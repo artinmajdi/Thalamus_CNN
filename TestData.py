@@ -42,7 +42,7 @@ def TestData(net , Test_Path , Train_Path , OriginalSeg_Data , Header , Affine ,
 
     for sliceNum in range(L):
         Stng = TestData.data_files[sliceNum]
-        d = Stng.find('slice')
+        d = Stng.find('Slice')
         SliceIdx[sliceNum] = int(Stng[d+5:].split('.')[0])
 
     SliceIdxArg = np.argsort(SliceIdx)
@@ -68,7 +68,8 @@ def TestData(net , Test_Path , Train_Path , OriginalSeg_Data , Header , Affine ,
             label = np.roll(label,[0,shiftX,shiftY,0])
 
         prediction = net.predict( Trained_Model_Path, data)
-
+        print('prediction size:' + str(prediction.shape) )
+        
         Prediction3D[CropDim[0,0]:CropDim[0,1],CropDim[1,0]:CropDim[1,1],int(SliceIdx[sliceNum])] = prediction[0,...,1]
         Prediction3D_logical[CropDim[0,0]:CropDim[0,1],CropDim[1,0]:CropDim[1,1],int(SliceIdx[sliceNum])] = prediction[0,...,1] > 0.2
 

@@ -56,48 +56,70 @@ def SumMasks(DirectorySubFolders):
     return maskD , Header , Affine
 
 
-SegmentName = '/PulNeucleusSegDeformed.nii.gz'  # ThalamusSegDeformed   ThalamusSegDeformed_Croped  PulNeucleusSegDeformed PulNeucleusSegDeformed_Croped
-TestName = 'ForUnet_Test16_Enhanced_Pul'
-Directory = '/media/data1/artin/data/Thalamus/'
-Directory_OriginalData = Directory + 'OriginalData/'
-with open(Directory_OriginalData + "subFolderList.txt" ,"rb") as fp:
-    subFolders = pickle.load(fp)
+A = [[0,0],[4,3],[6,1],[1,2],[1,3],[4,1]] #
+SliceNumbers = range(107,140)
 
-for sFi in range(len(subFolders)):
-# sFi = 1
-    Test_Path  = Directory + TestName + '/TestSubject'+str(sFi)+'/test/'
-    Train_Path = Directory + TestName + '/TestSubject'+str(sFi)+'/train/'
-    Trained_Model_Path = Train_Path + 'model/'
-    TestResults_Path   = Test_Path  + 'results/'
-
-    try:
-        os.stat(Trained_Model_Path)
-    except:
-        os.makedirs(Trained_Model_Path)
-
-    try:
-        os.stat(TestResults_Path)
-    except:
-        os.makedirs(TestResults_Path)
-
-    TrainData = image_util.ImageDataProvider(Train_Path + "*.tif")
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
-
-    net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) #  , cost="dice_coefficient"
-
-    trainer = unet.Trainer(net)
-    path = trainer.train(TrainData, Trained_Model_Path, training_iters=100, epochs=100, display_step=25) #, training_iters=100, epochs=100, display_step=10
-
-    # tensorboard --logdir=~/artin/data/Thalamus/ForUnet_Test2_IncreasingNumSlices/TestSubject0/train/model
-
-    # OriginalSeg , Header , Affine = SumMasks(Directory_OriginalData+subFolders[sFi])
-    OriginalSegFull = nib.load(Directory_OriginalData+subFolders[sFi]+SegmentName)
-    Header = OriginalSegFull.header
-    Affine = OriginalSegFull.affine
-    OriginalSeg = OriginalSegFull.get_data()
+Directory = '/media/data1/artin/data/Thalamus/CNN_VLP'
 
 
-    CropDimensions = np.array([ [50,198] , [130,278]])
-    padSize = 90
+for ii in range(len(A)):
+    if ii == 0:
+        TestName = 'Test_WMnMPRAGE_bias_corr_Deformed' # _Deformed_Cropped
+    else:
+        TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
 
-    [data,label,prediction] = TestData(net , Test_Path , Trained_Model_Path , OriginalSeg , Header , Affine , subFolders[sFi] , CropDimensions , padSize)
+    Test_Directory = Directory + '/' + TestName + '/'
+
+    # with open(Directory + '/OriginalDeformedPriors/subFolderList.txt' ,"rb") as fp:
+    #     subFolders = pickle.load(fp)
+    subFolders = os.listdir(Test_Directory)
+    print len(subFolders)
+
+
+    for sFi in range(len(subFolders)):
+        print('Test: ' + str(A[ii]) + 'Subject: ' + str(subFolders[sFi]))
+    # sFi = 1
+
+        Segments_Directory = Directory + '/OriginalDeformedPriors/' +  subFolders[sFi] + '/ManualDelineation'
+        SegmentName = Segments_Directory +'/6-VLP_Deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
+
+
+
+        Test_Path  = Test_Directory + subFolders[sFi] + '/Test/'
+        Train_Path = Test_Directory + subFolders[sFi] + '/Train/'
+        Trained_Model_Path = Train_Path + 'model/'
+        TestResults_Path   = Test_Path  + 'results/'
+
+        try:
+            os.stat(Trained_Model_Path)
+        except:
+            os.makedirs(Trained_Model_Path)
+
+        try:
+            os.stat(TestResults_Path)
+        except:
+            os.makedirs(TestResults_Path)
+
+        TrainData = image_util.ImageDataProvider(Train_Path + "*.tif")
+        print TrainData.n_class
+        logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
+
+        net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) #  , cost="dice_coefficient"
+
+        trainer = unet.Trainer(net)
+        path = trainer.train(TrainData, Trained_Model_Path, training_iters=80, epochs=70, display_step=500) #, training_iters=100, epochs=100, display_step=10
+
+        # tensorboard --logdir=~/artin/data/Thalamus/ForUnet_Test2_IncreasingNumSlices/TestSubject0/train/model
+
+        # OriginalSeg , Header , Affine = SumMasks(Directory_OriginalData+subFolders[sFi])
+        OriginalSegFull = nib.load(SegmentName)
+        Header = OriginalSegFull.header
+        Affine = OriginalSegFull.affine
+        OriginalSeg = OriginalSegFull.get_data()
+
+
+        CropDimensions = np.array([ [50,198] , [130,278]])
+        padSize = 90
+
+        [data,label,prediction] = TestData(net , Test_Path , Trained_Model_Path , OriginalSeg , Header , Affine , subFolders[sFi] , CropDimensions , padSize)
+    #    TestData2_MultipliedByWholeThalamus(net , Test_Path , Trained_Model_Path , OriginalSeg , subFolders[sFi], CropDimensions , padSize , Test_Path_Thalamus , Trained_Model_Path_Thalamus):

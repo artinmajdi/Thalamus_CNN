@@ -20,8 +20,9 @@ def EnhanceSlices(imD):
 
 Enhance_Flag = 1
 
-Directory = '/media/data1/artin/data/Thalamus/OriginalData/'
-TestName  = 'ForUnet_Test15_Enhanced_Thalamus'
+Directory = '/media/data1/artin/thomas/priors/'
+TestName  = 'CNN_Enhanced_VPL'
+inputName = 'WMnMPRAGE_bias_corr_Deformed_Cropped.nii.gz'
 SegmentName = '/ThalamusSegDeformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
 subFolders = os.listdir(Directory)
 
@@ -47,7 +48,7 @@ SliceNumbers = range(107,140)
 for sFi in range(len(subFolders)):
     # sFi = 0
     mask = nib.load(Directory+subFolders2[sFi]+SegmentName)
-    im = nib.load(Directory+subFolders2[sFi]+'/WMnMPRAGEdeformed.nii.gz')
+    im = nib.load(Directory+subFolders2[sFi]+'/'+inputName)
 
     imD = im.get_data()
     maskD = mask.get_data()

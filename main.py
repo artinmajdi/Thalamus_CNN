@@ -55,11 +55,13 @@ def SumMasks(DirectorySubFolders):
 
     return maskD , Header , Affine
 
+NeucleusFolder = 'CNN_VLP2' #'CNN_Thalamus' #
+NucleusName = '6-VLP' #'1-THALAMUS' #
 
 A = [[0,0],[4,3],[6,1],[1,2],[1,3],[4,1]] #
 SliceNumbers = range(107,140)
 
-Directory = '/media/data1/artin/data/Thalamus/CNN_VLP'
+Directory = '/media/data1/artin/data/Thalamus/' + NeucleusFolder
 
 
 for ii in range(len(A)):
@@ -76,12 +78,12 @@ for ii in range(len(A)):
     print len(subFolders)
 
 
-    for sFi in range(len(subFolders)):
+    for sFi in range(len(subFolders)-15):
         print('Test: ' + str(A[ii]) + 'Subject: ' + str(subFolders[sFi]))
     # sFi = 1
 
         Segments_Directory = Directory + '/OriginalDeformedPriors/' +  subFolders[sFi] + '/ManualDelineation'
-        SegmentName = Segments_Directory +'/6-VLP_Deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
+        SegmentName = Segments_Directory +'/' + NucleusName + '_Deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
 
 
 
@@ -107,7 +109,7 @@ for ii in range(len(A)):
         net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) #  , cost="dice_coefficient"
 
         trainer = unet.Trainer(net)
-        path = trainer.train(TrainData, Trained_Model_Path, training_iters=80, epochs=70, display_step=500) #, training_iters=100, epochs=100, display_step=10
+        path = trainer.train(TrainData, Trained_Model_Path, training_iters=100, epochs=100, display_step=500) #, training_iters=100, epochs=100, display_step=10
 
         # tensorboard --logdir=~/artin/data/Thalamus/ForUnet_Test2_IncreasingNumSlices/TestSubject0/train/model
 
@@ -118,8 +120,9 @@ for ii in range(len(A)):
         OriginalSeg = OriginalSegFull.get_data()
 
 
-        CropDimensions = np.array([ [50,198] , [130,278]])
+        CropDimensions = np.array([ [50,198] , [130,278] , [SliceNumbers[0] , SliceNumbers[len(SliceNumbers)-1]] ])
+
         padSize = 90
 
-        [data,label,prediction] = TestData(net , Test_Path , Trained_Model_Path , OriginalSeg , Header , Affine , subFolders[sFi] , CropDimensions , padSize)
-    #    TestData2_MultipliedByWholeThalamus(net , Test_Path , Trained_Model_Path , OriginalSeg , subFolders[sFi], CropDimensions , padSize , Test_Path_Thalamus , Trained_Model_Path_Thalamus):
+        # [data,label,prediction] = TestData(net , Test_Path , Trained_Model_Path , OriginalSeg , Header , Affine , subFolders[sFi] , CropDimensions , padSize)
+    # #   TestData2_MultipliedByWholeThalamus(net , Test_Path , Trained_Model_Path , OriginalSeg , subFolders[sFi], CropDimensions , padSize , Test_Path_Thalamus , Trained_Model_Path_Thalamus):

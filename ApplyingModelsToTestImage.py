@@ -8,30 +8,70 @@ import numpy as np
 import nibabel as nib
 from tf_unet import unet, util, image_util
 
-Directory = '/media/data1/artin/data/Thalamus/'
-Directory_OriginalData = Directory + 'OriginalData/'
-with open(Directory_OriginalData + "subFolderList.txt" ,"rb") as fp:
-    subFolders = pickle.load(fp)
-p = 0
-# for p in range(20):
+NeucleusFolder = 'CNN_VLP2' #'CNN_Thalamus' #
+NucleusName = '6-VLP' #'1-THALAMUS' #
+
+A = [[4,3],[6,1],[1,2],[1,3],[4,1]] # [0,0]] # ,
+SliceNumbers = range(107,140)
+
+Directory_VLP = '/media/data1/artin/data/Thalamus/' + NeucleusFolder
+Directory_Thalamus = '/media/data1/artin/data/Thalamus/' + 'CNN_Thalamus'
+
+for ii in range(0,len(A)):
+    if ii == 0:
+        TestName = 'Test_WMnMPRAGE_bias_corr_Deformed' # _Deformed_Cropped
+    else:
+        TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
+
+    Test_Directory_VLP = Directory_VLP + '/' + TestName + '/'
+    Test_Directory_Thalamus = Directory_Thalamus + '/' + TestName + '/'
+
+    subFolders = os.listdir(Test_Directory_VLP)
+
+    print subFolders[3]
+
+    print range(len(subFolders)-15)
+    for sFi in range(len(subFolders)-15):
+
+        print('-----------------------------------------------------------')
+        print('Test: ' + str(A[ii]) + 'Subject: ' + str(subFolders[sFi]))
+        print('-----------------------------------------------------------')
+
+        Orig_Segments_VLP_Directory = Directory_VLP + '/OriginalDeformedPriors/' +  subFolders[sFi] + '/ManualDelineation'
+        Orig_Segment_VLP_Address = Orig_Segments_VLP_Directory +'/' + NucleusName + '_Deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
+
+        Orig_Segments_Thalamus_Directory = Directory_Thalamus + '/OriginalDeformedPriors/' +  subFolders[sFi] + '/ManualDelineation'
+        Orig_Segment_Thalamus_Address = Orig_Segments_Thalamus_Directory +'/1-THALAMUS_Deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
+
+        # print Test_Path_VLP
+        Test_Path_VLP = Test_Directory_VLP + subFolders[sFi] + '/Test/'
+        Test_Path_Thalamus = Test_Directory_Thalamus + subFolders[sFi] +  '/Test/'
+
+        Trained_Model_Path_VLP = Test_Directory_VLP + subFolders[sFi] +  '/Train/model/'
+        Trained_Model_Path_Thalamus = Test_Directory_Thalamus + subFolders[sFi] +  '/Train/model/'
+        # Directory_OriginalData = Directory + 'OriginalData/'
+        # with open(Directory_OriginalData + "subFolderList.txt" ,"rb") as fp:
+        #     subFolders = pickle.load(fp)
+        # p = 0
+        #
+        #
+        # MainDirectory_FullThalamus = 'ForUnet_Test8_Enhanced/TestSubject'+str(p)
+        # MainDirectory = 'ForUnet_Test8_Enhanced/TestSubject'+str(p)
+
+        # Test_Path  = Directory + MainDirectory + '/test/'
+        # Test_Path_Thalamus  = Directory + MainDirectory_FullThalamus + '/test/'
+        # print Test_Path_Thalamus
+        # Trained_Model_Path = Directory + MainDirectory + '/train/
+        # Trained_Model_Path_Thalamus = Directory + MainDirectory_FullThalamus + '/train/model/'
+
+        OriginalSeg = nib.load(Orig_Segment_Thalamus_Address) # ThalamusSegDeformed_Croped PulNeucleusSegDeformed_Croped
+        net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2)
 
 
-MainDirectory_FullThalamus = 'ForUnet_Test8_Enhanced/TestSubject'+str(p)
-MainDirectory = 'ForUnet_Test8_Enhanced/TestSubject'+str(p)
+        CropDimensions = np.array([ [50,198] , [130,278] , [SliceNumbers[0] , SliceNumbers[len(SliceNumbers)-1]] ])
 
-Test_Path  = Directory + MainDirectory + '/test/'
-Test_Path_Thalamus  = Directory + MainDirectory_FullThalamus + '/test/'
-print Test_Path_Thalamus
-Trained_Model_Path = Directory + MainDirectory + '/train/model/'
-Trained_Model_Path_Thalamus = Directory + MainDirectory_FullThalamus + '/train/model/'
-
-OriginalSeg = nib.load(Directory_OriginalData+subFolders[p]+'/ThalamusSegDeformed.nii.gz') # ThalamusSegDeformed_Croped PulNeucleusSegDeformed_Croped
-net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2)
-
-
-CropDimensions = np.array([ [50,198] , [130,278]])
-padSize = 90
-[data,label,prediction,OriginalSeg] = TestData2_MultipliedByWholeThalamus(net , Test_Path , Trained_Model_Path , OriginalSeg , subFolders[p] , CropDimensions , padSize , Test_Path_Thalamus , Trained_Model_Path_Thalamus)
+        padSize = 90
+        [data,label,prediction,OriginalSeg] = TestData2_MultipliedByWholeThalamus(net , Test_Path_VLP , Trained_Model_Path_VLP , OriginalSeg , subFolders[sFi] , CropDimensions , padSize , Test_Path_Thalamus , Trained_Model_Path_Thalamus , NucleusName)
 
 
 

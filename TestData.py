@@ -69,9 +69,9 @@ def TestData(net , Test_Path , Train_Path , OriginalSeg_Data , Header , Affine ,
 
         prediction = net.predict( Trained_Model_Path, data)
         print('prediction size:' + str(prediction.shape) )
-        
-        Prediction3D[CropDim[0,0]:CropDim[0,1],CropDim[1,0]:CropDim[1,1],int(SliceIdx[sliceNum])] = prediction[0,...,1]
-        Prediction3D_logical[CropDim[0,0]:CropDim[0,1],CropDim[1,0]:CropDim[1,1],int(SliceIdx[sliceNum])] = prediction[0,...,1] > 0.2
+
+        Prediction3D[CropDim[0,0]:CropDim[0,1],CropDim[1,0]:CropDim[1,1],CropDim[2,0] + int(SliceIdx[sliceNum])] = prediction[0,...,1]
+        Prediction3D_logical[CropDim[0,0]:CropDim[0,1],CropDim[1,0]:CropDim[1,1],CropDim[2,0] + int(SliceIdx[sliceNum])] = prediction[0,...,1] > 0.2
 
         # unet.error_rate(prediction, util.crop_to_shape(label, prediction.shape))
         PredictedSeg = prediction[0,...,1] > 0.2
@@ -128,7 +128,7 @@ def ThalamusExtraction(net , Test_Path , Train_Path , subFolders, CropDim , padS
 
     for sliceNum in range(L):
         Stng = TestData.data_files[sliceNum]
-        d = Stng.find('slice')
+        d = Stng.find('Slice')
         SliceIdx[sliceNum] = int(Stng[d+5:].split('.')[0])
 
     SliceIdxArg = np.argsort(SliceIdx)
@@ -159,7 +159,7 @@ def ThalamusExtraction(net , Test_Path , Train_Path , subFolders, CropDim , padS
 
     return PredictionFull
 
-def TestData2_MultipliedByWholeThalamus(net , Test_Path , Train_Path , OriginalSeg , subFolders, CropDim , padSize , Test_Path_Thalamus , Trained_Model_Path_Thalamus):
+def TestData2_MultipliedByWholeThalamus(net , Test_Path , Train_Path , OriginalSeg , subFolders, CropDim , padSize , Test_Path_Thalamus , Trained_Model_Path_Thalamus , NucleusName):
 
 
     Trained_Model_Path = Train_Path + 'model.cpkt'
@@ -190,7 +190,7 @@ def TestData2_MultipliedByWholeThalamus(net , Test_Path , Train_Path , OriginalS
 
     for sliceNum in range(L):
         Stng = TestData.data_files[sliceNum]
-        d = Stng.find('slice')
+        d = Stng.find('Slice')
         SliceIdx[sliceNum] = int(Stng[d+5:].split('.')[0])
 
     SliceIdxArg = np.argsort(SliceIdx)
@@ -222,8 +222,8 @@ def TestData2_MultipliedByWholeThalamus(net , Test_Path , Train_Path , OriginalS
         prediction = np.zeros(prediction2.shape)
         prediction[0,:,:,:] = np.multiply(prediction2[0,:,:,:],PredictionFull[sliceNum,:,:,:])
 
-        Prediction3D[CropDim[0,0]:CropDim[0,1],CropDim[1,0]:CropDim[1,1],int(SliceIdx[sliceNum])] = prediction[0,...,1]
-        Prediction3D_logical[CropDim[0,0]:CropDim[0,1],CropDim[1,0]:CropDim[1,1],int(SliceIdx[sliceNum])] = prediction[0,...,1] > 0.5
+        Prediction3D[CropDim[0,0]:CropDim[0,1],CropDim[1,0]:CropDim[1,1],CropDim[2,0] + int(SliceIdx[sliceNum])] = prediction[0,...,1]
+        Prediction3D_logical[CropDim[0,0]:CropDim[0,1],CropDim[1,0]:CropDim[1,1],CropDim[2,0] + int(SliceIdx[sliceNum])] = prediction[0,...,1] > 0.1
 
         # unet.error_rate(prediction, util.crop_to_shape(label, prediction.shape))
         PredictedSeg = prediction[0,...,1] > 0.2
@@ -238,18 +238,18 @@ def TestData2_MultipliedByWholeThalamus(net , Test_Path , Train_Path , OriginalS
         Loss = unet.error_rate(prediction,label[:,A:sz[1]-A,A:sz[2]-A,:])
         LogLoss[sliceNum] = np.log10(Loss)
 
-    np.savetxt(TestResults_Path+'DiceCoefficient.txt',DiceCoefficient)
-    np.savetxt(TestResults_Path+'LogLoss.txt',LogLoss)
+    np.savetxt(TestResults_Path + 'DiceCoefficient.txt',DiceCoefficient)
+    np.savetxt(TestResults_Path + 'LogLoss.txt',LogLoss)
 
     Prediction3D_nifti = nib.Nifti1Image(Prediction3D,Affine)
     Prediction3D_nifti.get_header = Header
 
-    nib.save(Prediction3D_nifti,TestResults_Path + subFolders + '_ThalamusSegDeformed_Croped_Predicted.nii.gz')
+    nib.save(Prediction3D_nifti,TestResults_Path + subFolders + '_' + NucleusName + '.nii.gz')
 
     Prediction3D_logical_nifti = nib.Nifti1Image(Prediction3D_logical,Affine)
     Prediction3D_logical_nifti.get_header = Header
 
-    nib.save(Prediction3D_logical_nifti,TestResults_Path + subFolders + '_ThalamusSegDeformed_Croped_Predicted_logical.nii.gz')
+    nib.save(Prediction3D_logical_nifti,TestResults_Path + subFolders + '_' + NucleusName + '_Logical.nii.gz')
 
 
     return data,label,prediction,OriginalSeg

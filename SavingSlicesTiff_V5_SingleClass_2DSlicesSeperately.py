@@ -8,7 +8,7 @@ import tifffile
 import pickle
 from PIL import ImageEnhance , Image , ImageFilter
 
-NeucleusFolder = 'CNN_VLP2'
+NeucleusFolder = 'CNN_VLP4_2DSlicesSeperately'
 NeuclusName = '6-VLP'
 
 Directory_Priors = '/media/data1/artin/data/Thalamus/'+ NeucleusFolder + '/OriginalDeformedPriors'
@@ -29,11 +29,7 @@ with open(Directory_Priors+"subFolderList.txt" ,"wb") as fp:
 
 print(len(subFolders))
 print(subFolders[19])
-# print subFolders
-# IndxX = range(92,127) # range(22,36)
-# IndxY = range(151,211) #range(81,106)
-# IndxZ = range(109,151) # range(28,49)
-A = [[6,1],[1,2],[1,3],[4,1]] # [0,0],[4,3],
+A = [[0,0],[4,3]] # ,[6,1],[1,2],[1,3],[4,1]
 print len(A)
 SliceNumbers = range(107,140)
 
@@ -50,7 +46,7 @@ for ii in range(len(A)):
     inputName = TestName + '.nii.gz'
 
 
-    for sFi in range(len(subFolders)):
+    for sFi in range(len(subFolders)-16):
         # sFi = 0
 
         mask   = nib.load(Directory_Priors + '/'  + subFolders2[sFi] + '/' + SegmentName)
@@ -83,7 +79,6 @@ for ii in range(len(A)):
 
         for p in range(len(subFolders)):
 
-
             if sFi == p:
                 SaveDirectoryImage = Directory_Test + '/' + subFolders2[sFi] + '/' + '/Test'
             else:
@@ -96,8 +91,17 @@ for ii in range(len(A)):
 
             for sliceInd in range(imD2.shape[2]):
 
-                # tifffile.imsave(SaveDirectoryImage + '/' +'Slice'+str(IndxZ[sliceInd])+'.tif',imD2[:,:,sliceInd])
-                # tifffile.imsave(SaveDirectoryImage + '/' +'Slice'+str(IndxZ[sliceInd])+'_mask.tif',maskD2[:,:,sliceInd])
+                SaveDirectoryImageSlice = SaveDirectoryImage + '/Slice' + str(sliceInd)
 
-                tifffile.imsave(SaveDirectoryImage + '/' + subFolders2[p] + '_Slice'+str(sliceInd)+'.tif',imD_padded[:,:,sliceInd])
-                tifffile.imsave(SaveDirectoryImage + '/' + subFolders2[p] + '_Slice'+str(sliceInd)+'_mask.tif',maskD_padded[:,:,sliceInd])
+                try:
+                    os.stat(SaveDirectoryImageSlice)
+                except:
+                    os.makedirs(SaveDirectoryImageSlice)
+
+                if sFi == p:
+                    tifffile.imsave(SaveDirectoryImageSlice + '/' + subFolders2[p] + '_Slice'+str(sliceInd)+'.tif',imD_padded[:,:,sliceInd])
+                    tifffile.imsave(SaveDirectoryImageSlice + '/' + subFolders2[p] + '_Slice'+str(sliceInd)+'_mask.tif',maskD_padded[:,:,sliceInd])
+                else:
+                    for i in range(max(0,sliceInd-1),min(sliceInd+2,imD2.shape[2])):
+                        tifffile.imsave(SaveDirectoryImageSlice + '/' + subFolders2[p] + '_Slice'+str(i)+'.tif',imD_padded[:,:,i])
+                        tifffile.imsave(SaveDirectoryImageSlice + '/' + subFolders2[p] + '_Slice'+str(i)+'_mask.tif',maskD_padded[:,:,i])

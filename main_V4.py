@@ -56,33 +56,35 @@ def SumMasks(DirectorySubFolders):
 
     return maskD , Header , Affine
 
-NeucleusFolder = 'CNN5_Thalamus_2DSlicesSeperately_' #'CNN_Thalamus' #
-NucleusName = '1-THALAMUS' #'6-VLP' #
+def Main(sFi):
 
-A = [[0,0],[4,3]] # ,[6,1],[1,2],[1,3],[4,1]
-SliceNumbers = range(107,140)
+    NeucleusFolder = 'CNN5_Thalamus_2DSlicesSeperately_' #'CNN_Thalamus' #
+    NucleusName = '1-THALAMUS' #'6-VLP' #
 
-Directory_main = '/media/data1/artin/data/Thalamus/'
-Directory_Nuclei_Full = Directory_main + NeucleusFolder
-Directory_Thalamus_Full = Directory_main + 'CNN_Thalamus'
+    A = [[4,3]] # [[0,0],[4,3],[6,1],[1,2],[1,3],[4,1]]
+    SliceNumbers = range(107,140)
 
-
-for ii in range(len(A)):
-# ii = 0
-    if ii == 0:
-        TestName = 'Test_WMnMPRAGE_bias_corr_Deformed' # _Deformed_Cropped
-    else:
-        TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
-
-    Directory_Nuclei = Directory_Nuclei_Full + '/' + TestName + '/'
-    print Directory_Nuclei
-    # with open(Directory_Nuclei_Full + '/OriginalDeformedPriors/subFolderList.txt' ,"rb") as fp:
-    #     subFolders = pickle.load(fp)
-    subFolders = os.listdir(Directory_Nuclei)
-    # print len(subFolders)
+    Directory_main = '/media/data1/artin/data/Thalamus/'
+    Directory_Nuclei_Full = Directory_main + NeucleusFolder
+    Directory_Thalamus_Full = Directory_main + 'CNN_Thalamus'
 
 
-    for sFi in range(len(subFolders)):
+    for ii in range(len(A)):
+    # ii = 0
+        if ii == 0:
+            TestName = 'Test_WMnMPRAGE_bias_corr_Deformed' # _Deformed_Cropped
+        else:
+            TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
+
+        Directory_Nuclei = Directory_Nuclei_Full + '/' + TestName + '/'
+        print Directory_Nuclei
+        # with open(Directory_Nuclei_Full + '/OriginalDeformedPriors/subFolderList.txt' ,"rb") as fp:
+        #     subFolders = pickle.load(fp)
+        subFolders = os.listdir(Directory_Nuclei)
+        # print len(subFolders)
+
+
+        # for sFi in range(len(subFolders)):
 
         Directory_Nuclei_Label = Directory_main + '/OriginalDeformedPriors/' +  subFolders[sFi] + '/ManualDelineation/' + NucleusName + '_Deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
 
@@ -137,3 +139,21 @@ for ii in range(len(A)):
             padSize = 90
             [data,label,prediction] = TestData(net , Directory_Nuclei_Test , Directory_Nuclei_Train , OriginalSegFull , subFolders[sFi] , CropDimensions , padSize)
             #   [data,label,prediction,OriginalSeg] = TestData2_MultipliedByWholeThalamus(net , Directory_Nuclei_Test , Directory_Nuclei_Train , OriginalSeg , subFolders[sFi] , CropDimensions , padSize , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , NucleusName)
+
+
+if __name__ == '__main__':
+
+    # Define the dataset
+    sFi = range(19)
+
+    # Output the dataset
+    print ('Dataset: ' + str(sFi))
+
+    # Run this with a pool of 5 agents having a chunksize of 3 until finished
+    agents = 10
+    chunksize = 3
+    with Pool(processes=agents) as pool:
+        result = pool.map(Main, sFi, chunksize)
+
+    # Output the result
+    print ('Result:  ' + str(result))

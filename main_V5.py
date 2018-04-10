@@ -98,8 +98,8 @@ Directory_main = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' # '/localhome/msmajdi_
 Directory_Nuclei_Full = Directory_main + NeucleusFolder
 # Directory_Thalamus_Full = Directory_main + 'CNN_Thalamus'
 
-# ii = 1
-for ii in range(len(A)):
+ii = 1
+# for ii in range(len(A)):
 
     if ii == 0:
         TestName = 'Test_WMnMPRAGE_bias_corr_Deformed' # _Deformed_Cropped
@@ -114,11 +114,11 @@ for ii in range(len(A)):
     # print len(subFolders)
 
 
-    for sFi in range(len(subFolders)):
+    for sFi in range(5,6): # len(subFolders)):
 
         Directory_Nuclei_Label = '/array/hdd/msmajdi/data/priors_forCNN/' +  subFolders[sFi] + '/ManualDelineation/' + NucleusName + '_Deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
 
-        for sliceInd in range(33):
+        for sliceInd in range(15,16): # 33):
             print('------------------------------------------------------')
             print('Test: ' + str(A[ii]) + ' Subject: ' + str(subFolders[sFi]) + ' Slide ' + str(sliceInd) )
             print('------------------------------------------------------')

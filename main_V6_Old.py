@@ -93,7 +93,7 @@ print("start ")
 # 12-MD-Pf_deformed.nii.gz  2-AV_deformed.nii.gz	      5-VLa_deformed.nii.gz    8-Pul_deformed.nii.gz
 
 
-gpuNum = "4"
+gpuNum = 'nan'
 NeucleusFolder = 'CNN8_Pul_2D_SanitizedNN'  #  'CNN1_THALAMUS_2D_SanitizedNN' #'  CNN4567_VL_2D_SanitizedNN
 NucleusName = '8-Pul'  # '1-THALAMUS' #'6-VLP' #
 ManualDir = '/Manual_Delineation_Sanitized/' #ManualDelineation
@@ -169,7 +169,8 @@ for ii in range(len(A)): # len(A)):
             net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) #  , cost="dice_coefficient"
 
             trainer = unet.Trainer(net)
-            path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=100, epochs=100, display_step=500, GPU_Num=gpuNum) #  , cost="dice_coefficient" restore=True
+            if gpuNum != 'nan':
+                path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=100, epochs=100, display_step=500, GPU_Num=gpuNum) #  , cost="dice_coefficient" restore=True
 
             OriginalSegFull = nib.load(Directory_Nuclei_Label)
 

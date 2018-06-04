@@ -69,7 +69,10 @@ def TestData(net , Directory_Nuclei_Test , Directory_Nuclei_Train , OriginalSeg 
         data = np.roll(data,[0,shiftX,shiftY,0])
         label = np.roll(label,[0,shiftX,shiftY,0])
 
-    prediction = net.predict( Directory_Nuclei_Train_Model_cpkt, data, GPU_Num=gpuNum)
+    if gpuNum != 'nan':
+        prediction = net.predict( Directory_Nuclei_Train_Model_cpkt, data, GPU_Num=gpuNum)
+    else:
+        prediction = net.predict( Directory_Nuclei_Train_Model_cpkt, data)
 
     # PredictedSeg = prediction[0,...,1] > 0.2
     Thresh = max(filters.threshold_otsu(prediction[0,...,1]),0.2)
@@ -159,7 +162,11 @@ def ThalamusExtraction(net , Directory_Nuclei_Test , Directory_Nuclei_Train , su
             data = np.roll(data,[0,shiftX,shiftY,0])
             label = np.roll(label,[0,shiftX,shiftY,0])
 
-        prediction = net.predict( Directory_Nuclei_Train_Model_cpkt, data, GPU_Num=gpuNum)
+        if gpuNum != 'nan':
+            prediction = net.predict( Directory_Nuclei_Train_Model_cpkt, data, GPU_Num=gpuNum)
+        else:
+            prediction = net.predict( Directory_Nuclei_Train_Model_cpkt, data)
+
         PredictionFull_Thalamus[sliceNum,:,:,:] = prediction
 
     return PredictionFull_Thalamus
@@ -222,7 +229,11 @@ def TestData2_MultThalamus(net , Directory_Nuclei_Test , Directory_Nuclei_Train 
             data = np.roll(data,[0,shiftX,shiftY,0])
             label = np.roll(label,[0,shiftX,shiftY,0])
 
-        prediction2 = net.predict( Directory_Nuclei_Train_Model_cpkt, data, GPU_Num=gpuNum)
+
+        if gpuNum != 'nan':
+            prediction2 = net.predict( Directory_Nuclei_Train_Model_cpkt, data, GPU_Num=gpuNum)
+        else:
+            prediction2 = net.predict( Directory_Nuclei_Train_Model_cpkt, data)
 
         prediction = np.zeros(prediction2.shape)
         prediction[0,:,:,:] = np.multiply(prediction2[0,:,:,:],PredictionFull_Thalamus[sliceNum,:,:,:])
@@ -357,7 +368,10 @@ def TestData3_PerSlice(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Direct
             data = np.roll(data,[0,shiftX,shiftY,0])
             label = np.roll(label,[0,shiftX,shiftY,0])
 
-        prediction2 = net.predict( Directory_Nuclei_Train_Model_cpkt, data, GPU_Num=gpuNum)
+        if gpuNum != 'nan':
+            prediction2 = net.predict( Directory_Nuclei_Train_Model_cpkt, data, GPU_Num=gpuNum)
+        else:
+            prediction2 = net.predict( Directory_Nuclei_Train_Model_cpkt, data)
 
         if MultByThalamusFlag != 0:
 
@@ -528,7 +542,10 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nucle
             data = np.roll(data,[0,shiftX,shiftY,0])
             label = np.roll(label,[0,shiftX,shiftY,0])
 
-        prediction2 = net.predict( Directory_Nuclei_Train_Model_cpkt, data, GPU_Num=gpuNum)
+        if gpuNum != 'nan':
+            prediction2 = net.predict( Directory_Nuclei_Train_Model_cpkt, data, GPU_Num=gpuNum)
+        else:
+            prediction2 = net.predict( Directory_Nuclei_Train_Model_cpkt, data)
 
         if MultByThalamusFlag != 0:
 

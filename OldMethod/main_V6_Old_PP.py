@@ -20,9 +20,9 @@ print("start ")
 # 12-MD-Pf_deformed.nii.gz  2-AV_deformed.nii.gz	      5-VLa_deformed.nii.gz    8-Pul_deformed.nii.gz
 
 
-gpuNum = '4' # nan'
-NeucleusFolder = 'CNN8_Pul_2D_SanitizedNN'  #  'CNN1_THALAMUS_2D_SanitizedNN' #'  CNN4567_VL_2D_SanitizedNN
-NucleusName = '8-Pul'  # '1-THALAMUS' #'6-VLP' #
+gpuNum = '5' # nan'
+NeucleusFolder = 'CNN6_VLP_2D_SanitizedNN'  #  'CNN1_THALAMUS_2D_SanitizedNN' #'  CNN4567_VL_2D_SanitizedNN
+NucleusName = '6-VLP'  # '1-THALAMUS' #'6-VLP' #
 ManualDir = '/Manual_Delineation_Sanitized/' #ManualDelineation
 
 A = [[0,0]] # ,[4,3],[6,1],[1,2],[1,3],[4,1]]
@@ -186,7 +186,7 @@ for ii in range(len(A)):
 
 
     tt = int(len(subFolders)/2)
-    for sFi in range(tt)
+    for sFi in range(tt):
         ## for python2
         # for SbFlds in subFolders:
         #     processes = [mp.Process(target=main_Part, args=(SbFlds,TestName))]

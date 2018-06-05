@@ -192,7 +192,7 @@ for ii in range(len(A)):
         #     processes = [mp.Process(target=main_Part, args=(SbFlds,TestName))]
 
         ## for python3
-        processes = [mp.Process(target=main_Part, args=(SbFlds,TestName)) for SbFlds in subFolders[2*tt:2*(tt+1)]]
+        processes = [mp.Process(target=main_Part, args=(SbFlds,TestName)) for SbFlds in subFolders[2*sFi:2*(sFi+1)]]
 
         print(processes)
 

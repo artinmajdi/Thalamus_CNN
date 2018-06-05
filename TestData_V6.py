@@ -508,8 +508,8 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nucle
     TestData = image_util.ImageDataProvider(  Directory_Nuclei_Test0 + '*.tif',shuffle_data=False)
 
     L = len(SliceNumbers)
-    DiceCoefficient  = np.zeros(L)
-    DiceCoefficient_Mult  = np.zeros(L)
+    DiceCoefficient  = np.zeros(L+1)
+    DiceCoefficient_Mult  = np.zeros(L+1)
     LogLoss  = np.zeros(L)
     LogLoss_Mult  = np.zeros(L)
 

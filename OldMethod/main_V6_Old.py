@@ -171,9 +171,9 @@ for ii in range(len(A)):
 
             trainer = unet.Trainer(net)
             if gpuNum != 'nan':
-                path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=100, epochs=100, display_step=500, GPU_Num=gpuNum) #  , cost="dice_coefficient" restore=True
+                path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=200, epochs=150, display_step=500, GPU_Num=gpuNum) #  , cost="dice_coefficient" restore=True
             else:
-                path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=100, epochs=100, display_step=500) #  , cost="dice_coefficient" restore=True
+                path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=200, epochs=150, display_step=500) #  , cost="dice_coefficient" restore=True
 
             NucleiOrigSeg = nib.load(Directory_Nuclei_Label)
             ThalamusOrigSeg = nib.load(Directory_Thalamus_Label)

@@ -12,7 +12,7 @@ def DiceCoefficientCalculator(msk1,msk2):
     DiceCoef = intersection.sum()*2/(msk1.sum()+msk2.sum() + np.finfo(float).eps)
     return DiceCoef
 
-def TestData(net , Directory_Nuclei_Test , Directory_Nuclei_Train , OriginalSeg , subFolders, CropDim , padSize , gpuNum):
+def TestData(net , Directory_Nuclei_Test , Directory_Nuclei_Train , Thalamus_OriginalSeg , Nuclei_OriginalSeg , subFolders, CropDim , padSize , gpuNum):
 
 
     Directory_Nuclei_Train_Model_cpkt = Directory_Nuclei_Train + 'model/model.cpkt'
@@ -24,11 +24,11 @@ def TestData(net , Directory_Nuclei_Test , Directory_Nuclei_Train , OriginalSeg 
         os.makedirs(Directory_Nuclei_Test_Results)
 
 
-    OriginalSeg_Data = OriginalSeg.get_data()
-    Header = OriginalSeg.header
-    Affine = OriginalSeg.affine
+    Thalamus_OriginalSeg_Data = Thalamus_OriginalSeg.get_data()
+    Header = Thalamus_OriginalSeg.header
+    Affine = Thalamus_OriginalSeg.affine
 
-    sz = OriginalSeg_Data.shape
+    sz = Thalamus_OriginalSeg_Data.shape
     Prediction3D_Mult_logical = np.zeros(sz)
     Prediction3D_Mult = np.zeros(sz)
 
@@ -112,11 +112,11 @@ def TestData(net , Directory_Nuclei_Test , Directory_Nuclei_Train , OriginalSeg 
     # ax[0].imshow(data[0,20:sz[1]-20,20:sz[2]-20,0], aspect="auto",cmap = 'gray')
     # ax[1].imshow(label[0,20:sz[1]-20,20:sz[2]-20,1], aspect="auto",cmap = 'gray')
     # ax[2].imshow(prediction[0,...,1], aspect="auto",cmap = 'gray')
-    # ax[3].imshow(OriginalSeg, aspect="auto",cmap = 'gray')
+    # ax[3].imshow(Thalamus_OriginalSeg, aspect="auto",cmap = 'gray')
     # ax[0].set_title("Input")
     # ax[1].set_title("Ground truth")
     # ax[2].set_title("Prediction")
-    # ax[3].set_title("Prediction OriginalSeg")
+    # ax[3].set_title("Prediction Thalamus_OriginalSeg")
     # plt.show()
 
 def ThalamusExtraction(net , Directory_Nuclei_Test , Directory_Nuclei_Train , subFolders, CropDim , padSize , gpuNum):
@@ -171,7 +171,7 @@ def ThalamusExtraction(net , Directory_Nuclei_Test , Directory_Nuclei_Train , su
 
     return PredictionFull_Thalamus
 
-def TestData2_MultThalamus(net , Directory_Nuclei_Test , Directory_Nuclei_Train , OriginalSeg , subFolders, CropDim , padSize , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , NucleusName , gpuNum):
+def TestData2_MultThalamus(net , Directory_Nuclei_Test , Directory_Nuclei_Train , Thalamus_OriginalSeg , Nuclei_OriginalSeg , subFolders, CropDim , padSize , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , NucleusName , gpuNum):
 
 
     Directory_Nuclei_Train_Model_cpkt = Directory_Nuclei_Train + 'model/model.cpkt'
@@ -183,11 +183,11 @@ def TestData2_MultThalamus(net , Directory_Nuclei_Test , Directory_Nuclei_Train 
         os.makedirs(Directory_Nuclei_Test_Results)
 
 
-    OriginalSeg_Data = OriginalSeg.get_data()
-    Header = OriginalSeg.header
-    Affine = OriginalSeg.affine
+    Thalamus_OriginalSeg_Data = Thalamus_OriginalSeg.get_data()
+    Header = Thalamus_OriginalSeg.header
+    Affine = Thalamus_OriginalSeg.affine
 
-    sz = OriginalSeg_Data.shape
+    sz = Thalamus_OriginalSeg_Data.shape
     Prediction3D_Mult_logical = np.zeros(sz)
     Prediction3D_Mult = np.zeros(sz)
 
@@ -274,31 +274,31 @@ def TestData2_MultThalamus(net , Directory_Nuclei_Test , Directory_Nuclei_Train 
     nib.save(Prediction3D_logical_nifti,Directory_Nuclei_Test_Results + subFolders + '_' + NucleusName + '_Logical.nii.gz')
 
 
-    return data,label, prediction, OriginalSeg
+    return data,label, prediction, Thalamus_OriginalSeg
 
     # f, ax = plt.subplots(1, 3, sharey=True)
     # ax[0].imshow(data[0,20:sz[1]-20,20:sz[2]-20,0], aspect="auto",cmap = 'gray')
     # ax[1].imshow(label[0,20:sz[1]-20,20:sz[2]-20,1], aspect="auto",cmap = 'gray')
     # ax[2].imshow(prediction[0,...,1], aspect="auto",cmap = 'gray')
-    # ax[3].imshow(OriginalSeg, aspect="auto",cmap = 'gray')
+    # ax[3].imshow(Thalamus_OriginalSeg, aspect="auto",cmap = 'gray')
     # ax[0].set_title("Input")
     # ax[1].set_title("Ground truth")
     # ax[2].set_title("Prediction")
-    # ax[3].set_title("Prediction OriginalSeg")
+    # ax[3].set_title("Prediction Thalamus_OriginalSeg")
     # plt.show()
 
-def TestData3_PerSlice(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nuclei_Train0 , OriginalSeg , subFolders, CropDim , padSize , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , NucleusName , SliceNumbers , gpuNum):
+def TestData3_PerSlice(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nuclei_Train0 , Thalamus_OriginalSeg , Nuclei_OriginalSeg , subFolders, CropDim , padSize , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , NucleusName , SliceNumbers , gpuNum):
 
     # MultByThalamusFlag :
     # 0: Not Multiplied by Thalamus
     # 1: Multiplied by predicted Thalamus
     # 2: Multiplied by manual Thalamus
 
-    OriginalSeg_Data = OriginalSeg.get_data()
-    Header = OriginalSeg.header
-    Affine = OriginalSeg.affine
+    Thalamus_OriginalSeg_Data = Thalamus_OriginalSeg.get_data()
+    Header = Thalamus_OriginalSeg.header
+    Affine = Thalamus_OriginalSeg.affine
 
-    sz = OriginalSeg_Data.shape
+    sz = Thalamus_OriginalSeg_Data.shape
     Prediction3D_Mult_logical = np.zeros(sz)
     Prediction3D_Mult = np.zeros(sz)
     Prediction3D_PureNuclei = np.zeros(sz)
@@ -317,7 +317,7 @@ def TestData3_PerSlice(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Direct
             print('Error: Could not load Thalamus')
 
     elif MultByThalamusFlag == 2:
-        AA = OriginalSeg_Data[50:198 , 130:278 , SliceNumbers]
+        AA = Thalamus_OriginalSeg_Data[50:198 , 130:278 , SliceNumbers]
         L = len(SliceNumbers)
         for sliceInd in range(L):
             PredictionFull_Thalamus[sliceInd,:,:,1] = AA[:,:,sliceInd]
@@ -454,7 +454,7 @@ def TestData3_PerSlice(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Direct
 
     return Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical
 
-def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nuclei_Train0 , OriginalSeg , subFolders, CropDim , padSize , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , NucleusName , SliceNumbers , gpuNum):
+def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nuclei_Train0 , Thalamus_OriginalSeg , Nuclei_OriginalSeg , subFolders, CropDim , padSize , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , NucleusName , SliceNumbers , gpuNum):
 
 
     Directory_Nuclei_Train_Model_cpkt = Directory_Nuclei_Train0 + 'model/model.cpkt'
@@ -474,11 +474,12 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nucle
     except:
         os.makedirs(Directory_Test_Results_Nuclei)
 
-    OriginalSeg_Data = OriginalSeg.get_data()
-    Header = OriginalSeg.header
-    Affine = OriginalSeg.affine
+    Nuclei_OriginalSeg_Data = Nuclei_OriginalSeg.get_data()
+    Thalamus_OriginalSeg_Data = Thalamus_OriginalSeg.get_data()
+    Header = Thalamus_OriginalSeg.header
+    Affine = Thalamus_OriginalSeg.affine
 
-    sz = OriginalSeg_Data.shape
+    sz = Thalamus_OriginalSeg_Data.shape
 
     Prediction3D_Mult_logical = np.zeros(sz)
     Prediction3D_Mult = np.zeros(sz)
@@ -497,7 +498,7 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nucle
         #    print('Error: Could not load Thalamus')
 
     elif MultByThalamusFlag == 2:
-        AA = OriginalSeg_Data[50:198 , 130:278 , SliceNumbers]
+        AA = Thalamus_OriginalSeg_Data[50:198 , 130:278 , SliceNumbers]
         L = len(SliceNumbers)
         for sliceInd in range(L):
             PredictionFull_Thalamus[sliceInd,:,:,1] = AA[:,:,sliceInd]
@@ -620,6 +621,12 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nucle
             np.savetxt(Directory_Test_Results_Thalamus + 'DiceCoefficient.txt',DiceCoefficient_Mult)
             np.savetxt(Directory_Test_Results_Thalamus + 'LogLoss.txt',LogLoss_Mult)
 
+
+    DiceCoefficient[len(SliceIdx)] = DiceCoefficientCalculator(Prediction3D_PureNuclei_logical,Nuclei_OriginalSeg_Data)  # 20 is for zero padding done for input
+    np.savetxt(Directory_Test_Results_Nuclei + 'DiceCoefficient.txt',DiceCoefficient)
+    if MultByThalamusFlag != 0:
+        DiceCoefficient[len(SliceIdx)] = DiceCoefficientCalculator(Prediction3D_Mult_logical,Nuclei_OriginalSeg_Data)  # 20 is for zero padding done for input
+        np.savetxt(Directory_Test_Results_Thalamus + 'DiceCoefficient.txt',DiceCoefficient)
 
     Prediction3D_nifti = nib.Nifti1Image(Prediction3D_PureNuclei,Affine)
     Prediction3D_nifti.get_header = Header

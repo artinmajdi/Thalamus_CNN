@@ -28,16 +28,16 @@ ManualDir = '/Manual_Delineation_Sanitized/' #ManualDelineation
 A = [[0,0]] # ,[4,3],[6,1],[1,2],[1,3],[4,1]]
 SliceNumbers = range(107,140)
 
-# Directory_main = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' #
-Directory_main = '/media/artin-laptop/D0E2340CE233F5761/Thalamus_Segmentation/Data/'
+Directory_main = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' #
+# Directory_main = '/media/artin-laptop/D0E2340CE233F5761/Thalamus_Segmentation/Data/'
+
 Directory_Nuclei_Full = Directory_main + NeucleusFolder
 Directory_Thalamus_Full = Directory_main + 'CNN1_THALAMUS_2D_SanitizedNN'
 
-priorDir = Directory_main + 'Manual_Delineation_Sanitized_Full/'
-# priorDir =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
+# priorDir = Directory_main + 'Manual_Delineation_Sanitized_Full/'
+priorDir =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
 
 # subFolders = list(['vimp2_915_07112013_LC', 'vimp2_943_07242013_PA' ,'vimp2_964_08092013_TG'])
-
 
 
 def DiceCoefficientCalculator(msk1,msk2):
@@ -112,7 +112,7 @@ def calculate(process_name, tasks, results):
 
     return
 
-def main_Part(SbFlds, TestName, output):
+def main_Part(SbFlds, TestName):
 
     Directory_Nuclei_Label = priorDir +  SbFlds + ManualDir + NucleusName + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
     Directory_Thalamus_Label = priorDir +  SbFlds + ManualDir +'1-THALAMUS' + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
@@ -184,18 +184,29 @@ for ii in range(len(A)):
 
     subFolders = os.listdir(Directory_Nuclei)
 
-    for SbFlds in subFolders:
-        processes = [mp.Process(target=main_Part, args=(SbFlds,TestName))]
 
-    print(processes)
+    tt = int(len(subFolders)/2)
+    for sFi in range(tt)
+        ## for python2
+        # for SbFlds in subFolders:
+        #     processes = [mp.Process(target=main_Part, args=(SbFlds,TestName))]
 
-    for p in processes:
-        p.start()
+        ## for python3
+        processes = [mp.Process(target=main_Part, args=(SbFlds,TestName)) for SbFlds in subFolders[2*tt:2*(tt+1)]]
 
-    for p in processes:
-        p.join()
+        print(processes)
 
-    # results = [output.get() for p in processes]
+        for p in processes:
+            p.start()
 
-    # for sFi in range(len(subFolders)):
-    #     main_Part(subFolders[sFi],TestName)
+        for p in processes:
+            p.join()
+
+        # results = [output.get() for p in processes]
+
+        # for sFi in range(len(subFolders)):
+        #     main_Part(subFolders[sFi],TestName)
+
+    EvenOdd_Flg = len(subFolders) % 2
+    if EvenOdd_Flg == 1:
+        main_Part(subFolders[len(subFolders)-1],TestName)

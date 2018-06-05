@@ -158,7 +158,7 @@ for ii in range(len(A)): # len(A)):
             print('*---  Not Done:   ' + Directory_Nuclei_Train_Model + '  ---*')
             TrainData = image_util.ImageDataProvider(Directory_Nuclei_Train + "*.tif")
 
-            TestData = image_util.ImageDataProvider(  Directory_Nuclei_Test + '*.tif',shuffle_data=False)
+            # TestData = image_util.ImageDataProvider(  Directory_Nuclei_Test + '*.tif',shuffle_data=False)
             # data , label = TrainData(len(TrainData.data_files))
             logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
             # config = tf.ConfigProto()

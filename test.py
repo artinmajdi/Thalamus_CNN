@@ -50,3 +50,4 @@ print(SliceIdx)
 
 SliceIdxArg = np.argsort(SliceIdx)
 Data , Label = TestData(L)
+print(SliceIdx)

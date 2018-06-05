@@ -8,7 +8,7 @@ from skimage import filters
 eps = np.finfo(float).eps
 
 def DiceCoefficientCalculator(msk1,msk2):
-    intersection = np.logical_and(msk1,msk2)
+    intersection = msk1*msk2  # np.logical_and(msk1,msk2)
     DiceCoef = intersection.sum()*2/(msk1.sum()+msk2.sum() + np.finfo(float).eps)
     return DiceCoef
 
@@ -63,11 +63,11 @@ def TestData(net , Directory_Nuclei_Test , Directory_Nuclei_Train , OriginalSeg 
     data[0,:,:,:]  = Data[sliceNum,:,:,:].copy()
     label[0,:,:,:] = Label[sliceNum,:,:,:].copy()
 
-    if shiftFlag == 1:
-        shiftX = 0
-        shiftY = 0
-        data = np.roll(data,[0,shiftX,shiftY,0])
-        label = np.roll(label,[0,shiftX,shiftY,0])
+    # if shiftFlag == 1:
+    #     shiftX = 0
+    #     shiftY = 0
+    #     data = np.roll(data,[0,shiftX,shiftY,0])
+    #     label = np.roll(label,[0,shiftX,shiftY,0])
 
     if gpuNum != 'nan':
         prediction = net.predict( Directory_Nuclei_Train_Model_cpkt, data, GPU_Num=gpuNum)
@@ -139,7 +139,7 @@ def ThalamusExtraction(net , Directory_Nuclei_Test , Directory_Nuclei_Train , su
         d = Stng.find('Slice')
         SliceIdx[sliceNum] = int(Stng[d+5:].split('.')[0])
 
-    SliceIdxArg = np.argsort(SliceIdx)
+    # SliceIdxArg = np.argsort(SliceIdx)
     Data , Label = TestData(len(SliceIdx))
 
 
@@ -151,10 +151,10 @@ def ThalamusExtraction(net , Directory_Nuclei_Test , Directory_Nuclei_Train , su
 
     shiftFlag = 0
     PredictionFull_Thalamus = np.zeros((szD[0],148,148,2))
-    for sliceNum in SliceIdxArg:
+    for slInd in range(len(SliceIdx)):
 
-        data[0,:,:,:]  = Data[sliceNum,:,:,:].copy()
-        label[0,:,:,:] = Label[sliceNum,:,:,:].copy()
+        data[0,:,:,:]  = Data[slInd,:,:,:].copy()
+        label[0,:,:,:] = Label[slInd,:,:,:].copy()
 
         if shiftFlag == 1:
             shiftX = 0
@@ -167,7 +167,7 @@ def ThalamusExtraction(net , Directory_Nuclei_Test , Directory_Nuclei_Train , su
         else:
             prediction = net.predict( Directory_Nuclei_Train_Model_cpkt, data)
 
-        PredictionFull_Thalamus[sliceNum,:,:,:] = prediction
+        PredictionFull_Thalamus[SliceIdx[slInd],:,:,:] = prediction
 
     return PredictionFull_Thalamus
 
@@ -205,7 +205,7 @@ def TestData2_MultThalamus(net , Directory_Nuclei_Test , Directory_Nuclei_Train 
         d = Stng.find('Slice')
         SliceIdx[sliceNum] = int(Stng[d+5:].split('.')[0])
 
-    SliceIdxArg = np.argsort(SliceIdx)
+    # SliceIdxArg = np.argsort(SliceIdx)
     Data , Label = TestData(len(SliceIdx))
 
 
@@ -218,16 +218,16 @@ def TestData2_MultThalamus(net , Directory_Nuclei_Test , Directory_Nuclei_Train 
     shiftFlag = 0
 
     PredictionFull_Thalamus = ThalamusExtraction(net , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , subFolders, CropDim , padSize)
-    for sliceNum in SliceIdxArg:
+    for slInd in range(len(SliceIdx)):
 
-        data[0,:,:,:]  = Data[sliceNum,:,:,:].copy()
-        label[0,:,:,:] = Label[sliceNum,:,:,:].copy()
+        data[0,:,:,:]  = Data[slInd,:,:,:].copy()
+        label[0,:,:,:] = Label[slInd,:,:,:].copy()
 
-        if shiftFlag == 1:
-            shiftX = 0
-            shiftY = 0
-            data = np.roll(data,[0,shiftX,shiftY,0])
-            label = np.roll(label,[0,shiftX,shiftY,0])
+        # if shiftFlag == 1:
+        #     shiftX = 0
+        #     shiftY = 0
+        #     data = np.roll(data,[0,shiftX,shiftY,0])
+        #     label = np.roll(label,[0,shiftX,shiftY,0])
 
 
         if gpuNum != 'nan':
@@ -236,14 +236,14 @@ def TestData2_MultThalamus(net , Directory_Nuclei_Test , Directory_Nuclei_Train 
             prediction2 = net.predict( Directory_Nuclei_Train_Model_cpkt, data)
 
         prediction = np.zeros(prediction2.shape)
-        prediction[0,:,:,:] = np.multiply(prediction2[0,:,:,:],PredictionFull_Thalamus[sliceNum,:,:,:])
+        prediction[0,:,:,:] = np.multiply(prediction2[0,:,:,:],PredictionFull_Thalamus[int(SliceIdx[slInd]),:,:,:])
 
         # PredictedSeg = prediction[0,...,1] > 0.2
         Thresh = max(filters.threshold_otsu(prediction[0,...,1]),0.2)
         PredictedSeg = prediction[0,...,1] > Thresh
 
-        Prediction3D_Mult[CropDim[0,0]:CropDim[0,1],CropDim[1,0]:CropDim[1,1],CropDim[2,0] + int(SliceIdx[sliceNum])] = prediction[0,...,1]
-        Prediction3D_Mult_logical[CropDim[0,0]:CropDim[0,1],CropDim[1,0]:CropDim[1,1],CropDim[2,0] + int(SliceIdx[sliceNum])] = PredictedSeg
+        Prediction3D_Mult[CropDim[0,0]:CropDim[0,1],CropDim[1,0]:CropDim[1,1],CropDim[2,0] + int(SliceIdx[slInd])] = prediction[0,...,1]
+        Prediction3D_Mult_logical[CropDim[0,0]:CropDim[0,1],CropDim[1,0]:CropDim[1,1],CropDim[2,0] + int(SliceIdx[slInd])] = PredictedSeg
 
         # unet.error_rate(prediction, util.crop_to_shape(label, prediction.shape))
 
@@ -253,12 +253,12 @@ def TestData2_MultThalamus(net , Directory_Nuclei_Test , Directory_Nuclei_Train 
 
         A = int(padSize/2)
         imgCombined = util.combine_img_prediction(data, label, prediction)
-        DiceCoefficient[sliceNum] = DiceCoefficientCalculator(PredictedSeg,label[0,A:sz[1]-A,A:sz[2]-A,1])  # 20 is for zero padding done for input
-        util.save_image(imgCombined, Directory_Nuclei_Test_Results+"prediction_slice"+ str(SliceIdx[sliceNum]) + ".jpg")
+        DiceCoefficient[ int(SliceIdx[slInd]) ] = DiceCoefficientCalculator(PredictedSeg,label[0,A:sz[1]-A,A:sz[2]-A,1])  # 20 is for zero padding done for input
+        util.save_image(imgCombined, Directory_Nuclei_Test_Results+"prediction_slice"+ str(  CropDim[2,0] + int(SliceIdx[slInd])  ) + ".jpg")
 
 
         Loss = unet.error_rate(prediction,label[:,A:sz[1]-A,A:sz[2]-A,:])
-        LogLoss[sliceNum] = np.log10(Loss)
+        LogLoss[ int(SliceIdx[slInd]) ] = np.log10(Loss)
 
     np.savetxt(Directory_Nuclei_Test_Results + 'DiceCoefficient.txt',DiceCoefficient)
     np.savetxt(Directory_Nuclei_Test_Results + 'LogLoss.txt',LogLoss)
@@ -519,7 +519,7 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nucle
         d = Stng.find('_Slice')
         SliceIdx[sliceNum] = int(Stng[d+6:].split('.')[0])
 
-    SliceIdxArg = np.argsort(SliceIdx)
+    # SliceIdxArg = np.argsort(SliceIdx)
     Data , Label = TestData(L)
 
 
@@ -533,10 +533,10 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nucle
 
     # PredictionFull_Thalamus = ThalamusExtraction(net , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , subFolders, CropDim , padSize)
 
-    for sliceNum in SliceIdxArg:
+    for slInd in range(len(SliceIdx)):
 
-        data[0,:,:,:]  = Data[sliceNum,:,:,:].copy()
-        label[0,:,:,:] = Label[sliceNum,:,:,:].copy()
+        data[0,:,:,:]  = Data[slInd,:,:,:].copy()
+        label[0,:,:,:] = Label[slInd,:,:,:].copy()
 
         if shiftFlag == 1:
             shiftX = 0
@@ -552,8 +552,9 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nucle
         if MultByThalamusFlag != 0:
 
             prediction_Mult = np.zeros(prediction2.shape)
-            # prediction_Mult[0,:,:,:] = np.multiply(prediction2[0,:,:,:],PredictionFull_Thalamus[ SliceNumbers[sliceNum] ,:,:,:])
-            prediction_Mult[0,:,:,:] = np.multiply(prediction2[0,:,:,:],PredictionFull_Thalamus[sliceNum,:,:,:])
+            # prediction_Mult[0,:,:,:] = np.multiply(prediction2[0,:,:,:],PredictionFull_Thalamus[ SliceNumbers[slInd] ,:,:,:])
+
+            prediction_Mult[0,:,:,:] = np.multiply(prediction2[0,:,:,:],PredictionFull_Thalamus[int(SliceIdx[slInd]),:,:,:])
 
             # PredictedSeg = prediction_Mult[0,...,1] > 0.1
             try:
@@ -571,11 +572,11 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nucle
         PredictedSeg = prediction2[0,...,1] > Thresh
 
         if MultByThalamusFlag != 0:
-            Prediction3D_Mult[ CropDim[0,0]:CropDim[0,1],CropDim[1,0]:CropDim[1,1],int(SliceNumbers[sliceNum]) ] = prediction_Mult[0,...,1]
-            Prediction3D_Mult_logical[CropDim[0,0]:CropDim[0,1],CropDim[1,0]:CropDim[1,1],int(SliceNumbers[sliceNum]) ] = PredictedSeg_Mult
+            Prediction3D_Mult[ CropDim[0,0]:CropDim[0,1],CropDim[1,0]:CropDim[1,1],CropDim[2,0] + int(SliceIdx[slInd]) ] = prediction_Mult[0,...,1]
+            Prediction3D_Mult_logical[CropDim[0,0]:CropDim[0,1],CropDim[1,0]:CropDim[1,1], CropDim[2,0] + int(SliceIdx[slInd]) ] = PredictedSeg_Mult
 
-        Prediction3D_PureNuclei[ CropDim[0,0]:CropDim[0,1],CropDim[1,0]:CropDim[1,1],int(SliceNumbers[sliceNum]) ] = prediction2[0,...,1]
-        Prediction3D_PureNuclei_logical[ CropDim[0,0]:CropDim[0,1],CropDim[1,0]:CropDim[1,1],int(SliceNumbers[sliceNum]) ] = PredictedSeg
+        Prediction3D_PureNuclei[ CropDim[0,0]:CropDim[0,1],CropDim[1,0]:CropDim[1,1], CropDim[2,0] + int(SliceIdx[slInd]) ] = prediction2[0,...,1]
+        Prediction3D_PureNuclei_logical[ CropDim[0,0]:CropDim[0,1],CropDim[1,0]:CropDim[1,1], CropDim[2,0] + int(SliceIdx[slInd]) ] = PredictedSeg
 
         # prediction = np.zeros(prediction2.shape)
         # # prediction[0,:,:,:] = np.multiply(prediction2[0,:,:,:],PredictionFull_Thalamus[sliceNum,:,:,:])
@@ -593,28 +594,28 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nucle
 
         A = int((padSize/2))
         imgCombined = util.combine_img_prediction(data, label, prediction2)
-        DiceCoefficient[sliceNum] = DiceCoefficientCalculator(PredictedSeg,label[0,A:sz[1]-A,A:sz[2]-A,1])  # 20 is for zero padding done for input
-        util.save_image(imgCombined, Directory_Test_Results_Nuclei+"prediction_slice"+ str(SliceNumbers[sliceNum]) + ".jpg")
+        DiceCoefficient[int(SliceIdx[slInd])] = DiceCoefficientCalculator(PredictedSeg,label[0,A:sz[1]-A,A:sz[2]-A,1])  # 20 is for zero padding done for input
+        util.save_image(imgCombined, Directory_Test_Results_Nuclei+"prediction_slice"+ str( CropDim[2,0] + int(SliceIdx[slInd]) ) + ".jpg")
 
         Loss = unet.error_rate(prediction2,label[:,A:sz[1]-A,A:sz[2]-A,:])
-        LogLoss[sliceNum] = np.log10(Loss)
+        LogLoss[int(SliceIdx[slInd])] = np.log10(Loss)
         np.savetxt(Directory_Test_Results_Nuclei + 'DiceCoefficient.txt',DiceCoefficient)
         np.savetxt(Directory_Test_Results_Nuclei + 'LogLoss.txt',LogLoss)
 
 
         if MultByThalamusFlag != 0:
             AA  = prediction_Mult*0
-            AA[0,:,:,:] = PredictionFull_Thalamus[sliceNum,:,:,:]
+            AA[0,:,:,:] = PredictionFull_Thalamus[int(SliceIdx[slInd]),:,:,:]
 
             # A = (padSize/2)
             imgCombined = util.combine_img_prediction(data, label, prediction_Mult)
             imgCombined2 = util.combine_img_prediction(data, label, AA)
-            DiceCoefficient_Mult[sliceNum] = DiceCoefficientCalculator(PredictedSeg_Mult,label[0,A:sz[1]-A,A:sz[2]-A,1])  # 20 is for zero padding done for input
-            util.save_image(imgCombined, Directory_Test_Results_Thalamus +"prediction_slice"+ str(SliceNumbers[sliceNum]) + ".jpg")
-            util.save_image(imgCombined2, Directory_Test_Results_Thalamus+"prediction_slice"+ str(SliceNumbers[sliceNum]) + "2.jpg")
+            DiceCoefficient_Mult[int(SliceIdx[slInd])] = DiceCoefficientCalculator(PredictedSeg_Mult,label[0,A:sz[1]-A,A:sz[2]-A,1])  # 20 is for zero padding done for input
+            util.save_image(imgCombined, Directory_Test_Results_Thalamus +"prediction_slice"+ str(  CropDim[2,0] + int(SliceIdx[slInd]) ) + ".jpg")
+            util.save_image(imgCombined2, Directory_Test_Results_Thalamus+"prediction_slice"+ str(  CropDim[2,0] + int(SliceIdx[slInd]) ) + "2.jpg")
 
             Loss = unet.error_rate(prediction_Mult,label[:,A:sz[1]-A,A:sz[2]-A,:])
-            LogLoss_Mult[sliceNum] = np.log10(Loss)
+            LogLoss_Mult[int(SliceIdx[slInd])] = np.log10(Loss)
 
             np.savetxt(Directory_Test_Results_Thalamus + 'DiceCoefficient.txt',DiceCoefficient_Mult)
             np.savetxt(Directory_Test_Results_Thalamus + 'LogLoss.txt',LogLoss_Mult)

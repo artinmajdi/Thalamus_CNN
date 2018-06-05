@@ -156,7 +156,7 @@ def main_Part(SbFlds, TestName):
 
         trainer = unet.Trainer(net)
         if gpuNum != 'nan':
-            path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=2, epochs=2, display_step=500, GPU_Num=gpuNum) #  , cost="dice_coefficient" restore=True
+            path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=200, epochs=150, display_step=500, GPU_Num=gpuNum) #  , cost="dice_coefficient" restore=True
         else:
             path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=200, epochs=150, display_step=500) #  , cost="dice_coefficient" restore=True
 
@@ -184,15 +184,21 @@ for ii in range(len(A)):
 
     subFolders = os.listdir(Directory_Nuclei)
 
+    divider = 3
+    tt = int(len(subFolders)/divider)
+    Remdr = len(subFolders) % divider
 
-    tt = int(len(subFolders)/2)
-    for sFi in range(tt):
+    for sFi in range(tt+1):
         ## for python2
         # for SbFlds in subFolders:
         #     processes = [mp.Process(target=main_Part, args=(SbFlds,TestName))]
 
         ## for python3
-        processes = [mp.Process(target=main_Part, args=(SbFlds,TestName)) for SbFlds in subFolders[2*sFi:2*(sFi+1)]]
+
+        if sFi < tt:
+            processes = [mp.Process(target=main_Part, args=(SbFlds,TestName)) for SbFlds in subFolders[divider*sFi:divider*(sFi+1)]]
+        elif (Remdr != 0) & (sFi == tt):
+                processes = [mp.Process(target=main_Part, args=(SbFlds,TestName)) for SbFlds in subFolders[divider*(sFi):]]
 
         print(processes)
 
@@ -207,6 +213,6 @@ for ii in range(len(A)):
         # for sFi in range(len(subFolders)):
         #     main_Part(subFolders[sFi],TestName)
 
-    EvenOdd_Flg = len(subFolders) % 2
-    if EvenOdd_Flg == 1:
-        main_Part(subFolders[len(subFolders)-1],TestName)
+
+    if EvenOdd_Flg != 0:
+        main_Part(subFolders[divider*(sFi+1):],TestName)

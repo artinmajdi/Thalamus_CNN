@@ -109,7 +109,7 @@ Directory_Thalamus_Full = Directory_main + 'CNN1_THALAMUS_2D_SanitizedNN'
 priorDir = Directory_main + 'Manual_Delineation_Sanitized_Full/'
 #priorDir =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
 
-# ii = 1
+# subFolders = list(['vimp2_915_07112013_LC', 'vimp2_943_07242013_PA' ,'vimp2_964_08092013_TG'])
 for ii in range(len(A)): # len(A)):
 
     if ii == 0:

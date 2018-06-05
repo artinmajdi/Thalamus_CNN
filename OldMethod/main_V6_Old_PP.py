@@ -171,31 +171,31 @@ def main_Part(SbFlds, TestName, output):
 
     # output.put(SbFlds)
 
-# for ii in range(len(A)):
-ii = 0
+for ii in range(len(A)):
+    # ii = 0
 
-if ii == 0:
-    TestName = 'Test_WMnMPRAGE_bias_corr_Deformed' # _Deformed_Cropped
-else:
-    TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
+    if ii == 0:
+        TestName = 'Test_WMnMPRAGE_bias_corr_Deformed' # _Deformed_Cropped
+    else:
+        TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
 
-Directory_Nuclei = Directory_Nuclei_Full + '/' + TestName + '/'
-Directory_Thalamus = Directory_Thalamus_Full + '/' + TestName + '/'
+    Directory_Nuclei = Directory_Nuclei_Full + '/' + TestName + '/'
+    Directory_Thalamus = Directory_Thalamus_Full + '/' + TestName + '/'
 
-subFolders = os.listdir(Directory_Nuclei)
+    subFolders = os.listdir(Directory_Nuclei)
 
-for SbFlds in subFolders:
-    processes = [mp.Process(target=main_Part, args=(SbFlds,TestName))]
+    for SbFlds in subFolders:
+        processes = [mp.Process(target=main_Part, args=(SbFlds,TestName))]
 
-print(processes)
+    print(processes)
 
-for p in processes:
-    p.start()
+    for p in processes:
+        p.start()
 
-for p in processes:
-    p.join()
+    for p in processes:
+        p.join()
 
-# results = [output.get() for p in processes]
+    # results = [output.get() for p in processes]
 
-# for sFi in range(len(subFolders)):
-#     main_Part(subFolders[sFi],TestName)
+    # for sFi in range(len(subFolders)):
+    #     main_Part(subFolders[sFi],TestName)

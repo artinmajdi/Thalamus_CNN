@@ -28,9 +28,9 @@ def TestData(net , Directory_Nuclei_Test , Directory_Nuclei_Train , OriginalSeg 
     Header = OriginalSeg.header
     Affine = OriginalSeg.affine
 
-
-    Prediction3D_Mult_logical = np.zeros(OriginalSeg_Data.shape)
-    Prediction3D_Mult = np.zeros(OriginalSeg_Data.shape)
+    sz = OriginalSeg_Data.shape
+    Prediction3D_Mult_logical = np.zeros(sz)
+    Prediction3D_Mult = np.zeros(sz)
 
     trainer = unet.Trainer(net)
 
@@ -187,9 +187,9 @@ def TestData2_MultThalamus(net , Directory_Nuclei_Test , Directory_Nuclei_Train 
     Header = OriginalSeg.header
     Affine = OriginalSeg.affine
 
-
-    Prediction3D_Mult_logical = np.zeros(OriginalSeg_Data.shape)
-    Prediction3D_Mult = np.zeros(OriginalSeg_Data.shape)
+    sz = OriginalSeg_Data.shape
+    Prediction3D_Mult_logical = np.zeros(sz)
+    Prediction3D_Mult = np.zeros(sz)
 
     trainer = unet.Trainer(net)
 
@@ -274,7 +274,7 @@ def TestData2_MultThalamus(net , Directory_Nuclei_Test , Directory_Nuclei_Train 
     nib.save(Prediction3D_logical_nifti,Directory_Nuclei_Test_Results + subFolders + '_' + NucleusName + '_Logical.nii.gz')
 
 
-    return data,label,prediction,OriginalSeg
+    return data,label, prediction, OriginalSeg
 
     # f, ax = plt.subplots(1, 3, sharey=True)
     # ax[0].imshow(data[0,20:sz[1]-20,20:sz[2]-20,0], aspect="auto",cmap = 'gray')
@@ -298,11 +298,12 @@ def TestData3_PerSlice(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Direct
     Header = OriginalSeg.header
     Affine = OriginalSeg.affine
 
-    Prediction3D_Mult_logical = np.zeros(OriginalSeg_Data.shape)
-    Prediction3D_Mult = np.zeros(OriginalSeg_Data.shape)
-    Prediction3D_PureNuclei = np.zeros(OriginalSeg_Data.shape)
-    Prediction3D_PureNuclei_logical = np.zeros(OriginalSeg_Data.shape)
     sz = OriginalSeg_Data.shape
+    Prediction3D_Mult_logical = np.zeros(sz)
+    Prediction3D_Mult = np.zeros(sz)
+    Prediction3D_PureNuclei = np.zeros(sz)
+    Prediction3D_PureNuclei_logical = np.zeros(sz)
+
     PredictionFull_Thalamus = np.zeros((len(SliceNumbers),148,148,2))
 
     trainer = unet.Trainer(net)
@@ -477,11 +478,12 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nucle
     Header = OriginalSeg.header
     Affine = OriginalSeg.affine
 
-    Prediction3D_Mult_logical = np.zeros(OriginalSeg_Data.shape)
-    Prediction3D_Mult = np.zeros(OriginalSeg_Data.shape)
-    Prediction3D_PureNuclei = np.zeros(OriginalSeg_Data.shape)
-    Prediction3D_PureNuclei_logical = np.zeros(OriginalSeg_Data.shape)
     sz = OriginalSeg_Data.shape
+
+    Prediction3D_Mult_logical = np.zeros(sz)
+    Prediction3D_Mult = np.zeros(sz)
+    Prediction3D_PureNuclei = np.zeros(sz)
+    Prediction3D_PureNuclei_logical = np.zeros(sz)
     PredictionFull_Thalamus = np.zeros((len(SliceNumbers),148,148,2))
 
     trainer = unet.Trainer(net)

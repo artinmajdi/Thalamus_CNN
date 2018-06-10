@@ -63,8 +63,8 @@ for sFi in range(len(subFolders)):
 
         Directory_Nuclei_Test  = Directory_Nuclei + subFolders[sFi] + '/Test/Results/'
         Dirr = Directory_Nuclei_Test + subFolders[sFi] + '_' + NucleusName + '_Logical.nii.gz'
-        Prediction = nib.load(Dirr)
-        Prediction = Prediction.get_data()
+        PredictionF = nib.load(Dirr)
+        Prediction = PredictionF.get_data()
 
 
         # Thresh = max(filters.threshold_otsu(Prediction),0.2)
@@ -75,9 +75,29 @@ for sFi in range(len(subFolders)):
 
     # print(len(A))
     Prediction2 = np.sum(Prediction_full,axis=3)
-    Dice[sFi,len(A)] = DiceCoefficientCalculator(Label > 0.5 ,Prediction2 > 3)
+    predictionMV = Prediction2 > 3
+    Dice[sFi,len(A)] = DiceCoefficientCalculator(Label > 0.5 ,predictionMV)
     np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python.txt',100*Dice, fmt='%2.1f')
 
+
+    Header = PredictionF.header
+    Affine = PredictionF.affine
+
+    Directory_Nuclei_Full2 = Directory_Nuclei_Full + '/MajorityVoting_Results'
+    try:
+        os.stat(Directory_Nuclei_Full2)
+    except:
+        os.makedirs(Directory_Nuclei_Full2)
+
+    Directory_Nuclei_Full3 = Directory_Nuclei_Full2 + '/' + subFolders[sFi]
+    try:
+        os.stat(Directory_Nuclei_Full3)
+    except:
+        os.makedirs(Directory_Nuclei_Full3)
+
+    predictionMV_nifti = nib.Nifti1Image(predictionMV,Affine)
+    Prediction3D_nifti.get_header = Header
+    nib.save(predictionMV_nifti , Directory_Nuclei_Full3 + '/' + subFolders[sFi] + '_' + NucleusName + '.nii.gz')
 
 
 # a = np.random.random((3,4)) > 0.5

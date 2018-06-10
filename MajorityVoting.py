@@ -4,7 +4,7 @@ import nibabel as nib
 import numpy as np
 import matplotlib.pyplot as plt
 from skimage import filters
-
+import pickle
 
 def DiceCoefficientCalculator(msk1,msk2):
     intersection = msk1*msk2  # np.logical_and(msk1,msk2)
@@ -121,7 +121,10 @@ Dice2 = np.zeros((len(subFolders)+1, len(A)+1))
 Dice2[:len(subFolders),:] = Dice
 Dice2[len(subFolders),:] = np.mean(Dice,axis=0)
 np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python.txt',100*Dice2, fmt='%2.1f')
-np.savetxt(Directory_Nuclei_Full + '/subFolders_Python.txt',subFolders)
+# np.savetxt(Directory_Nuclei_Full + '/subFolders_Python.txt',subFolders)
+
+with open(Directory_Nuclei_Full + "subFoldersList_Python.txt" ,"wb") as fp:
+    pickle.dump(subFolders,fp)
 
 # a = np.random.random((3,4)) > 0.5
 # b = np.random.random((3,4)) > 0.5

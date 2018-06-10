@@ -71,11 +71,11 @@ for sFi in range(len(subFolders)):
         Dice[sFi,ii] = DiceCoefficientCalculator(Label,Prediction > 0.5)
 
         Label_full[:,:,:,ii] = Label
-        np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python.txt',Dice)
+        np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python.txt',100*Dice, fmt='%1.2e')
 
-    Label2 = np.sum(Label_full,axis=3) > 3
+    Label2 = np.sum(Label_full,axis=3) > 2
     Dice[sFi,ii+1] = DiceCoefficientCalculator(Label2,Prediction > 0.5)
-    np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python.txt',Dice)
+    np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python.txt',100*Dice, fmt='%1.2e')
 
 
 

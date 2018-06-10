@@ -74,7 +74,7 @@ for sFi in range(len(subFolders)):
 
 Label2 = np.sum(Label_full,axis=3) > 3
 Dice[sFi,ii+1] = DiceCoefficientCalculator(Label2,Prediction > 0.5)
-print(Dice)
+np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient.txt',Dice)
 
 
 

@@ -68,7 +68,7 @@ for sFi in range(17,len(subFolders)):
             PredictionF = nib.load(Dirr)
             Prediction = PredictionF.get_data()
 
-
+            # print('k')
             # Thresh = max(filters.threshold_otsu(Prediction),0.2)
             Dice[sFi,ii] = DiceCoefficientCalculator(Label > 0.5 ,Prediction > 0.5)
 

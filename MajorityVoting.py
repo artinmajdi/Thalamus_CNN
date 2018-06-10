@@ -75,7 +75,9 @@ for sFi in range(len(subFolders)):
 
     # print(len(A))
     Prediction2 = np.sum(Prediction_full,axis=3)
-    predictionMV = Prediction2 > 3
+    predictionMV = np.zeros(Prediction2.shape)
+    predictionMV[:,:,:] = Prediction2 > 3
+
     Dice[sFi,len(A)] = DiceCoefficientCalculator(Label > 0.5 ,predictionMV)
     np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python.txt',100*Dice, fmt='%2.1f')
 
@@ -95,9 +97,13 @@ for sFi in range(len(subFolders)):
     except:
         os.makedirs(Directory_Nuclei_Full3)
 
+    print(type(predictionMV))
+    print(Affine)
     predictionMV_nifti = nib.Nifti1Image(predictionMV,Affine)
     predictionMV_nifti.get_header = Header
-    nib.save(predictionMV_nifti , Directory_Nuclei_Full3 + '/' + subFolders[sFi] + '_' + NucleusName + '.nii.gz')
+    AA =  Directory_Nuclei_Full3 + '/' + subFolders[sFi] + '_' + NucleusName + '.nii.gz'
+    print(AA)
+    nib.save(predictionMV_nifti ,AA)
 
 
 # a = np.random.random((3,4)) > 0.5

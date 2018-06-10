@@ -41,7 +41,7 @@ Label = Label.get_data()
 sz = Label.shape
 
 
-for sFi in range(17,len(subFolders)):
+for sFi in range(len(subFolders)):
     print(str(sFi) + ': ' + str(subFolders[sFi]))
     # sFi = 1
     Directory_Nuclei_Label = priorDir +  subFolders[sFi] + ManualDir + NucleusName + '_deformed.nii.gz'

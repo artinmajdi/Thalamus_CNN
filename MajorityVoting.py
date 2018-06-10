@@ -41,7 +41,6 @@ Label = Label.get_data()
 sz = Label.shape
 
 
-
 for sFi in range(len(subFolders)):
     print(str(sFi) + ': ' + str(subFolders[sFi]))
     # sFi = 1
@@ -97,14 +96,15 @@ for sFi in range(len(subFolders)):
     except:
         os.makedirs(Directory_Nuclei_Full3)
 
-    print(type(predictionMV))
-    print(Affine)
+    #print(type(predictionMV))
+    #print(Affine)
     predictionMV_nifti = nib.Nifti1Image(predictionMV,Affine)
     predictionMV_nifti.get_header = Header
     AA =  Directory_Nuclei_Full3 + '/' + subFolders[sFi] + '_' + NucleusName + '.nii.gz'
-    print(AA)
+    #print(AA)
     nib.save(predictionMV_nifti ,AA)
 
+np.savetxt(Directory_Nuclei_Full3 + '/subFolders_Python.txt',subFolders)
 
 # a = np.random.random((3,4)) > 0.5
 # b = np.random.random((3,4)) > 0.5

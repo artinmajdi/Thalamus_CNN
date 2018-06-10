@@ -41,7 +41,7 @@ Label = Label.get_data()
 sz = Label.shape
 
 
-Label_full = np.zeros((sz[0],sz[1],sz[2],len(A)))
+
 for sFi in range(len(subFolders)):
     print(str(sFi) + ': ' + str(subFolders[sFi]))
     # sFi = 1
@@ -49,6 +49,7 @@ for sFi in range(len(subFolders)):
     Label = nib.load(Directory_Nuclei_Label)
     Label = Label.get_data()
 
+    Label_full = np.zeros((sz[0],sz[1],sz[2],len(A)))
     for ii in range(len(A)):
         # ii = 1
         if ii == 0:
@@ -72,10 +73,9 @@ for sFi in range(len(subFolders)):
         Label_full[:,:,:,ii] = Label
         np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient.txt',Dice)
 
-
-Label2 = np.sum(Label_full,axis=3) > 3
-Dice[sFi,ii+1] = DiceCoefficientCalculator(Label2,Prediction > 0.5)
-np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient.txt',Dice)
+    Label2 = np.sum(Label_full,axis=3) > 3
+    Dice[sFi,ii+1] = DiceCoefficientCalculator(Label2,Prediction > 0.5)
+    np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient.txt',Dice)
 
 
 

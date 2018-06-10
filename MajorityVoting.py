@@ -70,18 +70,27 @@ for sFi in range(len(subFolders)):
         # Thresh = max(filters.threshold_otsu(Prediction),0.2)
         Dice[sFi,ii] = DiceCoefficientCalculator(Label,Prediction > 0.5)
 
-        Label_full[:,:,:,ii] = Label
+        Label_full[:,:,:,ii] = Label > 0.5
         print(ii)
         np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python.txt',100*Dice, fmt='%2.1f')
 
     Label2 = np.sum(Label_full,axis=3)
-    Dice[sFi,ii+1] = DiceCoefficientCalculator(Label2 > 2,Prediction > 0.5)
+    Dice[sFi,len(A)] = DiceCoefficientCalculator(Label2 > 2,Prediction > 0.5)
     np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python.txt',100*Dice, fmt='%2.1f')
 
-
-
-
-
+#
+#
+# a = np.random.random((3,4)) > 0.5
+# b = np.random.random((3,4)) > 0.5
+#
+# sz = a.shape
+# c = np.zeros((sz[0],sz[1],2))
+# c[:,:,0] = a
+# c[:,:,1] = b
+# print(a)
+# print(b)
+# print(np.sum(c,axis=2))
+#
 
 
 

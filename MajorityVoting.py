@@ -33,6 +33,13 @@ TestName = 'Test_WMnMPRAGE_bias_corr_Deformed' # _Deformed_Cropped
 Directory_Nuclei = Directory_Nuclei_Full + '/' + TestName + '/'
 subFolders = os.listdir(Directory_Nuclei)
 
+listt = []
+for i in range(len(subFolders)):
+    if subFolders[i][:4] == 'vimp':
+        listt.append(subFolders[i])
+
+subFolders = listt
+
 Dice = np.zeros((len(subFolders), len(A)+1))
 
 Directory_Nuclei_Label = priorDir +  subFolders[0] + ManualDir + NucleusName + '_deformed.nii.gz'

@@ -41,7 +41,7 @@ Label = Label.get_data()
 sz = Label.shape
 
 
-for sFi in range(len(subFolders)):
+for sFi in range(17,len(subFolders)):
     print(str(sFi) + ': ' + str(subFolders[sFi]))
     # sFi = 1
     Directory_Nuclei_Label = priorDir +  subFolders[sFi] + ManualDir + NucleusName + '_deformed.nii.gz'
@@ -49,6 +49,7 @@ for sFi in range(len(subFolders)):
     Label = Label.get_data()
 
     Prediction_full = np.zeros((sz[0],sz[1],sz[2],len(A)))
+    Er = 0
     for ii in range(len(A)):
         # ii = 1
         if ii == 0:
@@ -62,20 +63,24 @@ for sFi in range(len(subFolders)):
 
         Directory_Nuclei_Test  = Directory_Nuclei + subFolders[sFi] + '/Test/Results/'
         Dirr = Directory_Nuclei_Test + subFolders[sFi] + '_' + NucleusName + '_Logical.nii.gz'
-        PredictionF = nib.load(Dirr)
-        Prediction = PredictionF.get_data()
+
+        try:
+            PredictionF = nib.load(Dirr)
+            Prediction = PredictionF.get_data()
 
 
-        # Thresh = max(filters.threshold_otsu(Prediction),0.2)
-        Dice[sFi,ii] = DiceCoefficientCalculator(Label > 0.5 ,Prediction > 0.5)
+            # Thresh = max(filters.threshold_otsu(Prediction),0.2)
+            Dice[sFi,ii] = DiceCoefficientCalculator(Label > 0.5 ,Prediction > 0.5)
 
-        Prediction_full[:,:,:,ii] = Prediction > 0.5
-        np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python.txt',100*Dice, fmt='%2.1f')
+            Prediction_full[:,:,:,ii] = Prediction > 0.5
+            np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python.txt',100*Dice, fmt='%2.1f')
+        except:
+            Er = Er + 1
 
     # print(len(A))
     Prediction2 = np.sum(Prediction_full,axis=3)
     predictionMV = np.zeros(Prediction2.shape)
-    predictionMV[:,:,:] = Prediction2 > 3
+    predictionMV[:,:,:] = Prediction2 > 3-Er
 
     Dice[sFi,len(A)] = DiceCoefficientCalculator(Label > 0.5 ,predictionMV)
     np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python.txt',100*Dice, fmt='%2.1f')

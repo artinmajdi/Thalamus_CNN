@@ -96,7 +96,7 @@ for sFi in range(len(subFolders)):
         os.makedirs(Directory_Nuclei_Full3)
 
     predictionMV_nifti = nib.Nifti1Image(predictionMV,Affine)
-    Prediction3D_nifti.get_header = Header
+    predictionMV_nifti.get_header = Header
     nib.save(predictionMV_nifti , Directory_Nuclei_Full3 + '/' + subFolders[sFi] + '_' + NucleusName + '.nii.gz')
 
 

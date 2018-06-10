@@ -118,8 +118,8 @@ for sFi in range(len(subFolders)):
 
 
 Dice2 = np.zeros((len(subFolders)+1, len(A)+1))
-Dice2[:len(subFolders)+1,:] = Dice
-Dice2[len(subFolders)+1,:] = np.mean(Dice,axis=0)
+Dice2[:len(subFolders),:] = Dice
+Dice2[len(subFolders),:] = np.mean(Dice,axis=0)
 np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python.txt',100*Dice2, fmt='%2.1f')
 np.savetxt(Directory_Nuclei_Full + '/subFolders_Python.txt',subFolders)
 

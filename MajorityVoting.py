@@ -150,4 +150,4 @@ with open(Directory_Nuclei_Full + "/subFoldersList_Python.txt" ,"wb") as fp:
 
 
 
-print('llllllllllll')
+# print('llllllllllll')

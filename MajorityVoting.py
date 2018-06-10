@@ -49,7 +49,7 @@ for sFi in range(len(subFolders)):
     Label = nib.load(Directory_Nuclei_Label)
     Label = Label.get_data()
 
-    Label_full = np.zeros((sz[0],sz[1],sz[2],len(A)))
+    Prediction_full = np.zeros((sz[0],sz[1],sz[2],len(A)))
     for ii in range(len(A)):
         # ii = 1
         if ii == 0:
@@ -68,17 +68,14 @@ for sFi in range(len(subFolders)):
 
 
         # Thresh = max(filters.threshold_otsu(Prediction),0.2)
-        # Dice[sFi,ii] = DiceCoefficientCalculator(Label,Prediction > 0.5)
+        Dice[sFi,ii] = DiceCoefficientCalculator(Label > 0.5 ,Prediction > 0.5)
 
-        Label_full[:,:,:,ii] = Label > 0.5
-
-        Dice[sFi,ii] = DiceCoefficientCalculator(Label_full[:,:,:,ii] > 0.5,Prediction > 0.5)
-        #
+        Prediction_full[:,:,:,ii] = Prediction > 0.5
         np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python.txt',100*Dice, fmt='%2.1f')
 
     print(len(A))
-    Label2 = np.sum(Label_full,axis=3)
-    Dice[sFi,len(A)] = DiceCoefficientCalculator(Label2 > 0,Prediction > 0.5)
+    Prediction2 = np.sum(Prediction_full,axis=3)
+    Dice[sFi,len(A)] = DiceCoefficientCalculator(Label > 0.5 ,Prediction2 > 0.5)
     np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python.txt',100*Dice, fmt='%2.1f')
 
 
@@ -92,8 +89,8 @@ for sFi in range(len(subFolders)):
 # c[:,:,1] = b
 # print(a)
 # print(b)
-# print(np.sum(c,axis=2))
-#
+# print(np.sum(c,axis=2)>1)
+
 
 
 

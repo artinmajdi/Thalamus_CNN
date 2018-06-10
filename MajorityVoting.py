@@ -116,7 +116,12 @@ for sFi in range(len(subFolders)):
     #print(AA)
     nib.save(predictionMV_nifti ,AA)
 
-np.savetxt(Directory_Nuclei_Full3 + '/subFolders_Python.txt',subFolders)
+
+Dice2 = np.zeros((len(subFolders)+1, len(A)+1))
+Dice2[:len(subFolders)+1,:] = Dice
+Dice2[len(subFolders)+1,:] = np.mean(Dice,axis=0)
+np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python.txt',100*Dice2, fmt='%2.1f')
+np.savetxt(Directory_Nuclei_Full + '/subFolders_Python.txt',subFolders)
 
 # a = np.random.random((3,4)) > 0.5
 # b = np.random.random((3,4)) > 0.5

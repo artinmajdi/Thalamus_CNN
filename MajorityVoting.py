@@ -43,7 +43,7 @@ sz = Label.shape
 
 Label_full = np.zeros((sz[0],sz[1],sz[2],len(A)))
 for sFi in range(len(subFolders)):
-    print(subFolders[sFi])
+    print(str(sFi) + ': ' + str(subFolders[sFi]))
     # sFi = 1
     Directory_Nuclei_Label = priorDir +  subFolders[sFi] + ManualDir + NucleusName + '_deformed.nii.gz'
     Label = nib.load(Directory_Nuclei_Label)

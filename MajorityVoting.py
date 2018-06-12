@@ -71,6 +71,7 @@ for sFi in range(len(subFolders)):
         Directory_Nuclei_Test  = Directory_Nuclei + subFolders[sFi] + '/Test/Results/'
         Dirr = Directory_Nuclei_Test + subFolders[sFi] + '_' + NucleusName + '_Logical.nii.gz'
 
+        print('sFi: ',str(sFi),' Aii: ', str(ii))
         try:
             PredictionF = nib.load(Dirr)
             Prediction = PredictionF.get_data()
@@ -82,6 +83,7 @@ for sFi in range(len(subFolders)):
             Prediction_full[:,:,:,ii] = Prediction > 0.5
             np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python.txt',100*Dice, fmt='%2.1f')
         except:
+            print('Exceptioon   sFi: ',str(sFi),' Aii: ', str(ii))
             Er = Er + 1
 
     # print(len(A))

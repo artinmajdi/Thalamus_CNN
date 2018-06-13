@@ -170,10 +170,10 @@ for ii in range(len(A)):
             net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) #  , cost="dice_coefficient"
 
             trainer = unet.Trainer(net)
-            if gpuNum != 'nan':
-                path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=200, epochs=150, display_step=500, GPU_Num=gpuNum) #  , cost="dice_coefficient" restore=True
-            else:
-                path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=200, epochs=150, display_step=500) #  , cost="dice_coefficient" restore=True
+            # if gpuNum != 'nan':
+            #     path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=200, epochs=150, display_step=500, GPU_Num=gpuNum) #  , cost="dice_coefficient" restore=True
+            # else:
+            #     path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=200, epochs=150, display_step=500) #  , cost="dice_coefficient" restore=True
 
             NucleiOrigSeg = nib.load(Directory_Nuclei_Label)
             ThalamusOrigSeg = nib.load(Directory_Thalamus_Label)

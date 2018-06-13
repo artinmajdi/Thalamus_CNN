@@ -43,8 +43,8 @@ def TestData(net , Directory_Nuclei_Test , Directory_Nuclei_Train , Thalamus_Ori
 
     # for sliceNum in range(L):
     #     Stng = TestData.data_files[sliceNum]
-    #     d = Stng.find('Slice')
-    #     SliceIdx[sliceNum] = int(Stng[d+5:].split('.')[0])
+    #     d = Stng.find('_Slice')
+    #     SliceIdx[sliceNum] = int(Stng[d+6:].split('.')[0])
     #
     # SliceIdxArg = np.argsort(SliceIdx)
     Data , Label = TestData(1)
@@ -136,8 +136,8 @@ def ThalamusExtraction(net , Directory_Nuclei_Test , Directory_Nuclei_Train , su
 
     for sliceNum in range(L):
         Stng = TestData.data_files[sliceNum]
-        d = Stng.find('Slice')
-        SliceIdx[sliceNum] = int(Stng[d+5:].split('.')[0])
+        d = Stng.find('_Slice')
+        SliceIdx[sliceNum] = int(Stng[d+6:].split('.')[0])
 
     # SliceIdxArg = np.argsort(SliceIdx)
     Data , Label = TestData(len(SliceIdx))
@@ -202,8 +202,8 @@ def TestData2_MultThalamus(net , Directory_Nuclei_Test , Directory_Nuclei_Train 
 
     for sliceNum in range(L):
         Stng = TestData.data_files[sliceNum]
-        d = Stng.find('Slice')
-        SliceIdx[sliceNum] = int(Stng[d+5:].split('.')[0])
+        d = Stng.find('_Slice')
+        SliceIdx[sliceNum] = int(Stng[d+6:].split('.')[0])
 
     # SliceIdxArg = np.argsort(SliceIdx)
     Data , Label = TestData(len(SliceIdx))

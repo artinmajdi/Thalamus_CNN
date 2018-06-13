@@ -167,6 +167,12 @@ def ThalamusExtraction(net , Directory_Nuclei_Test , Directory_Nuclei_Train , su
         else:
             prediction = net.predict( Directory_Nuclei_Train_Model_cpkt, data)
 
+        print(slInd)
+        print(type(slInd))
+        print(SliceIdx[slInd])
+        print(type(SliceIdx))
+        print(prediction.shape())
+        print(type(prediction))
         PredictionFull_Thalamus[SliceIdx[slInd],:,:,:] = prediction
 
     return PredictionFull_Thalamus

@@ -94,8 +94,8 @@ print("start ")
 
 
 gpuNum = '4' # nan'
-NeucleusFolder = 'CNN8_Pul_2D_SanitizedNN'  #  'CNN1_THALAMUS_2D_SanitizedNN' #'  CNN4567_VL_2D_SanitizedNN
-NucleusName = '8-Pul'  # '1-THALAMUS' #'6-VLP' #
+NeucleusFolder = 'CNN12_MD_Pf_2D_SanitizedNN'  #  'CNN1_THALAMUS_2D_SanitizedNN' #'  CNN4567_VL_2D_SanitizedNN
+NucleusName = '12-MD-Pf' # '8-Pul'  # '1-THALAMUS' #'6-VLP' #
 ManualDir = '/Manual_Delineation_Sanitized/' #ManualDelineation
 
 A = [[0,0]] # ,[4,3],[6,1],[1,2],[1,3],[4,1]]
@@ -111,7 +111,7 @@ priorDir = Directory_main + 'Manual_Delineation_Sanitized_Full/'
 
 # subFolders = list(['vimp2_915_07112013_LC', 'vimp2_943_07242013_PA' ,'vimp2_964_08092013_TG'])
 
-for ii in range(len(A)):
+for ii in range(1): # len(A)):
 
     if ii == 0:
         TestName = 'Test_WMnMPRAGE_bias_corr_Deformed' # _Deformed_Cropped
@@ -127,7 +127,7 @@ for ii in range(len(A)):
     # print len(subFolders)
 
 
-    for sFi in range(len(subFolders)):
+    for sFi in range(1): # len(subFolders)):
 
         Directory_Nuclei_Label = priorDir +  subFolders[sFi] + ManualDir + NucleusName + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
         Directory_Thalamus_Label = priorDir +  subFolders[sFi] + ManualDir +'1-THALAMUS' + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped

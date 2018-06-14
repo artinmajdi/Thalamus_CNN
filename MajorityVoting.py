@@ -11,6 +11,8 @@ def DiceCoefficientCalculator(msk1,msk2):
     DiceCoef = intersection.sum()*2/(msk1.sum()+msk2.sum())
     return DiceCoef
 
+Flag_Result = 1
+Flag_Result_Mult = 1
 
 NeucleusFolder = 'CNN8_Pul_2D_SanitizedNN'  #  'CNN1_THALAMUS_2D_SanitizedNN' #'  CNN4567_VL_2D_SanitizedNN
 NucleusName = '8-Pul'  # '1-THALAMUS' #'6-VLP' #
@@ -41,6 +43,8 @@ for i in range(len(subFolders)):
 subFolders = listt
 
 Dice = np.zeros((len(subFolders), len(A)+1))
+Dice_Mult = np.zeros((len(subFolders), len(A)+1))
+
 
 Directory_Nuclei_Label = priorDir +  subFolders[0] + ManualDir + NucleusName + '_deformed.nii.gz'
 Label = nib.load(Directory_Nuclei_Label)
@@ -55,8 +59,15 @@ for sFi in range(len(subFolders)):
     Label = nib.load(Directory_Nuclei_Label)
     Label = Label.get_data()
 
-    Prediction_full = np.zeros((sz[0],sz[1],sz[2],len(A)))
-    Er = 0
+    if Flag_Result == 1:
+        Prediction_full = np.zeros((sz[0],sz[1],sz[2],len(A)))
+        Er  = 0
+
+    if Flag_Result_Mult == 1:
+        Prediction_full_Mult = np.zeros((sz[0],sz[1],sz[2],len(A)))
+        Er2 = 0
+
+    
     for ii in range(len(A)):
         # ii = 1
         if ii == 0:
@@ -69,30 +80,51 @@ for sFi in range(len(subFolders)):
 
 
         Directory_Nuclei_Test  = Directory_Nuclei + subFolders[sFi] + '/Test/Results/'
+        Directory_Nuclei_Test_Mult  = Directory_Nuclei + subFolders[sFi] + '/Test/Results_MultByManualThalamus/'
         Dirr = Directory_Nuclei_Test + subFolders[sFi] + '_' + NucleusName + '_Logical.nii.gz'
+        Dirr_Mult = Directory_Nuclei_Test_Mult + subFolders[sFi] + '_' + NucleusName + '_Logical.nii.gz'
 
         print('sFi: ',str(sFi),' Aii: ', str(ii))
-        try:
-            PredictionF = nib.load(Dirr)
-            Prediction = PredictionF.get_data()
+        if Flag_Result == 1:
+            try:
+                PredictionF = nib.load(Dirr)
+                Prediction = PredictionF.get_data()
+                Dice[sFi,ii] = DiceCoefficientCalculator(Label > 0.5 ,Prediction > 0.5)
+                Prediction_full[:,:,:,ii] = Prediction > 0.5
+                np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python.txt',100*Dice, fmt='%2.1f')
+            except:
+                print('Exceptioon   sFi: ',str(sFi),' Aii: ', str(ii))
+                Er = Er + 1
 
-            # print('k')
-            # Thresh = max(filters.threshold_otsu(Prediction),0.2)
-            Dice[sFi,ii] = DiceCoefficientCalculator(Label > 0.5 ,Prediction > 0.5)
+        if Flag_Result_Mult == 1:
+            try:
+                PredictionF = nib.load(Dirr_Mult)
+                Prediction = PredictionF.get_data()
+                Dice_Mult[sFi,ii] = DiceCoefficientCalculator(Label > 0.5 ,Prediction > 0.5)
+                Prediction_full_Mult[:,:,:,ii] = Prediction > 0.5
+                np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python_Mult.txt',100*Dice_Mult, fmt='%2.1f')
+            except:
+                print('Exceptioon   sFi: ',str(sFi),' Aii: ', str(ii))
+                Er2 = Er2 + 1
 
-            Prediction_full[:,:,:,ii] = Prediction > 0.5
-            np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python.txt',100*Dice, fmt='%2.1f')
-        except:
-            print('Exceptioon   sFi: ',str(sFi),' Aii: ', str(ii))
-            Er = Er + 1
 
-    # print(len(A))
-    Prediction2 = np.sum(Prediction_full,axis=3)
-    predictionMV = np.zeros(Prediction2.shape)
-    predictionMV[:,:,:] = Prediction2 > 3-Er
+    if Flag_Result == 1:
+        Prediction2 = np.sum(Prediction_full,axis=3)
+        predictionMV = np.zeros(Prediction2.shape)
+        predictionMV[:,:,:] = Prediction2 > 3-Er
 
-    Dice[sFi,len(A)] = DiceCoefficientCalculator(Label > 0.5 ,predictionMV)
-    np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python.txt',100*Dice, fmt='%2.1f')
+    if Flag_Result_Mult == 1:
+        Prediction2 = np.sum(Prediction_full_Mult,axis=3)
+        predictionMV_Mult = np.zeros(Prediction2.shape)
+        predictionMV_Mult[:,:,:] = Prediction2 > 3-Er2
+
+    if Flag_Result == 1:
+        Dice[sFi,len(A)] = DiceCoefficientCalculator(Label > 0.5 ,predictionMV)
+        np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python.txt',100*Dice, fmt='%2.1f')
+
+    if Flag_Result_Mult == 1:
+        Dice_Mult[sFi,len(A)] = DiceCoefficientCalculator(Label > 0.5 ,predictionMV_Mult)
+        np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python_Mult.txt',100*Dice_Mult, fmt='%2.1f')
 
 
     Header = PredictionF.header
@@ -110,19 +142,32 @@ for sFi in range(len(subFolders)):
     except:
         os.makedirs(Directory_Nuclei_Full3)
 
-    #print(type(predictionMV))
-    #print(Affine)
-    predictionMV_nifti = nib.Nifti1Image(predictionMV,Affine)
-    predictionMV_nifti.get_header = Header
-    AA =  Directory_Nuclei_Full3 + '/' + subFolders[sFi] + '_' + NucleusName + '.nii.gz'
-    #print(AA)
-    nib.save(predictionMV_nifti ,AA)
+    if Flag_Result == 1:
+        predictionMV_nifti = nib.Nifti1Image(predictionMV,Affine)
+        predictionMV_nifti.get_header = Header
+        AA =  Directory_Nuclei_Full3 + '/' + subFolders[sFi] + '_' + NucleusName + '.nii.gz'
+        nib.save(predictionMV_nifti ,AA)
+
+    if Flag_Result_Mult == 1:
+        predictionMV_nifti = nib.Nifti1Image(predictionMV_Mult,Affine)
+        predictionMV_nifti.get_header = Header
+        AA =  Directory_Nuclei_Full3 + '/' + subFolders[sFi] + '_' + NucleusName + '_Mult.nii.gz'
+        nib.save(predictionMV_nifti ,AA)
 
 
-Dice2 = np.zeros((len(subFolders)+1, len(A)+1))
-Dice2[:len(subFolders),:] = Dice
-Dice2[len(subFolders),:] = np.mean(Dice,axis=0)
-np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python.txt',100*Dice2, fmt='%2.1f')
+if Flag_Result == 1:
+    Dice2 = np.zeros((len(subFolders)+1, len(A)+1))
+    Dice2[:len(subFolders),:] = Dice
+    Dice2[len(subFolders),:] = np.mean(Dice,axis=0)
+    np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python.txt',100*Dice2, fmt='%2.1f')
+
+if Flag_Result_Mult == 1:
+    Dice2_Mult = np.zeros((len(subFolders)+1, len(A)+1))
+    Dice2_Mult[:len(subFolders),:] = Dice_Mult
+    Dice2_Mult[len(subFolders),:] = np.mean(Dice_Mult,axis=0)
+    np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python_Mult.txt',100*Dice2_Mult, fmt='%2.1f')
+
+
 # np.savetxt(Directory_Nuclei_Full + '/subFolders_Python.txt',subFolders)
 
 with open(Directory_Nuclei_Full + "/subFoldersList_Python.txt" ,"wb") as fp:

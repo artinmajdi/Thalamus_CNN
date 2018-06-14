@@ -25,7 +25,7 @@ NeucleusFolder = 'CNN6_VLP_2D_SanitizedNN'  #  'CNN1_THALAMUS_2D_SanitizedNN' #'
 NucleusName = '6-VLP'  # '1-THALAMUS' #'6-VLP' #
 ManualDir = '/Manual_Delineation_Sanitized/' #ManualDelineation
 
-A = [[0,0]] # ,[4,3],[6,1],[1,2],[1,3],[4,1]]
+A = [[0,0],[4,3],[6,1],[1,2],[1,3],[4,1]]
 SliceNumbers = range(107,140)
 
 Directory_main = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' #
@@ -39,26 +39,20 @@ priorDir =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
 
 # subFolders = list(['vimp2_915_07112013_LC', 'vimp2_943_07242013_PA' ,'vimp2_964_08092013_TG'])
 
-
-def DiceCoefficientCalculator(msk1,msk2):
-    intersection = msk1*msk2  # np.logical_and(msk1,msk2)
-    DiceCoef = intersection.sum()*2/(msk1.sum()+msk2.sum())
-    return DiceCoef
-
-def ReadMasks(DirectoryMask,SliceNumbers):
-
-    mask = nib.load(DirectoryMask)
-    maskD = mask.get_data()
-
-    Header = mask.header
-    Affine = mask.affine
-
-    msk = maskD
-
-    msk[maskD<0.5]  = 0
-    msk[msk>=0.5] = 1
-
-    return msk , Header , Affine
+# def ReadMasks(DirectoryMask,SliceNumbers):
+#
+#     mask = nib.load(DirectoryMask)
+#     maskD = mask.get_data()
+#
+#     Header = mask.header
+#     Affine = mask.affine
+#
+#     msk = maskD
+#
+#     msk[maskD<0.5]  = 0
+#     msk[msk>=0.5] = 1
+#
+#     return msk , Header , Affine
 
 def SumMasks(DirectorySubFolders):
 
@@ -86,31 +80,31 @@ def SumMasks(DirectorySubFolders):
     return maskD , Header , Affine
 
 # define worker function
-def calculate(process_name, tasks, results):
-    print('[%s] evaluation routine starts' % process_name)
-
-    while True:
-        new_value = tasks.get()
-        if new_value < 0:
-            print('[%s] evaluation routine quits' % process_name)
-
-            # Indicate finished
-            results.put(-1)
-            break
-        else:
-            # Compute result and mimic a long-running task
-            compute = new_value * new_value
-            sleep(0.02*new_value)
-
-            # Output which process received the value
-            # and the calculation result
-            print('[%s] received value: %i' % (process_name, new_value))
-            print('[%s] calculated value: %i' % (process_name, compute))
-
-            # Add result to the queue
-            results.put(compute)
-
-    return
+# def calculate(process_name, tasks, results):
+#     print('[%s] evaluation routine starts' % process_name)
+#
+#     while True:
+#         new_value = tasks.get()
+#         if new_value < 0:
+#             print('[%s] evaluation routine quits' % process_name)
+#
+#             # Indicate finished
+#             results.put(-1)
+#             break
+#         else:
+#             # Compute result and mimic a long-running task
+#             compute = new_value * new_value
+#             sleep(0.02*new_value)
+#
+#             # Output which process received the value
+#             # and the calculation result
+#             print('[%s] received value: %i' % (process_name, new_value))
+#             print('[%s] calculated value: %i' % (process_name, compute))
+#
+#             # Add result to the queue
+#             results.put(compute)
+#
+#     return
 
 def main_Part(SbFlds, TestName):
 
@@ -166,12 +160,12 @@ def main_Part(SbFlds, TestName):
         CropDimensions = np.array([ [50,198] , [130,278] , [SliceNumbers[0] , SliceNumbers[len(SliceNumbers)-1]] ])
 
         padSize = 90
-        MultByThalamusFlag = 0
+        MultByThalamusFlag = 1
         [Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical] = TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test , Directory_Nuclei_Train , ThalamusOrigSeg , NucleiOrigSeg , SbFlds, CropDimensions , padSize , Directory_Thalamus_Test , Directory_Thalamus_Train_Model , NucleusName , SliceNumbers , gpuNum)
 
     # output.put(SbFlds)
 
-for ii in range(len(A)):
+for ii in range(1): # len(A)):
     # ii = 0
 
     if ii == 0:
@@ -184,11 +178,11 @@ for ii in range(len(A)):
 
     subFolders = os.listdir(Directory_Nuclei)
 
-    divider = 3
+    divider = 2
     tt = int(len(subFolders)/divider)
     Remdr = len(subFolders) % divider
 
-    for sFi in range(tt+1):
+    for sFi in range(1): # tt+1):
         ## for python2
         # for SbFlds in subFolders:
         #     processes = [mp.Process(target=main_Part, args=(SbFlds,TestName))]
@@ -205,8 +199,8 @@ for ii in range(len(A)):
         for p in processes:
             p.start()
 
-        for p in processes:
-            p.join()
+        # for p in processes:
+        #     p.join()
 
         # results = [output.get() for p in processes]
 

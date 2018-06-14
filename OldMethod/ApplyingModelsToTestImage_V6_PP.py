@@ -165,7 +165,7 @@ def main_Part(SbFlds, TestName):
 
     # output.put(SbFlds)
 
-for ii in range(1): # len(A)):
+for ii in range(len(A)):
     # ii = 0
 
     if ii == 0:
@@ -178,11 +178,11 @@ for ii in range(1): # len(A)):
 
     subFolders = os.listdir(Directory_Nuclei)
 
-    divider = 2
+    divider = 4
     tt = int(len(subFolders)/divider)
     Remdr = len(subFolders) % divider
 
-    for sFi in range(1): # tt+1):
+    for sFi in range(tt+1):
         ## for python2
         # for SbFlds in subFolders:
         #     processes = [mp.Process(target=main_Part, args=(SbFlds,TestName))]

@@ -12,82 +12,6 @@ from tf_unet import unet, util, image_util
 import multiprocessing
 import tensorflow as tf
 
-
-def DiceCoefficientCalculator(msk1,msk2):
-    intersection = msk1*msk2  # np.logical_and(msk1,msk2)
-    DiceCoef = intersection.sum()*2/(msk1.sum()+msk2.sum())
-    return DiceCoef
-
-def ReadMasks(DirectoryMask,SliceNumbers):
-
-    mask = nib.load(DirectoryMask)
-    maskD = mask.get_data()
-
-    Header = mask.header
-    Affine = mask.affine
-
-    msk = maskD
-
-    msk[maskD<0.5]  = 0
-    msk[msk>=0.5] = 1
-
-    return msk , Header , Affine
-
-def SumMasks(DirectorySubFolders):
-
-    i = 1
-    Directory_Nuclei_Label = '/6_VLP_NeucleusSegDeformed.nii.gz'
-    msk , Header , Affine = ReadMasks(DirectorySubFolders+Directory_Nuclei_Label)
-    maskD = np.zeros(msk.shape)
-    maskD[msk == 1] = 10*i
-
-    i = i + 1
-    Directory_Nuclei_Label = '/7_VPL_NeucleusSegDeformed.nii.gz'
-    msk , Header , Affine = ReadMasks(DirectorySubFolders+Directory_Nuclei_Label)
-    maskD[msk == 1] = 10*i
-
-    i = i + 1
-    Directory_Nuclei_Label = '/8_Pul_NeucleusSegDeformed.nii.gz'
-    msk , Header , Affine = ReadMasks(DirectorySubFolders+Directory_Nuclei_Label)
-    maskD[msk == 1] = 10*i
-
-    i = i + 1
-    Directory_Nuclei_Label = '/12_MD_Pf_NeucleusSegDeformed.nii.gz'
-    msk , Header , Affine = ReadMasks(DirectorySubFolders+Directory_Nuclei_Label)
-    maskD[msk == 1] = 10*i
-
-    return maskD , Header , Affine
-
-# define worker function
-def calculate(process_name, tasks, results):
-    print('[%s] evaluation routine starts' % process_name)
-
-    while True:
-        new_value = tasks.get()
-        if new_value < 0:
-            print('[%s] evaluation routine quits' % process_name)
-
-            # Indicate finished
-            results.put(-1)
-            break
-        else:
-            # Compute result and mimic a long-running task
-            compute = new_value * new_value
-            sleep(0.02*new_value)
-
-            # Output which process received the value
-            # and the calculation result
-            print('[%s] received value: %i' % (process_name, new_value))
-            print('[%s] calculated value: %i' % (process_name, compute))
-
-            # Add result to the queue
-            results.put(compute)
-
-    return
-
-#def Main(sFi):
-
-print("start ")
 # 10-MGN_deformed.nii.gz	  13-Hb_deformed.nii.gz       4567-VL_deformed.nii.gz  6-VLP_deformed.nii.gz  9-LGN_deformed.nii.gz
 # 11-CM_deformed.nii.gz	  1-THALAMUS_deformed.nii.gz  4-VA_deformed.nii.gz     7-VPL_deformed.nii.gz
 # 12-MD-Pf_deformed.nii.gz  2-AV_deformed.nii.gz	      5-VLa_deformed.nii.gz    8-Pul_deformed.nii.gz
@@ -98,7 +22,7 @@ NeucleusFolder = 'CNN12_MD_Pf_2D_SanitizedNN'  #  'CNN1_THALAMUS_2D_SanitizedNN'
 NucleusName = '12-MD-Pf' # '8-Pul'  # '1-THALAMUS' #'6-VLP' #
 ManualDir = '/Manual_Delineation_Sanitized/' #ManualDelineation
 
-A = [[0,0]] # ,[4,3],[6,1],[1,2],[1,3],[4,1]]
+A = [[0,0],[4,3],[6,1],[1,2],[1,3],[4,1]]
 SliceNumbers = range(107,140)
 
 # Directory_main = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' #
@@ -111,7 +35,7 @@ priorDir = Directory_main + 'Manual_Delineation_Sanitized_Full/'
 
 # subFolders = list(['vimp2_915_07112013_LC', 'vimp2_943_07242013_PA' ,'vimp2_964_08092013_TG'])
 
-for ii in range(1): # len(A)):
+for ii in range(len(A)):
 
     if ii == 0:
         TestName = 'Test_WMnMPRAGE_bias_corr_Deformed' # _Deformed_Cropped
@@ -127,7 +51,7 @@ for ii in range(1): # len(A)):
     # print len(subFolders)
 
 
-    for sFi in range(1): # len(subFolders)):
+    for sFi in range(len(subFolders)):
 
         Directory_Nuclei_Label = priorDir +  subFolders[sFi] + ManualDir + NucleusName + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
         Directory_Thalamus_Label = priorDir +  subFolders[sFi] + ManualDir +'1-THALAMUS' + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
@@ -170,10 +94,10 @@ for ii in range(1): # len(A)):
             net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) #  , cost="dice_coefficient"
 
             trainer = unet.Trainer(net)
-            # if gpuNum != 'nan':
-            #     path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=200, epochs=150, display_step=500, GPU_Num=gpuNum) #  , cost="dice_coefficient" restore=True
-            # else:
-            #     path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=200, epochs=150, display_step=500) #  , cost="dice_coefficient" restore=True
+            if gpuNum != 'nan':
+                path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=200, epochs=150, display_step=500, GPU_Num=gpuNum) #  , cost="dice_coefficient" restore=True
+            else:
+                path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=200, epochs=150, display_step=500) #  , cost="dice_coefficient" restore=True
 
             NucleiOrigSeg = nib.load(Directory_Nuclei_Label)
             ThalamusOrigSeg = nib.load(Directory_Thalamus_Label)

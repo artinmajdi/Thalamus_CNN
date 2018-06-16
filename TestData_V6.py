@@ -496,12 +496,17 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nucle
     trainer = unet.Trainer(net)
 
     if MultByThalamusFlag == 1:
-        # try:
-        PredictionFull_Thalamus = ThalamusExtraction(net , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , subFolders, CropDim , padSize , gpuNum)
+
+        # PredictionFull_Thalamus = ThalamusExtraction(net , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , subFolders, CropDim , padSize , gpuNum)
         outputFolder = 'Results_MultByPredictedThalamus/'
-        #except:
-        #    MultByThalamusFlag = 0
-        #    print('Error: Could not load Thalamus')
+
+        ThalamusOrigSeg = nib.load(Directory_Thalamus_Test + subFolders + '_' + '1-THALAMUS' + '_Logical.nii.gz')
+        Thalamus_OriginalSeg_Data = ThalamusOrigSeg.get_data()
+        AA = Thalamus_OriginalSeg_Data.get_data()[50:198 , 130:278 , SliceNumbers]
+        L = len(SliceNumbers)
+        for sliceInd in range(L):
+            PredictionFull_Thalamus[sliceInd,:,:,1] = AA[:,:,sliceInd]
+            PredictionFull_Thalamus[sliceInd,:,:,0] = 1 - AA[:,:,sliceInd]
 
     elif MultByThalamusFlag == 2:
         AA = Thalamus_OriginalSeg_Data[50:198 , 130:278 , SliceNumbers]

@@ -65,7 +65,7 @@ for ii in range(len(A)):
         Directory_Nuclei_Test  = Directory_Nuclei + subFolders[sFi] + '/Test/'
         Directory_Nuclei_Train = Directory_Nuclei + subFolders[sFi] + '/Train/'
         Directory_Nuclei_Train_Model = Directory_Nuclei_Train + 'model/'
-        TestResults_Path   = Directory_Nuclei_Test  + 'Results/'
+        TestResults_Path   = Directory_Nuclei_Test  + 'Results2/'
 
         Directory_Thalamus_Test  = Directory_Thalamus + subFolders[sFi] + '/Test/'
         Directory_Thalamus_Train = Directory_Thalamus + subFolders[sFi] + '/Train/'

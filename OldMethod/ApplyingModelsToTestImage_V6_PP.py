@@ -179,7 +179,7 @@ for ii in range(len(A)):
     subFolders = []
     subFlds = os.listdir(Directory_Nuclei)
     for i in range(len(subFlds)):
-        if subFolders[i][:5] == 'vimp2':
+        if subFlds[i][:5] == 'vimp2':
             subFolders.append(subFlds[i])
 
     divider = 4

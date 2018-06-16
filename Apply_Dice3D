@@ -10,9 +10,9 @@ set priorfolderName = 'Manual_Delineation_Sanitized'
 
 # Results	Results2  Results_MultByManualThalamus	
 
-foreach FolderTest ('CNN8_Pul_2D_SanitizedNN' ) # 'CNN12_MD_Pf_2D_SanitizedNN' 'CNN6_VLP_2D_SanitizedNN' 'CNN4567_VL_2D_SanitizedNN' 'CNN1_THALAMUS_2D_SanitizedNN' )
+foreach FolderTest ('CNN1_THALAMUS_2D_SanitizedNN') # 'CNN8_Pul_2D_SanitizedNN' ) # 'CNN12_MD_Pf_2D_SanitizedNN' 'CNN6_VLP_2D_SanitizedNN' 'CNN4567_VL_2D_SanitizedNN'  )
 # set reslt = 'Results'
-
+set nucleiName = 1-THALAMUS # 8-Pul
 set reusltDirectory = $TestDirectory/Results
 #mkdir $reusltDirectory
 #mkdir $reusltDirectory/$FolderTest/array/hdd/msmajdi/Tests/Thalamus_CNN/code
@@ -30,7 +30,7 @@ echo $Test
 cd $TestDirectory/$FolderTest/$Test
 foreach vimp (vimp2*)
 	echo $vimp
-        set nucleiName = 8-Pul
+        
 
 	set label = $LabelDirectory/$vimp/Manual_Delineation_Sanitized/{$nucleiName}_deformed.nii.gz
 	#echo $label

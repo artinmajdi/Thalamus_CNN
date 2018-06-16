@@ -167,13 +167,13 @@ def ThalamusExtraction(net , Directory_Nuclei_Test , Directory_Nuclei_Train , su
         else:
             prediction = net.predict( Directory_Nuclei_Train_Model_cpkt, data)
 
-        print(slInd)
-        print(type(slInd))
-        print(SliceIdx[slInd])
-        print(type(SliceIdx))
-        print(prediction.shape())
-        print(type(prediction))
-        PredictionFull_Thalamus[SliceIdx[slInd],:,:,:] = prediction
+        #print(slInd)
+        #print(type(slInd))
+        #print(SliceIdx[slInd])
+        #print(type(SliceIdx))
+        #print(prediction.shape)
+        #print(type(prediction))
+        PredictionFull_Thalamus[int(SliceIdx[slInd]),:,:,:] = prediction
 
     return PredictionFull_Thalamus
 
@@ -473,7 +473,7 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nucle
         except:
             os.makedirs(Directory_Test_Results_Thalamus)
 
-    Directory_Test_Results_Nuclei = Directory_Nuclei_Test0 + 'Results/'
+    Directory_Test_Results_Nuclei = Directory_Nuclei_Test0 + 'Results2/'
 
     try:
         os.stat(Directory_Test_Results_Nuclei)
@@ -496,17 +496,19 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nucle
     trainer = unet.Trainer(net)
 
     if MultByThalamusFlag == 1:
-
-        # PredictionFull_Thalamus = ThalamusExtraction(net , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , subFolders, CropDim , padSize , gpuNum)
+        #PredictionFull_Thalamus = ThalamusExtraction(net , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , subFolders, CropDim , padSize , gpuNum)
         outputFolder = 'Results_MultByPredictedThalamus/'
-
-        ThalamusOrigSeg = nib.load(Directory_Thalamus_Test + subFolders + '_' + '1-THALAMUS' + '_Logical.nii.gz')
-        Thalamus_OriginalSeg_Data = ThalamusOrigSeg.get_data()
-        AA = Thalamus_OriginalSeg_Data.get_data()[50:198 , 130:278 , SliceNumbers]
-        L = len(SliceNumbers)
-        for sliceInd in range(L):
-            PredictionFull_Thalamus[sliceInd,:,:,1] = AA[:,:,sliceInd]
-            PredictionFull_Thalamus[sliceInd,:,:,0] = 1 - AA[:,:,sliceInd]
+        loadThalamus = 1
+        if loadThalamus == 1:
+            ThalamusOrigSeg = nib.load(Directory_Thalamus_Test + 'Results/' + subFolders + '_' + '1-THALAMUS' + '_Logical.nii.gz')
+            Thalamus_OriginalSeg_Data = ThalamusOrigSeg.get_data()
+            AA = Thalamus_OriginalSeg_Data[50:198 , 130:278 , SliceNumbers]
+            L = len(SliceNumbers)
+            for sliceInd in range(L):
+                PredictionFull_Thalamus[sliceInd,:,:,1] = AA[:,:,sliceInd]
+                PredictionFull_Thalamus[sliceInd,:,:,0] = 1 - AA[:,:,sliceInd]
+        else:
+            PredictionFull_Thalamus = ThalamusExtraction(net , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , subFolders, CropDim , padSize , gpuNum)
 
     elif MultByThalamusFlag == 2:
         AA = Thalamus_OriginalSeg_Data[50:198 , 130:278 , SliceNumbers]

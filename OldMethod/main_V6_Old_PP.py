@@ -14,15 +14,30 @@ import tensorflow as tf
 
 output = mp.Queue()
 
-print("start ")
+gpuNum = '4' # nan'
+
 # 10-MGN_deformed.nii.gz	  13-Hb_deformed.nii.gz       4567-VL_deformed.nii.gz  6-VLP_deformed.nii.gz  9-LGN_deformed.nii.gz
 # 11-CM_deformed.nii.gz	  1-THALAMUS_deformed.nii.gz  4-VA_deformed.nii.gz     7-VPL_deformed.nii.gz
 # 12-MD-Pf_deformed.nii.gz  2-AV_deformed.nii.gz	      5-VLa_deformed.nii.gz    8-Pul_deformed.nii.gz
 
+ind = 8
+if ind == 1:
+    NeucleusFolder = 'CNN1_THALAMUS_2D_SanitizedNN'
+    NucleusName = '1-THALAMUS'
+elif ind == 4:
+    NeucleusFolder = 'CNN4567_VL_2D_SanitizedNN' # 'CNN12_MD_Pf_2D_SanitizedNN' #  'CNN1_THALAMUS_2D_SanitizedNN' 'CNN6_VLP_2D_SanitizedNN'  #
+    NucleusName = '4567-VL'
+elif ind == 6:
+    NeucleusFolder = 'CNN6_VLP_2D_SanitizedNN'
+    NucleusName = '6-VLP'
+elif ind == 8:
+    NeucleusFolder = 'CNN8_Pul_2D_SanitizedNN'
+    NucleusName = '8-Pul'
+elif ind == 12:
+    NeucleusFolder = 'CNN12_MD_Pf_2D_SanitizedNN'
+    NucleusName = '12-MD-Pf'
 
-gpuNum = '5' # nan'
-NeucleusFolder = 'CNN12_MD_Pf_2D_SanitizedNN' #  'CNN1_THALAMUS_2D_SanitizedNN' 'CNN6_VLP_2D_SanitizedNN'  #   CNN4567_VL_2D_SanitizedNN
-NucleusName = '12-MD-Pf' # '6-VLP'  # '1-THALAMUS' #'6-VLP' #
+
 ManualDir = '/Manual_Delineation_Sanitized/' #ManualDelineation
 
 A = [[0,0],[4,3],[6,1],[1,2],[1,3],[4,1]]

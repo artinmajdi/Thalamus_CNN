@@ -18,8 +18,8 @@ import tensorflow as tf
 
 
 gpuNum = '4' # nan'
-NeucleusFolder = 'CNN12_MD_Pf_2D_SanitizedNN' #  'CNN1_THALAMUS_2D_SanitizedNN' 'CNN6_VLP_2D_SanitizedNN'  #   CNN4567_VL_2D_SanitizedNN
-NucleusName = '12-MD-Pf' # '6-VLP'  # '1-THALAMUS' #'6-VLP' #
+NeucleusFolder = 'CNN8_Pul_2D_SanitizedNN' # 'CNN12_MD_Pf_2D_SanitizedNN' #  'CNN1_THALAMUS_2D_SanitizedNN' # 'CNN6_VLP_2D_SanitizedNN'  #   CNN4567_VL_2D_SanitizedNN
+NucleusName = '8-Pul' #'12-MD-Pf' # '6-VLP'  # '1-THALAMUS' #
 ManualDir = '/Manual_Delineation_Sanitized/' #ManualDelineation
 
 A = [[0,0],[4,3],[6,1],[1,2],[1,3],[4,1]]

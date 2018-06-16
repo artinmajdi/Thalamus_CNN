@@ -47,7 +47,12 @@ for ii in range(1): # len(A)):
     # print Directory_Nuclei
     # with open(Directory_Nuclei_Full + '/OriginalDeformedPriors/subFolderList.txt' ,"rb") as fp:
     #     subFolders = pickle.load(fp)
-    subFolders = os.listdir(Directory_Nuclei)
+    subFolders = []
+    subFlds = os.listdir(Directory_Nuclei)
+    for i in range(len(subFlds)):
+        if subFolders[i][:5] == 'vimp2':
+            subFolders.append(subFlds[i])
+
     # print len(subFolders)
 
 

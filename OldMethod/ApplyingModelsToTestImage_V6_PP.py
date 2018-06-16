@@ -14,15 +14,30 @@ import tensorflow as tf
 
 output = mp.Queue()
 
-print("start ")
+gpuNum = '4' # nan'
+
 # 10-MGN_deformed.nii.gz	  13-Hb_deformed.nii.gz       4567-VL_deformed.nii.gz  6-VLP_deformed.nii.gz  9-LGN_deformed.nii.gz
 # 11-CM_deformed.nii.gz	  1-THALAMUS_deformed.nii.gz  4-VA_deformed.nii.gz     7-VPL_deformed.nii.gz
 # 12-MD-Pf_deformed.nii.gz  2-AV_deformed.nii.gz	      5-VLa_deformed.nii.gz    8-Pul_deformed.nii.gz
 
+ind = 8
+if ind == 1:
+    NeucleusFolder = 'CNN1_THALAMUS_2D_SanitizedNN'
+    NucleusName = '1-THALAMUS'
+elif ind == 4:
+    NeucleusFolder = 'CNN4567_VL_2D_SanitizedNN' # 'CNN12_MD_Pf_2D_SanitizedNN' #  'CNN1_THALAMUS_2D_SanitizedNN' 'CNN6_VLP_2D_SanitizedNN'  #
+    NucleusName = '4567-VL'
+elif ind == 6:
+    NeucleusFolder = 'CNN6_VLP_2D_SanitizedNN'
+    NucleusName = '6-VLP'
+elif ind == 8:
+    NeucleusFolder = 'CNN8_Pul_2D_SanitizedNN'
+    NucleusName = '8-Pul'
+elif ind == 12:
+    NeucleusFolder = 'CNN12_MD_Pf_2D_SanitizedNN'
+    NucleusName = '12-MD-Pf'
 
-gpuNum = '5' # nan'
-NeucleusFolder = 'CNN12_MD_Pf_2D_SanitizedNN' #  'CNN1_THALAMUS_2D_SanitizedNN' 'CNN6_VLP_2D_SanitizedNN'  #   CNN4567_VL_2D_SanitizedNN
-NucleusName = '12-MD-Pf' # '6-VLP'  # '1-THALAMUS' #'6-VLP' #
+
 ManualDir = '/Manual_Delineation_Sanitized/' #ManualDelineation
 
 A = [[0,0],[4,3],[6,1],[1,2],[1,3],[4,1]]
@@ -38,21 +53,6 @@ Directory_Thalamus_Full = Directory_main + 'CNN1_THALAMUS_2D_SanitizedNN'
 priorDir =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
 
 # subFolders = list(['vimp2_915_07112013_LC', 'vimp2_943_07242013_PA' ,'vimp2_964_08092013_TG'])
-
-# def ReadMasks(DirectoryMask,SliceNumbers):
-#
-#     mask = nib.load(DirectoryMask)
-#     maskD = mask.get_data()
-#
-#     Header = mask.header
-#     Affine = mask.affine
-#
-#     msk = maskD
-#
-#     msk[maskD<0.5]  = 0
-#     msk[msk>=0.5] = 1
-#
-#     return msk , Header , Affine
 
 def SumMasks(DirectorySubFolders):
 
@@ -78,33 +78,6 @@ def SumMasks(DirectorySubFolders):
     maskD[msk == 1] = 10*i
 
     return maskD , Header , Affine
-
-# define worker function
-# def calculate(process_name, tasks, results):
-#     print('[%s] evaluation routine starts' % process_name)
-#
-#     while True:
-#         new_value = tasks.get()
-#         if new_value < 0:
-#             print('[%s] evaluation routine quits' % process_name)
-#
-#             # Indicate finished
-#             results.put(-1)
-#             break
-#         else:
-#             # Compute result and mimic a long-running task
-#             compute = new_value * new_value
-#             sleep(0.02*new_value)
-#
-#             # Output which process received the value
-#             # and the calculation result
-#             print('[%s] received value: %i' % (process_name, new_value))
-#             print('[%s] calculated value: %i' % (process_name, compute))
-#
-#             # Add result to the queue
-#             results.put(compute)
-#
-#     return
 
 def main_Part(SbFlds, TestName):
 
@@ -182,7 +155,7 @@ for ii in range(len(A)):
         if subFlds[i][:5] == 'vimp2':
             subFolders.append(subFlds[i])
 
-    divider = 4
+    divider = 3
     tt = int(len(subFolders)/divider)
     Remdr = len(subFolders) % divider
 
@@ -203,8 +176,8 @@ for ii in range(len(A)):
         for p in processes:
             p.start()
 
-        # for p in processes:
-        #     p.join()
+        for p in processes:
+            p.join()
 
         # results = [output.get() for p in processes]
 

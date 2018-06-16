@@ -22,16 +22,16 @@ NeucleusFolder = 'CNN12_MD_Pf_2D_SanitizedNN' #  'CNN1_THALAMUS_2D_SanitizedNN' 
 NucleusName = '12-MD-Pf' # '6-VLP'  # '1-THALAMUS' #'6-VLP' #
 ManualDir = '/Manual_Delineation_Sanitized/' #ManualDelineation
 
-A = [[0,0]] # ,[4,3],[6,1],[1,2],[1,3],[4,1]]
+A = [[0,0],[4,3],[6,1],[1,2],[1,3],[4,1]]
 SliceNumbers = range(107,140)
 
-# Directory_main = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' #
-Directory_main = '/media/artin-laptop/D0E2340CE233F5761/Thalamus_Segmentation/Data/'
+Directory_main = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' #
+#Directory_main = '/media/artin-laptop/D0E2340CE233F5761/Thalamus_Segmentation/Data/'
 Directory_Nuclei_Full = Directory_main + NeucleusFolder
 Directory_Thalamus_Full = Directory_main + 'CNN1_THALAMUS_2D_SanitizedNN'
 
-priorDir = Directory_main + 'Manual_Delineation_Sanitized_Full/'
-# priorDir =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
+#priorDir = Directory_main + 'Manual_Delineation_Sanitized_Full/'
+priorDir =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
 
 # subFolders = list(['vimp2_915_07112013_LC', 'vimp2_943_07242013_PA' ,'vimp2_964_08092013_TG'])
 

@@ -473,7 +473,7 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nucle
         except:
             os.makedirs(Directory_Test_Results_Thalamus)
 
-    Directory_Test_Results_Nuclei = Directory_Nuclei_Test0 + 'Results2/'
+    Directory_Test_Results_Nuclei = Directory_Nuclei_Test0 + 'Results/'
 
     try:
         os.stat(Directory_Test_Results_Nuclei)

@@ -107,13 +107,13 @@ for ii in range(len(A)):
             # config.gpu_options.per_process_gpu_memory_fraction = 0.4
             # unet.config = config
 
-            net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) #  , cost="dice_coefficient"
+            net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
 
-            trainer = unet.Trainer(net)
+            trainer = unet.Trainer(net, optimizer = "adam")
             if gpuNum != 'nan':
-                path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=200, epochs=150, display_step=500, GPU_Num=gpuNum) #  , cost="dice_coefficient" restore=True
+                path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=200, epochs=150, display_step=500, GPU_Num=gpuNum ) #  restore=True
             else:
-                path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=200, epochs=150, display_step=500) #  , cost="dice_coefficient" restore=True
+                path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=200, epochs=150, display_step=500) #   restore=True
 
             NucleiOrigSeg = nib.load(Directory_Nuclei_Label)
             ThalamusOrigSeg = nib.load(Directory_Thalamus_Label)

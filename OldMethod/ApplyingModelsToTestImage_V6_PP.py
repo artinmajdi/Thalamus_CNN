@@ -54,31 +54,6 @@ priorDir =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
 
 # subFolders = list(['vimp2_915_07112013_LC', 'vimp2_943_07242013_PA' ,'vimp2_964_08092013_TG'])
 
-def SumMasks(DirectorySubFolders):
-
-    i = 1
-    Directory_Nuclei_Label = '/6_VLP_NeucleusSegDeformed.nii.gz'
-    msk , Header , Affine = ReadMasks(DirectorySubFolders+Directory_Nuclei_Label)
-    maskD = np.zeros(msk.shape)
-    maskD[msk == 1] = 10*i
-
-    i = i + 1
-    Directory_Nuclei_Label = '/7_VPL_NeucleusSegDeformed.nii.gz'
-    msk , Header , Affine = ReadMasks(DirectorySubFolders+Directory_Nuclei_Label)
-    maskD[msk == 1] = 10*i
-
-    i = i + 1
-    Directory_Nuclei_Label = '/8_Pul_NeucleusSegDeformed.nii.gz'
-    msk , Header , Affine = ReadMasks(DirectorySubFolders+Directory_Nuclei_Label)
-    maskD[msk == 1] = 10*i
-
-    i = i + 1
-    Directory_Nuclei_Label = '/12_MD_Pf_NeucleusSegDeformed.nii.gz'
-    msk , Header , Affine = ReadMasks(DirectorySubFolders+Directory_Nuclei_Label)
-    maskD[msk == 1] = 10*i
-
-    return maskD , Header , Affine
-
 def main_Part(SbFlds, TestName):
 
     Directory_Nuclei_Label = priorDir +  SbFlds + ManualDir + NucleusName + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
@@ -183,7 +158,3 @@ for ii in range(len(A)):
 
         # for sFi in range(len(subFolders)):
         #     main_Part(subFolders[sFi],TestName)
-
-
-    # if Remdr != 0:
-    #     main_Part(subFolders[divider*(sFi+1):],TestName)

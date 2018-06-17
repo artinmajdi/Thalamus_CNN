@@ -43,6 +43,7 @@ SliceNumbers = range(107,140)
 
 Directory_main = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' #
 #Directory_main = '/media/artin-laptop/D0E2340CE233F5761/Thalamus_Segmentation/Data/'
+
 Directory_Nuclei_Full = Directory_main + NeucleusFolder
 Directory_Thalamus_Full = Directory_main + 'CNN1_THALAMUS_2D_SanitizedNN'
 
@@ -54,7 +55,7 @@ priorDir =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
 for ii in range(len(A)):
 
     if ii == 0:
-        TestName = 'Test_WMnMPRAGE_bias_corr_Deformed' # _Deformed_Cropped
+        TestName = 'Test_WMnMPRAGE_bias_corr_Deformed'
     else:
         TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
 
@@ -63,9 +64,11 @@ for ii in range(len(A)):
     # print Directory_Nuclei
     # with open(Directory_Nuclei_Full + '/OriginalDeformedPriors/subFolderList.txt' ,"rb") as fp:
     #     subFolders = pickle.load(fp)
-    subFolders = os.listdir(Directory_Nuclei)
-    # print len(subFolders)
-
+    subFolders = []
+    subFlds = os.listdir(Directory_Nuclei)
+    for i in range(len(subFlds)):
+        if subFlds[i][:5] == 'vimp2':
+            subFolders.append(subFlds[i])
 
     for sFi in range(len(subFolders)):
 

@@ -13,7 +13,6 @@ import multiprocessing as mp
 import tensorflow as tf
 
 output = mp.Queue()
-
 gpuNum = '4' # nan'
 
 # 10-MGN_deformed.nii.gz	  13-Hb_deformed.nii.gz       4567-VL_deformed.nii.gz  6-VLP_deformed.nii.gz  9-LGN_deformed.nii.gz
@@ -54,77 +53,10 @@ priorDir =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
 
 # subFolders = list(['vimp2_915_07112013_LC', 'vimp2_943_07242013_PA' ,'vimp2_964_08092013_TG'])
 
-# def ReadMasks(DirectoryMask,SliceNumbers):
-#
-#     mask = nib.load(DirectoryMask)
-#     maskD = mask.get_data()
-#
-#     Header = mask.header
-#     Affine = mask.affine
-#
-#     msk = maskD
-#
-#     msk[maskD<0.5]  = 0
-#     msk[msk>=0.5] = 1
-#
-#     return msk , Header , Affine
-
-def SumMasks(DirectorySubFolders):
-
-    i = 1
-    Directory_Nuclei_Label = '/6_VLP_NeucleusSegDeformed.nii.gz'
-    msk , Header , Affine = ReadMasks(DirectorySubFolders+Directory_Nuclei_Label)
-    maskD = np.zeros(msk.shape)
-    maskD[msk == 1] = 10*i
-
-    i = i + 1
-    Directory_Nuclei_Label = '/7_VPL_NeucleusSegDeformed.nii.gz'
-    msk , Header , Affine = ReadMasks(DirectorySubFolders+Directory_Nuclei_Label)
-    maskD[msk == 1] = 10*i
-
-    i = i + 1
-    Directory_Nuclei_Label = '/8_Pul_NeucleusSegDeformed.nii.gz'
-    msk , Header , Affine = ReadMasks(DirectorySubFolders+Directory_Nuclei_Label)
-    maskD[msk == 1] = 10*i
-
-    i = i + 1
-    Directory_Nuclei_Label = '/12_MD_Pf_NeucleusSegDeformed.nii.gz'
-    msk , Header , Affine = ReadMasks(DirectorySubFolders+Directory_Nuclei_Label)
-    maskD[msk == 1] = 10*i
-
-    return maskD , Header , Affine
-
-# define worker function
-# def calculate(process_name, tasks, results):
-#     print('[%s] evaluation routine starts' % process_name)
-#
-#     while True:
-#         new_value = tasks.get()
-#         if new_value < 0:
-#             print('[%s] evaluation routine quits' % process_name)
-#
-#             # Indicate finished
-#             results.put(-1)
-#             break
-#         else:
-#             # Compute result and mimic a long-running task
-#             compute = new_value * new_value
-#             sleep(0.02*new_value)
-#
-#             # Output which process received the value
-#             # and the calculation result
-#             print('[%s] received value: %i' % (process_name, new_value))
-#             print('[%s] calculated value: %i' % (process_name, compute))
-#
-#             # Add result to the queue
-#             results.put(compute)
-#
-#     return
-
 def main_Part(SbFlds, TestName):
 
-    Directory_Nuclei_Label = priorDir +  SbFlds + ManualDir + NucleusName + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
-    Directory_Thalamus_Label = priorDir +  SbFlds + ManualDir +'1-THALAMUS' + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
+    Directory_Nuclei_Label = priorDir +  SbFlds + ManualDir + NucleusName + '_deformed.nii.gz'
+    Directory_Thalamus_Label = priorDir +  SbFlds + ManualDir +'1-THALAMUS' + '_deformed.nii.gz'
 
     print(Directory_Nuclei_Label) # sliceInd = 25
     Directory_Nuclei_Test  = Directory_Nuclei + SbFlds + '/Test/'
@@ -180,7 +112,7 @@ def main_Part(SbFlds, TestName):
 
     # output.put(SbFlds)
 
-for ii in range(1): # len(A)):
+for ii in range(len(A)):
     # ii = 0
 
     if ii == 0:
@@ -191,13 +123,18 @@ for ii in range(1): # len(A)):
     Directory_Nuclei = Directory_Nuclei_Full + '/' + TestName + '/'
     Directory_Thalamus = Directory_Thalamus_Full + '/' + TestName + '/'
 
-    subFolders = os.listdir(Directory_Nuclei)
+    subFolders = []
+    subFlds = os.listdir(Directory_Nuclei)
+    for i in range(len(subFlds)):
+        if subFlds[i][:5] == 'vimp2':
+            subFolders.append(subFlds[i])
 
+            
     divider = 2
     tt = int(len(subFolders)/divider)
     Remdr = len(subFolders) % divider
 
-    for sFi in range(1): # tt+1):
+    for sFi in range(tt+1):
         ## for python2
         # for SbFlds in subFolders:
         #     processes = [mp.Process(target=main_Part, args=(SbFlds,TestName))]

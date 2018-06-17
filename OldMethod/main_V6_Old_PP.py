@@ -19,7 +19,7 @@ gpuNum = '4' # nan'
 # 11-CM_deformed.nii.gz	  1-THALAMUS_deformed.nii.gz  4-VA_deformed.nii.gz     7-VPL_deformed.nii.gz
 # 12-MD-Pf_deformed.nii.gz  2-AV_deformed.nii.gz	      5-VLa_deformed.nii.gz    8-Pul_deformed.nii.gz
 
-ind = 8
+ind = 1
 if ind == 1:
     NeucleusFolder = 'CNN1_THALAMUS_2D_SanitizedNN'
     NucleusName = '1-THALAMUS'
@@ -95,7 +95,7 @@ def main_Part(SbFlds, TestName):
 
         net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) #  , cost="dice_coefficient"
 
-        trainer = unet.Trainer(net)
+        trainer = unet.Trainer(net, optimizer = "adam")
         if gpuNum != 'nan':
             path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=200, epochs=150, display_step=500, GPU_Num=gpuNum) #  , cost="dice_coefficient" restore=True
         else:
@@ -107,7 +107,7 @@ def main_Part(SbFlds, TestName):
         CropDimensions = np.array([ [50,198] , [130,278] , [SliceNumbers[0] , SliceNumbers[len(SliceNumbers)-1]] ])
 
         padSize = 90
-        MultByThalamusFlag = 1
+        MultByThalamusFlag = 0
         [Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical] = TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test , Directory_Nuclei_Train , ThalamusOrigSeg , NucleiOrigSeg , SbFlds, CropDimensions , padSize , Directory_Thalamus_Test , Directory_Thalamus_Train_Model , NucleusName , SliceNumbers , gpuNum)
 
     # output.put(SbFlds)
@@ -129,8 +129,8 @@ for ii in range(len(A)):
         if subFlds[i][:5] == 'vimp2':
             subFolders.append(subFlds[i])
 
-            
-    divider = 2
+
+    divider = 3
     tt = int(len(subFolders)/divider)
     Remdr = len(subFolders) % divider
 
@@ -151,8 +151,8 @@ for ii in range(len(A)):
         for p in processes:
             p.start()
 
-        # for p in processes:
-        #     p.join()
+        for p in processes:
+            p.join()
 
         # results = [output.get() for p in processes]
 

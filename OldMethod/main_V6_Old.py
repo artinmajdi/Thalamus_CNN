@@ -18,7 +18,7 @@ gpuNum = '4' # nan'
 # 11-CM_deformed.nii.gz	  1-THALAMUS_deformed.nii.gz  4-VA_deformed.nii.gz     7-VPL_deformed.nii.gz
 # 12-MD-Pf_deformed.nii.gz  2-AV_deformed.nii.gz	      5-VLa_deformed.nii.gz    8-Pul_deformed.nii.gz
 
-ind = 8
+ind = 1
 if ind == 1:
     NeucleusFolder = 'CNN1_THALAMUS_2D_SanitizedNN'
     NucleusName = '1-THALAMUS'
@@ -124,5 +124,5 @@ for ii in range(len(A)):
             CropDimensions = np.array([ [50,198] , [130,278] , [SliceNumbers[0] , SliceNumbers[len(SliceNumbers)-1]] ])
 
             padSize = 90
-            MultByThalamusFlag = 1
+            MultByThalamusFlag = 0
             [Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical] = TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test , Directory_Nuclei_Train , ThalamusOrigSeg , NucleiOrigSeg , subFolders[sFi], CropDimensions , padSize , Directory_Thalamus_Test , Directory_Thalamus_Train_Model , NucleusName , SliceNumbers , gpuNum)

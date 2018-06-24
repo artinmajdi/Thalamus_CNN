@@ -14,7 +14,7 @@ from PIL import ImageEnhance , Image , ImageFilter
 # 13-Hb_Deformed.nii.gz	  4-VA_Deformed.nii.gz	      8-Pul_Deformed.nii.gz
 
 
-NeuclusName = '6-VLP' #'8-Pul' # '4567-VL' # 
+NeuclusName = '6-VLP' #'8-Pul' # '4567-VL' #
 NeuclusNameFull = ['12-MD-Pf'] # '6-VLP' , '1-THALAMUS' , '8-Pul' , '4567-VL']
 # Directory_Priors = '/media/data1/artin/data/Thalamus/'+ NeucleusFolder + '/OriginalDeformedPriors'
 Directory_Priors = '/array/hdd/msmajdi/data/priors_forCNN_Ver2'

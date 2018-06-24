@@ -25,12 +25,10 @@ Directory_Tests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN'
 subFolders = os.listdir(Directory_Priors)
 
 subFolders2 = []
-i = 0
+
 for o in range(len(subFolders)):
     if "vimp2_" in subFolders[o]:
         subFolders2.append(subFolders[o])
-
-        i = i+1;
 
 subFolders = subFolders2
 with open(Directory_Priors + "subFolderList.txt" ,"wb") as fp:

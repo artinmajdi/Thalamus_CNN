@@ -59,6 +59,7 @@ for ii in range(len(A)):
     else:
         TestName = 'WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
 
+    print(TestName)
     Directory_Test = Directory_Tests + '/MultiClass/Test_' + TestName
 
     inputName = TestName + '.nii.gz'

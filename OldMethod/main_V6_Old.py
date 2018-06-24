@@ -18,7 +18,7 @@ gpuNum = '4' # nan'
 # 11-CM_deformed.nii.gz	  1-THALAMUS_deformed.nii.gz  4-VA_deformed.nii.gz     7-VPL_deformed.nii.gz
 # 12-MD-Pf_deformed.nii.gz  2-AV_deformed.nii.gz	      5-VLa_deformed.nii.gz    8-Pul_deformed.nii.gz
 
-ind = 1
+ind = 8
 if ind == 1:
     NeucleusFolder = 'CNN1_THALAMUS_2D_SanitizedNN'
     NucleusName = '1-THALAMUS'
@@ -52,7 +52,7 @@ priorDir =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
 
 # subFolders = list(['vimp2_915_07112013_LC', 'vimp2_943_07242013_PA' ,'vimp2_964_08092013_TG'])
 
-for ii in range(len(A)):
+for ii in range(1): # len(A)):
 
     if ii == 0:
         TestName = 'Test_WMnMPRAGE_bias_corr_Deformed'
@@ -70,7 +70,7 @@ for ii in range(len(A)):
         if subFlds[i][:5] == 'vimp2':
             subFolders.append(subFlds[i])
 
-    for sFi in range(len(subFolders)):
+    for sFi in range(1): # len(subFolders)):
 
         Directory_Nuclei_Label = priorDir +  subFolders[sFi] + ManualDir + NucleusName + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
         Directory_Thalamus_Label = priorDir +  subFolders[sFi] + ManualDir +'1-THALAMUS' + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
@@ -110,7 +110,7 @@ for ii in range(len(A)):
             # config.gpu_options.per_process_gpu_memory_fraction = 0.4
             # unet.config = config
 
-            net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
+            net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True, cost="dice_coefficient") #
 
             trainer = unet.Trainer(net, optimizer = "adam")
             if gpuNum != 'nan':

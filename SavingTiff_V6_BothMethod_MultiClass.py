@@ -27,7 +27,7 @@ subFolders = os.listdir(Directory_Priors)
 subFolders2 = []
 i = 0
 for o in range(len(subFolders)):
-    if "." not in subFolders[o]:
+    if "vimp2_" in subFolders[o]:
         subFolders2.append(subFolders[o])
 
         i = i+1;
@@ -36,7 +36,7 @@ subFolders = subFolders2
 with open(Directory_Priors + "subFolderList.txt" ,"wb") as fp:
     pickle.dump(subFolders,fp)
 
-print(len(subFolders))
+#print(len(subFolders))
 # print(subFolders[19])
 A = [[0,0],[4,3],[6,1],[1,2],[1,3],[4,1]] #
 # print len(A)
@@ -52,7 +52,7 @@ L = len(NeuclusNameFull)
 for N in range(L):
     NeuclusName = NeuclusNameFull[N]
     # NeucleusFolder = 'CNN' + NeuclusName.replace('-','_') + '_2D_SanitizedNN'
-    SegmentName[N] = 'Manual_Delineation_Sanitized/' + NeuclusName + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
+    SegmentName.append('Manual_Delineation_Sanitized/' + NeuclusName + '_deformed.nii.gz')   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
 
 
 for ii in range(len(A)):
@@ -70,9 +70,9 @@ for ii in range(len(A)):
         if (ii == 1) & (sFi == 18):
             print('error')
         else:
-            print('ii '+str(ii) + ' sfi ' + str(sFi))
+            # print('ii '+str(ii) + ' sfi ' + str(sFi))
 
-            maskFull = []
+            maskDFull = []
             for N in range(L):
                 mask = nib.load(Directory_Priors + '/'  + subFolders2[sFi] + '/' + SegmentName[N])
                 maskD = mask.get_data()
@@ -80,7 +80,7 @@ for ii in range(len(A)):
                 maskD_padded = np.pad(maskD_B,((padSize,padSize),(padSize,padSize),(0,0)),'constant' )
                 maskDFull.append(maskD_padded)
 
-            print(str(sFi) + subFolders2[sFi])
+            print(str(sFi) + ':  ' + subFolders2[sFi])
             im     = nib.load(Directory_Priors + '/'  + subFolders2[sFi] + '/' + inputName)
             imD    = im.get_data()
             Header = im.header

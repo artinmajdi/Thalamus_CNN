@@ -30,6 +30,7 @@ from tf_unet.layers import (weight_variable, weight_variable_devonc, bias_variab
                             conv2d, deconv2d, max_pool, crop_and_concat, pixel_wise_softmax_2,
                             cross_entropy)
 from skimage import filters
+# import tensorlayer
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
 
@@ -227,14 +228,12 @@ class Unet(object):
                 loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=flat_logits,
                                                                               labels=flat_labels))
         elif cost_name == "dice_coefficient":
-            eps = 1e-5
+            eps = 1e-10
 
             prediction = pixel_wise_softmax_2(logits)
-            #print('-------------<<<<______>>>>----------------')
-            #print(prediction.shape)
             union =  eps + tf.reduce_sum(prediction) + tf.reduce_sum(self.y)
 
-            myMethod = 3
+            myMethod = 4
             if myMethod == 1:
                 try:
                     Thresh_Mult = max(filters.threshold_otsu(prediction),0.2)
@@ -246,26 +245,42 @@ class Unet(object):
                 # prediction[0,...,1] = prediction[0,...,1] > Thresh_Mult
                 # prediction[0,...,1] = prediction[0,...,2] < Thresh_Mult
 
-                prediction = tf.cast(prediction > Thresh_Mult, dtype=tf.float32)
-                intersection = tf.reduce_sum( prediction  * self.y)
+                #prediction = tf.cast(prediction > Thresh_Mult, dtype=tf.float32)
+                intersection = tf.reduce_sum( prediction2  * self.y)
 
-                loss = 1 - (2 * intersection/ (union))
+                loss = 1 - (2 * intersection / (union))
 
             elif myMethod == 2:
+
                 Thresh_Mult = 0.5
-                output = tf.cast(prediction > Thresh_Mult, dtype=tf.float32)
-                target = tf.cast(self.y > Thresh_Mult, dtype=tf.float32)
-                inse = tf.reduce_sum(tf.multiply(output, target))
+                prediction2 = tf.cast(prediction > Thresh_Mult, dtype=tf.float32) #
+                union =  eps + tf.reduce_sum(prediction2[...,0]) + tf.reduce_sum(self.y[...,0])                # target = tf.cast(self.y > Thresh_Mult, dtype=tf.float32)
+                intersection = tf.reduce_sum(prediction2[...,0] * self.y[...,0])
+                # intersection = tf.reduce_sum(output * target)
                 # hard_dice = tf.clip_by_value(hard_dice, 0, 1.0-epsilon)
-                hard_dice = (2. * inse) / (union)
-                hard_dice = tf.reduce_mean(hard_dice)
+                loss = 1 - ((2. * intersection) / union)
+                # loss = - tf.reduce_mean(hard_dice)
                 # # dice = tf.clip_by_value(dice, 0, 1.0-epsilon) # if all empty, dice = 1
-                loss = - tf.reduce_mean(hard_dice)
+                # loss = - tf.reduce_mean(hard_dice)
 
+            elif myMethod == 3:
+                loss = tensorlayer.cost.dice_hard_coe(output=prediction,target=self.y,threshold=0.5,smooth=1e-5)
+
+            elif myMethod == 4:
+                print('myMethod: ',myMethod)
+
+                flat_logits = tf.reshape(logits[...,0] > 0.5 , [-1, self.n_class])
+                flat_labels = tf.reshape(self.y[...,0] > 0.5 , [-1, self.n_class])
+
+                union =  eps + tf.reduce_sum(flat_labels) + tf.reduce_sum(flat_logits)
+                # weight_map = tf.multiply(flat_labels, flat_logits)
+                weight_map = flat_labels * flat_logits
+                intersection = tf.reduce_sum(weight_map)
+
+                loss = - (2 * intersection/ (union))
             else:
+
                 intersection = tf.reduce_sum(prediction * self.y)
-
-
                 loss = - (2 * intersection/ (union))
 
             print('-------------<<<<___&&&&&&&&&___>>>>----------------')

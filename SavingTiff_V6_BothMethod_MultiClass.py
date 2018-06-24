@@ -66,9 +66,7 @@ for ii in range(len(A)):
 
     for sFi in range(len(subFolders)):
         # sFi = 0
-        if (ii == 1) & (sFi == 18):
-            print('error')
-        else:
+        try:
             # print('ii '+str(ii) + ' sfi ' + str(sFi))
 
             maskDFull = []
@@ -111,3 +109,5 @@ for ii in range(len(A)):
 
                     tifffile.imsave(SaveDirectoryImage + '/' + subFolders2[p] + '_Slice'+str(sliceInd)+'.tif',imD_padded[:,:,sliceInd])
                     tifffile.imsave(SaveDirectoryImage + '/' + subFolders2[p] + '_Slice'+str(sliceInd)+'_mask.tif',msk_MultyClass)
+        except:
+            print('Error ' + str(sFi) + ':  ' + subFolders2[sFi])

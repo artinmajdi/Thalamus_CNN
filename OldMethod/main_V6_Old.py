@@ -70,7 +70,7 @@ for ii in range(1): # len(A)):
         if subFlds[i][:5] == 'vimp2':
             subFolders.append(subFlds[i])
 
-    for sFi in range(4,5): # len(subFolders)):
+    for sFi in range(len(subFolders)):
 
         Directory_Nuclei_Label = priorDir +  subFolders[sFi] + ManualDir + NucleusName + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
         Directory_Thalamus_Label = priorDir +  subFolders[sFi] + ManualDir +'1-THALAMUS' + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
@@ -114,7 +114,7 @@ for ii in range(1): # len(A)):
 
             trainer = unet.Trainer(net) # , optimizer = "adam",learning_rate=0.03
             if gpuNum != 'nan':
-                path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=20, epochs=15, display_step=500, GPU_Num=gpuNum ) #  restore=True
+                path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=200, epochs=150, display_step=500, GPU_Num=gpuNum ) #  restore=True
             else:
                 path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=200, epochs=150, display_step=500) #   restore=True
 

@@ -27,7 +27,7 @@ import logging
 import tensorflow as tf
 from tf_unet import util
 from tf_unet.layers import (weight_variable, weight_variable_devonc, bias_variable,
-                            conv2d, deconv2d, max_pool, crop_and_concat, pixel_wise_softmax_2,
+                            conv2d, deconv2d, max_pool, crop_and_concat, pixel_wise_softmax, pixel_wise_softmax_2,
                             cross_entropy)
 from skimage import filters
 # import tensorlayer
@@ -269,15 +269,14 @@ class Unet(object):
             elif myMethod == 4:
                 print('myMethod: ',myMethod)
 
-                flat_logits = tf.reshape(logits[...,0] > 0.5 , [-1, self.n_class])
-                flat_labels = tf.reshape(self.y[...,0] > 0.5 , [-1, self.n_class])
+                prediction = pixel_wise_softmax(logits)
+                flat_logits = tf.reshape(prediction[...,0] , [-1, self.n_class])
+                flat_labels = tf.reshape(self.y[...,0] , [-1, self.n_class])
 
                 union =  eps + tf.reduce_sum(flat_labels) + tf.reduce_sum(flat_logits)
-                # weight_map = tf.multiply(flat_labels, flat_logits)
-                weight_map = flat_labels * flat_logits
-                intersection = tf.reduce_sum(weight_map)
+                intersection = tf.reduce_sum(flat_labels * flat_logits)
 
-                loss = - (2 * intersection/ (union))
+                loss = 1-(2 * intersection/ (union))
             else:
 
                 intersection = tf.reduce_sum(prediction * self.y)

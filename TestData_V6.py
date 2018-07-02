@@ -460,20 +460,20 @@ def TestData3_PerSlice(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Direct
 
     return Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical
 
-def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nuclei_Train0 , Thalamus_OriginalSeg , Nuclei_OriginalSeg , subFolders, CropDim , padSize , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , NucleusName , SliceNumbers , gpuNum):
+def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nuclei_Train_Model0 , Thalamus_OriginalSeg , Nuclei_OriginalSeg , subFolders, CropDim , padSize , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , NucleusName , SliceNumbers , gpuNum):
 
 
-    Directory_Nuclei_Train_Model_cpkt = Directory_Nuclei_Train0 + 'model/model.cpkt'
+    Directory_Nuclei_Train_Model_cpkt = Directory_Nuclei_Train_Model0 + 'model.cpkt'
     # Directory_Nuclei_Test_Results   = Directory_Nuclei_Test  + 'results/'
 
     if MultByThalamusFlag != 0:
-        Directory_Test_Results_Thalamus = Directory_Nuclei_Test0 + 'Results_MultByManualThalamus/'
+        Directory_Test_Results_Thalamus = Directory_Nuclei_Test0 + 'Results/'
         try:
             os.stat(Directory_Test_Results_Thalamus)
         except:
             os.makedirs(Directory_Test_Results_Thalamus)
 
-    Directory_Test_Results_Nuclei = Directory_Nuclei_Test0 + 'Results/'
+    Directory_Test_Results_Nuclei = Directory_Nuclei_Test0 + 'Results_MultByManualThalamus/'
 
     try:
         os.stat(Directory_Test_Results_Nuclei)

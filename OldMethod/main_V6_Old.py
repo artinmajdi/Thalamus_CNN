@@ -34,7 +34,9 @@ elif ind == 8:
 elif ind == 12:
     NeucleusFolder = 'CNN12_MD_Pf_2D_SanitizedNN'
     NucleusName = '12-MD-Pf'
-
+elif ind == 0:
+    NeucleusFolder = 'MultiClass'
+    NucleusName = '1-THALAMUS'
 
 ManualDir = '/Manual_Delineation_Sanitized/' #ManualDelineation
 
@@ -110,7 +112,7 @@ for ii in range(1): # len(A)):
             # config.gpu_options.per_process_gpu_memory_fraction = 0.4
             # unet.config = config
 
-            net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True, cost="dice_coefficient") #
+            net = unet.Unet(layers=4, features_root=16, channels=1, n_class=4 , summaries=True, cost="dice_coefficient") #
 
             trainer = unet.Trainer(net, optimizer = "adam")
             if gpuNum != 'nan':

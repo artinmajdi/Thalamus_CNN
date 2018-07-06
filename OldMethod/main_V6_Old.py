@@ -68,7 +68,7 @@ for ii in range(1): # len(A)):
     subFlds = os.listdir(Directory_Nuclei)
     for i in range(len(subFlds)):
         if subFlds[i][:5] == 'vimp2':
-            subFolders.append(subFlds[ia
+            subFolders.append(subFlds[i])
 
     for sFi in range(len(subFolders)):
 
@@ -126,3 +126,4 @@ for ii in range(1): # len(A)):
             padSize = 90
             MultByThalamusFlag = 0
             [Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical] = TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test , Directory_Nuclei_Train_Model , ThalamusOrigSeg , NucleiOrigSeg , subFolders[sFi], CropDimensions , padSize , Directory_Thalamus_Test , Directory_Thalamus_Train_Model , NucleusName , SliceNumbers , gpuNum)
+

@@ -63,6 +63,7 @@ for subDirs in subDirsFull:print subDirs
             # axes[1].imshow(imD[:,:,sliceNum],cmap='gray',aspect='auto')
             # plt.show()
 
+EnhanceThomas = 0
 if EnhanceThomas == 1:
     Directory = '/media/data1/artin/thomas/'
     scaleEnhance = [[1,2],[1,3],[4,1],[6,1],[4,2],[4,3]]

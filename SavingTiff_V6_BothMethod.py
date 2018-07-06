@@ -60,7 +60,7 @@ for NeuclusName in NeuclusNameFull:
         inputName = TestName + '.nii.gz'
         print(inputName)
 
-
+        print('-')
         for sFi in range(len(subFolders)):
             # sFi = 0
             if (ii == 1) & (sFi == 18):

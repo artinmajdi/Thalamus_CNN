@@ -68,7 +68,7 @@ for ii in range(1): # len(A)):
     subFlds = os.listdir(Directory_Nuclei)
     for i in range(len(subFlds)):
         if subFlds[i][:5] == 'vimp2':
-            subFolders.append(subFlds[i])
+            subFolders.append(subFlds[ia
 
     for sFi in range(len(subFolders)):
 

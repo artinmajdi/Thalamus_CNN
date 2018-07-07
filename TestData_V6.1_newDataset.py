@@ -531,7 +531,7 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nucle
     for sliceNum in range(L):
         Stng = TestData.data_files[sliceNum]
         d = Stng.find('_Slice')
-        SliceIdx[sliceNum] = int(Stng[d+6:].split('.')[0])
+        SliceIdx[sliceNum] = int(Stng[d+7:].split('.')[0])
 
     # SliceIdxArg = np.argsort(SliceIdx)
     Data , Label = TestData(L)

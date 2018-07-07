@@ -52,7 +52,7 @@ Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' #
 # Name_allTests_Thalamus = Dir_AllTests + 'newDataset/' + 'CNN1_THALAMUS_2D_SanitizedNN'
 
 # Dir_Prior =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
-Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
+Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS/'
 
 # subFolders = list(['a', 'b'])
 
@@ -80,8 +80,8 @@ for ii in range(len(A)):
         Dir_NucleiTestSamples  = Dir_AllTests + 'newDataset/' + NeucleusFolder + '/' + TestName + '/' + subFolders[sFi] + '/Test/'
         Dir_ResultsOut   = Dir_NucleiTestSamples  + 'Results/'
 
-
-        Dir_NucleiModelOut = Dir_AllTests + NeucleusFolder + '/' + TestName + '/' + subFolders[sFi] + '/Train/model/'
+        subFoldersModel = 'vimp2_668_02282013_CD'
+        Dir_NucleiModelOut = Dir_AllTests + NeucleusFolder + '/' + TestName + '/' + subFoldersModel + '/Train/model/'
         # Dir_NucleiModelOut = Dir_AllTests + 'newDataset/' + NeucleusFolder + '/' + TestName + '/' + subFolders[sFi] + '/Train/model/'
 
 

@@ -66,7 +66,7 @@ for ii in range(len(A)):
     if ii == 0:
         TestName = 'WMnMPRAGE_Deformed' # _Deformed_Cropped
     else:
-        TestName = 'WMnMPRAGE_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
+        TestName = 'WMnMPRAGE_Deformed_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) 
 
     Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + '/' + Name_allTests_Nuclei + '/Test_' + TestName
 

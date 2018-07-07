@@ -56,7 +56,7 @@ Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
 
 # subFolders = list(['a', 'b'])
 
-for ii in range(1): # len(A)):
+for ii in range(len(A)):
 
     if ii == 0:
         TestName = 'Test_WMnMPRAGE_bias_corr_Deformed'
@@ -72,16 +72,16 @@ for ii in range(1): # len(A)):
         if subFlds[i][:5] == 'vimp2':
             subFolders.append(subFlds[i])
 
+    subFolders =
     for sFi in range(len(subFolders)):
 
         Dir_Prior_NucleiSamples = Dir_Prior +  subFolders[sFi] + ManualDir + NucleusName + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
         Dir_Prior_ThalamusSamples = Dir_Prior +  subFolders[sFi] + ManualDir +'1-THALAMUS' + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
 
-        print(Dir_Prior_NucleiSamples) # sliceInd = 25
         Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Test/'
         Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
         Dir_NucleiModelOut = Dir_NucleiTrainSamples + 'model/'
-        Dir_ResultsOut   = Dir_NucleiTestSamples  + 'Results_MomentumOptimizer/'
+        Dir_ResultsOut   = Dir_NucleiTestSamples  + 'Results/'
 
         Dir_ThalamusTestSamples  = Dir_AllTests_Thalamus_EnhancedFld + subFolders[sFi] + '/Test/'
         Dir_ThalamusTrainSamples = Dir_AllTests_Thalamus_EnhancedFld + subFolders[sFi] + '/Train/'

@@ -45,11 +45,11 @@ ManualDir = '/Manual_Delineation_Sanitized/' #ManualDelineation
 A = [[0,0],[4,3],[6,1],[1,2],[1,3],[4,1]]
 SliceNumbers = range(107,140)
 
-Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/newDataset' #
+Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/ #
 #Dir_AllTests = '/media/artin-laptop/D0E2340CE233F5761/Thalamus_Segmentation/Data/'
 
-Name_allTests_Nuclei = Dir_AllTests + NeucleusFolder
-Name_allTests_Thalamus = Dir_AllTests + 'CNN1_THALAMUS_2D_SanitizedNN'
+# Name_allTests_Nuclei = Dir_AllTests + 'newDataset/' + NeucleusFolder
+# Name_allTests_Thalamus = Dir_AllTests + 'newDataset/' + 'CNN1_THALAMUS_2D_SanitizedNN'
 
 # Dir_Prior =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
 Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
@@ -63,8 +63,8 @@ for ii in range(len(A)):
     else:
         TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
 
-    Dir_AllTests_Nuclei_EnhancedFld = Name_allTests_Nuclei + '/' + TestName + '/'
-    Dir_AllTests_Thalamus_EnhancedFld = Name_allTests_Thalamus + '/' + TestName + '/'
+    Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + 'newDataset/' + NeucleusFolder + '/' + TestName + '/'
+    Dir_AllTests_Thalamus_EnhancedFld = Dir_AllTests + 'newDataset/' + 'CNN1_THALAMUS_2D_SanitizedNN' + '/' + TestName + '/'
 
     subFolders = []
     subFlds = os.listdir(Dir_AllTests_Nuclei_EnhancedFld)
@@ -77,19 +77,16 @@ for ii in range(len(A)):
             Dir_Prior_NucleiSamples = Dir_Prior +  subFolders[sFi] + ManualDir + NucleusName + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
             Dir_Prior_ThalamusSamples = Dir_Prior +  subFolders[sFi] + ManualDir +'1-THALAMUS' + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
 
-            Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Test/'
+            Dir_NucleiTestSamples  = Dir_AllTests + 'newDataset/' + NeucleusFolder + '/' + TestName + '/' + subFolders[sFi] + '/Test/'
             Dir_ResultsOut   = Dir_NucleiTestSamples  + 'Results/'
 
-            
-            Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
-            Dir_NucleiModelOut = Dir_NucleiTrainSamples + 'model/'
 
-
+            Dir_NucleiModelOut = Dir_AllTests + NeucleusFolder + '/' + TestName + '/' + subFolders[sFi] + '/Train/model/'
+            # Dir_NucleiModelOut = Dir_AllTests + 'newDataset/' + NeucleusFolder + '/' + TestName + '/' + subFolders[sFi] + '/Train/model/'
 
 
             Dir_ThalamusTestSamples  = Dir_AllTests_Thalamus_EnhancedFld + subFolders[sFi] + '/Test/'
-            Dir_ThalamusTrainSamples = Dir_AllTests_Thalamus_EnhancedFld + subFolders[sFi] + '/Train/'
-            Dir_ThalamusModelOut = Dir_ThalamusTrainSamples + 'model/'
+            Dir_ThalamusModelOut = Dir_AllTests_Thalamus_EnhancedFld + subFolders[sFi] + '/Train/model/'
 
 
             if os.path.isfile(Dir_ResultsOut + 'DiceCoefficient__.txt'):
@@ -97,7 +94,7 @@ for ii in range(len(A)):
                 continue
             else:
                 print('*---  Not Done:   ' + Dir_NucleiModelOut + '  ---*')
-                TrainData = image_util.ImageDataProvider(Dir_NucleiTrainSamples + "*.tif")
+                # TrainData = image_util.ImageDataProvider(Dir_NucleiTrainSamples + "*.tif")
 
                 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
                 # config = tf.ConfigProto()
@@ -120,7 +117,12 @@ for ii in range(len(A)):
 
                 padSize = 90
                 MultByThalamusFlag = 0
-                [Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical] = TestData3(net , MultByThalamusFlag, Dir_NucleiTestSamples , Dir_NucleiTrainSamples , ThalamusOrigSeg , NucleiOrigSeg , subFolders[sFi], CropDimensions , padSize , Dir_ThalamusTestSamples , Dir_ThalamusModelOut , NucleusName , SliceNumbers , gpuNum)
+                [Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical] = TestData3(net , MultByThalamusFlag, Dir_NucleiTestSamples , Dir_NucleiModelOut , ThalamusOrigSeg , NucleiOrigSeg , subFolders[sFi], CropDimensions , padSize , Dir_ThalamusTestSamples , Dir_ThalamusModelOut , NucleusName , SliceNumbers , gpuNum)
+
+
+                # TestData = image_util.ImageDataProvider(  Directory_Nuclei_Test0 + '*.tif',shuffle_data=False)
+                # Data , Label = TestData(L)
+                # prediction2 = net.predict( Directory_Nuclei_Train_Model_cpkt, data, GPU_Num=gpuNum)
         except:
             print('-------------------------------------------------------')
             print('subFolders: ',subFolders[sFi])

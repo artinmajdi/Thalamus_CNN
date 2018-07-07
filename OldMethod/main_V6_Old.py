@@ -18,7 +18,7 @@ gpuNum = '5' # nan'
 # 11-CM_deformed.nii.gz	  1-THALAMUS_deformed.nii.gz  4-VA_deformed.nii.gz     7-VPL_deformed.nii.gz
 # 12-MD-Pf_deformed.nii.gz  2-AV_deformed.nii.gz	      5-VLa_deformed.nii.gz    8-Pul_deformed.nii.gz
 
-ind = 8
+ind = 1
 if ind == 1:
     NeucleusFolder = 'CNN1_THALAMUS_2D_SanitizedNN'
     NucleusName = '1-THALAMUS'
@@ -31,6 +31,9 @@ elif ind == 6:
 elif ind == 8:
     NeucleusFolder = 'CNN8_Pul_2D_SanitizedNN'
     NucleusName = '8-Pul'
+elif ind == 10:
+    NeucleusFolder = 'CNN10_MGN_2D_SanitizedNN'
+    NucleusName = '10-MGN'
 elif ind == 12:
     NeucleusFolder = 'CNN12_MD_Pf_2D_SanitizedNN'
     NucleusName = '12-MD-Pf'
@@ -126,4 +129,3 @@ for ii in range(1): # len(A)):
             padSize = 90
             MultByThalamusFlag = 0
             [Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical] = TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test , Directory_Nuclei_Train_Model , ThalamusOrigSeg , NucleiOrigSeg , subFolders[sFi], CropDimensions , padSize , Directory_Thalamus_Test , Directory_Thalamus_Train_Model , NucleusName , SliceNumbers , gpuNum)
-

@@ -13,18 +13,36 @@ from PIL import ImageEnhance , Image , ImageFilter
 # 12-MD-Pf_Deformed.nii.gz  4567-VL_Deformed.nii.gz     7-VPL_Deformed.nii.gz
 # 13-Hb_Deformed.nii.gz	  4-VA_Deformed.nii.gz	      8-Pul_Deformed.nii.gz
 
+ind = 1
+if ind == 1:
+    Name_allTests_Nuclei = 'CNN1_THALAMUS_2D_SanitizedNN'
+    NucleusName = '1-THALAMUS'
+elif ind == 4:
+    Name_allTests_Nuclei = 'CNN4567_VL_2D_SanitizedNN' # 'CNN12_MD_Pf_2D_SanitizedNN' #  'CNN1_THALAMUS_2D_SanitizedNN' 'CNN6_VLP_2D_SanitizedNN'  #
+    NucleusName = '4567-VL'
+elif ind == 6:
+    Name_allTests_Nuclei = 'CNN6_VLP_2D_SanitizedNN'
+    NucleusName = '6-VLP'
+elif ind == 8:
+    Name_allTests_Nuclei = 'CNN8_Pul_2D_SanitizedNN'
+    NucleusName = '8-Pul'
+elif ind == 10:
+    Name_allTests_Nuclei = 'CNN10_MGN_2D_SanitizedNN'
+    NucleusName = '10-MGN'
+elif ind == 12:
+    Name_allTests_Nuclei = 'CNN12_MD_Pf_2D_SanitizedNN'
+    NucleusName = '12-MD-Pf'
 
-NeuclusName = '6-VLP' #'8-Pul' # '4567-VL' #
-NeuclusNameFull = ['12-MD-Pf'] # '6-VLP' , '1-THALAMUS' , '8-Pul' , '4567-VL']
-# Directory_Priors = '/media/data1/artin/data/Thalamus/'+ NeucleusFolder + '/OriginalDeformedPriors'
 
-# Directory_Priors = '/array/hdd/msmajdi/data/priors_forCNN_Ver2'
-Directory_Priors = '/array/hdd/msmajdi/data/newPriors/7T_MS'
-Directory_Tests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN'
+# Dir_Prior = '/media/data1/artin/data/Thalamus/'+ Name_allTests_Nuclei + '/OriginalDeformedPriors'
 
+# Dir_Prior = '/array/hdd/msmajdi/data/priors_forCNN_Ver2'
+Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
+Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN'
 
 
-subFolders = os.listdir(Directory_Priors)
+
+subFolders = os.listdir(Dir_Prior)
 
 subFolders2 = []
 i = 0
@@ -34,60 +52,59 @@ for o in range(len(subFolders)):
         i = i+1;
 
 subFolders = subFolders2
-with open(Directory_Priors + "subFolderList.txt" ,"wb") as fp:
+with open(Dir_Prior + "subFolderList.txt" ,"wb") as fp:
     pickle.dump(subFolders,fp)
 
-print(len(subFolders))
-# print(subFolders[19])
 A = [[0,0],[4,3],[6,1],[1,2],[1,3],[4,1]] #
-# print len(A)
 SliceNumbers = range(107,140)
 
-for NeuclusName in NeuclusNameFull:
+
+Name_allTests_Nuclei = 'newDataset/CNN' + NeuclusName.replace('-','_') + '_2D_SanitizedNN'
+
+Name_priors_San_Label = 'Manual_Delineation_Sanitized/' + NeuclusName + '_deformed.nii.gz'
 
 
-    NeucleusFolder = 'newDataset/CNN' + NeuclusName.replace('-','_') + '_2D_SanitizedNN'
-    SegmentName = 'sanitized_rois/' + NeuclusName + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
-    for ii in range(1): # len(A)):
-        if ii == 0:
-            TestName = 'WMnMPRAGE_Deformed' # _Deformed_Cropped
-        else:
-            TestName = 'WMnMPRAGE_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
+for ii in range(len(A)):
+    if ii == 0:
+        TestName = 'WMnMPRAGE_Deformed' # _Deformed_Cropped
+    else:
+        TestName = 'WMnMPRAGE_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
 
-        Directory_Test = Directory_Tests + '/' + NeucleusFolder + '/Test_' + TestName
+    Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + '/' + Name_allTests_Nuclei + '/Test_' + TestName
 
-        inputName = TestName + '.nii.gz'
-        print(inputName)
+    inputName = TestName + '.nii.gz'
+    print(inputName)
 
-        for sFi in range(len(subFolders)):
+    for sFi in range(len(subFolders)):
 
-            print('ii '+str(ii) + ' sfi ' + str(sFi))
-            mask   = nib.load(Directory_Priors + '/'  + subFolders2[sFi] + '/' + SegmentName)
-            im     = nib.load(Directory_Priors + '/'  + subFolders2[sFi] + '/' + inputName)
-            print str(sFi) + subFolders2[sFi]
-            imD    = im.get_data()
-            maskD  = mask.get_data()
-            Header = im.header
-            Affine = im.affine
+        print('ii '+str(ii) + ' sfi ' + str(sFi))
+        mask   = nib.load(Dir_Prior + '/'  + subFolders2[sFi] + '/' + Name_priors_San_Label)
+        im     = nib.load(Dir_Prior + '/'  + subFolders2[sFi] + '/' + inputName)
+        print(str(sFi) + subFolders2[sFi])
+        imD    = im.get_data()
+        maskD  = mask.get_data()
+        Header = im.header
+        Affine = im.affine
 
-            imD2 = imD[50:198,130:278,SliceNumbers]
-            maskD2 = maskD[50:198,130:278,SliceNumbers]
+        imD2 = imD[50:198,130:278,SliceNumbers]
+        maskD2 = maskD[50:198,130:278,SliceNumbers]
 
-            padSizeFull = 90
-            padSize = padSizeFull/2
-            imD_padded = np.pad(imD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' ) #
-            maskD_padded = np.pad(maskD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' ) # , constant_values=(5)
+        padSizeFull = 90
+        padSize = padSizeFull/2
+        imD_padded = np.pad(imD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' )
+        maskD_padded = np.pad(maskD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' )
 
 
-            SaveDirectoryImage = Directory_Test + '/' + subFolders2[sFi] + '/Test'
+        Dir_TestSamples = Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders2[sFi] + '/Test'
 
 
-            try:
-                os.stat(SaveDirectoryImage)
-            except:
-                os.makedirs(SaveDirectoryImage)
+        try:
+            os.stat(Dir_TestSamples)
+        except:
+            os.makedirs(Dir_TestSamples)
 
-            for sliceInd in range(imD2.shape[2]):
+        for sliceInd in range(imD2.shape[2]):
 
-                tifffile.imsave(SaveDirectoryImage + '/' + subFolders2[sFi] + '_Slice'+str(sliceInd)+'.tif',imD_padded[:,:,sliceInd])
-                tifffile.imsave(SaveDirectoryImage + '/' + subFolders2[sFi] + '_Slice'+str(sliceInd)+'_mask.tif',maskD_padded[:,:,sliceInd])
+            Name_PredictedImage = subFolders2[sFi] + '_Slice_'+str(SliceNumbers[sliceInd])
+            tifffile.imsave( Dir_TestSamples + '/' + Name_PredictedImage + '.tif' , imD_padded[:,:,sliceInd] )
+            tifffile.imsave( Dir_TestSamples + '/' + Name_PredictedImage + '_mask.tif' , maskD_padded[:,:,sliceInd] )

@@ -13,9 +13,30 @@ from PIL import ImageEnhance , Image , ImageFilter
 # 12-MD-Pf_Deformed.nii.gz  4567-VL_Deformed.nii.gz     7-VPL_Deformed.nii.gz
 # 13-Hb_Deformed.nii.gz	  4-VA_Deformed.nii.gz	      8-Pul_Deformed.nii.gz
 
+ind = 1
+if ind == 1:
+    NeucleusFolder = 'CNN1_THALAMUS_2D_SanitizedNN'
+    NucleusName = '1-THALAMUS'
+elif ind == 4:
+    NeucleusFolder = 'CNN4567_VL_2D_SanitizedNN' # 'CNN12_MD_Pf_2D_SanitizedNN' #  'CNN1_THALAMUS_2D_SanitizedNN' 'CNN6_VLP_2D_SanitizedNN'  #
+    NucleusName = '4567-VL'
+elif ind == 6:
+    NeucleusFolder = 'CNN6_VLP_2D_SanitizedNN'
+    NucleusName = '6-VLP'
+elif ind == 8:
+    NeucleusFolder = 'CNN8_Pul_2D_SanitizedNN'
+    NucleusName = '8-Pul'
+elif ind == 10:
+    NeucleusFolder = 'CNN10_MGN_2D_SanitizedNN'
+    NucleusName = '10-MGN'
+elif ind == 12:
+    NeucleusFolder = 'CNN12_MD_Pf_2D_SanitizedNN'
+    NucleusName = '12-MD-Pf'
 
 NeuclusName = '6-VLP' #'8-Pul' # '4567-VL' #
 NeuclusNameFull = ['8-Pul' , '6-VLP' , '4567-VL'] # '12-MD-Pf'] # '6-VLP' , '1-THALAMUS' , '8-Pul' , '4567-VL']
+
+
 # Directory_Priors = '/media/data1/artin/data/Thalamus/'+ NeucleusFolder + '/OriginalDeformedPriors'
 Directory_Priors = '/array/hdd/msmajdi/data/priors_forCNN_Ver2'
 Directory_Tests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN'

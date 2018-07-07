@@ -35,7 +35,6 @@ elif ind == 12:
 
 
 # Dir_Prior = '/media/data1/artin/data/Thalamus/'+ Name_allTests_Nuclei + '/OriginalDeformedPriors'
-
 # Dir_Prior = '/array/hdd/msmajdi/data/priors_forCNN_Ver2'
 Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
 Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN'
@@ -55,13 +54,12 @@ subFolders = subFolders2
 with open(Dir_Prior + "subFolderList.txt" ,"wb") as fp:
     pickle.dump(subFolders,fp)
 
-A = [[0,0],[4,3],[6,1],[1,2],[1,3],[4,1]] #
+A = [[0,0],[4,3],[6,1],[1,2],[1,3],[4,1]]
 SliceNumbers = range(107,140)
 
 
-Name_allTests_Nuclei = 'newDataset/CNN' + NeuclusName.replace('-','_') + '_2D_SanitizedNN'
-
-Name_priors_San_Label = 'Manual_Delineation_Sanitized/' + NeuclusName + '_deformed.nii.gz'
+Name_allTests_Nuclei  = 'newDataset/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
+Name_priors_San_Label = 'Manual_Delineation_Sanitized/' + NucleusName + '_deformed.nii.gz'
 
 
 for ii in range(len(A)):

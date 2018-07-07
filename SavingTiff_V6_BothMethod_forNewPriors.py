@@ -17,7 +17,9 @@ from PIL import ImageEnhance , Image , ImageFilter
 NeuclusName = '6-VLP' #'8-Pul' # '4567-VL' #
 NeuclusNameFull = ['12-MD-Pf'] # '6-VLP' , '1-THALAMUS' , '8-Pul' , '4567-VL']
 # Directory_Priors = '/media/data1/artin/data/Thalamus/'+ NeucleusFolder + '/OriginalDeformedPriors'
-Directory_Priors = '/array/hdd/msmajdi/data/priors_forCNN_Ver2'
+
+# Directory_Priors = '/array/hdd/msmajdi/data/priors_forCNN_Ver2'
+Directory_Priors = '/array/hdd/msmajdi/data/newPriors/7T_MS'
 Directory_Tests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN'
 
 
@@ -29,7 +31,6 @@ i = 0
 for o in range(len(subFolders)):
     if "." not in subFolders[o]:
         subFolders2.append(subFolders[o])
-
         i = i+1;
 
 subFolders = subFolders2
@@ -42,79 +43,51 @@ A = [[0,0],[4,3],[6,1],[1,2],[1,3],[4,1]] #
 # print len(A)
 SliceNumbers = range(107,140)
 
-methodMode = 'Old_Method'
-
 for NeuclusName in NeuclusNameFull:
 
 
-    NeucleusFolder = 'CNN' + NeuclusName.replace('-','_') + '_2D_SanitizedNN'
-    SegmentName = 'Manual_Delineation_Sanitized/' + NeuclusName + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
-    for ii in range(len(A)):
+    NeucleusFolder = 'newDataset/CNN' + NeuclusName.replace('-','_') + '_2D_SanitizedNN'
+    SegmentName = 'sanitized_rois/' + NeuclusName + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
+    for ii in range(1): # len(A)):
         if ii == 0:
-            TestName = 'WMnMPRAGE_bias_corr_Deformed' # _Deformed_Cropped
+            TestName = 'WMnMPRAGE_Deformed' # _Deformed_Cropped
         else:
-            TestName = 'WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
+            TestName = 'WMnMPRAGE_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
 
         Directory_Test = Directory_Tests + '/' + NeucleusFolder + '/Test_' + TestName
 
         inputName = TestName + '.nii.gz'
         print(inputName)
 
-
         for sFi in range(len(subFolders)):
-            # sFi = 0
-            if (ii == 1) & (sFi == 18):
-                print('error')
-            else:
-                print('ii '+str(ii) + ' sfi ' + str(sFi))
-                mask   = nib.load(Directory_Priors + '/'  + subFolders2[sFi] + '/' + SegmentName)
-                im     = nib.load(Directory_Priors + '/'  + subFolders2[sFi] + '/' + inputName)
-                # print im.shape
-                print str(sFi) + subFolders2[sFi]
-                imD    = im.get_data()
-                maskD  = mask.get_data()
-                Header = im.header
-                Affine = im.affine
 
-                # imD2 = imD
-                # maskD2 = maskD
+            print('ii '+str(ii) + ' sfi ' + str(sFi))
+            mask   = nib.load(Directory_Priors + '/'  + subFolders2[sFi] + '/' + SegmentName)
+            im     = nib.load(Directory_Priors + '/'  + subFolders2[sFi] + '/' + inputName)
+            print str(sFi) + subFolders2[sFi]
+            imD    = im.get_data()
+            maskD  = mask.get_data()
+            Header = im.header
+            Affine = im.affine
 
-                imD2 = imD[50:198,130:278,SliceNumbers]
-                maskD2 = maskD[50:198,130:278,SliceNumbers]
+            imD2 = imD[50:198,130:278,SliceNumbers]
+            maskD2 = maskD[50:198,130:278,SliceNumbers]
 
-                padSizeFull = 90
-                padSize = padSizeFull/2
-                imD_padded = np.pad(imD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' ) #
-                maskD_padded = np.pad(maskD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' ) # , constant_values=(5)
+            padSizeFull = 90
+            padSize = padSizeFull/2
+            imD_padded = np.pad(imD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' ) #
+            maskD_padded = np.pad(maskD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' ) # , constant_values=(5)
 
-                # imD2 = imD[IndxX,:,:]
-                # imD2 = imD2[:,IndxY,:]
-                # imD2 = imD2[:,:,IndxZ]
-                #
-                # maskD2 = maskD[IndxX,:,:]
-                # maskD2 = maskD2[:,IndxY,:]
-                # maskD2 = maskD2[:,:,IndxZ]
 
-                for p in range(len(subFolders)):
+            SaveDirectoryImage = Directory_Test + '/' + subFolders2[sFi] + '/Test'
 
-                    SaveDirectoryImage = Directory_Test + '/' + subFolders2[sFi] + '/' + '/Test'
 
-                    try:
-                        os.stat(SaveDirectoryImage)
-                    except:
-                        os.makedirs(SaveDirectoryImage)
+            try:
+                os.stat(SaveDirectoryImage)
+            except:
+                os.makedirs(SaveDirectoryImage)
 
-                    for sliceInd in range(imD2.shape[2]):
+            for sliceInd in range(imD2.shape[2]):
 
-                        if methodMode == 'New_Method':
-                            SaveDirectoryImageSlice = SaveDirectoryImage + '/Slice' + str(sliceInd)
-                        else:
-                            SaveDirectoryImageSlice = SaveDirectoryImage
-
-                        try:
-                            os.stat(SaveDirectoryImageSlice)
-                        except:
-                            os.makedirs(SaveDirectoryImageSlice)
-
-                        tifffile.imsave(SaveDirectoryImageSlice + '/' + subFolders2[p] + '_Slice'+str(sliceInd)+'.tif',imD_padded[:,:,sliceInd])
-                        tifffile.imsave(SaveDirectoryImageSlice + '/' + subFolders2[p] + '_Slice'+str(sliceInd)+'_mask.tif',maskD_padded[:,:,sliceInd])
+                tifffile.imsave(SaveDirectoryImage + '/' + subFolders2[sFi] + '_Slice'+str(sliceInd)+'.tif',imD_padded[:,:,sliceInd])
+                tifffile.imsave(SaveDirectoryImage + '/' + subFolders2[sFi] + '_Slice'+str(sliceInd)+'_mask.tif',maskD_padded[:,:,sliceInd])

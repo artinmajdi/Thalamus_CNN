@@ -60,7 +60,6 @@ for NeuclusName in NeuclusNameFull:
         inputName = TestName + '.nii.gz'
         print(inputName)
 
-        print('-')
         for sFi in range(len(subFolders)):
             # sFi = 0
             if (ii == 1) & (sFi == 18):
@@ -87,20 +86,12 @@ for NeuclusName in NeuclusNameFull:
                 imD_padded = np.pad(imD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' ) #
                 maskD_padded = np.pad(maskD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' ) # , constant_values=(5)
 
-                # imD2 = imD[IndxX,:,:]
-                # imD2 = imD2[:,IndxY,:]
-                # imD2 = imD2[:,:,IndxZ]
-                #
-                # maskD2 = maskD[IndxX,:,:]
-                # maskD2 = maskD2[:,IndxY,:]
-                # maskD2 = maskD2[:,:,IndxZ]
-
                 for p in range(len(subFolders)):
 
                     if sFi == p:
-                        SaveDirectoryImage = Directory_Test + '/' + subFolders2[sFi] + '/' + '/Test'
+                        SaveDirectoryImage = Directory_Test + '/' + subFolders2[p] + '/Test'
                     else:
-                        SaveDirectoryImage = Directory_Test + '/' + subFolders2[sFi] + '/' + '/Train'
+                        SaveDirectoryImage = Directory_Test + '/' + subFolders2[p] + '/Train'
 
                     try:
                         os.stat(SaveDirectoryImage)
@@ -109,20 +100,20 @@ for NeuclusName in NeuclusNameFull:
 
                     for sliceInd in range(imD2.shape[2]):
 
-                        if methodMode == 'New_Method':
-                            SaveDirectoryImageSlice = SaveDirectoryImage + '/Slice' + str(sliceInd)
-                        else:
-                            SaveDirectoryImageSlice = SaveDirectoryImage
+                        # if methodMode == 'New_Method':
+                        #     SaveDirectoryImageSlice = SaveDirectoryImage + '/Slice' + str(sliceInd)
+                        # else:
+                        SaveDirectoryImageSlice = SaveDirectoryImage
 
-                        try:
-                            os.stat(SaveDirectoryImageSlice)
-                        except:
-                            os.makedirs(SaveDirectoryImageSlice)
+                        # try:
+                        #     os.stat(SaveDirectoryImageSlice)
+                        # except:
+                        #     os.makedirs(SaveDirectoryImageSlice)
 
-                        if sFi == p:
-                            tifffile.imsave(SaveDirectoryImageSlice + '/' + subFolders2[p] + '_Slice'+str(sliceInd)+'.tif',imD_padded[:,:,sliceInd])
-                            tifffile.imsave(SaveDirectoryImageSlice + '/' + subFolders2[p] + '_Slice'+str(sliceInd)+'_mask.tif',maskD_padded[:,:,sliceInd])
-                        else:
-                            for i in range(max(0,sliceInd-1),min(sliceInd+2,imD2.shape[2])):
-                                tifffile.imsave(SaveDirectoryImageSlice + '/' + subFolders2[p] + '_Slice'+str(i)+'.tif',imD_padded[:,:,i])
-                                tifffile.imsave(SaveDirectoryImageSlice + '/' + subFolders2[p] + '_Slice'+str(i)+'_mask.tif',maskD_padded[:,:,i])
+                        # if sFi == p:
+                        tifffile.imsave(SaveDirectoryImageSlice + '/' + subFolders2[sFi] + '_Slice'+str(sliceInd)+'.tif',imD_padded[:,:,sliceInd])
+                        tifffile.imsave(SaveDirectoryImageSlice + '/' + subFolders2[sFi] + '_Slice'+str(sliceInd)+'_mask.tif',maskD_padded[:,:,sliceInd])
+                        # else:
+                        #     for i in range(max(0,sliceInd-1),min(sliceInd+2,imD2.shape[2])):
+                        #         tifffile.imsave(SaveDirectoryImageSlice + '/' + subFolders2[p] + '_Slice'+str(i)+'.tif',imD_padded[:,:,i])
+                        #         tifffile.imsave(SaveDirectoryImageSlice + '/' + subFolders2[p] + '_Slice'+str(i)+'_mask.tif',maskD_padded[:,:,i])

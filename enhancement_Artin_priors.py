@@ -22,8 +22,8 @@ def enhancing(im , scaleEnhance):
         im = im2.enhance(scaleEnhance[1])
 
     return im
-
-Directory = '/array/hdd/msmajdi/data/newPriors/7T_MS/'
+Directory = '/media/artin/D0E2340CE233F576/Thalamus_Segmentation/Data/NewPriors/test/7T_MS'
+# Directory = '/array/hdd/msmajdi/data/newPriors/7T_MS/'
 # Directory = '/media/data1/artin/thomas/priors/'
 # subDirs = os.listdir(Directory)
 
@@ -31,9 +31,9 @@ subDirsFull = glob(Directory+'/*/')
 # subDirs = subDirsFull[0]
 scaleEnhance = [[1,2],[1,3],[4,1],[6,1],[4,2],[4,3]]
 
-for subDirs in subDirsFull:print subDirs
-    print subDirs
-    for name in ['WMnMPRAGE'] # 'WMnMPRAGE_bias_corr' , 'WMnMPRAGEdeformed']:
+for subDirs in subDirsFull:
+    print(subDirs)
+    for name in ['WMnMPRAGE_bias_corr_Deformed']: # 'WMnMPRAGE_Deformed' 'WMnMPRAGE_bias_corr' , 'WMnMPRAGEdeformed']:
 
         im = nib.load(subDirs + name + '.nii.gz')
         imD = im.get_data()
@@ -44,7 +44,7 @@ for subDirs in subDirsFull:print subDirs
         sz = imD.shape
 
         for s in scaleEnhance:
-            print s
+            print(s)
             imEnhanced = np.zeros(sz)
             for i in range(sz[2]):
                 imEnhanced[:,:,i] = enhancing(imD[:,:,i] , s)
@@ -53,7 +53,7 @@ for subDirs in subDirsFull:print subDirs
             imEnhanced_nifti = nib.Nifti1Image(imEnhanced , im.affine , im.header)
 
             string = subDirs + name + '_' + 'Sharpness_' + str(s[0]) + '_Contrast_' + str(s[1]) + '.nii.gz'
-            print string
+            print(string)
 
             nib.save(imEnhanced_nifti,string)
 
@@ -78,7 +78,7 @@ if EnhanceThomas == 1:
         sz = imD.shape
 
         for s in scaleEnhance:
-            print s
+            print(s)
             imEnhanced = np.zeros(sz)
             for i in range(sz[2]):
                 imEnhanced[:,:,i] = enhancing(imD[:,:,i] , s)
@@ -87,6 +87,6 @@ if EnhanceThomas == 1:
             imEnhanced_nifti = nib.Nifti1Image(imEnhanced , im.affine , im.header)
 
             string = Directory + name + '_' + 'Sharpness_' + str(s[0]) + '_Contrast_' + str(s[1]) + '.nii.gz'
-            print string
+            print(string)
 
             nib.save(imEnhanced_nifti,string)

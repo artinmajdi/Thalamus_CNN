@@ -57,9 +57,10 @@ with open(Dir_Prior + "subFolderList.txt" ,"wb") as fp:
 A = [[0,0],[4,3],[6,1],[1,2],[1,3],[4,1]]
 SliceNumbers = range(107,140)
 
+ManualDir = '/Manual_Delineation_Sanitized/'
 
 Name_allTests_Nuclei  = 'newDataset/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
-Name_priors_San_Label = 'Manual_Delineation_Sanitized/' + NucleusName + '_deformed.nii.gz'
+Name_priors_San_Label = ManualDir + NucleusName + '_deformed.nii.gz'
 
 
 for ii in range(len(A)):

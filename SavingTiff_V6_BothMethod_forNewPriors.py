@@ -75,12 +75,13 @@ for ii in range(len(A)):
     inputName = TestName + '.nii.gz'
     print(inputName)
 
+    subFolders = ['765_04162013_AW']
     for sFi in range(len(subFolders)):
 
         print('ii '+str(ii) + ' sfi ' + str(sFi))
-        mask   = nib.load(Dir_Prior + '/'  + subFolders2[sFi] + '/' + Name_priors_San_Label)
-        im     = nib.load(Dir_Prior + '/'  + subFolders2[sFi] + '/' + inputName)
-        print(str(sFi) + subFolders2[sFi])
+        mask   = nib.load(Dir_Prior + '/'  + subFolders[sFi] + '/' + Name_priors_San_Label)
+        im     = nib.load(Dir_Prior + '/'  + subFolders[sFi] + '/' + inputName)
+        print(str(sFi) + subFolders[sFi])
         imD    = im.get_data()
         maskD  = mask.get_data()
         Header = im.header
@@ -95,7 +96,7 @@ for ii in range(len(A)):
         maskD_padded = np.pad(maskD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' )
 
 
-        Dir_TestSamples = Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders2[sFi] + '/Test'
+        Dir_TestSamples = Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders[sFi] + '/Test'
 
 
         try:
@@ -105,6 +106,6 @@ for ii in range(len(A)):
 
         for sliceInd in range(imD2.shape[2]):
 
-            Name_PredictedImage = subFolders2[sFi] + '_Slice_'+str(SliceNumbers[sliceInd])
+            Name_PredictedImage = subFolders[sFi] + '_Slice_'+str(SliceNumbers[sliceInd])
             tifffile.imsave( Dir_TestSamples + '/' + Name_PredictedImage + '.tif' , imD_padded[:,:,sliceInd] )
             tifffile.imsave( Dir_TestSamples + '/' + Name_PredictedImage + '_mask.tif' , maskD_padded[:,:,sliceInd] )

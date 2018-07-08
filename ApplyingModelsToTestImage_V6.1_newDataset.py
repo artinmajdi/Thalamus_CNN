@@ -53,8 +53,8 @@ Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' #
 
 # Dir_Prior =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
 
-# Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS/'
-Dir_Prior = '/array/hdd/msmajdi/data/test/'
+Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS/'
+# Dir_Prior = '/array/hdd/msmajdi/data/test/'
 
 # subFolders = list(['a', 'b'])
 

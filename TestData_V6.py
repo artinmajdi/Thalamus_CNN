@@ -315,12 +315,12 @@ def TestData3_PerSlice(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Direct
     trainer = unet.Trainer(net)
 
     if MultByThalamusFlag == 1:
-        try:
-            PredictionFull_Thalamus = ThalamusExtraction(net , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , subFolders, CropDim , padSize)
-            outputFolder = 'Results_MultByPredictedThalamus/'
-        except:
-            MultByThalamusFlag = 0
-            print('Error: Could not load Thalamus')
+        # try:
+        PredictionFull_Thalamus = ThalamusExtraction(net , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , subFolders, CropDim , padSize)
+        # outputFolder = 'Results_MultByPredictedThalamus/'
+        # except:
+        #     MultByThalamusFlag = 0
+        #     print('Error: Could not load Thalamus')
 
     elif MultByThalamusFlag == 2:
         AA = Thalamus_OriginalSeg_Data[50:198 , 130:278 , SliceNumbers]
@@ -467,13 +467,13 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nucle
     # Directory_Nuclei_Test_Results   = Directory_Nuclei_Test  + 'results/'
 
     if MultByThalamusFlag != 0:
-        Directory_Test_Results_Thalamus = Directory_Nuclei_Test0 + 'Results/'
+        Directory_Test_Results_Thalamus = Directory_Nuclei_Test0 + 'Results_MultByManualThalamus/'
         try:
             os.stat(Directory_Test_Results_Thalamus)
         except:
             os.makedirs(Directory_Test_Results_Thalamus)
 
-    Directory_Test_Results_Nuclei = Directory_Nuclei_Test0 + 'Results_MultByManualThalamus/'
+    Directory_Test_Results_Nuclei = Directory_Nuclei_Test0 + 'Results/'
 
     try:
         os.stat(Directory_Test_Results_Nuclei)
@@ -497,7 +497,7 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nucle
 
     if MultByThalamusFlag == 1:
         #PredictionFull_Thalamus = ThalamusExtraction(net , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , subFolders, CropDim , padSize , gpuNum)
-        outputFolder = 'Results_MultByPredictedThalamus/'
+        # outputFolder = 'Results_MultByPredictedThalamus/'
         loadThalamus = 1
         if loadThalamus == 1:
             ThalamusOrigSeg = nib.load(Directory_Thalamus_Test + 'Results/' + subFolders + '_' + '1-THALAMUS' + '_Logical.nii.gz')

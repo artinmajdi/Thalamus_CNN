@@ -7,11 +7,10 @@ import nibabel as nib
 import shutil
 from collections import OrderedDict
 import logging
-from TestData_V6 import TestData3
+from TestData_V6_1_newDataset  import TestData3
 from tf_unet import unet, util, image_util
 import multiprocessing
 import tensorflow as tf
-
 
 gpuNum = '4' # nan'
 
@@ -53,8 +52,6 @@ Name_allTests_Thalamus = Dir_AllTests + 'CNN1_THALAMUS_2D_SanitizedNN'
 
 # Dir_Prior =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
 Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
-
-# subFolders = list(['a', 'b'])
 
 for ii in range(len(A)):
 

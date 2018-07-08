@@ -51,7 +51,9 @@ Name_allTests_Nuclei = Dir_AllTests + NeucleusFolder
 Name_allTests_Thalamus = Dir_AllTests + 'CNN1_THALAMUS_2D_SanitizedNN'
 
 # Dir_Prior =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
+
 Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
+# Dir_Prior = '/array/hdd/msmajdi/data/test'
 
 for ii in range(len(A)):
 

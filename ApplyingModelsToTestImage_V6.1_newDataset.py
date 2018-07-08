@@ -52,7 +52,9 @@ Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' #
 # Name_allTests_Thalamus = Dir_AllTests + 'newDataset/' + 'CNN1_THALAMUS_2D_SanitizedNN'
 
 # Dir_Prior =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
-Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS/'
+
+# Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS/'
+Dir_Prior = '/array/hdd/msmajdi/data/test'
 
 # subFolders = list(['a', 'b'])
 

@@ -36,7 +36,10 @@ elif ind == 12:
 
 # Dir_Prior = '/media/data1/artin/data/Thalamus/'+ Name_allTests_Nuclei + '/OriginalDeformedPriors'
 # Dir_Prior = '/array/hdd/msmajdi/data/priors_forCNN_Ver2'
-Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
+
+# Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
+Dir_Prior = '/array/hdd/msmajdi/data/test'
+
 Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN'
 
 

@@ -13,7 +13,7 @@ from PIL import ImageEnhance , Image , ImageFilter
 # 12-MD-Pf_Deformed.nii.gz  4567-VL_Deformed.nii.gz     7-VPL_Deformed.nii.gz
 # 13-Hb_Deformed.nii.gz	  4-VA_Deformed.nii.gz	      8-Pul_Deformed.nii.gz
 
-for ind in [4,6,8,10,12]:
+for ind in [6,8,10,12]:
     # ind = 1
     if ind == 1:
         Name_allTests_Nuclei = 'CNN1_THALAMUS_2D_SanitizedNN'
@@ -69,7 +69,7 @@ for ind in [4,6,8,10,12]:
     A = [[0,0],[4,3],[6,1],[1,2],[1,3],[4,1]]
     SliceNumbers = range(107,140)
 
-    ManualDir = '/Manual_Delineation_Sanitized/'
+    ManualDir = 'Manual_Delineation_Sanitized/'
 
     Name_allTests_Nuclei  = 'newDataset/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
     Name_priors_San_Label = ManualDir + NucleusName + '_deformed.nii.gz'

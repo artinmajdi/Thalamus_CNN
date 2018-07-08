@@ -7,7 +7,7 @@ import nibabel as nib
 import shutil
 from collections import OrderedDict
 import logging
-from TestData_V6 import TestData3
+from TestData_V6_1_newDataset import TestData3
 from tf_unet import unet, util, image_util
 import multiprocessing
 import tensorflow as tf

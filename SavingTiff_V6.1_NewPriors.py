@@ -79,7 +79,7 @@ for ii in range(len(A)):
     if ii == 0:
         TestName = 'WMnMPRAGE_bias_corr_Deformed'
     else:
-        TestName = 'WMnMPRAGE_bias_corr_Deformed_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1])
+        TestName = 'WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
 
     Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + '/' + Name_allTests_Nuclei + '/Test_' + TestName
 

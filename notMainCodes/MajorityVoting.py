@@ -47,7 +47,8 @@ for ind = [1,4,6,8,12]:
     Directory_Thalamus_Full = Directory_main + 'CNN1_THALAMUS_2D_SanitizedNN'
 
     #priorDir = Directory_main + 'Manual_Delineation_Sanitized_Full/'
-    priorDir =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
+    # priorDir =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
+    Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS/'
 
     # subFolders = list(['vimp2_915_07112013_LC', 'vimp2_943_07242013_PA' ,'vimp2_964_08092013_TG'])
 

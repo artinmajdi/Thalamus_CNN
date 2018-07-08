@@ -1,9 +1,6 @@
 import numpy as np
-import tensorflow as tf
 
 
-
-tf.cost
-
-a = np.random.random((3,4))
-print(a.shape)
+a = np.asarray([10,10,2,4,3])
+nb = a - 5
+print(nb)

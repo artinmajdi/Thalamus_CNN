@@ -527,11 +527,13 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nucle
     LogLoss_Mult  = np.zeros(L)
 
     SliceIdx = np.zeros(L)
-
+    SliceIdxOrig = np.zeros(L)
     for sliceNum in range(L):
         Stng = TestData.data_files[sliceNum]
         d = Stng.find('_Slice')
-        SliceIdx[sliceNum] = int(Stng[d+7:].split('.')[0])
+        S = int(Stng[d+7:].split('.')[0])
+        SliceIdx[sliceNum] = S - CropDim[2,0]
+        SliceIdxOrig[sliceNum]  = S
 
     # SliceIdxArg = np.argsort(SliceIdx)
     Data , Label = TestData(L)

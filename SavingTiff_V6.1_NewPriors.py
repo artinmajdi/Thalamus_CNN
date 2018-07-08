@@ -78,7 +78,7 @@ for ii in range(len(A)):
     inputName = TestName + '.nii.gz'
     print(inputName)
 
-    subFolders = ['vimp2_765_04162013_AW']
+    # subFolders = ['vimp2_765_04162013_AW']
     for sFi in range(len(subFolders)):
 
         print('ii '+str(ii) + ' sfi ' + str(sFi))

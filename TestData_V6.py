@@ -635,6 +635,7 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nucle
             np.savetxt(Directory_Test_Results_Thalamus + 'LogLoss.txt',LogLoss_Mult)
 
 
+
     DiceCoefficient[len(SliceIdx)] = DiceCoefficientCalculator(Prediction3D_PureNuclei_logical,Nuclei_OriginalSeg_Data)  # 20 is for zero padding done for input
     np.savetxt(Directory_Test_Results_Nuclei + 'DiceCoefficient.txt',DiceCoefficient)
     if MultByThalamusFlag != 0:

@@ -44,16 +44,24 @@ Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN'
 
 
 
-subFolders = os.listdir(Dir_Prior)
+# subFolders = os.listdir(Dir_Prior)
+# subFolders2 = []
+# for o in range(len(subFolders)):
+#     if "." not in subFolders[o]:
+#         subFolders2.append(subFolders[o])
+#
+# subFolders = subFolders2
 
-subFolders2 = []
-# i = 0
-for o in range(len(subFolders)):
-    if "." not in subFolders[o]:
-        subFolders2.append(subFolders[o])
-        # i = i+1;
 
-subFolders = subFolders2
+subFolders = []
+subFlds = os.listdir(Dir_Prior)
+for i in range(len(subFlds)):
+    if subFlds[i][:5] == 'vimp2':
+        subFolders.append(subFlds[i])
+
+
+
+
 # with open(Dir_Prior + "subFolderList.txt" ,"wb") as fp:
 #     pickle.dump(subFolders,fp)
 

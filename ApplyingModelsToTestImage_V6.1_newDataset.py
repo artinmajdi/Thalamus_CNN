@@ -52,7 +52,6 @@ Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' #
 # Name_allTests_Thalamus = Dir_AllTests + 'newDataset/' + 'CNN1_THALAMUS_2D_SanitizedNN'
 
 # Dir_Prior =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
-
 Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS/'
 # Dir_Prior = '/array/hdd/msmajdi/data/test/'
 
@@ -74,7 +73,7 @@ for ii in range(len(A)):
         if subFlds[i][:5] == 'vimp2':
             subFolders.append(subFlds[i])
 
-    for sFi in range(1,len(subFolders)):
+    for sFi in range(len(subFolders)):
         # try:
         Dir_Prior_NucleiSamples = Dir_Prior +  subFolders[sFi] + ManualDir + NucleusName + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
         Dir_Prior_ThalamusSamples = Dir_Prior +  subFolders[sFi] + ManualDir +'1-THALAMUS' + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped

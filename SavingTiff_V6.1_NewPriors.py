@@ -37,8 +37,8 @@ elif ind == 12:
 # Dir_Prior = '/media/data1/artin/data/Thalamus/'+ Name_allTests_Nuclei + '/OriginalDeformedPriors'
 # Dir_Prior = '/array/hdd/msmajdi/data/priors_forCNN_Ver2'
 
-# Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
-Dir_Prior = '/array/hdd/msmajdi/data/test'
+Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
+# Dir_Prior = '/array/hdd/msmajdi/data/test'
 
 Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN'
 
@@ -47,15 +47,15 @@ Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN'
 subFolders = os.listdir(Dir_Prior)
 
 subFolders2 = []
-i = 0
+# i = 0
 for o in range(len(subFolders)):
     if "." not in subFolders[o]:
         subFolders2.append(subFolders[o])
-        i = i+1;
+        # i = i+1;
 
 subFolders = subFolders2
-with open(Dir_Prior + "subFolderList.txt" ,"wb") as fp:
-    pickle.dump(subFolders,fp)
+# with open(Dir_Prior + "subFolderList.txt" ,"wb") as fp:
+#     pickle.dump(subFolders,fp)
 
 A = [[0,0],[4,3],[6,1],[1,2],[1,3],[4,1]]
 SliceNumbers = range(107,140)
@@ -71,7 +71,7 @@ for ii in range(len(A)):
     if ii == 0:
         TestName = 'WMnMPRAGE_bias_corr_Deformed'
     else:
-        TestName = 'WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
+        TestName = 'WMnMPRAGE_bias_corr_Deformed_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1])
 
     Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + '/' + Name_allTests_Nuclei + '/Test_' + TestName
 

@@ -467,13 +467,13 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nucle
     # Directory_Nuclei_Test_Results   = Directory_Nuclei_Test  + 'results/'
 
     if MultByThalamusFlag != 0:
-        Directory_Test_Results_Thalamus = Directory_Nuclei_Test0 + 'Results/'
+        Directory_Test_Results_Thalamus = Directory_Nuclei_Test0 + 'Results_MultByManualThalamus/'
         try:
             os.stat(Directory_Test_Results_Thalamus)
         except:
             os.makedirs(Directory_Test_Results_Thalamus)
 
-    Directory_Test_Results_Nuclei = Directory_Nuclei_Test0 + 'Results_MultByManualThalamus/'
+    Directory_Test_Results_Nuclei = Directory_Nuclei_Test0 + 'Results/'
 
     try:
         os.stat(Directory_Test_Results_Nuclei)

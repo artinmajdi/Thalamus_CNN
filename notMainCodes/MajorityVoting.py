@@ -18,7 +18,7 @@ gpuNum = '4' # nan'
 # 11-CM_deformed.nii.gz	  1-THALAMUS_deformed.nii.gz  4-VA_deformed.nii.gz     7-VPL_deformed.nii.gz
 # 12-MD-Pf_deformed.nii.gz  2-AV_deformed.nii.gz	      5-VLa_deformed.nii.gz    8-Pul_deformed.nii.gz
 
-for ind = [1,4,6,8,12]:
+for ind in [1,4,6,8,12]:
     if ind == 1:
         NeucleusFolder = 'CNN1_THALAMUS_2D_SanitizedNN'
         NucleusName = '1-THALAMUS'

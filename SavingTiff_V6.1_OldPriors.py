@@ -67,8 +67,9 @@ for ind in [1,6,8,10,12]:
         # subFolders = ['vimp2_765_04162013_AW']
         for sFi in range(len(subFolders)):
             if (ii == 1) & (sFi == 18):
-                imFull = np.append(imFull,np.zeros((im.shape)),axis=3)
-                mskFull = np.append(mskFull,np.zeros((mask.shape),axis=3)
+                a = np.zeros((imD_padded.shape))
+                imFull = np.append(imFull,a[...,np.newaxis]),axis=3)
+                mskFull = np.append(mskFull,a[...,np.newaxis],axis=3)
             else:
                 print('Loading Images:  ii '+str(ii) + ' sfi ' + str(sFi))
                 mask   = nib.load(Dir_Prior + '/'  + subFolders[sFi] + '/' + Name_priors_San_Label)

@@ -7,7 +7,7 @@ import nibabel as nib
 import shutil
 from collections import OrderedDict
 import logging
-from TestData_V6_1_newDataset import TestData3
+from TestData_V6_1 import TestData3
 from tf_unet import unet, util, image_util
 import multiprocessing
 import tensorflow as tf
@@ -43,8 +43,10 @@ for ind in [1,4]: # [1,4,6,8,10,12]
 
     if mode == 'oldDatasetV2':
         NeucleusFolder  = 'oldDatasetV2/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
+        ThalamusFolder  = 'oldDatasetV2/CNN1_THALAMUS_2D_SanitizedNN'
     else if mode == 'oldDataset':
         NeucleusFolder  = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
+        ThalamusFolder  = 'CNN1_THALAMUS_2D_SanitizedNN'
 
 
     ManualDir = '/Manual_Delineation_Sanitized/'
@@ -69,7 +71,7 @@ for ind in [1,4]: # [1,4,6,8,10,12]
             TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
 
         Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + NeucleusFolder + '/' + TestName + '/'
-        Dir_AllTests_Thalamus_EnhancedFld = Dir_AllTests + 'CNN1_THALAMUS_2D_SanitizedNN' + '/' + TestName + '/'
+        Dir_AllTests_Thalamus_EnhancedFld = Dir_AllTests + ThalamusFolder + '/' + TestName + '/'
 
         subFolders = []
         subFlds = os.listdir(Dir_AllTests_Nuclei_EnhancedFld)

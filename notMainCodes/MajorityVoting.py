@@ -17,7 +17,7 @@ gpuNum = '4' # nan'
 # 10-MGN_deformed.nii.gz	  13-Hb_deformed.nii.gz       4567-VL_deformed.nii.gz  6-VLP_deformed.nii.gz  9-LGN_deformed.nii.gz
 # 11-CM_deformed.nii.gz	  1-THALAMUS_deformed.nii.gz  4-VA_deformed.nii.gz     7-VPL_deformed.nii.gz
 # 12-MD-Pf_deformed.nii.gz  2-AV_deformed.nii.gz	      5-VLa_deformed.nii.gz    8-Pul_deformed.nii.gz
-
+save_Dir  = Directory_Nuclei_Full + '/DiceCoefficient_MajorityWoting_'
 for ind in [6,8,12]: # 1,
     if ind == 1:
         NeucleusFolder = 'CNN1_THALAMUS_2D_SanitizedNN'
@@ -106,7 +106,7 @@ for ind in [6,8,12]: # 1,
                     Dice[sFi,ii] = DiceCoefficientCalculator(Label > 0.5 ,Prediction > 0.5)
 
                     Prediction_full[:,:,:,ii] = Prediction > 0.5
-                    np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python'+reslt+'.txt',100*Dice, fmt='%2.1f')
+                    np.savetxt(save_Dir + reslt + '.txt',100*Dice, fmt='%2.1f')
                 except:
                     Er = Er + 1
 
@@ -116,7 +116,7 @@ for ind in [6,8,12]: # 1,
             predictionMV[:,:,:] = Prediction2 > 3-Er
 
             Dice[sFi,len(A)] = DiceCoefficientCalculator(Label > 0.5 ,predictionMV)
-            np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python'+reslt+'.txt',100*Dice, fmt='%2.1f')
+            np.savetxt(save_Dir + reslt + '.txt',100*Dice, fmt='%2.1f')
 
 
             Header = PredictionF.header
@@ -146,7 +146,7 @@ for ind in [6,8,12]: # 1,
         Dice2 = np.zeros((len(subFolders)+1, len(A)+1))
         Dice2[:len(subFolders),:] = Dice
         Dice2[len(subFolders),:] = np.mean(Dice,axis=0)
-        np.savetxt(Directory_Nuclei_Full + '/DiceCoefficient_Python'+reslt+'.txt',100*Dice2, fmt='%2.1f')
+        np.savetxt(save_Dir + reslt + '.txt',100*Dice2, fmt='%2.1f')
         # np.savetxt(Directory_Nuclei_Full + '/subFolders_Python.txt',subFolders)
 
         with open(Directory_Nuclei_Full + "/subFoldersList_Python"+reslt+".txt" ,"wb") as fp:

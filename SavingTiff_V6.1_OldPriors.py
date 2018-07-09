@@ -68,7 +68,7 @@ for ind in [1,6,8,10,12]:
         # subFolders = ['vimp2_765_04162013_AW']
         for sFi in range(len(subFolders)):
 
-            print('ii '+str(ii) + ' sfi ' + str(sFi))
+            print('Loading Images:  ii '+str(ii) + ' sfi ' + str(sFi))
             mask   = nib.load(Dir_Prior + '/'  + subFolders[sFi] + '/' + Name_priors_San_Label)
             im     = nib.load(Dir_Prior + '/'  + subFolders[sFi] + '/' + inputName)
             print(str(sFi) + ' ' + subFolders[sFi])
@@ -107,6 +107,7 @@ for ind in [1,6,8,10,12]:
 
 
         for sFi_parent in range(len(subFolders)):
+            print('Writing Images:  ii '+str(ii) + ' sfi ' + str(sFi_parent))
             for sFi_child in range(len(subFolders)):
 
                 if sFi_parent == sFi_child:

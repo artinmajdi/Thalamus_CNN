@@ -14,22 +14,16 @@ from PIL import ImageEnhance , Image , ImageFilter
 for ind in [1,6,8,10,12]:
     # ind = 1
     if ind == 1:
-        Name_allTests_Nuclei = 'CNN1_THALAMUS_2D_SanitizedNN'
         NucleusName = '1-THALAMUS'
     elif ind == 4:
-        Name_allTests_Nuclei = 'CNN4567_VL_2D_SanitizedNN'
         NucleusName = '4567-VL'
     elif ind == 6:
-        Name_allTests_Nuclei = 'CNN6_VLP_2D_SanitizedNN'
         NucleusName = '6-VLP'
     elif ind == 8:
-        Name_allTests_Nuclei = 'CNN8_Pul_2D_SanitizedNN'
         NucleusName = '8-Pul'
     elif ind == 10:
-        Name_allTests_Nuclei = 'CNN10_MGN_2D_SanitizedNN'
         NucleusName = '10-MGN'
     elif ind == 12:
-        Name_allTests_Nuclei = 'CNN12_MD_Pf_2D_SanitizedNN'
         NucleusName = '12-MD-Pf'
 
 
@@ -39,7 +33,7 @@ for ind in [1,6,8,10,12]:
     Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
     # Dir_Prior = '/array/hdd/msmajdi/data/test'
 
-    Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN'
+    Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/oldDatasetV2'
 
 
     subFolders = []

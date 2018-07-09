@@ -11,7 +11,7 @@ from PIL import ImageEnhance , Image , ImageFilter
 # 12-MD-Pf_Deformed.nii.gz  4567-VL_Deformed.nii.gz     7-VPL_Deformed.nii.gz
 # 13-Hb_Deformed.nii.gz	  4-VA_Deformed.nii.gz	      8-Pul_Deformed.nii.gz
 
-for ind in [6,8,10,12]:
+for ind in [1,6,8,10,12]:
     # ind = 1
     if ind == 1:
         Name_allTests_Nuclei = 'CNN1_THALAMUS_2D_SanitizedNN'

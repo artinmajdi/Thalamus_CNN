@@ -28,9 +28,8 @@ for ind in [1,6,8,10,12]:
 
 
     # Dir_Prior = '/media/data1/artin/data/Thalamus/'+ Name_allTests_Nuclei + '/OriginalDeformedPriors'
-    # Dir_Prior = '/array/hdd/msmajdi/data/priors_forCNN_Ver2'
-
-    Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
+    Dir_Prior = '/array/hdd/msmajdi/data/priors_forCNN_Ver2'
+    # Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
     # Dir_Prior = '/array/hdd/msmajdi/data/test'
 
 
@@ -67,42 +66,45 @@ for ind in [1,6,8,10,12]:
 
         # subFolders = ['vimp2_765_04162013_AW']
         for sFi in range(len(subFolders)):
-
-            print('Loading Images:  ii '+str(ii) + ' sfi ' + str(sFi))
-            mask   = nib.load(Dir_Prior + '/'  + subFolders[sFi] + '/' + Name_priors_San_Label)
-            im     = nib.load(Dir_Prior + '/'  + subFolders[sFi] + '/' + inputName)
-            print(str(sFi) + ' ' + subFolders[sFi])
-            imD    = im.get_data()
-            maskD  = mask.get_data()
-            Header = im.header
-            Affine = im.affine
-
-            imD2 = imD[50:198,130:278,SliceNumbers]
-            maskD2 = maskD[50:198,130:278,SliceNumbers]
-
-            padSizeFull = 90
-            padSize = padSizeFull/2
-            imD_padded = np.pad(imD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' )
-            maskD_padded = np.pad(maskD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' )
-
-            if sFi == 0:
-                imFull = imD_padded[...,np.newaxis]
-                mskFull = maskD_padded[...,np.newaxis]
+            if (ii == 1) & (sFi == 18):
+                imFull = np.append(imFull,np.zeros((im.shape)),axis=3)
+                mskFull = np.append(mskFull,np.zeros((mask.shape),axis=3)
             else:
-                imFull = np.append(imFull,imD_padded[...,np.newaxis],axis=3)
-                mskFull = np.append(mskFull,maskD_padded[...,np.newaxis],axis=3)
+                print('Loading Images:  ii '+str(ii) + ' sfi ' + str(sFi))
+                mask   = nib.load(Dir_Prior + '/'  + subFolders[sFi] + '/' + Name_priors_San_Label)
+                im     = nib.load(Dir_Prior + '/'  + subFolders[sFi] + '/' + inputName)
+                print(str(sFi) + ' ' + subFolders[sFi])
+                imD    = im.get_data()
+                maskD  = mask.get_data()
+                Header = im.header
+                Affine = im.affine
 
-            Dir = Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders[sFi] + '/Test'
-            try:
-                os.stat(Dir)
-            except:
-                os.makedirs(Dir)
+                imD2 = imD[50:198,130:278,SliceNumbers]
+                maskD2 = maskD[50:198,130:278,SliceNumbers]
 
-            Dir = Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders[sFi] + '/Train'
-            try:
-                os.stat(Dir)
-            except:
-                os.makedirs(Dir)
+                padSizeFull = 90
+                padSize = padSizeFull/2
+                imD_padded = np.pad(imD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' )
+                maskD_padded = np.pad(maskD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' )
+
+                if sFi == 0:
+                    imFull = imD_padded[...,np.newaxis]
+                    mskFull = maskD_padded[...,np.newaxis]
+                else:
+                    imFull = np.append(imFull,imD_padded[...,np.newaxis],axis=3)
+                    mskFull = np.append(mskFull,maskD_padded[...,np.newaxis],axis=3)
+
+                Dir = Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders[sFi] + '/Test'
+                try:
+                    os.stat(Dir)
+                except:
+                    os.makedirs(Dir)
+
+                Dir = Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders[sFi] + '/Train'
+                try:
+                    os.stat(Dir)
+                except:
+                    os.makedirs(Dir)
 
 
 

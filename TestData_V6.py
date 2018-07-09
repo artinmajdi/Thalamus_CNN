@@ -510,6 +510,7 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nucle
         else:
             PredictionFull_Thalamus = ThalamusExtraction(net , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , subFolders, CropDim , padSize , gpuNum)
 
+
     elif MultByThalamusFlag == 2:
         AA = Thalamus_OriginalSeg_Data[50:198 , 130:278 , SliceNumbers]
         L = len(SliceNumbers)

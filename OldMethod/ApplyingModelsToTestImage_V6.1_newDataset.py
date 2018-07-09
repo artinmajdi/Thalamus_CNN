@@ -75,8 +75,8 @@ for ind in [1,6,8]:
 
         for sFi in range(len(subFolders)):
             # try:
-            Dir_Prior_NucleiSamples = Dir_Prior +  subFolders[sFi] + ManualDir + NucleusName + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
-            Dir_Prior_ThalamusSamples = Dir_Prior +  subFolders[sFi] + ManualDir +'1-THALAMUS' + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
+            Dir_Prior_NucleiSample = Dir_Prior +  subFolders[sFi] + ManualDir + NucleusName + '_deformed.nii.gz'
+            Dir_Prior_ThalamusSample = Dir_Prior +  subFolders[sFi] + ManualDir +'1-THALAMUS' + '_deformed.nii.gz'
 
             Dir_NucleiTestSamples  = Dir_AllTests + 'newDataset/' + NeucleusFolder + '/' + TestName + '/' + subFolders[sFi] + '/Test/'
             Dir_ResultsOut   = Dir_NucleiTestSamples  + 'Results/'
@@ -111,8 +111,8 @@ for ind in [1,6,8]:
             # else:
             #     path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500) #  , cost="dice_coefficient" restore=True
 
-            NucleiOrigSeg = nib.load(Dir_Prior_NucleiSamples)
-            ThalamusOrigSeg = nib.load(Dir_Prior_ThalamusSamples)
+            NucleiOrigSeg = nib.load(Dir_Prior_NucleiSample)
+            ThalamusOrigSeg = nib.load(Dir_Prior_ThalamusSample)
 
             CropDimensions = np.array([ [50,198] , [130,278] , [SliceNumbers[0] , SliceNumbers[len(SliceNumbers)-1]] ])
 

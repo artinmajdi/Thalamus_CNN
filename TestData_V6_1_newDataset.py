@@ -15,7 +15,7 @@ def DiceCoefficientCalculator(msk1,msk2):
 def TestData(net , Directory_Nuclei_Test , Directory_Nuclei_Train , Thalamus_OriginalSeg , Nuclei_OriginalSeg , subFolders, CropDim , padSize , gpuNum):
 
 
-    Directory_Nuclei_Train_Model_cpkt = Directory_Nuclei_Train + 'model/model.cpkt'
+    Dir_NucleiModelOut_cptk = Directory_Nuclei_Train + 'model/model.cpkt'
     Directory_Nuclei_Test_Results     = Directory_Nuclei_Test  + 'results/'
 
     try:
@@ -70,9 +70,9 @@ def TestData(net , Directory_Nuclei_Test , Directory_Nuclei_Train , Thalamus_Ori
     #     label = np.roll(label,[0,shiftX,shiftY,0])
 
     if gpuNum != 'nan':
-        prediction = net.predict( Directory_Nuclei_Train_Model_cpkt, data, GPU_Num=gpuNum)
+        prediction = net.predict( Dir_NucleiModelOut_cptk, data, GPU_Num=gpuNum)
     else:
-        prediction = net.predict( Directory_Nuclei_Train_Model_cpkt, data)
+        prediction = net.predict( Dir_NucleiModelOut_cptk, data)
 
     # PredictedSeg = prediction[0,...,1] > 0.2
     Thresh = max(filters.threshold_otsu(prediction[0,...,1]),0.2)
@@ -122,7 +122,7 @@ def TestData(net , Directory_Nuclei_Test , Directory_Nuclei_Train , Thalamus_Ori
 def ThalamusExtraction(net , Directory_Nuclei_Test , Directory_Nuclei_Train , subFolders, CropDim , padSize , gpuNum):
 
 
-    Directory_Nuclei_Train_Model_cpkt = Directory_Nuclei_Train + 'model.cpkt'
+    Dir_NucleiModelOut_cptk = Directory_Nuclei_Train + 'model.cpkt'
 
 
     trainer = unet.Trainer(net)
@@ -163,9 +163,9 @@ def ThalamusExtraction(net , Directory_Nuclei_Test , Directory_Nuclei_Train , su
             label = np.roll(label,[0,shiftX,shiftY,0])
 
         if gpuNum != 'nan':
-            prediction = net.predict( Directory_Nuclei_Train_Model_cpkt, data, GPU_Num=gpuNum)
+            prediction = net.predict( Dir_NucleiModelOut_cptk, data, GPU_Num=gpuNum)
         else:
-            prediction = net.predict( Directory_Nuclei_Train_Model_cpkt, data)
+            prediction = net.predict( Dir_NucleiModelOut_cptk, data)
 
         #print(slInd)
         #print(type(slInd))
@@ -180,7 +180,7 @@ def ThalamusExtraction(net , Directory_Nuclei_Test , Directory_Nuclei_Train , su
 def TestData2_MultThalamus(net , Directory_Nuclei_Test , Directory_Nuclei_Train , Thalamus_OriginalSeg , Nuclei_OriginalSeg , subFolders, CropDim , padSize , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , NucleusName , gpuNum):
 
 
-    Directory_Nuclei_Train_Model_cpkt = Directory_Nuclei_Train + 'model/model.cpkt'
+    Dir_NucleiModelOut_cptk = Directory_Nuclei_Train + 'model/model.cpkt'
     Directory_Nuclei_Test_Results   = Directory_Nuclei_Test  + 'results/'
 
     try:
@@ -237,9 +237,9 @@ def TestData2_MultThalamus(net , Directory_Nuclei_Test , Directory_Nuclei_Train 
 
 
         if gpuNum != 'nan':
-            prediction2 = net.predict( Directory_Nuclei_Train_Model_cpkt, data, GPU_Num=gpuNum)
+            prediction2 = net.predict( Dir_NucleiModelOut_cptk, data, GPU_Num=gpuNum)
         else:
-            prediction2 = net.predict( Directory_Nuclei_Train_Model_cpkt, data)
+            prediction2 = net.predict( Dir_NucleiModelOut_cptk, data)
 
         prediction = np.zeros(prediction2.shape)
         prediction[0,:,:,:] = np.multiply(prediction2[0,:,:,:],PredictionFull_Thalamus[int(SliceIdx[slInd]),:,:,:])
@@ -346,7 +346,7 @@ def TestData3_PerSlice(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Direct
         Directory_Nuclei_Train = Directory_Nuclei_Train0 + 'Slice' + str(sliceInd) + '/'
         Directory_Nuclei_Test  = Directory_Nuclei_Test0 + 'Slice' + str(sliceInd) + '/'
 
-        Directory_Nuclei_Train_Model_cpkt = Directory_Nuclei_Train + 'model/model.cpkt'
+        Dir_NucleiModelOut_cptk = Directory_Nuclei_Train + 'model/model.cpkt'
 
         if MultByThalamusFlag != 0:
             Directory_Test_Results_Thalamus = Directory_Nuclei_Test0 + 'Results_MultByManualThalamus/'
@@ -376,9 +376,9 @@ def TestData3_PerSlice(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Direct
             label = np.roll(label,[0,shiftX,shiftY,0])
 
         if gpuNum != 'nan':
-            prediction2 = net.predict( Directory_Nuclei_Train_Model_cpkt, data, GPU_Num=gpuNum)
+            prediction2 = net.predict( Dir_NucleiModelOut_cptk, data, GPU_Num=gpuNum)
         else:
-            prediction2 = net.predict( Directory_Nuclei_Train_Model_cpkt, data)
+            prediction2 = net.predict( Dir_NucleiModelOut_cptk, data)
 
         if MultByThalamusFlag != 0:
 
@@ -460,11 +460,12 @@ def TestData3_PerSlice(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Direct
 
     return Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical
 
-def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nuclei_Train_Model0 , Thalamus_OriginalSeg , Nuclei_OriginalSeg , subFolders, CropDim , padSize , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , NucleusName , SliceNumbers , gpuNum):
+def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Dir_NucleiModelOut , Thalamus_OriginalSeg , Nuclei_OriginalSeg , subFolders, CropDim , padSize , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , NucleusName , SliceNumbers , gpuNum):
 
 
-    Directory_Nuclei_Train_Model_cpkt = Directory_Nuclei_Train_Model0 + 'model.cpkt'
+    Dir_NucleiModelOut_cptk = Dir_NucleiModelOut + 'model.cpkt'
     # Directory_Nuclei_Test_Results   = Directory_Nuclei_Test  + 'results/'
+
 
     if MultByThalamusFlag != 0:
         Directory_Test_Results_Thalamus = Directory_Nuclei_Test0 + 'Results_MultByManualThalamus/'
@@ -561,9 +562,9 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Directory_Nucle
             label = np.roll(label,[0,shiftX,shiftY,0])
 
         if gpuNum != 'nan':
-            prediction2 = net.predict( Directory_Nuclei_Train_Model_cpkt, data, GPU_Num=gpuNum)
+            prediction2 = net.predict( Dir_NucleiModelOut_cptk, data, GPU_Num=gpuNum)
         else:
-            prediction2 = net.predict( Directory_Nuclei_Train_Model_cpkt, data)
+            prediction2 = net.predict( Dir_NucleiModelOut_cptk, data)
 
         if MultByThalamusFlag != 0:
 

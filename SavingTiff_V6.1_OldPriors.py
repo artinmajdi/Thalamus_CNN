@@ -67,9 +67,9 @@ for ind in [1,6,8,10,12]:
         # subFolders = ['vimp2_765_04162013_AW']
         for sFi in range(len(subFolders)):
             if (ii == 1) & (sFi == 18):
-                a = np.zeros((imD_padded.shape))
-                imFull = np.append(imFull,a[...,np.newaxis]),axis=3)
-                mskFull = np.append(mskFull,a[...,np.newaxis],axis=3)
+                imD_padded = np.zeros((imD_padded.shape))
+                maskD_padded = np.zeros((maskD_padded.shape))
+
             else:
                 print('Loading Images:  ii '+str(ii) + ' sfi ' + str(sFi))
                 mask   = nib.load(Dir_Prior + '/'  + subFolders[sFi] + '/' + Name_priors_San_Label)
@@ -88,24 +88,24 @@ for ind in [1,6,8,10,12]:
                 imD_padded = np.pad(imD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' )
                 maskD_padded = np.pad(maskD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' )
 
-                if sFi == 0:
-                    imFull = imD_padded[...,np.newaxis]
-                    mskFull = maskD_padded[...,np.newaxis]
-                else:
-                    imFull = np.append(imFull,imD_padded[...,np.newaxis],axis=3)
-                    mskFull = np.append(mskFull,maskD_padded[...,np.newaxis],axis=3)
+            if sFi == 0:
+                imFull = imD_padded[...,np.newaxis]
+                mskFull = maskD_padded[...,np.newaxis]
+            else:
+                imFull = np.append(imFull,imD_padded[...,np.newaxis],axis=3)
+                mskFull = np.append(mskFull,maskD_padded[...,np.newaxis],axis=3)
 
-                Dir = Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders[sFi] + '/Test'
-                try:
-                    os.stat(Dir)
-                except:
-                    os.makedirs(Dir)
+            Dir = Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders[sFi] + '/Test'
+            try:
+                os.stat(Dir)
+            except:
+                os.makedirs(Dir)
 
-                Dir = Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders[sFi] + '/Train'
-                try:
-                    os.stat(Dir)
-                except:
-                    os.makedirs(Dir)
+            Dir = Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders[sFi] + '/Train'
+            try:
+                os.stat(Dir)
+            except:
+                os.makedirs(Dir)
 
 
 

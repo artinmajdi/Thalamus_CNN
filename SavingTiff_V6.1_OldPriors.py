@@ -43,7 +43,7 @@ for ind in [1,6,8,10,12]:
             subFolders.append(subFlds[i])
 
 
-    A = [[0,0],[4,3],[6,1],[1,2],[1,3],[4,1]]
+    A = [[0,0],[6,1],[1,2],[1,3],[4,1]] # [4,3],
     SliceNumbers = range(107,140)
 
     ManualDir = 'Manual_Delineation_Sanitized/'

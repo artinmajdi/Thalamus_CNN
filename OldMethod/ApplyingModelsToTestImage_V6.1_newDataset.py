@@ -7,7 +7,7 @@ import nibabel as nib
 import shutil
 from collections import OrderedDict
 import logging
-from TestData_V6_1 import TestData3
+from TestData_V6_1_newDataset import TestData3
 from tf_unet import unet, util, image_util
 import multiprocessing
 import tensorflow as tf
@@ -75,8 +75,8 @@ for ind in [1,6,8]:
 
         for sFi in range(len(subFolders)):
             # try:
-            Dir_Prior_NucleiSample = Dir_Prior +  subFolders[sFi] + ManualDir + NucleusName + '_deformed.nii.gz'
-            Dir_Prior_ThalamusSample = Dir_Prior +  subFolders[sFi] + ManualDir +'1-THALAMUS' + '_deformed.nii.gz'
+            Dir_Prior_NucleiSample = Dir_Prior +  subFolders[sFi] + ManualDir + NucleusName + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
+            Dir_Prior_ThalamusSample = Dir_Prior +  subFolders[sFi] + ManualDir +'1-THALAMUS' + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
 
             Dir_NucleiTestSamples  = Dir_AllTests + 'newDataset/' + NeucleusFolder + '/' + TestName + '/' + subFolders[sFi] + '/Test/'
             Dir_ResultsOut   = Dir_NucleiTestSamples  + 'Results/'

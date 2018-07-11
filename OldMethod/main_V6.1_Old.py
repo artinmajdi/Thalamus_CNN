@@ -79,6 +79,10 @@ for ii in range(len(A)):
     else:
         TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
 
+    print('-------------------------------------')
+    print(TestName)
+    print('-------------------------------------')
+
     Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + NeucleusFolder + '/' + TestName + '/'
     Dir_AllTests_Thalamus_EnhancedFld = Dir_AllTests + ThalamusFolder + '/' + TestName + '/'
 

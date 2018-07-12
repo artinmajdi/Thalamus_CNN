@@ -83,6 +83,7 @@ for ind in [1,6,8,10,12]:
     A = [[0,0],[6,1],[1,2],[1,3],[4,1]] # [4,3],
     SliceNumbers = range(107,140)
 
+
     # Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/newDataset/' #
     # Dir_AllTests = '/media/artin/D0E2340CE233F576/Thalamus_Segmentation/Data/'
     Dir_AllTests_nucleiFld = Dir_AllTests + NeucleusFolder
@@ -164,7 +165,7 @@ for ind in [1,6,8,10,12]:
 
             Dir_save = Dir_SaveMWFld + NeucleusFolder + '/' + subFolders[sFi] + '/'
             try:
-                os.stat(Dir_save
+                os.stat(Dir_save)
             except:
                 os.makedirs(Dir_save)
 

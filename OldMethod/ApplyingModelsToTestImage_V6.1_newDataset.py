@@ -7,7 +7,7 @@ import nibabel as nib
 import shutil
 from collections import OrderedDict
 import logging
-from TestData_V6_1_newDataset import TestData3
+from TestData_V6_1 import TestData3
 from tf_unet import unet, util, image_util
 import multiprocessing
 import tensorflow as tf
@@ -19,7 +19,7 @@ gpuNum = '4' # nan'
 # 11-CM_deformed.nii.gz	  1-THALAMUS_deformed.nii.gz  4-VA_deformed.nii.gz     7-VPL_deformed.nii.gz
 # 12-MD-Pf_deformed.nii.gz  2-AV_deformed.nii.gz	      5-VLa_deformed.nii.gz    8-Pul_deformed.nii.gz
 
-for ind in [1,6,8]:
+for ind in [1,6,8,10,12]:
     if ind == 1:
         NeucleusFolder = 'CNN1_THALAMUS_2D_SanitizedNN'
         NucleusName = '1-THALAMUS'
@@ -42,10 +42,10 @@ for ind in [1,6,8]:
 
     ManualDir = '/Manual_Delineation_Sanitized/' #ManualDelineation
 
-    A = [[0,0],[4,3],[6,1],[1,2],[1,3],[4,1]]
+    A = [[0,0],[1,2],[1,3],[4,1],[6,1]] # [4,3],
     SliceNumbers = range(107,140)
 
-    Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' #
+    Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/oldDatasetV2/' #
     #Dir_AllTests = '/media/artin-laptop/D0E2340CE233F5761/Thalamus_Segmentation/Data/'
 
     # Name_allTests_Nuclei = Dir_AllTests + 'newDataset/' + NeucleusFolder
@@ -81,8 +81,8 @@ for ind in [1,6,8]:
             Dir_NucleiTestSamples  = Dir_AllTests + 'newDataset/' + NeucleusFolder + '/' + TestName + '/' + subFolders[sFi] + '/Test/'
             Dir_ResultsOut   = Dir_NucleiTestSamples  + 'Results/'
 
-            subFoldersModel = 'vimp2_668_02282013_CD'
-            Dir_NucleiModelOut = Dir_AllTests + NeucleusFolder + '/' + TestName + '/' + subFoldersModel + '/Train/model/'
+            subFoldersModel = 'vimp2_964_08092013_TG' # 'vimp2_668_02282013_CD'
+            Dir_NucleiModelOut = Dir_AllTests + NeucleusFolder + '/' + TestName + '/' + subFoldersModel + '/Train/model/'  # 'model_momentum/'
             # Dir_NucleiModelOut = Dir_AllTests + 'newDataset/' + NeucleusFolder + '/' + TestName + '/' + subFolders[sFi] + '/Train/model/'
 
 

@@ -17,8 +17,8 @@ gpuNum = '4' # nan'
 # 10-MGN_deformed.nii.gz	  13-Hb_deformed.nii.gz       4567-VL_deformed.nii.gz  6-VLP_deformed.nii.gz  9-LGN_deformed.nii.gz
 # 11-CM_deformed.nii.gz	  1-THALAMUS_deformed.nii.gz  4-VA_deformed.nii.gz     7-VPL_deformed.nii.gz
 # 12-MD-Pf_deformed.nii.gz  2-AV_deformed.nii.gz	      5-VLa_deformed.nii.gz    8-Pul_deformed.nii.gz
-save_Dir  = Directory_Nuclei_Full + '/DiceCoefficient_MajorityWoting_'
-for ind in [6,8,12]: # 1,
+save_Dir  = Directory_Nuclei_Full + '/Folder_DiceCoefficient_MajorityWoting_Atom_'
+for ind in [6,8,10,12]: # 1,
     if ind == 1:
         NeucleusFolder = 'CNN1_THALAMUS_2D_SanitizedNN'
         NucleusName = '1-THALAMUS'
@@ -31,6 +31,9 @@ for ind in [6,8,12]: # 1,
     elif ind == 8:
         NeucleusFolder = 'CNN8_Pul_2D_SanitizedNN'
         NucleusName = '8-Pul'
+    elif ind == 10:
+        NeucleusFolder = 'CNN10_MGN_2D_SanitizedNN'
+        NucleusName = '10-MGN'
     elif ind == 12:
         NeucleusFolder = 'CNN12_MD_Pf_2D_SanitizedNN'
         NucleusName = '12-MD-Pf'
@@ -122,11 +125,11 @@ for ind in [6,8,12]: # 1,
             Header = PredictionF.header
             Affine = PredictionF.affine
 
-            Directory_Nuclei_Full2 = Directory_Nuclei_Full + '/MajorityVoting_Results'
+            # Directory_Nuclei_Full2 = Directory_Nuclei_Full + '/Folder_MajorityVoting_Results_Atom'
             try:
-                os.stat(Directory_Nuclei_Full2)
+                os.stat(save_Dir)
             except:
-                os.makedirs(Directory_Nuclei_Full2)
+                os.makedirs(save_Dir)
 
             Directory_Nuclei_Full3 = Directory_Nuclei_Full2 + '/' + subFolders[sFi]
             try:

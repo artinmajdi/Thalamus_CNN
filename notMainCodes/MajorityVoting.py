@@ -119,6 +119,12 @@ for ind in [1,6,8,10,12]:
             Label = nib.load(Directory_Nuclei_Label)
             Label = Label.get_data()
 
+            Dir_save = Dir_SaveMWFld + NeucleusFolder + '/' + subFolders[sFi] + '/'
+            try:
+                os.stat(Dir_save)
+            except:
+                os.makedirs(Dir_save)
+                
             Prediction_full = np.zeros((sz[0],sz[1],sz[2],len(A)))
             Er = 0
             for ii in range(len(A)):
@@ -163,11 +169,7 @@ for ind in [1,6,8,10,12]:
             # Dir_AllTests_nucleiFld2 = Dir_AllTests_nucleiFld + '/Folder_MajorityVoting_Results_Atom'
 
 
-            Dir_save = Dir_SaveMWFld + NeucleusFolder + '/' + subFolders[sFi] + '/'
-            try:
-                os.stat(Dir_save)
-            except:
-                os.makedirs(Dir_save)
+
 
             predictionMV_nifti = nib.Nifti1Image(predictionMV,Affine)
             predictionMV_nifti.get_header = Header

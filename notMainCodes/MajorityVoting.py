@@ -11,6 +11,44 @@ def DiceCoefficientCalculator(msk1,msk2):
     DiceCoef = intersection.sum()*2/(msk1.sum()+msk2.sum())
     return DiceCoef
 
+def initialDirectories(ind = 1, mode = 'oldDataset'):
+
+    if ind == 1:
+        NucleusName = '1-THALAMUS'
+    elif ind == 4:
+        NucleusName = '4567-VL'
+    elif ind == 6:
+        NucleusName = '6-VLP'
+    elif ind == 8:
+        NucleusName = '8-Pul'
+    elif ind == 10:
+        NucleusName = '10-MGN'
+    elif ind == 12:
+        NucleusName = '12-MD-Pf'
+
+
+    if mode == 'oldDatasetV2':
+        NeucleusFolder = 'oldDatasetV2/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
+        ThalamusFolder = 'oldDatasetV2/CNN1_THALAMUS_2D_SanitizedNN'
+    elif mode == 'oldDataset':
+        NeucleusFolder = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
+        ThalamusFolder = 'CNN1_THALAMUS_2D_SanitizedNN'
+    elif mode == 'newDataset':
+        NeucleusFolder = 'newDataset/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
+        ThalamusFolder = 'newDataset/CNN1_THALAMUS_2D_SanitizedNN'
+
+    if mode == 'localMachine':
+        Dir_AllTests = '/media/artin-laptop/D0E2340CE233F5761/Thalamus_Segmentation/Data/'
+        Dir_Prior = ''
+
+    elif (mode == 'oldDataset') | (mode == 'oldDatasetV2'):
+        Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/'
+        Dir_Prior =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
+
+    elif mode == 'newDataset':
+        Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/'
+        Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS/'
+
 
 gpuNum = '4' # nan'
 
@@ -18,38 +56,23 @@ gpuNum = '4' # nan'
 # 11-CM_deformed.nii.gz	  1-THALAMUS_deformed.nii.gz  4-VA_deformed.nii.gz     7-VPL_deformed.nii.gz
 # 12-MD-Pf_deformed.nii.gz  2-AV_deformed.nii.gz	      5-VLa_deformed.nii.gz    8-Pul_deformed.nii.gz
 save_Dir  = Directory_Nuclei_Full + '/Folder_DiceCoefficient_MajorityWoting_Atom_'
-for ind in [6,8,10,12]: # 1,
-    if ind == 1:
-        NeucleusFolder = 'CNN1_THALAMUS_2D_SanitizedNN'
-        NucleusName = '1-THALAMUS'
-    elif ind == 4:
-        NeucleusFolder = 'CNN4567_VL_2D_SanitizedNN' # 'CNN12_MD_Pf_2D_SanitizedNN' #  'CNN1_THALAMUS_2D_SanitizedNN' 'CNN6_VLP_2D_SanitizedNN'  #
-        NucleusName = '4567-VL'
-    elif ind == 6:
-        NeucleusFolder = 'CNN6_VLP_2D_SanitizedNN'
-        NucleusName = '6-VLP'
-    elif ind == 8:
-        NeucleusFolder = 'CNN8_Pul_2D_SanitizedNN'
-        NucleusName = '8-Pul'
-    elif ind == 10:
-        NeucleusFolder = 'CNN10_MGN_2D_SanitizedNN'
-        NucleusName = '10-MGN'
-    elif ind == 12:
-        NeucleusFolder = 'CNN12_MD_Pf_2D_SanitizedNN'
-        NucleusName = '12-MD-Pf'
+for ind in [1,6,8,10,12]: # 1,
+
+    mode = 'newDataset'
+    NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior = initialDirectories(ind , mode)
 
 
     ManualDir = '/Manual_Delineation_Sanitized/' #ManualDelineation
 
-    A = [[0,0],[4,3],[6,1],[1,2],[1,3],[4,1]]
+    A = [[0,0],[6,1],[1,2],[1,3],[4,1]] # [4,3],
     SliceNumbers = range(107,140)
 
-    Directory_main = '/array/hdd/msmajdi/Tests/Thalamus_CNN/newDataset/' #
-    # Directory_main = '/media/artin/D0E2340CE233F576/Thalamus_Segmentation/Data/'
-    Directory_Nuclei_Full = Directory_main + NeucleusFolder
-    Directory_Thalamus_Full = Directory_main + 'CNN1_THALAMUS_2D_SanitizedNN'
+    # Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/newDataset/' #
+    # Dir_AllTests = '/media/artin/D0E2340CE233F576/Thalamus_Segmentation/Data/'
+    Directory_Nuclei_Full = Dir_AllTests + NeucleusFolder
+    Directory_Thalamus_Full = Dir_AllTests + 'CNN1_THALAMUS_2D_SanitizedNN'
 
-    #priorDir = Directory_main + 'Manual_Delineation_Sanitized_Full/'
+    #priorDir = Dir_AllTests + 'Manual_Delineation_Sanitized_Full/'
     # priorDir =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
     priorDir = '/array/hdd/msmajdi/data/newPriors/7T_MS/'
 
@@ -66,7 +89,7 @@ for ind in [6,8,10,12]: # 1,
 
     subFolders = listt
 
-    for reslt in ['Results']: #  , 'Results_MultByManualThalamus'
+    for reslt in ['Results_momentum']: # 'Results' ,  , 'Results_MultByManualThalamus'
 
         print(reslt + '--------------->>>>>---------------')
         Dice = np.zeros((len(subFolders), len(A)+1))
@@ -116,7 +139,7 @@ for ind in [6,8,10,12]: # 1,
             # print(len(A))
             Prediction2 = np.sum(Prediction_full,axis=3)
             predictionMV = np.zeros(Prediction2.shape)
-            predictionMV[:,:,:] = Prediction2 > 3-Er
+            predictionMV[:,:,:] = Prediction2 > 2-Er
 
             Dice[sFi,len(A)] = DiceCoefficientCalculator(Label > 0.5 ,predictionMV)
             np.savetxt(save_Dir + reslt + '.txt',100*Dice, fmt='%2.1f')

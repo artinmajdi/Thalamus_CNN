@@ -124,7 +124,7 @@ for ind in [1,6,8,10,12]:
                 os.stat(Dir_save)
             except:
                 os.makedirs(Dir_save)
-                
+
             Prediction_full = np.zeros((sz[0],sz[1],sz[2],len(A)))
             Er = 0
             for ii in range(len(A)):
@@ -160,16 +160,11 @@ for ind in [1,6,8,10,12]:
             predictionMV[:,:,:] = Prediction2 > 2-Er
 
             Dice[sFi,len(A)] = DiceCoefficientCalculator(Label > 0.5 ,predictionMV)
-            np.savetxt(Dir_SaveMWFld + NeucleusFolder + '/' + 'DiceCoefsAll_' + reslt + '.txt',100*Dice, fmt='%2.1f')
+            # np.savetxt(Dir_SaveMWFld + NeucleusFolder + '/' + 'DiceCoefsAll_' + reslt + '.txt',100*Dice, fmt='%2.1f')
 
 
             Header = PredictionF.header
             Affine = PredictionF.affine
-
-            # Dir_AllTests_nucleiFld2 = Dir_AllTests_nucleiFld + '/Folder_MajorityVoting_Results_Atom'
-
-
-
 
             predictionMV_nifti = nib.Nifti1Image(predictionMV,Affine)
             predictionMV_nifti.get_header = Header
@@ -179,7 +174,8 @@ for ind in [1,6,8,10,12]:
         Dice2 = np.zeros((len(subFolders)+1, len(A)+1))
         Dice2[:len(subFolders),:] = Dice
         Dice2[len(subFolders),:] = np.mean(Dice,axis=0)
-        np.savetxt(Dir_SaveMWFld + NeucleusFolder + '/DiceMW_' + reslt + '.txt',100*Dice2, fmt='%2.1f')
+
+        np.savetxt(Dir_SaveMWFld + NeucleusFolder + '/DiceCoefsAll_' + reslt + '.txt',100*Dice2, fmt='%2.1f')
         # np.savetxt(Dir_AllTests_nucleiFld + '/subFolders_Python.txt',subFolders)
 
         with open(Dir_SaveMWFld + NeucleusFolder + "/subFoldersList_MW_"+reslt+".txt" ,"wb") as fp:

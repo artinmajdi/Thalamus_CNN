@@ -93,9 +93,9 @@ for ind in [1,6,8,10,12]:
     except:
         os.makedirs(Dir_SaveMWFld)
 
-    #priorDir = Dir_AllTests + 'Manual_Delineation_Sanitized_Full/'
-    # priorDir =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
-    # priorDir = '/array/hdd/msmajdi/data/newPriors/7T_MS/'
+    #Dir_Prior = Dir_AllTests + 'Manual_Delineation_Sanitized_Full/'
+    # Dir_Prior =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
+    # Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS/'
     # subFolders = list(['vimp2_915_07112013_LC', 'vimp2_943_07242013_PA' ,'vimp2_964_08092013_TG'])
 
     subFolders = subFolderList(Dir_AllTests_nucleiFld)
@@ -105,7 +105,7 @@ for ind in [1,6,8,10,12]:
         print(reslt + '--------------->>>>>---------------')
         Dice = np.zeros((len(subFolders), len(A)+1))
 
-        Directory_Nuclei_Label = priorDir +  subFolders[0] + ManualDir + NucleusName + '_deformed.nii.gz'
+        Directory_Nuclei_Label = Dir_Prior +  subFolders[0] + ManualDir + NucleusName + '_deformed.nii.gz'
         Label = nib.load(Directory_Nuclei_Label)
         Label = Label.get_data()
         sz = Label.shape
@@ -114,7 +114,7 @@ for ind in [1,6,8,10,12]:
         for sFi in range(len(subFolders)):
             print(str(sFi) + ': ' + str(subFolders[sFi]))
             # sFi = 1
-            Directory_Nuclei_Label = priorDir +  subFolders[sFi] + ManualDir + NucleusName + '_deformed.nii.gz'
+            Directory_Nuclei_Label = Dir_Prior +  subFolders[sFi] + ManualDir + NucleusName + '_deformed.nii.gz'
             Label = nib.load(Directory_Nuclei_Label)
             Label = Label.get_data()
 

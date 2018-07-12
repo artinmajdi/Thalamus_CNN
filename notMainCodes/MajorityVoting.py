@@ -28,35 +28,51 @@ def initialDirectories(ind = 1, mode = 'oldDataset'):
 
 
     if mode == 'oldDatasetV2':
-        NeucleusFolder = 'oldDatasetV2/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
-        ThalamusFolder = 'oldDatasetV2/CNN1_THALAMUS_2D_SanitizedNN'
+        NeucleusFolder = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
+        ThalamusFolder = 'CNN1_THALAMUS_2D_SanitizedNN'
     elif mode == 'oldDataset':
         NeucleusFolder = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
         ThalamusFolder = 'CNN1_THALAMUS_2D_SanitizedNN'
     elif mode == 'newDataset':
-        NeucleusFolder = 'newDataset/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
-        ThalamusFolder = 'newDataset/CNN1_THALAMUS_2D_SanitizedNN'
+        NeucleusFolder = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
+        ThalamusFolder = 'CNN1_THALAMUS_2D_SanitizedNN'
 
     if mode == 'localMachine':
         Dir_AllTests = '/media/artin-laptop/D0E2340CE233F5761/Thalamus_Segmentation/Data/'
         Dir_Prior = ''
 
-    elif (mode == 'oldDataset') | (mode == 'oldDatasetV2'):
+    elif mode == 'oldDataset':
         Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/'
         Dir_Prior =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
 
+    elif mode == 'oldDatasetV2':
+        Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/oldDatasetV2/'
+        Dir_Prior =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
+
     elif mode == 'newDataset':
-        Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/'
+        Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/newDataset/'
         Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS/'
 
     return NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior
+
+def subFolderList(Dir_AllTests_nucleiFld):
+    TestName = 'Test_WMnMPRAGE_bias_corr_Deformed' # _Deformed_Cropped
+    Dir_AllTests_nucleiFld_Ehd = Dir_AllTests_nucleiFld + '/' + TestName + '/'
+    subFolders = os.listdir(Dir_AllTests_nucleiFld_Ehd)
+
+    listt = []
+    for i in range(len(subFolders)):
+        if subFolders[i][:4] == 'vimp':
+            listt.append(subFolders[i])
+
+    return listt
 
 gpuNum = '4' # nan'
 
 # 10-MGN_deformed.nii.gz	  13-Hb_deformed.nii.gz       4567-VL_deformed.nii.gz  6-VLP_deformed.nii.gz  9-LGN_deformed.nii.gz
 # 11-CM_deformed.nii.gz	  1-THALAMUS_deformed.nii.gz  4-VA_deformed.nii.gz     7-VPL_deformed.nii.gz
 # 12-MD-Pf_deformed.nii.gz  2-AV_deformed.nii.gz	      5-VLa_deformed.nii.gz    8-Pul_deformed.nii.gz
-for ind in [1,6,8,10,12]: 
+for ind in [1,6,8,10,12]:
 
     mode = 'newDataset'
     NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior = initialDirectories(ind , mode)
@@ -69,26 +85,20 @@ for ind in [1,6,8,10,12]:
 
     # Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/newDataset/' #
     # Dir_AllTests = '/media/artin/D0E2340CE233F576/Thalamus_Segmentation/Data/'
-    Directory_Nuclei_Full = Dir_AllTests + NeucleusFolder
-    Directory_Thalamus_Full = Dir_AllTests + 'CNN1_THALAMUS_2D_SanitizedNN'
-    save_Dir  = Dir_AllTests + 'Folder_DiceCoefficient_MajorityWoting_Atom_'
+    Dir_AllTests_nucleiFld = Dir_AllTests + NeucleusFolder
+    Dir_AllTests_ThalamusFld = Dir_AllTests + 'CNN1_THALAMUS_2D_SanitizedNN'
+    Dir_SaveMWFld  = Dir_AllTests + 'Folder_MajorityWoting/'
+    try:
+        os.stat(Dir_SaveMWFld)
+    except:
+        os.makedirs(Dir_SaveMWFld)
 
     #priorDir = Dir_AllTests + 'Manual_Delineation_Sanitized_Full/'
     # priorDir =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
-    priorDir = '/array/hdd/msmajdi/data/newPriors/7T_MS/'
-
+    # priorDir = '/array/hdd/msmajdi/data/newPriors/7T_MS/'
     # subFolders = list(['vimp2_915_07112013_LC', 'vimp2_943_07242013_PA' ,'vimp2_964_08092013_TG'])
 
-    TestName = 'Test_WMnMPRAGE_bias_corr_Deformed' # _Deformed_Cropped
-    Directory_Nuclei = Directory_Nuclei_Full + '/' + TestName + '/'
-    subFolders = os.listdir(Directory_Nuclei)
-
-    listt = []
-    for i in range(len(subFolders)):
-        if subFolders[i][:4] == 'vimp':
-            listt.append(subFolders[i])
-
-    subFolders = listt
+    subFolders = subFolderList(Dir_AllTests_nucleiFld)
 
     for reslt in ['Results_momentum']: # 'Results' ,  , 'Results_MultByManualThalamus'
 
@@ -117,15 +127,15 @@ for ind in [1,6,8,10,12]:
                 else:
                     TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
 
-                Directory_Nuclei = Directory_Nuclei_Full + '/' + TestName + '/'
-                Directory_Thalamus = Directory_Thalamus_Full + '/' + TestName + '/'
+                Dir_AllTests_nucleiFld_Ehd = Dir_AllTests_nucleiFld + '/' + TestName + '/'
+                Dir_AllTests_ThalamusFld_Ehd = Dir_AllTests_ThalamusFld + '/' + TestName + '/'
 
 
-                Directory_Nuclei_Test  = Directory_Nuclei + subFolders[sFi] + '/Test/' + reslt + '/'
-                Dirr = Directory_Nuclei_Test + subFolders[sFi] + '_' + NucleusName + '_Logical.nii.gz'
+                Directory_Nuclei_Test  = Dir_AllTests_nucleiFld_Ehd + subFolders[sFi] + '/Test/' + reslt + '/'
+                Dir_NucleiPredSample = Directory_Nuclei_Test + subFolders[sFi] + '_' + NucleusName + '_Logical.nii.gz'
 
                 try:
-                    PredictionF = nib.load(Dirr)
+                    PredictionF = nib.load(Dir_NucleiPredSample)
                     Prediction = PredictionF.get_data()
 
                     # print('k')
@@ -133,7 +143,7 @@ for ind in [1,6,8,10,12]:
                     Dice[sFi,ii] = DiceCoefficientCalculator(Label > 0.5 ,Prediction > 0.5)
 
                     Prediction_full[:,:,:,ii] = Prediction > 0.5
-                    np.savetxt(save_Dir + reslt + '.txt',100*Dice, fmt='%2.1f')
+                    np.savetxt(Dir_SaveMWFld + NeucleusFolder + '/' + 'DiceCoefsAll_' + reslt + '.txt',100*Dice, fmt='%2.1f')
                 except:
                     Er = Er + 1
 
@@ -143,40 +153,33 @@ for ind in [1,6,8,10,12]:
             predictionMV[:,:,:] = Prediction2 > 2-Er
 
             Dice[sFi,len(A)] = DiceCoefficientCalculator(Label > 0.5 ,predictionMV)
-            np.savetxt(save_Dir + reslt + '.txt',100*Dice, fmt='%2.1f')
+            np.savetxt(Dir_SaveMWFld + NeucleusFolder + '/' + 'DiceCoefsAll_' + reslt + '.txt',100*Dice, fmt='%2.1f')
 
 
             Header = PredictionF.header
             Affine = PredictionF.affine
 
-            # Directory_Nuclei_Full2 = Directory_Nuclei_Full + '/Folder_MajorityVoting_Results_Atom'
-            try:
-                os.stat(save_Dir)
-            except:
-                os.makedirs(save_Dir)
+            # Dir_AllTests_nucleiFld2 = Dir_AllTests_nucleiFld + '/Folder_MajorityVoting_Results_Atom'
 
-            Directory_Nuclei_Full3 = Directory_Nuclei_Full2 + '/' + subFolders[sFi]
-            try:
-                os.stat(Directory_Nuclei_Full3)
-            except:
-                os.makedirs(Directory_Nuclei_Full3)
 
-            #print(type(predictionMV))
-            #print(Affine)
+            Dir_save = Dir_SaveMWFld + NeucleusFolder + '/' + subFolders[sFi] + '/'
+            try:
+                os.stat(Dir_save
+            except:
+                os.makedirs(Dir_save)
+
             predictionMV_nifti = nib.Nifti1Image(predictionMV,Affine)
             predictionMV_nifti.get_header = Header
-            AA =  Directory_Nuclei_Full3 + '/' + subFolders[sFi] + '_' + NucleusName + '.nii.gz'
-            #print(AA)
+            AA =  Dir_save + subFolders[sFi] + '_' + NucleusName + '_MW.nii.gz'
             nib.save(predictionMV_nifti ,AA)
 
-        # print(Dice)
         Dice2 = np.zeros((len(subFolders)+1, len(A)+1))
         Dice2[:len(subFolders),:] = Dice
         Dice2[len(subFolders),:] = np.mean(Dice,axis=0)
-        np.savetxt(save_Dir + reslt + '.txt',100*Dice2, fmt='%2.1f')
-        # np.savetxt(Directory_Nuclei_Full + '/subFolders_Python.txt',subFolders)
+        np.savetxt(Dir_SaveMWFld + NeucleusFolder + '/DiceMW_' + reslt + '.txt',100*Dice2, fmt='%2.1f')
+        # np.savetxt(Dir_AllTests_nucleiFld + '/subFolders_Python.txt',subFolders)
 
-        with open(Directory_Nuclei_Full + "/subFoldersList_Python"+reslt+".txt" ,"wb") as fp:
+        with open(Dir_SaveMWFld + NeucleusFolder + "/subFoldersList_MW_"+reslt+".txt" ,"wb") as fp:
             pickle.dump(subFolders,fp)
 
     # a = np.random.random((3,4)) > 0.5

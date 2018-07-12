@@ -55,8 +55,7 @@ gpuNum = '4' # nan'
 # 10-MGN_deformed.nii.gz	  13-Hb_deformed.nii.gz       4567-VL_deformed.nii.gz  6-VLP_deformed.nii.gz  9-LGN_deformed.nii.gz
 # 11-CM_deformed.nii.gz	  1-THALAMUS_deformed.nii.gz  4-VA_deformed.nii.gz     7-VPL_deformed.nii.gz
 # 12-MD-Pf_deformed.nii.gz  2-AV_deformed.nii.gz	      5-VLa_deformed.nii.gz    8-Pul_deformed.nii.gz
-save_Dir  = Directory_Nuclei_Full + '/Folder_DiceCoefficient_MajorityWoting_Atom_'
-for ind in [1,6,8,10,12]: # 1,
+for ind in [1,6,8,10,12]: 
 
     mode = 'newDataset'
     NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior = initialDirectories(ind , mode)
@@ -71,6 +70,7 @@ for ind in [1,6,8,10,12]: # 1,
     # Dir_AllTests = '/media/artin/D0E2340CE233F576/Thalamus_Segmentation/Data/'
     Directory_Nuclei_Full = Dir_AllTests + NeucleusFolder
     Directory_Thalamus_Full = Dir_AllTests + 'CNN1_THALAMUS_2D_SanitizedNN'
+    save_Dir  = Dir_AllTests + 'Folder_DiceCoefficient_MajorityWoting_Atom_'
 
     #priorDir = Dir_AllTests + 'Manual_Delineation_Sanitized_Full/'
     # priorDir =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'

@@ -12,7 +12,7 @@ from tf_unet import unet, util, image_util
 import multiprocessing
 import tensorflow as tf
 
-gpuNum = '5' # nan'
+gpuNum = '4' # nan'
 
 def initialDirectories(ind = 1, mode = 'oldDataset'):
 
@@ -68,20 +68,16 @@ mode = 'oldDatasetV2'
 NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior = initialDirectories(ind , mode)
 
 
-A = [[0,0],[4,3],[6,1],[1,2],[1,3],[4,1]]
+A = [[0,0],[6,1],[1,2],[1,3],[4,1]] # [4,3],
 SliceNumbers = range(107,140)
 
 
-for ii in range(len(A)):
+for ii in range(len(A)): # [1,4]: #
 
     if ii == 0:
         TestName = 'Test_WMnMPRAGE_bias_corr_Deformed'
     else:
         TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
-
-    print('-------------------------------------')
-    print(TestName)
-    print('-------------------------------------')
 
     Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + NeucleusFolder + '/' + TestName + '/'
     Dir_AllTests_Thalamus_EnhancedFld = Dir_AllTests + ThalamusFolder + '/' + TestName + '/'
@@ -92,15 +88,15 @@ for ii in range(len(A)):
         if subFlds[i][:5] == 'vimp2':
             subFolders.append(subFlds[i])
 
-    for sFi in range(len(subFolders)):
+    for sFi in range(1): # len(subFolders)):
 
         Dir_Prior_NucleiSample = Dir_Prior +  subFolders[sFi] + '/Manual_Delineation_Sanitized/' + NucleusName + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
         Dir_Prior_ThalamusSample = Dir_Prior +  subFolders[sFi] + '/Manual_Delineation_Sanitized/' +'1-THALAMUS' + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
 
         Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Test/'
         Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
-        Dir_NucleiModelOut = Dir_NucleiTrainSamples + 'model/'
-        Dir_ResultsOut   = Dir_NucleiTestSamples  + 'Results/'
+        Dir_NucleiModelOut = Dir_NucleiTrainSamples + 'model_momentum/'
+        Dir_ResultsOut   = Dir_NucleiTestSamples  + 'Results_momentum/'
 
         Dir_ThalamusTestSamples  = Dir_AllTests_Thalamus_EnhancedFld + subFolders[sFi] + '/Test/'
         Dir_ThalamusModelOut = Dir_AllTests_Thalamus_EnhancedFld + subFolders[sFi] + '/Train/model/'
@@ -130,7 +126,7 @@ for ii in range(len(A)):
 
             net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
 
-            trainer = unet.Trainer(net, optimizer = "adam") # ,learning_rate=0.03
+            trainer = unet.Trainer(net) # , optimizer = "adam",learning_rate=0.03
             if gpuNum != 'nan':
                 path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500, GPU_Num=gpuNum ) #  restore=True
             else:
@@ -143,4 +139,5 @@ for ii in range(len(A)):
 
             padSize = 90
             MultByThalamusFlag = 0
+            # Directories = {'ResultsOut':Dir_ResultsOut , 'NucleiModelOut':Dir_NucleiModelOut , 'ThalamusTestSamples':Dir_ThalamusTestSamples,'ThalamusModelOut':Dir_ThalamusModelOut}
             [Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical] = TestData3(net , MultByThalamusFlag, Dir_NucleiTestSamples , Dir_NucleiModelOut , ThalamusOrigSeg , NucleiOrigSeg , subFolders[sFi], CropDimensions , padSize , Dir_ThalamusTestSamples , Dir_ThalamusModelOut , NucleusName , SliceNumbers , gpuNum)

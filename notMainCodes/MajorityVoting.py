@@ -49,6 +49,7 @@ def initialDirectories(ind = 1, mode = 'oldDataset'):
         Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/'
         Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS/'
 
+    return NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior
 
 gpuNum = '4' # nan'
 

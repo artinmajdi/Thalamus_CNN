@@ -134,7 +134,7 @@ for ii in range(len(A)): # [1,4]: #
 
             net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
 
-            trainer = unet.Trainer(net) # , optimizer = "adam",learning_rate=0.03
+            trainer = unet.Trainer(net,prediction_path=Dir_ResultsOut) # , optimizer = "adam",learning_rate=0.03
             if gpuNum != 'nan':
                 path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500, GPU_Num=gpuNum ) #  restore=True
             else:
@@ -149,4 +149,3 @@ for ii in range(len(A)): # [1,4]: #
             MultByThalamusFlag = 0
             # Directories = {'ResultsOut':Dir_ResultsOut , 'NucleiModelOut':Dir_NucleiModelOut , 'ThalamusTestSamples':Dir_ThalamusTestSamples,'ThalamusModelOut':Dir_ThalamusModelOut}
             [Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical] = TestData3(net , MultByThalamusFlag, Dir_NucleiTestSamples , Dir_NucleiModelOut , ThalamusOrigSeg , NucleiOrigSeg , subFolders[sFi], CropDimensions , padSize , Dir_ThalamusTestSamples , Dir_ThalamusModelOut , NucleusName , SliceNumbers , gpuNum)
-

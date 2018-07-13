@@ -503,14 +503,16 @@ def TestData4(net , Init , Nuclei_Image):
 
     # >>>>>>>>>>>>>>>>>> Dice >>>>>>>>>>>>>>>>>>>>>>>>>.........
 
+    Dice = [0,0]
     if Init['Dice_Flag'] == 1:
-        DiceCoefficient = DiceCoefficientCalculator(prediction_3D_Logical, Init['Nuclei_Label'].get_data())
+        Dice[0] = DiceCoefficientCalculator(prediction_3D_Logical, Init['Nuclei_Label'].get_data())
 
         if Init['MultThlms_Flag'] != 0:
-            DiceM = DiceCoefficientCalculator(prediction_3D_Mult_Logical,Nuclei_LabelD)
-            DiceCoefficient = np.append(DiceCoefficient,DiceM)
+            Dice[1] = DiceCoefficientCalculator(prediction_3D_Mult_Logical,Nuclei_LabelD)
+            # DiceCoefficient = np.append(DiceCoefficient,DiceM)
 
-        np.savetxt(dir_ResultOut + 'DiceCoefficient.txt',DiceCoefficient)
+        print(Dice)
+        np.savetxt(dir_ResultOut + 'DiceCoefficient.txt',Dice )
 
 
 
@@ -531,3 +533,4 @@ def TestData4(net , Init , Nuclei_Image):
         Prediction3D_logical_nifti = nib.Nifti1Image(prediction_3D_Mult_Logical,Affine)
         Prediction3D_logical_nifti.get_header = Header
         nib.save(Prediction3D_logical_nifti , dir_ResultOut_Mlt + Init['subFolders'] + '_' + Init['NucleusName'] + '_Logical.nii.gz')
+

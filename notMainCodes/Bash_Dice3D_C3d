@@ -1,0 +1,48 @@
+#!/bin/csh
+
+
+set TestDirectory = '/array/hdd/msmajdi/Tests/Thalamus_CNN'
+set LabelDirectory = '/array/hdd/msmajdi/data/priors_forCNN_Ver2/Manual_Delineation_Sanitized_Full'
+set priorfolderName = 'Manual_Delineation_Sanitized'
+# Label ('1-THALAMUS' '8-Pul' '4567-VL') # '2-AV' '4-VA' '5-VLa' '6-VLP' '7-VPL' '9-LGN' '10-MGN' '11-CM' '12-MD-Pf' '13-Hb' 
+# set Label = '4567-VL' # '1-THALAMUS' # '8-Pul' # 
+# set FolderTest = 'CNN4567_VL_2D_SanitizedNN' # 'CNN1_THALAMUS_2D_SanitizedNN' # 'CNN8_Pul_2D_SanitizedNN' 
+
+# Results	Results2  Results_MultByManualThalamus	
+
+foreach FolderTest ('CNN1_THALAMUS_2D_SanitizedNN') # 'CNN8_Pul_2D_SanitizedNN' ) # 'CNN12_MD_Pf_2D_SanitizedNN' 'CNN6_VLP_2D_SanitizedNN' 'CNN4567_VL_2D_SanitizedNN'  )
+# set reslt = 'Results'
+set nucleiName = 1-THALAMUS # 8-Pul
+set reusltDirectory = $TestDirectory/Results
+#mkdir $reusltDirectory
+#mkdir $reusltDirectory/$FolderTest/array/hdd/msmajdi/Tests/Thalamus_CNN/code
+
+echo $FolderTest
+
+cd $TestDirectory/$FolderTest
+foreach Test (Test_*)
+echo $Test
+
+#set Test = 'Test_WMnMPRAGE_bias_corr_Sharpness_4_Contrast_3_Deformed'
+# set Test = 'Test_WMnMPRAGE_bias_corr_Deformed'
+#mkdir $reusltDirectory/$FolderTest/$Test
+
+cd $TestDirectory/$FolderTest/$Test
+foreach vimp (vimp2*)
+	echo $vimp
+        
+
+	set label = $LabelDirectory/$vimp/Manual_Delineation_Sanitized/{$nucleiName}_deformed.nii.gz
+	#echo $label
+	set prediction = $TestDirectory/$FolderTest/$Test/$vimp/Test/Results/{$vimp}_{$nucleiName}_Logical.nii.gz
+        #echo $prediction
+        set c3d_Directory = '/array/ssd/msmajdi/software/c3d-1.0.0-Linux-x86_64/bin/'
+	
+        cd $c3d_Directory
+        echo $vimp >> {$TestDirectory/$FolderTest/$Test}/Dice_{$Test}
+        ./c3d $prediction $label -overlap 1 >> {$TestDirectory/$FolderTest/$Test}/Dice_{$Test}
+	cd $TestDirectory/$FolderTest/$Test
+end
+cd ../
+end
+end

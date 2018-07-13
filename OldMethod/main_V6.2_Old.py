@@ -7,12 +7,11 @@ import nibabel as nib
 import shutil
 from collections import OrderedDict
 import logging
-from TestData_V6_1 import TestData3
+from TestData_V6_2 import TestData4
 from tf_unet import unet, util, image_util
 import multiprocessing
 import tensorflow as tf
 
-gpuNum = '4' # nan'
 
 def mkDir(dir):
     try:
@@ -35,7 +34,7 @@ def testNme(A,ii):
         TestName = 'Test_WMnMPRAGE_bias_corr_Deformed'
     else:
         TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
-        return TestName
+    return TestName
 
 def initialDirectories(ind = 1, mode = 'oldDataset'):
 
@@ -94,6 +93,7 @@ def initialDirectories(ind = 1, mode = 'oldDataset'):
 
     return NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior
 
+Init = {'init':1}
 ind = 1
 mode = 'oldDatasetV2'
 NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior = initialDirectories(ind , mode)
@@ -106,22 +106,22 @@ Init['Dice_Flag'] = 1
 Init['MultThlms_Flag'] = 0
 Init['optimizer'] = "momentum" # "adam"
 Init['CropDim'] = np.array([ [50,198] , [130,278] , [ Init['SliceNumbers'][0] , Init['SliceNumbers'][ len(Init['SliceNumbers'])-1 ] ] ])
-Init['gpuNum'] = gpuNum
+Init['gpuNum'] = '5'
 Init['padSize'] = int(90/2)
 Init['NucleusName'] = NucleusName
 
 
-for ii in range(1): # len(A)): 
+for ii in range(1): # len(A)):
 
     TestName = testNme(A,ii)
-    inputName = TestName + '.nii.gz'
+    inputName = TestName.split('Test_')[1]  + '.nii.gz'
 
     Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + NeucleusFolder + '/' + TestName + '/'
 
     subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
     for sFi in range(1): # len(subFolders)):
-
+        # print(subFolders[sFi])
         if Init['Dice_Flag'] == 1:
             dir = Dir_Prior +  subFolders[sFi] + '/Manual_Delineation_Sanitized/' + NucleusName + '_deformed.nii.gz'
             Init['Nuclei_Label'] = nib.load(dir)
@@ -146,14 +146,15 @@ for ii in range(1): # len(A)):
         # unet.config = config
 
         net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
-        trainer = unet.Trainer(net , optimizer = Init['optimizer']  , prediction_path = Dir_ResultsOut) # ,learning_rate=0.03
-        if gpuNum != 'nan':
-            path = trainer.train(TrainData, Init['Dir_NucleiModelOut'], training_iters=200, epochs=150, display_step=500, GPU_Num=gpuNum ) #  restore=True
+        trainer = unet.Trainer(net , optimizer = Init['optimizer']) #   , prediction_path = Dir_ResultsOut,learning_rate=0.03
+        if Init['gpuNum'] != 'nan':
+            path = trainer.train(TrainData, Init['Dir_NucleiModelOut'], training_iters=200, epochs=150, display_step=500, GPU_Num=Init['gpuNum'] ) #  restore=True
         else:
             path = trainer.train(TrainData, Init['Dir_NucleiModelOut'], training_iters=200, epochs=150, display_step=500) #   restore=True
 
 
         Nuclei_Image = nib.load(Dir_Prior + subFolders[sFi] + '/' + inputName)
         Init['subFolders'] = subFolders[sFi]
-        # [Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical] = TestData3(net , MultByThalamusFlag, Dir_NucleiTestSamples , Dir_NucleiModelOut , ThalamusOrigSeg , NucleiOrigSeg , subFolders[sFi], CropDimensions , padSize , Dir_ThalamusTestSamples , Dir_ThalamusModelOut , NucleusName , SliceNumbers , gpuNum)
+        # [Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical] = TestData3(net , MultByThalamusFlag, Dir_NucleiTestSamples , Dir_NucleiModelOut , ThalamusOrigSeg , NucleiOrigSeg , subFolders[sFi], CropDimensions , padSize , Dir_ThalamusTestSamples , Dir_ThalamusModelOut , NucleusName , SliceNumbers , Init['gpuNum'])
         TestData4(net , Init , Nuclei_Image)
+

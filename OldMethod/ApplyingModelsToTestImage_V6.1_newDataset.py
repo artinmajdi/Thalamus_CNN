@@ -13,7 +13,7 @@ import multiprocessing
 import tensorflow as tf
 
 
-gpuNum = '4' # nan'
+gpuNum = '3' # nan'
 
 # 10-MGN_deformed.nii.gz	  13-Hb_deformed.nii.gz       4567-VL_deformed.nii.gz  6-VLP_deformed.nii.gz  9-LGN_deformed.nii.gz
 # 11-CM_deformed.nii.gz	  1-THALAMUS_deformed.nii.gz  4-VA_deformed.nii.gz     7-VPL_deformed.nii.gz
@@ -45,7 +45,7 @@ for ind in [1,6,8,10,12]:
     A = [[0,0],[1,2],[1,3],[4,1],[6,1]] # [4,3],
     SliceNumbers = range(107,140)
 
-    Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/oldDatasetV2/' #
+    Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' #
     #Dir_AllTests = '/media/artin-laptop/D0E2340CE233F5761/Thalamus_Segmentation/Data/'
 
     # Name_allTests_Nuclei = Dir_AllTests + 'newDataset/' + NeucleusFolder
@@ -82,8 +82,8 @@ for ind in [1,6,8,10,12]:
             Dir_ResultsOut   = Dir_NucleiTestSamples  + 'Results/'
 
             subFoldersModel = 'vimp2_964_08092013_TG' # 'vimp2_668_02282013_CD'
-            Dir_NucleiModelOut = Dir_AllTests + NeucleusFolder + '/' + TestName + '/' + subFoldersModel + '/Train/model/'  # 'model_momentum/'
-            # Dir_NucleiModelOut = Dir_AllTests + 'newDataset/' + NeucleusFolder + '/' + TestName + '/' + subFolders[sFi] + '/Train/model/'
+            # Dir_NucleiModelOut = Dir_AllTests + NeucleusFolder + '/' + TestName + '/' + subFoldersModel + '/Train/model/'  # 'model_momentum/'
+            Dir_NucleiModelOut = Dir_AllTests + 'oldDatasetV2/' + NeucleusFolder + '/' + TestName + '/' + subFoldersModel + '/Train/model/'
 
 
             Dir_ThalamusTestSamples  = Dir_AllTests_Thalamus_EnhancedFld + subFolders[sFi] + '/Test/'

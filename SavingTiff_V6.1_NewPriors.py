@@ -8,31 +8,43 @@ import tifffile
 import pickle
 from PIL import ImageEnhance , Image , ImageFilter
 
-# 10-MGN_Deformed.nii.gz	  1-THALAMUS_Deformed.nii.gz  5-VLa_Deformed.nii.gz  9-LGN_Deformed.nii.gz
-# 11-CM_Deformed.nii.gz	  2-AV_Deformed.nii.gz	      6-VLP_Deformed.nii.gz
-# 12-MD-Pf_Deformed.nii.gz  4567-VL_Deformed.nii.gz     7-VPL_Deformed.nii.gz
-# 13-Hb_Deformed.nii.gz	  4-VA_Deformed.nii.gz	      8-Pul_Deformed.nii.gz
+def subFoldersFunc(Dir_Prior):
+    subFolders = []
+    subFlds = os.listdir(Dir_Prior)
+    for i in range(len(subFlds)):
+        if subFlds[i][:5] == 'vimp2':
+            subFolders.append(subFlds[i])
+    return subFolders
 
-for ind in [6,8,10,12]:
+
+for ind in [2,4,5,7,9,11,13]: # 1,6,8,10,12
     # ind = 1
     if ind == 1:
-        # Name_allTests_Nuclei = 'CNN1_THALAMUS_2D_SanitizedNN'
         NucleusName = '1-THALAMUS'
-    elif ind == 4:
-        # Name_allTests_Nuclei = 'CNN4567_VL_2D_SanitizedNN'
+    elif ind == 2:
+        NucleusName = '2-AV'
+    elif ind == 4567:
         NucleusName = '4567-VL'
+    elif ind == 4:
+        NucleusName = '4-VA'
+    elif ind == 5:
+        NucleusName = '5-VLa'
     elif ind == 6:
-        # Name_allTests_Nuclei = 'CNN6_VLP_2D_SanitizedNN'
         NucleusName = '6-VLP'
+    elif ind == 7:
+        NucleusName = '7-VPL'
     elif ind == 8:
-        # Name_allTests_Nuclei = 'CNN8_Pul_2D_SanitizedNN'
         NucleusName = '8-Pul'
+    elif ind == 9:
+        NucleusName = '9-LGN'
     elif ind == 10:
-        # Name_allTests_Nuclei = 'CNN10_MGN_2D_SanitizedNN'
         NucleusName = '10-MGN'
+    elif ind == 11:
+        NucleusName = '11-CM'
     elif ind == 12:
-        # Name_allTests_Nuclei = 'CNN12_MD_Pf_2D_SanitizedNN'
         NucleusName = '12-MD-Pf'
+    elif ind == 13:
+        NucleusName = '13-Hb'
 
 
     # Dir_Prior = '/media/data1/artin/data/Thalamus/'+ Name_allTests_Nuclei + '/OriginalDeformedPriors'
@@ -43,30 +55,9 @@ for ind in [6,8,10,12]:
 
     Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN'
 
+    subFolders = subFoldersFunc(Dir_Prior)
 
-
-    # subFolders = os.listdir(Dir_Prior)
-    # subFolders2 = []
-    # for o in range(len(subFolders)):
-    #     if "." not in subFolders[o]:
-    #         subFolders2.append(subFolders[o])
-    #
-    # subFolders = subFolders2
-
-
-    subFolders = []
-    subFlds = os.listdir(Dir_Prior)
-    for i in range(len(subFlds)):
-        if subFlds[i][:5] == 'vimp2':
-            subFolders.append(subFlds[i])
-
-
-
-
-    # with open(Dir_Prior + "subFolderList.txt" ,"wb") as fp:
-    #     pickle.dump(subFolders,fp)
-
-    A = [[0,0],[4,3],[6,1],[1,2],[1,3],[4,1]]
+    A = [[0,0],[6,1],[1,2],[1,3],[4,1]] # [4,3],
     SliceNumbers = range(107,140)
 
     ManualDir = 'Manual_Delineation_Sanitized/'
@@ -85,15 +76,15 @@ for ind in [6,8,10,12]:
         Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + '/' + Name_allTests_Nuclei + '/Test_' + TestName
 
         inputName = TestName + '.nii.gz'
-        print(inputName)
 
+        print('---------------------------------------')
         # subFolders = ['vimp2_765_04162013_AW']
         for sFi in range(len(subFolders)):
 
-            print('ii '+str(ii) + ' sfi ' + str(sFi))
+            print(NucleusName,inputName.split('WMnMPRAGE_bias_corr_')[1].split('nii.gz')[0] , str(sFi) + ' ' + subFolders[sFi])
+
             mask   = nib.load(Dir_Prior + '/'  + subFolders[sFi] + '/' + Name_priors_San_Label)
             im     = nib.load(Dir_Prior + '/'  + subFolders[sFi] + '/' + inputName)
-            print(str(sFi) + ' ' + subFolders[sFi])
             imD    = im.get_data()
             maskD  = mask.get_data()
             Header = im.header

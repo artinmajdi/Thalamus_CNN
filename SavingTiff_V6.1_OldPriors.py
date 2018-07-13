@@ -6,10 +6,14 @@ import tifffile
 import pickle
 from PIL import ImageEnhance , Image , ImageFilter
 
-# 10-MGN_Deformed.nii.gz	  1-THALAMUS_Deformed.nii.gz  5-VLa_Deformed.nii.gz  9-LGN_Deformed.nii.gz
-# 11-CM_Deformed.nii.gz	  2-AV_Deformed.nii.gz	      6-VLP_Deformed.nii.gz
-# 12-MD-Pf_Deformed.nii.gz  4567-VL_Deformed.nii.gz     7-VPL_Deformed.nii.gz
-# 13-Hb_Deformed.nii.gz	  4-VA_Deformed.nii.gz	      8-Pul_Deformed.nii.gz
+def subFoldersFunc(Dir_Prior):
+    subFolders = []
+    subFlds = os.listdir(Dir_Prior)
+    for i in range(len(subFlds)):
+        if subFlds[i][:5] == 'vimp2':
+            subFolders.append(subFlds[i])
+
+    return subFolders
 
 for ind in [2,4,5,7,9,11,13]: # 1,6,8,10,12
     # ind = 1
@@ -50,11 +54,7 @@ for ind in [2,4,5,7,9,11,13]: # 1,6,8,10,12
     Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/oldDatasetV2'
 
 
-    subFolders = []
-    subFlds = os.listdir(Dir_Prior)
-    for i in range(len(subFlds)):
-        if subFlds[i][:5] == 'vimp2':
-            subFolders.append(subFlds[i])
+    subFolders = subFoldersFunc(Dir_Prior)
 
 
     A = [[0,0],[6,1],[1,2],[1,3],[4,1]] # [4,3],
@@ -136,4 +136,3 @@ for ind in [2,4,5,7,9,11,13]: # 1,6,8,10,12
                     Name_PredictedImage = subFolders[sFi_parent] + '_Slice_' + str(SliceNumbers[slcIx])
                     tifffile.imsave( Dir + '/' + Name_PredictedImage + '.tif' , imFull[:,:,slcIx,sFi_parent] )
                     tifffile.imsave( Dir + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi_parent] )
-

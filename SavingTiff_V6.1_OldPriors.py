@@ -11,20 +11,34 @@ from PIL import ImageEnhance , Image , ImageFilter
 # 12-MD-Pf_Deformed.nii.gz  4567-VL_Deformed.nii.gz     7-VPL_Deformed.nii.gz
 # 13-Hb_Deformed.nii.gz	  4-VA_Deformed.nii.gz	      8-Pul_Deformed.nii.gz
 
-for ind in [1,6,8,10,12]:
+for ind in [2,4,5,7,9,11,13]: # 1,6,8,10,12
     # ind = 1
     if ind == 1:
         NucleusName = '1-THALAMUS'
-    elif ind == 4:
+    elif ind == 2:
+        NucleusName = '2-AV'
+    elif ind == 4567:
         NucleusName = '4567-VL'
+    elif ind == 4:
+        NucleusName = '4-VA'
+    elif ind == 5:
+        NucleusName = '5-VLa'
     elif ind == 6:
         NucleusName = '6-VLP'
+    elif ind == 7:
+        NucleusName = '7-VPL'
     elif ind == 8:
         NucleusName = '8-Pul'
+    elif ind == 9:
+        NucleusName = '9-LGN'
     elif ind == 10:
         NucleusName = '10-MGN'
+    elif ind == 11:
+        NucleusName = '11-CM'
     elif ind == 12:
         NucleusName = '12-MD-Pf'
+    elif ind == 13:
+        NucleusName = '13-Hb'
 
 
     # Dir_Prior = '/media/data1/artin/data/Thalamus/'+ Name_allTests_Nuclei + '/OriginalDeformedPriors'
@@ -62,31 +76,27 @@ for ind in [1,6,8,10,12]:
         Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + '/' + Name_allTests_Nuclei + '/Test_' + TestName
 
         inputName = TestName + '.nii.gz'
-        print(inputName)
 
         # subFolders = ['vimp2_765_04162013_AW']
         for sFi in range(len(subFolders)):
-            if (ii == 1) & (sFi == 18):
-                imD_padded = np.zeros((imD_padded.shape))
-                maskD_padded = np.zeros((maskD_padded.shape))
 
-            else:
-                print('Loading Images:  ii '+str(ii) + ' sfi ' + str(sFi))
-                mask   = nib.load(Dir_Prior + '/'  + subFolders[sFi] + '/' + Name_priors_San_Label)
-                im     = nib.load(Dir_Prior + '/'  + subFolders[sFi] + '/' + inputName)
-                print(str(sFi) + ' ' + subFolders[sFi])
-                imD    = im.get_data()
-                maskD  = mask.get_data()
-                Header = im.header
-                Affine = im.affine
+            print('Reading Images:  ',NucleusName,inputName.split('WMnMPRAGE_bias_corr_')[1].split('nii.gz')[0] , str(sFi) + ' ' + subFolders[sFi])
+            # print('Loading Images:  ii '+str(ii) + ' sfi ' + str(sFi))
+            mask   = nib.load(Dir_Prior + '/'  + subFolders[sFi] + '/' + Name_priors_San_Label)
+            im     = nib.load(Dir_Prior + '/'  + subFolders[sFi] + '/' + inputName)
 
-                imD2 = imD[50:198,130:278,SliceNumbers]
-                maskD2 = maskD[50:198,130:278,SliceNumbers]
+            imD    = im.get_data()
+            maskD  = mask.get_data()
+            Header = im.header
+            Affine = im.affine
 
-                padSizeFull = 90
-                padSize = padSizeFull/2
-                imD_padded = np.pad(imD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' )
-                maskD_padded = np.pad(maskD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' )
+            imD2 = imD[50:198,130:278,SliceNumbers]
+            maskD2 = maskD[50:198,130:278,SliceNumbers]
+
+            padSizeFull = 90
+            padSize = padSizeFull/2
+            imD_padded = np.pad(imD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' )
+            maskD_padded = np.pad(maskD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' )
 
             if sFi == 0:
                 imFull = imD_padded[...,np.newaxis]
@@ -107,10 +117,11 @@ for ind in [1,6,8,10,12]:
             except:
                 os.makedirs(Dir)
 
+        print('-------------------------------')
 
 
         for sFi_parent in range(len(subFolders)):
-            print('Writing Images:  ii '+str(ii) + ' sfi ' + str(sFi_parent))
+            print('Writing Images:  ',NucleusName,str(sFi_parent) + ' ' + subFolders[sFi_parent])
             for sFi_child in range(len(subFolders)):
 
                 if sFi_parent == sFi_child:
@@ -124,3 +135,4 @@ for ind in [1,6,8,10,12]:
                     Name_PredictedImage = subFolders[sFi_parent] + '_Slice_' + str(SliceNumbers[slcIx])
                     tifffile.imsave( Dir + '/' + Name_PredictedImage + '.tif' , imFull[:,:,slcIx,sFi_parent] )
                     tifffile.imsave( Dir + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi_parent] )
+

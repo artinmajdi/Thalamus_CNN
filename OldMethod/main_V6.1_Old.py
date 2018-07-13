@@ -21,23 +21,32 @@ def initialDirectories(ind = 1, mode = 'oldDataset'):
     # 12-MD-Pf_deformed.nii.gz  2-AV_deformed.nii.gz	      5-VLa_deformed.nii.gz    8-Pul_deformed.nii.gz
 
     if ind == 1:
-        # NeucleusFolder = 'CNN1_THALAMUS_2D_SanitizedNN'
         NucleusName = '1-THALAMUS'
-    elif ind == 4:
-        # NeucleusFolder = 'CNN4567_VL_2D_SanitizedNN'
+    elif ind == 2:
+        NucleusName = '2-AV'
+    elif ind == 4567:
         NucleusName = '4567-VL'
+    elif ind == 4:
+        NucleusName = '4-VA'
+    elif ind == 5:
+        NucleusName = '5-VLa'
     elif ind == 6:
-        # NeucleusFolder = 'CNN6_VLP_2D_SanitizedNN'
         NucleusName = '6-VLP'
+    elif ind == 7:
+        NucleusName = '7-VPL'
     elif ind == 8:
-        #NeucleusFolder = 'CNN8_Pul_2D_SanitizedNN'
         NucleusName = '8-Pul'
+    elif ind == 9:
+        NucleusName = '9-LGN'
     elif ind == 10:
-        #NeucleusFolder = 'CNN10_MGN_2D_SanitizedNN'
         NucleusName = '10-MGN'
+    elif ind == 11:
+        NucleusName = '11-CM'
     elif ind == 12:
-        #NeucleusFolder = 'CNN12_MD_Pf_2D_SanitizedNN'
         NucleusName = '12-MD-Pf'
+    elif ind == 13:
+        NucleusName = '13-Hb'
+
 
     if mode == 'oldDatasetV2':
         NeucleusFolder = 'oldDatasetV2/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
@@ -49,14 +58,13 @@ def initialDirectories(ind = 1, mode = 'oldDataset'):
         NeucleusFolder = 'newDataset/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
         ThalamusFolder = 'newDataset/CNN1_THALAMUS_2D_SanitizedNN'
 
+
     if mode == 'localMachine':
         Dir_AllTests = '/media/artin-laptop/D0E2340CE233F5761/Thalamus_Segmentation/Data/'
         Dir_Prior = ''
-
     elif (mode == 'oldDataset') | (mode == 'oldDatasetV2'):
         Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/'
         Dir_Prior =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
-
     elif mode == 'newDataset':
         Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/'
         Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS/'
@@ -141,3 +149,4 @@ for ii in range(len(A)): # [1,4]: #
             MultByThalamusFlag = 0
             # Directories = {'ResultsOut':Dir_ResultsOut , 'NucleiModelOut':Dir_NucleiModelOut , 'ThalamusTestSamples':Dir_ThalamusTestSamples,'ThalamusModelOut':Dir_ThalamusModelOut}
             [Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical] = TestData3(net , MultByThalamusFlag, Dir_NucleiTestSamples , Dir_NucleiModelOut , ThalamusOrigSeg , NucleiOrigSeg , subFolders[sFi], CropDimensions , padSize , Dir_ThalamusTestSamples , Dir_ThalamusModelOut , NucleusName , SliceNumbers , gpuNum)
+

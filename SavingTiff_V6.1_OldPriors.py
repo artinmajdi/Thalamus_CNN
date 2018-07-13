@@ -77,6 +77,7 @@ for ind in [2,4,5,7,9,11,13]: # 1,6,8,10,12
 
         inputName = TestName + '.nii.gz'
 
+        print('---------------------------------------')
         # subFolders = ['vimp2_765_04162013_AW']
         for sFi in range(len(subFolders)):
 
@@ -94,7 +95,7 @@ for ind in [2,4,5,7,9,11,13]: # 1,6,8,10,12
             maskD2 = maskD[50:198,130:278,SliceNumbers]
 
             padSizeFull = 90
-            padSize = padSizeFull/2
+            padSize = int(padSizeFull/2)
             imD_padded = np.pad(imD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' )
             maskD_padded = np.pad(maskD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' )
 
@@ -117,7 +118,7 @@ for ind in [2,4,5,7,9,11,13]: # 1,6,8,10,12
             except:
                 os.makedirs(Dir)
 
-        print('-------------------------------')
+        print('---------------------------------------')
 
 
         for sFi_parent in range(len(subFolders)):

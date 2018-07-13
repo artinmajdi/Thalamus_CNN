@@ -434,33 +434,28 @@ def mkDir(dir):
         os.makedirs(dir)
     return dir
 
-def TestData4(net , Init , Nuclei_Image, Nuclei_Label):
+def TestData4(net , Init , Nuclei_Image):
 
     ResultFldName = 'Results_momentum'
 
 
-    CropDim    = Init['CropDim']
-    gpuNum     = Init['gpuNum']
-    padSize    = Init['padSize']
-    subFolders = Init['subFolders']
-    NucleusName        = Init['NucleusName']
-    SliceNumbers       = Init['Slice_Numbers']
-    ResultFldName      = Init['ResultFldName']
-    MultThlms_Flag     = Init['MultThlms_Flag']
-    Thalamus_PredSeg   = Init['Thalamus_PredSeg']
-    Dir_NucleiModelOut = Init['Dir_NucleiModelOut']
+    CropDim      = Init['CropDim']
+    padSize      = Init['padSize']
+    SliceNumbers = Init['SliceNumbers']
 
+    Dir_NucleiModelOut_cptk = Init['Dir_NucleiModelOut'] + 'model.cpkt'
 
-    Dir_NucleiModelOut_cptk = Dir_NucleiModelOut + 'model.cpkt'
-    Directory_Test_Results_Nuclei = mkDir(Directory_Nuclei_Test0 + ResultFldName + '/')
+    dir_ResultOut = mkDir(Init['Dir_NucleiTestSamples'] + 'Results_' + Init['optimizer'] + '/')
 
-    if MultThlms_Flag != 0:
-        Directory_Test_Results_Thalamus = mkDir(Directory_Nuclei_Test0 + ResultFldName + '_MultByThlms/')
+    if Init['MultThlms_Flag'] != 0:
+        dir_ResultOut_Mlt = mkDir(Init['Dir_NucleiTestSamples'] + 'Results_' + Init['optimizer'] + '_MultByThlms/')
 
     Nuclei_ImageD = Nuclei_Image.get_data()
     Header  = Nuclei_Image.header
     Affine  = Nuclei_Image.affine
     sz_Orig = Nuclei_ImageD.shape
+
+
 
 
     # ........>>>>>>>>>>>>>>>>>> Prediction >>>>>>>>>>>>>>>>>>>>>>>>>.........
@@ -470,8 +465,8 @@ def TestData4(net , Init , Nuclei_Image, Nuclei_Label):
     Nuclei_ImageD = np.pad(Nuclei_ImageD,((padSize,padSize),(padSize,padSize),(0,0)),'constant' )
     Nuclei_ImageD = np.transpose(Nuclei_ImageD,[2,0,1])
 
-    if gpuNum != 'nan':
-        prediction = net.predict( Dir_NucleiModelOut_cptk, Nuclei_ImageD[...,np.newaxis], GPU_Num=gpuNum)
+    if Init['gpuNum'] != 'nan':
+        prediction = net.predict( Dir_NucleiModelOut_cptk, Nuclei_ImageD[...,np.newaxis], GPU_Num=Init['gpuNum'])
     else:
         prediction = net.predict( Dir_NucleiModelOut_cptk, Nuclei_ImageD[...,np.newaxis])
 
@@ -494,37 +489,45 @@ def TestData4(net , Init , Nuclei_Image, Nuclei_Label):
     prediction_3D_Logical[ CropDim[0,0]:CropDim[0,1] , CropDim[1,0]:CropDim[1,1] , SliceNumbers ] = prediction_Logical
 
 
+
+
     # >>>>>>>>>>>>>>>>>> if mult by thalamus >>>>>>>>>>>>>>>>>>>>>>>>>.........
 
-    if MultThlms_Flag != 0:
-        prediction_3D_Mult_Logical = Thalamus_PredSeg * prediction_3D_Logical
+    if Init['MultThlms_Flag'] != 0:
+        Thalamus_PredSegD = Init['Thalamus_PredSeg'].get_data()
+        prediction_3D_Mult_Logical = Thalamus_PredSegD * prediction_3D_Logical
+
+
+
 
 
     # >>>>>>>>>>>>>>>>>> Dice >>>>>>>>>>>>>>>>>>>>>>>>>.........
 
-    DiceCoefficient = DiceCoefficientCalculator(prediction_3D_Logical,Nuclei_Label.get_data())
+    if Init['Dice_Flag'] == 1:
+        DiceCoefficient = DiceCoefficientCalculator(prediction_3D_Logical, Init['Nuclei_Label'].get_data())
 
-    if MultThlms_Flag != 0:
-        DiceM = DiceCoefficientCalculator(prediction_3D_Mult_Logical,Nuclei_LabelD)
-        DiceCoefficient = np.append(DiceCoefficient,DiceM)
+        if Init['MultThlms_Flag'] != 0:
+            DiceM = DiceCoefficientCalculator(prediction_3D_Mult_Logical,Nuclei_LabelD)
+            DiceCoefficient = np.append(DiceCoefficient,DiceM)
+
+        np.savetxt(dir_ResultOut + 'DiceCoefficient.txt',DiceCoefficient)
+
+
 
 
 
 
     # >>>>>>>>>>>>>>>>>> saving >>>>>>>>>>>>>>>>>>>>>>>>>.........
 
-    np.savetxt(Directory_Test_Results_Thalamus + 'DiceCoefficient.txt',DiceCoefficient)
-
-
     Prediction3D_nifti = nib.Nifti1Image(prediction_3D,Affine)
     Prediction3D_nifti.get_header = Header
-    nib.save(Prediction3D_nifti,Directory_Test_Results_Nuclei + subFolders + '_' + NucleusName + '.nii.gz')
+    nib.save(Prediction3D_nifti , dir_ResultOut + Init['subFolders'] + '_' + Init['NucleusName'] + '.nii.gz')
 
     Prediction3D_logical_nifti = nib.Nifti1Image(prediction_3D_Logical,Affine)
     Prediction3D_logical_nifti.get_header = Header
-    nib.save(Prediction3D_logical_nifti,Directory_Test_Results_Nuclei + subFolders + '_' + NucleusName + '_Logical.nii.gz')
+    nib.save(Prediction3D_logical_nifti , dir_ResultOut + Init['subFolders'] + '_' + Init['NucleusName'] + '_Logical.nii.gz')
 
-    if MultThlms_Flag != 0:
+    if Init['MultThlms_Flag'] != 0:
         Prediction3D_logical_nifti = nib.Nifti1Image(prediction_3D_Mult_Logical,Affine)
         Prediction3D_logical_nifti.get_header = Header
-        nib.save(Prediction3D_logical_nifti,Directory_Test_Results_Thalamus + subFolders + '_' + NucleusName + '_Logical.nii.gz')
+        nib.save(Prediction3D_logical_nifti , dir_ResultOut_Mlt + Init['subFolders'] + '_' + Init['NucleusName'] + '_Logical.nii.gz')

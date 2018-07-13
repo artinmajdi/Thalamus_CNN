@@ -25,6 +25,14 @@ def mkDir(dir):
         os.makedirs(dir)
     return dir
 
+def testNme(A,ii):
+    if ii == 0:
+        TestName = 'Test_WMnMPRAGE_bias_corr_Deformed'
+    else:
+        TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
+        return TestName
+
+
 # def TestData3(net , MultThlms_Flag, Directory_Nuclei_Test0 , Dir_NucleiModelOut , Thalamus_OriginalSeg , Thalamus_PredSeg , Nuclei_ImageD , subFolders, CropDim , padSize , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , NucleusName , SliceNumbers , gpuNum):
 def TestData4(net , Init , Nuclei_Image, Nuclei_Label ):
 

@@ -18,6 +18,8 @@ def DiceCoefficientCalculator(msk1,msk2):
     return DiceCoef
 
 
+vv = {'a':np.random.random(3),'b':3}
+vv['c'] = 4
 
 # def TestData4(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Dir_NucleiModelOut , Thalamus_OriginalSeg , Thalamus_PredSeg , Nuclei_Image , subFolders, CropDim , padSize , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , NucleusName , SliceNumbers , gpuNum):
 

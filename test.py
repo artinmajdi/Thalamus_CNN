@@ -41,7 +41,7 @@ Nuclei_Label = Nuclei_Label.get_data()
 
 sz_Orig = Nuclei_Image.shape
 SliceNumbers = range(107,140)
-CropDim = np.array([ [50,198] , [130,278] , [SliceNumbers[0] , SliceNumbers[len(SliceNumbers)]] ])
+CropDim = np.array([ [50,198] , [130,278] , [SliceNumbers[0] , SliceNumbers[len(SliceNumbers)-1]+1] ])
 
 # temp !!!!!!!!!
 Thalamus_PredSeg = Nuclei_Label
@@ -50,9 +50,12 @@ Dir_NucleiModelOut_cptk = path
 padSizeFull = 90
 padSize = int(padSizeFull/2)
 
+Init = {'Slice_Numbers':SliceNumbers , 'CropDim':CropDim , 'gpuNum':gpuNum , 'padSize':padSize}
 
-
-
+SliceNumbers = Init['Slice_Numbers']
+CropDim      = Init['CropDim']
+gpuNum       = Init['gpuNum']
+padSize      = Init['padSize']
 
 # >>>>>>>>>>>>>>>>>> Prediction >>>>>>>>>>>>>>>>>>>>>>>>>.........
 # Dir_NucleiModelOut_cptk = dir + 'model/model.cpkt'

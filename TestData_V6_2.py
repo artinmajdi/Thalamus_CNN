@@ -436,8 +436,6 @@ def mkDir(dir):
 
 def TestData4(net , Init , Nuclei_Image):
 
-    ResultFldName = 'Results_momentum'
-
 
     CropDim      = Init['CropDim']
     padSize      = Init['padSize']
@@ -533,4 +531,3 @@ def TestData4(net , Init , Nuclei_Image):
         Prediction3D_logical_nifti = nib.Nifti1Image(prediction_3D_Mult_Logical,Affine)
         Prediction3D_logical_nifti.get_header = Header
         nib.save(Prediction3D_logical_nifti , dir_ResultOut_Mlt + Init['subFolders'] + '_' + Init['NucleusName'] + '_Logical.nii.gz')
-

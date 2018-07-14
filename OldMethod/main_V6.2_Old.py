@@ -106,7 +106,7 @@ Init['Dice_Flag'] = 1
 Init['MultThlms_Flag'] = 0
 Init['optimizer'] = "momentum" # "adam"
 Init['CropDim'] = np.array([ [50,198] , [130,278] , [ Init['SliceNumbers'][0] , Init['SliceNumbers'][ len(Init['SliceNumbers'])-1 ] ] ])
-Init['gpuNum'] = '5'
+Init['gpuNum'] = '4'
 Init['padSize'] = int(90/2)
 Init['NucleusName'] = NucleusName
 

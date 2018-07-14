@@ -102,15 +102,15 @@ Init['Dice_Flag'] = 1
 Init['MultThlms_Flag'] = 0
 Init['optimizer'] = "momentum" # "adam"
 Init['CropDim'] = np.array([ [50,198] , [130,278] , [ Init['SliceNumbers'][0] , Init['SliceNumbers'][ len(Init['SliceNumbers'])-1 ] ] ])
-Init['gpuNum'] = '5'
+# Init['gpuNum'] = '2'
 Init['padSize'] = int(90/2)
 Init['NucleusName'] = NucleusName
 
-
-Nuclei_Image = nib.load('/media/artin/D0E2340CE233F576/test/WMnMPRAGE_bias_corr_Deformed.nii.gz')
-Init['Dir_NucleiModelOut'] = '/media/artin/D0E2340CE233F576/test/model_momentum/'
-Init['Nuclei_Label'] = nib.load('/media/artin/D0E2340CE233F576/test/1-THALAMUS_deformed.nii.gz')
-Init['Dir_NucleiTestSamples'] = '/media/artin/D0E2340CE233F576/test/'
+dir = '/media/groot/Seagate Backup Plus Drive/code/mine/test/'
+Nuclei_Image = nib.load(dir + 'WMnMPRAGE_bias_corr_Deformed.nii.gz')
+Init['Dir_NucleiModelOut'] = dir + 'model_Backup/'
+Init['Nuclei_Label'] = nib.load(dir + '1-THALAMUS_deformed.nii.gz')
+Init['Dir_NucleiTestSamples'] = dir
 Init['gpuNum'] = 'nan'
 net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
 
@@ -150,6 +150,13 @@ if Init['gpuNum'] != 'nan':
     prediction = net.predict( Dir_NucleiModelOut_cptk, Nuclei_ImageD[...,np.newaxis], GPU_Num=Init['gpuNum'])
 else:
     prediction = net.predict( Dir_NucleiModelOut_cptk, Nuclei_ImageD[...,np.newaxis])
+b = Nuclei_ImageD[...,np.newaxis]
+a = Nuclei_ImageD[10,:,:,np.newaxis]
+a = a[np.newaxis,...]
+a.shape
+prediction = net.predict( Dir_NucleiModelOut_cptk, b)
+prediction.shape
+
 
 prediction = np.transpose(prediction,[1,2,0,3])
 prediction = prediction[...,1]
@@ -195,7 +202,7 @@ if Init['Dice_Flag'] == 1:
     print(Dice)
     np.savetxt(dir_ResultOut + 'DiceCoefficient.txt',Dice )
 
-
+    dir_ResultOut
 
 
 

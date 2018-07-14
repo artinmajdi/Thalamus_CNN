@@ -71,7 +71,7 @@ def initialDirectories(ind = 1, mode = 'oldDataset'):
 
     return NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior
 
-ind = 1
+for ind in [2,4,5]:
 mode = 'oldDatasetV2'
 NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior = initialDirectories(ind , mode)
 
@@ -149,3 +149,4 @@ for ii in range(len(A)): # [1,4]: #
             MultByThalamusFlag = 0
             # Directories = {'ResultsOut':Dir_ResultsOut , 'NucleiModelOut':Dir_NucleiModelOut , 'ThalamusTestSamples':Dir_ThalamusTestSamples,'ThalamusModelOut':Dir_ThalamusModelOut}
             [Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical] = TestData3(net , MultByThalamusFlag, Dir_NucleiTestSamples , Dir_NucleiModelOut , ThalamusOrigSeg , NucleiOrigSeg , subFolders[sFi], CropDimensions , padSize , Dir_ThalamusTestSamples , Dir_ThalamusModelOut , NucleusName , SliceNumbers , gpuNum)
+

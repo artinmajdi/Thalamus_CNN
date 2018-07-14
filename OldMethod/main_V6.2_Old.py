@@ -134,7 +134,7 @@ for ii in range(1): # len(A)):
         Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
 
         Init['Dir_NucleiModelOut'] = mkDir(Dir_NucleiTrainSamples + 'model_' + Init['optimizer'] + '/')
-        Dir_ResultsOut = mkDir( Init['Dir_NucleiTestSamples']  + 'Results_' + Init['optimizer'] + '/')
+        Init['dir_ResultOut']  = mkDir( Init['Dir_NucleiTestSamples'] + 'Results_' + Init['optimizer'] + '/')
 
 
 
@@ -157,4 +157,3 @@ for ii in range(1): # len(A)):
         Init['subFolders'] = subFolders[sFi]
         # [Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical] = TestData3(net , MultByThalamusFlag, Dir_NucleiTestSamples , Dir_NucleiModelOut , ThalamusOrigSeg , NucleiOrigSeg , subFolders[sFi], CropDimensions , padSize , Dir_ThalamusTestSamples , Dir_ThalamusModelOut , NucleusName , SliceNumbers , Init['gpuNum'])
         TestData4(net , Init , Nuclei_Image)
-

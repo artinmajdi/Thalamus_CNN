@@ -12,7 +12,7 @@ from tf_unet import unet, util, image_util
 import multiprocessing
 import tensorflow as tf
 
-gpuNum = '4' # nan'
+gpuNum = '5' # nan'
 
 def initialDirectories(ind = 1, mode = 'oldDataset'):
 
@@ -80,7 +80,7 @@ for ind in [1]:
     SliceNumbers = range(107,140)
 
 
-    for ii in range(len(A)): # [1,4]: #
+    for ii in range(1): # len(A)): # [1,4]: #
 
         if ii == 0:
             TestName = 'Test_WMnMPRAGE_bias_corr_Deformed'
@@ -97,6 +97,7 @@ for ind in [1]:
                 subFolders.append(subFlds[i])
 
         for sFi in range(1): # len(subFolders)):
+            print(NucleusName,TestName.split('Test_WMnMPRAGE_bias_corr_')[1],subFolders[sFi])
 
             Dir_Prior_NucleiSample = Dir_Prior +  subFolders[sFi] + '/Manual_Delineation_Sanitized/' + NucleusName + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
             Dir_Prior_ThalamusSample = Dir_Prior +  subFolders[sFi] + '/Manual_Delineation_Sanitized/' +'1-THALAMUS' + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
@@ -134,9 +135,9 @@ for ind in [1]:
 
                 net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
 
-                trainer = unet.Trainer(net,prediction_path=Dir_ResultsOut) # , optimizer = "adam",learning_rate=0.03
+                trainer = unet.Trainer(net) #,prediction_path=Dir_ResultsOut , optimizer = "adam",learning_rate=0.03
                 if gpuNum != 'nan':
-                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500, GPU_Num=gpuNum ) #  restore=True
+                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=15, display_step=500, GPU_Num=gpuNum ) #  restore=True
                 else:
                     path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500) #   restore=True
 

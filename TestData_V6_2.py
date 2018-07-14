@@ -440,10 +440,8 @@ def TestData4(net , Init , Nuclei_Image):
     CropDim      = Init['CropDim']
     padSize      = Init['padSize']
     SliceNumbers = Init['SliceNumbers']
-
+    Dir_ResultOut = Init['Dir_ResultOut']
     Dir_NucleiModelOut_cptk = Init['Dir_NucleiModelOut'] + 'model.cpkt'
-
-    dir_ResultOut = mkDir(Init['Dir_NucleiTestSamples'] + 'Results_' + Init['optimizer'] + '/')
 
     if Init['MultThlms_Flag'] != 0:
         dir_ResultOut_Mlt = mkDir(Init['Dir_NucleiTestSamples'] + 'Results_' + Init['optimizer'] + '_MultByThlms/')
@@ -510,7 +508,7 @@ def TestData4(net , Init , Nuclei_Image):
             # DiceCoefficient = np.append(DiceCoefficient,DiceM)
 
         print(Dice)
-        np.savetxt(dir_ResultOut + 'DiceCoefficient.txt',Dice )
+        np.savetxt(Dir_ResultOut + 'DiceCoefficient.txt',Dice )
 
 
 
@@ -521,11 +519,11 @@ def TestData4(net , Init , Nuclei_Image):
 
     Prediction3D_nifti = nib.Nifti1Image(prediction_3D,Affine)
     Prediction3D_nifti.get_header = Header
-    nib.save(Prediction3D_nifti , dir_ResultOut + Init['subFolders'] + '_' + Init['NucleusName'] + '.nii.gz')
+    nib.save(Prediction3D_nifti , Dir_ResultOut + Init['subFolders'] + '_' + Init['NucleusName'] + '.nii.gz')
 
     Prediction3D_logical_nifti = nib.Nifti1Image(prediction_3D_Logical,Affine)
     Prediction3D_logical_nifti.get_header = Header
-    nib.save(Prediction3D_logical_nifti , dir_ResultOut + Init['subFolders'] + '_' + Init['NucleusName'] + '_Logical.nii.gz')
+    nib.save(Prediction3D_logical_nifti , Dir_ResultOut + Init['subFolders'] + '_' + Init['NucleusName'] + '_Logical.nii.gz')
 
     if Init['MultThlms_Flag'] != 0:
         Prediction3D_logical_nifti = nib.Nifti1Image(prediction_3D_Mult_Logical,Affine)

@@ -42,17 +42,18 @@ def ThalamusExtraction(net , Directory_Nuclei_Test , Directory_Nuclei_Train , su
     data  = np.zeros((1,szD[1],szD[2],szD[3]))
     label = np.zeros((1,szL[1],szL[2],szL[3]))
 
+    shiftFlag = 0
     PredictionFull_Thalamus = np.zeros((szD[0],148,148,2))
     for slInd in range(len(SliceIdx)):
 
         data[0,:,:,:]  = Data[slInd,:,:,:].copy()
         label[0,:,:,:] = Label[slInd,:,:,:].copy()
 
-        # if shiftFlag == 1:
-        #     shiftX = 0
-        #     shiftY = 0
-        #     data = np.roll(data,[0,shiftX,shiftY,0])
-        #     label = np.roll(label,[0,shiftX,shiftY,0])
+        if shiftFlag == 1:
+            shiftX = 0
+            shiftY = 0
+            data = np.roll(data,[0,shiftX,shiftY,0])
+            label = np.roll(label,[0,shiftX,shiftY,0])
 
         if gpuNum != 'nan':
             prediction = net.predict( Dir_NucleiModelOut_cptk, data, GPU_Num=gpuNum)
@@ -143,6 +144,13 @@ def TestData3_PerSlice(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Direct
 
         data , label = TestData(1)
 
+        shiftFlag = 0
+
+        if shiftFlag == 1:
+            shiftX = 0
+            shiftY = 0
+            data = np.roll(data,[0,shiftX,shiftY,0])
+            label = np.roll(label,[0,shiftX,shiftY,0])
 
         if gpuNum != 'nan':
             prediction2 = net.predict( Dir_NucleiModelOut_cptk, data, GPU_Num=gpuNum)
@@ -243,7 +251,7 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Dir_NucleiModel
         except:
             os.makedirs(Directory_Test_Results_Thalamus)
 
-    Directory_Test_Results_Nuclei = Directory_Nuclei_Test0 + 'Results_momentum/'
+    Directory_Test_Results_Nuclei = Directory_Nuclei_Test0 + 'Results/' #'Results_momentum/' #
 
     try:
         os.stat(Directory_Test_Results_Nuclei)
@@ -315,6 +323,7 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Dir_NucleiModel
     data  = np.zeros((1,szD[1],szD[2],szD[3]))
     label = np.zeros((1,szL[1],szL[2],szL[3]))
 
+    shiftFlag = 0
 
     # PredictionFull_Thalamus = ThalamusExtraction(net , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , subFolders, CropDim , padSize)
 
@@ -322,6 +331,12 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Dir_NucleiModel
 
         data[0,:,:,:]  = Data[slInd,:,:,:].copy()
         label[0,:,:,:] = Label[slInd,:,:,:].copy()
+
+        if shiftFlag == 1:
+            shiftX = 0
+            shiftY = 0
+            data = np.roll(data,[0,shiftX,shiftY,0])
+            label = np.roll(label,[0,shiftX,shiftY,0])
 
         if gpuNum != 'nan':
             prediction2 = net.predict( Dir_NucleiModelOut_cptk, data, GPU_Num=gpuNum)

@@ -6,15 +6,6 @@ import tifffile
 import pickle
 from PIL import ImageEnhance , Image , ImageFilter
 
-def subFoldersFunc(Dir_Prior):
-    subFolders = []
-    subFlds = os.listdir(Dir_Prior)
-    for i in range(len(subFlds)):
-        if subFlds[i][:5] == 'vimp2':
-            subFolders.append(subFlds[i])
-
-    return subFolders
-
 def testNme(A,ii):
     if ii == 0:
         TestName = 'Test_WMnMPRAGE_bias_corr_Deformed'
@@ -29,6 +20,15 @@ def mkDir(dir):
     except:
         os.makedirs(dir)
     return dir
+
+def subFoldersFunc(Dir_Prior):
+    subFolders = []
+    subFlds = os.listdir(Dir_Prior)
+    for i in range(len(subFlds)):
+        if subFlds[i][:5] == 'vimp2':
+            subFolders.append(subFlds[i])
+
+    return subFolders
 
 def initialDirectories(ind = 1, mode = 'oldDatasetV2'):
 
@@ -80,15 +80,14 @@ def initialDirectories(ind = 1, mode = 'oldDatasetV2'):
     # Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
     # Dir_Prior = '/array/hdd/msmajdi/data/test'
 
-
     Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/oldDatasetV2'
 
-    A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
+    A = [[0,0],[6,1],[1,2],[1,3],[4,1]] # [4,3],
 
     return NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A
 
 
-for ind in [2,4,5,7,9,11,13]:
+for ind in [2,4567,8]: # ,4,5,7,9,11,13]: # 1,6,8,10,12
 
     NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'oldDatasetV2')
     subFolders = subFoldersFunc(Dir_Prior)
@@ -100,12 +99,13 @@ for ind in [2,4,5,7,9,11,13]:
 
         TestName = testNme(A,ii)
 
-        Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + '/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN/' + TestName
+        Dir_EachTraining = Dir_AllTests + '/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN/' + TestName
+        Dir_AllTrainings = Dir_AllTests + '/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN/' + 'AllTrainings'
 
         inputName = TestName.split('Test_')[1] + '.nii.gz'
 
         print('---------------------------------------')
-        for sFi in range(len(subFolders)):  # subFolders = ['vimp2_765_04162013_AW']
+        for sFi in range(len(subFolders)): # subFolders = ['vimp2_765_04162013_AW']
 
             print('Reading Images:  ',NucleusName,inputName.split('WMnMPRAGE_bias_corr_')[1].split('nii.gz')[0] , str(sFi) + ' ' + subFolders[sFi])
             mask   = nib.load(Dir_Prior + '/'  + subFolders[sFi] + '/' + Name_priors_San_Label)
@@ -131,10 +131,13 @@ for ind in [2,4,5,7,9,11,13]:
                 imFull = np.append(imFull,imD_padded[...,np.newaxis],axis=3)
                 mskFull = np.append(mskFull,maskD_padded[...,np.newaxis],axis=3)
 
+            mkDir(Dir_EachTraining + '/' + subFolders[sFi] + '/Test')
+            mkDir(Dir_EachTraining + '/' + subFolders[sFi] + '/Train')
 
-            Dir = mkDir(Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders[sFi] + '/Test')
+            mkDir(Dir_AllTrainings + '/' + subFolders[sFi] + '/Test')
+            mkDir(Dir_AllTrainings + '/' + subFolders[sFi] + '/Train')
 
-            Dir = mkDir(Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders[sFi] + '/Train')
+        print('---------------------------------------')
 
 
         for sFi_parent in range(len(subFolders)):
@@ -142,13 +145,20 @@ for ind in [2,4,5,7,9,11,13]:
             for sFi_child in range(len(subFolders)):
 
                 if sFi_parent == sFi_child:
-                    Dir = Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders[sFi_child] + '/Test'
+                    Dir_Each = Dir_EachTraining + '/' + subFolders[sFi_child] + '/Test'
+                    Dir_All  = Dir_AllTrainings + '/' + subFolders[sFi_child] + '/Test'
+
                 else:
-                    Dir = Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders[sFi_child] + '/Train'
+                    Dir_Each = Dir_EachTraining + '/' + subFolders[sFi_child] + '/Train'
+                    Dir_All  = Dir_AllTrainings + '/' + subFolders[sFi_child] + '/Train'
 
 
                 for slcIx in range(imFull.shape[2]):
 
-                    Name_PredictedImage = subFolders[sFi_parent] + '_Slice_' + str(SliceNumbers[slcIx])
-                    tifffile.imsave( Dir + '/' + Name_PredictedImage + '.tif' , imFull[:,:,slcIx,sFi_parent] )
-                    tifffile.imsave( Dir + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi_parent] )
+                    Name_PredictedImage = subFolders[sFi_parent] + '_Sh_' + str(A[ii][0]) + '_Ct' + str(A[ii][1]) + '_Slice_' + str(SliceNumbers[slcIx])
+                    tifffile.imsave( Dir_Each + '/' + Name_PredictedImage + '.tif' , imFull[:,:,slcIx,sFi_parent] )
+                    tifffile.imsave( Dir_Each + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi_parent] )
+
+                    if (ii == 0) | ( (ii > 0) & (sFi_parent != sFi_child) ) :  # the first argument will save both test and train files in the non enhanced version . the second argument will only save the train files for the enhanced version
+                        tifffile.imsave( Dir_All + '/' + Name_PredictedImage + '.tif' , imFull[:,:,slcIx,sFi_parent] )
+                        tifffile.imsave( Dir_All + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi_parent] )

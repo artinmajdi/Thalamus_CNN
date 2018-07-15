@@ -90,10 +90,8 @@ def initialDirectories(ind = 1, mode = 'oldDatasetV2'):
 for ind in [2,4567,8]: # ,4,5,7,9,11,13]: # 1,6,8,10,12
 
     NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'oldDatasetV2')
-
     subFolders = subFoldersFunc(Dir_Prior)
 
-    Name_allTests_Nuclei  = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
     Name_priors_San_Label = 'Manual_Delineation_Sanitized/' + NucleusName + '_deformed.nii.gz'
 
 
@@ -101,16 +99,14 @@ for ind in [2,4567,8]: # ,4,5,7,9,11,13]: # 1,6,8,10,12
 
         TestName = testNme(A,ii)
 
-        Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + '/' + Name_allTests_Nuclei + '/' + TestName
+        Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + '/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN/' + TestName
 
         inputName = TestName.split('Test_')[1] + '.nii.gz'
 
         print('---------------------------------------')
-        # subFolders = ['vimp2_765_04162013_AW']
-        for sFi in range(len(subFolders)):
+        for sFi in range(len(subFolders)): # subFolders = ['vimp2_765_04162013_AW']
 
             print('Reading Images:  ',NucleusName,inputName.split('WMnMPRAGE_bias_corr_')[1].split('nii.gz')[0] , str(sFi) + ' ' + subFolders[sFi])
-            # print('Loading Images:  ii '+str(ii) + ' sfi ' + str(sFi))
             mask   = nib.load(Dir_Prior + '/'  + subFolders[sFi] + '/' + Name_priors_San_Label)
             im     = nib.load(Dir_Prior + '/'  + subFolders[sFi] + '/' + inputName)
 
@@ -135,18 +131,7 @@ for ind in [2,4567,8]: # ,4,5,7,9,11,13]: # 1,6,8,10,12
                 mskFull = np.append(mskFull,maskD_padded[...,np.newaxis],axis=3)
 
             Dir = mkDir(Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders[sFi] + '/Test')
-            # Dir = Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders[sFi] + '/Test'
-            # try:
-            #     os.stat(Dir)
-            # except:
-            #     os.makedirs(Dir)
-
             Dir = mkDir(Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders[sFi] + '/Train')
-            # Dir = Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders[sFi] + '/Train'
-            # try:
-            #     os.stat(Dir)
-            # except:
-            #     os.makedirs(Dir)
 
         print('---------------------------------------')
 

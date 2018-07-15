@@ -19,7 +19,8 @@ for ind in [1]: # ,4,5,7,9,11,13]: # 1,6,8,10,12
 
     if ind == 1:
         NucleusName = '1-THALAMUS'
-        SliceNumbers = range(106,143)
+        # SliceNumbers = range(106,143)
+        SliceNumbers = range(103,147)
         # SliceNumbers = range(107,140) # original one
     elif ind == 2:
         NucleusName = '2-AV'

@@ -117,8 +117,8 @@ for ind in [1]:
 
             Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Test/'
             Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
-            Dir_NucleiModelOut = Dir_NucleiTrainSamples + 'model_momentum/'
-            Dir_ResultsOut   = Dir_NucleiTestSamples  + 'Results_momentum/'
+            Dir_NucleiModelOut = Dir_NucleiTrainSamples + 'model/'
+            Dir_ResultsOut   = Dir_NucleiTestSamples  + 'Results/'
 
             Dir_ThalamusTestSamples  = Dir_AllTests_Thalamus_EnhancedFld + subFolders[sFi] + '/Test/'
             Dir_ThalamusModelOut = Dir_AllTests_Thalamus_EnhancedFld + subFolders[sFi] + '/Train/model/'
@@ -148,11 +148,11 @@ for ind in [1]:
 
                 net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
 
-                trainer = unet.Trainer(net) #,prediction_path=Dir_ResultsOut , optimizer = "adam",learning_rate=0.03
+                trainer = unet.Trainer(net, optimizer = "adam") # ,learning_rate=0.03
                 if gpuNum != 'nan':
-                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=15, display_step=500, GPU_Num=gpuNum ) #  restore=True
+                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=100, display_step=500, GPU_Num=gpuNum ,prediction_path=Dir_ResultsOut) #  restore=True
                 else:
-                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500) #   restore=True
+                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500 ,prediction_path=Dir_ResultsOut) #   restore=True
 
                 NucleiOrigSeg = nib.load(Dir_Prior_NucleiSample)
                 ThalamusOrigSeg = nib.load(Dir_Prior_ThalamusSample)

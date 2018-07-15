@@ -61,6 +61,7 @@ for ind in [1,6,8,10,12]:
         NucleusName = '13-Hb'
         SliceNumbers = range(116,129)
 
+
         NeucleusFolder  = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
 
     ManualDir = '/Manual_Delineation_Sanitized/' #ManualDelineation

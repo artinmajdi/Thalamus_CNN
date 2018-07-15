@@ -23,6 +23,7 @@ def initialDirectories(ind = 1, mode = 'oldDataset'):
     if ind == 1:
         NucleusName = '1-THALAMUS'
         SliceNumbers = range(106,143)
+        # SliceNumbers = range(107,140) # original one
     elif ind == 2:
         NucleusName = '2-AV'
         SliceNumbers = range(126,143)

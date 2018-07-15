@@ -20,7 +20,8 @@ def testNme(A,ii):
         TestName = 'Test_WMnMPRAGE_bias_corr_Deformed'
     else:
         TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
-        return TestName
+
+    return TestName
 
 def mkDir(dir):
     try:
@@ -29,34 +30,49 @@ def mkDir(dir):
         os.makedirs(dir)
     return dir
 
-for ind in [2,4,5,7,9,11,13]: # 1,6,8,10,12
-    # ind = 1
+def initialDirectories(ind = 1, mode = 'oldDatasetV2'):
+
     if ind == 1:
         NucleusName = '1-THALAMUS'
+        # SliceNumbers = range(106,143)
+        SliceNumbers = range(103,147)
+        # SliceNumbers = range(107,140) # original one
     elif ind == 2:
         NucleusName = '2-AV'
+        SliceNumbers = range(126,143)
     elif ind == 4567:
         NucleusName = '4567-VL'
+        SliceNumbers = range(114,143)
     elif ind == 4:
         NucleusName = '4-VA'
+        SliceNumbers = range(116,140)
     elif ind == 5:
         NucleusName = '5-VLa'
+        SliceNumbers = range(115,133)
     elif ind == 6:
         NucleusName = '6-VLP'
+        SliceNumbers = range(115,145)
     elif ind == 7:
         NucleusName = '7-VPL'
+        SliceNumbers = range(114,141)
     elif ind == 8:
         NucleusName = '8-Pul'
+        SliceNumbers = range(112,141)
     elif ind == 9:
         NucleusName = '9-LGN'
+        SliceNumbers = range(105,119)
     elif ind == 10:
         NucleusName = '10-MGN'
+        SliceNumbers = range(107,121)
     elif ind == 11:
         NucleusName = '11-CM'
+        SliceNumbers = range(115,131)
     elif ind == 12:
         NucleusName = '12-MD-Pf'
+        SliceNumbers = range(115,140)
     elif ind == 13:
         NucleusName = '13-Hb'
+        SliceNumbers = range(116,129)
 
 
     # Dir_Prior = '/media/data1/artin/data/Thalamus/'+ Name_allTests_Nuclei + '/OriginalDeformedPriors'
@@ -67,30 +83,29 @@ for ind in [2,4,5,7,9,11,13]: # 1,6,8,10,12
 
     Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/oldDatasetV2'
 
+    A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
 
+    return NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A
+
+
+for ind in [2,4,5,7,9,11,13]:
+
+    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'oldDatasetV2')
     subFolders = subFoldersFunc(Dir_Prior)
 
-
-    A = [[0,0],[6,1],[1,2],[1,3],[4,1]] # [4,3],
-    SliceNumbers = range(107,140)
-
-    ManualDir = 'Manual_Delineation_Sanitized/'
-
-    Name_priors_San_Label = ManualDir + NucleusName + '_deformed.nii.gz'
+    Name_priors_San_Label = 'Manual_Delineation_Sanitized/' + NucleusName + '_deformed.nii.gz'
 
 
     for ii in range(len(A)):
 
         TestName = testNme(A,ii)
 
+        Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + '/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN/' + TestName
 
-        Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + '/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN/Test_' + TestName
-
-        inputName = TestName + '.nii.gz'
+        inputName = TestName.split('Test_')[1] + '.nii.gz'
 
         print('---------------------------------------')
-        # subFolders = ['vimp2_765_04162013_AW']
-        for sFi in range(len(subFolders)):
+        for sFi in range(len(subFolders)):  # subFolders = ['vimp2_765_04162013_AW']
 
             print('Reading Images:  ',NucleusName,inputName.split('WMnMPRAGE_bias_corr_')[1].split('nii.gz')[0] , str(sFi) + ' ' + subFolders[sFi])
             mask   = nib.load(Dir_Prior + '/'  + subFolders[sFi] + '/' + Name_priors_San_Label)

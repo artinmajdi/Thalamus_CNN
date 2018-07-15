@@ -15,15 +15,30 @@ import tensorflow as tf
 
 gpuNum = '3' # nan'
 
-# 10-MGN_deformed.nii.gz	  13-Hb_deformed.nii.gz       4567-VL_deformed.nii.gz  6-VLP_deformed.nii.gz  9-LGN_deformed.nii.gz
-# 11-CM_deformed.nii.gz	  1-THALAMUS_deformed.nii.gz  4-VA_deformed.nii.gz     7-VPL_deformed.nii.gz
-# 12-MD-Pf_deformed.nii.gz  2-AV_deformed.nii.gz	      5-VLa_deformed.nii.gz    8-Pul_deformed.nii.gz
+def subFoldersFunc(Dir_Prior):
+    subFolders = []
+    subFlds = os.listdir(Dir_Prior)
+    for i in range(len(subFlds)):
+        if subFlds[i][:5] == 'vimp2':
+            subFolders.append(subFlds[i])
 
-for ind in [1,6,8,10,12]:
+    return subFolders
+
+def testNme(A,ii):
+    if ii == 0:
+        TestName = 'Test_WMnMPRAGE_bias_corr_Deformed'
+    else:
+        TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
+
+    return TestName
+
+def initialDirectories(ind = 1, mode = 'newDataset'):
 
     if ind == 1:
         NucleusName = '1-THALAMUS'
-        SliceNumbers = range(106,143)
+        # SliceNumbers = range(106,143)
+        SliceNumbers = range(103,147)
+        # SliceNumbers = range(107,140) # original one
     elif ind == 2:
         NucleusName = '2-AV'
         SliceNumbers = range(126,143)
@@ -61,14 +76,6 @@ for ind in [1,6,8,10,12]:
         NucleusName = '13-Hb'
         SliceNumbers = range(116,129)
 
-
-        NeucleusFolder  = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
-
-    ManualDir = '/Manual_Delineation_Sanitized/' #ManualDelineation
-
-    A = [[0,0],[1,2],[1,3],[4,1],[6,1]] # [4,3],
-    # SliceNumbers = range(107,140)
-
     Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' #
     #Dir_AllTests = '/media/artin-laptop/D0E2340CE233F5761/Thalamus_Segmentation/Data/'
 
@@ -79,23 +86,42 @@ for ind in [1,6,8,10,12]:
     Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS/'
     # Dir_Prior = '/array/hdd/msmajdi/data/test/'
 
-    # subFolders = list(['a', 'b'])
+    A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
+
+    return NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A
+
+
+subFoldersModel = 'vimp2_964_08092013_TG'
+
+for ind in [1,6,8,10,12]:
+
+
+    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'newDataset')
+
+    NeucleusFolder  = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
+
+    ManualDir = '/Manual_Delineation_Sanitized/' #ManualDelineation
+
 
     for ii in range(len(A)):
 
-        if ii == 0:
-            TestName = 'Test_WMnMPRAGE_bias_corr_Deformed' # _Deformed_Cropped
-        else:
-            TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
+        # if ii == 0:
+        #     TestName = 'Test_WMnMPRAGE_bias_corr_Deformed' # _Deformed_Cropped
+        # else:
+        #     TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
+
+        TestName = testNme(A,ii)
 
         Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + 'newDataset/' + NeucleusFolder + '/' + TestName + '/'
         Dir_AllTests_Thalamus_EnhancedFld = Dir_AllTests + 'newDataset/' + 'CNN1_THALAMUS_2D_SanitizedNN' + '/' + TestName + '/'
 
-        subFolders = []
-        subFlds = os.listdir(Dir_AllTests_Nuclei_EnhancedFld)
-        for i in range(len(subFlds)):
-            if subFlds[i][:5] == 'vimp2':
-                subFolders.append(subFlds[i])
+        # subFolders = []
+        # subFlds = os.listdir(Dir_AllTests_Nuclei_EnhancedFld)
+        # for i in range(len(subFlds)):
+        #     if subFlds[i][:5] == 'vimp2':
+        #         subFolders.append(subFlds[i])
+
+        subFolders = subFoldersFunc(Dir_Prior)
 
         for sFi in range(len(subFolders)):
             # try:
@@ -105,7 +131,7 @@ for ind in [1,6,8,10,12]:
             Dir_NucleiTestSamples  = Dir_AllTests + 'newDataset/' + NeucleusFolder + '/' + TestName + '/' + subFolders[sFi] + '/Test/'
             Dir_ResultsOut   = Dir_NucleiTestSamples  + 'Results/'
 
-            subFoldersModel = 'vimp2_964_08092013_TG' # 'vimp2_668_02282013_CD'
+
             # Dir_NucleiModelOut = Dir_AllTests + NeucleusFolder + '/' + TestName + '/' + subFoldersModel + '/Train/model/'  # 'model_momentum/'
             Dir_NucleiModelOut = Dir_AllTests + 'oldDatasetV2/' + NeucleusFolder + '/' + TestName + '/' + subFoldersModel + '/Train/model/'
 

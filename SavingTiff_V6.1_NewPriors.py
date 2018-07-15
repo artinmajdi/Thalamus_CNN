@@ -16,35 +16,64 @@ def subFoldersFunc(Dir_Prior):
             subFolders.append(subFlds[i])
     return subFolders
 
+def mkDir(dir):
+    try:
+        os.stat(dir)
+    except:
+        os.makedirs(dir)
+    return dir
 
-for ind in [2,4,5,7,9,11,13]: # 1,6,8,10,12
-    # ind = 1
+def testNme(A,ii):
+    if ii == 0:
+        TestName = 'Test_WMnMPRAGE_bias_corr_Deformed'
+    else:
+        TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
+
+    return TestName
+
+def initialDirectories(ind = 1, mode = 'newDataset'):
+
     if ind == 1:
         NucleusName = '1-THALAMUS'
+        # SliceNumbers = range(106,143)
+        SliceNumbers = range(103,147)
+        # SliceNumbers = range(107,140) # original one
     elif ind == 2:
         NucleusName = '2-AV'
+        SliceNumbers = range(126,143)
     elif ind == 4567:
         NucleusName = '4567-VL'
+        SliceNumbers = range(114,143)
     elif ind == 4:
         NucleusName = '4-VA'
+        SliceNumbers = range(116,140)
     elif ind == 5:
         NucleusName = '5-VLa'
+        SliceNumbers = range(115,133)
     elif ind == 6:
         NucleusName = '6-VLP'
+        SliceNumbers = range(115,145)
     elif ind == 7:
         NucleusName = '7-VPL'
+        SliceNumbers = range(114,141)
     elif ind == 8:
         NucleusName = '8-Pul'
+        SliceNumbers = range(112,141)
     elif ind == 9:
         NucleusName = '9-LGN'
+        SliceNumbers = range(105,119)
     elif ind == 10:
         NucleusName = '10-MGN'
+        SliceNumbers = range(107,121)
     elif ind == 11:
         NucleusName = '11-CM'
+        SliceNumbers = range(115,131)
     elif ind == 12:
         NucleusName = '12-MD-Pf'
+        SliceNumbers = range(115,140)
     elif ind == 13:
         NucleusName = '13-Hb'
+        SliceNumbers = range(116,129)
 
 
     # Dir_Prior = '/media/data1/artin/data/Thalamus/'+ Name_allTests_Nuclei + '/OriginalDeformedPriors'
@@ -55,31 +84,37 @@ for ind in [2,4,5,7,9,11,13]: # 1,6,8,10,12
 
     Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN'
 
+    A = [[0,0],[6,1],[1,2],[1,3],[4,1]] # [4,3],
+
+    return NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A
+
+
+
+for ind in [2,4,5,7,9,11,13]: # 1,6,8,10,12
+
+    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'newDataset')
+
     subFolders = subFoldersFunc(Dir_Prior)
 
-    A = [[0,0],[6,1],[1,2],[1,3],[4,1]] # [4,3],
-    SliceNumbers = range(107,140)
-
-    ManualDir = 'Manual_Delineation_Sanitized/'
-
     Name_allTests_Nuclei  = 'newDataset/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
-    Name_priors_San_Label = ManualDir + NucleusName + '_deformed.nii.gz'
+    Name_priors_San_Label = 'Manual_Delineation_Sanitized/' + NucleusName + '_deformed.nii.gz'
 
 
     for ii in range(len(A)):
 
-        if ii == 0:
-            TestName = 'WMnMPRAGE_bias_corr_Deformed'
-        else:
-            TestName = 'WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
+        # if ii == 0:
+        #     TestName = 'WMnMPRAGE_bias_corr_Deformed'
+        # else:
+        #     TestName = 'WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
 
-        Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + '/' + Name_allTests_Nuclei + '/Test_' + TestName
+        TestName = testNme(A,ii)
 
-        inputName = TestName + '.nii.gz'
+        Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + '/' + Name_allTests_Nuclei + '/' + TestName
+
+        inputName = TestName.split('Test_')[1] + '.nii.gz'
 
         print('---------------------------------------')
-        # subFolders = ['vimp2_765_04162013_AW']
-        for sFi in range(len(subFolders)):
+        for sFi in range(len(subFolders)):  # subFolders = ['vimp2_765_04162013_AW']
 
             print(NucleusName,inputName.split('WMnMPRAGE_bias_corr_')[1].split('nii.gz')[0] , str(sFi) + ' ' + subFolders[sFi])
 
@@ -98,14 +133,11 @@ for ind in [2,4,5,7,9,11,13]: # 1,6,8,10,12
             imD_padded = np.pad(imD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' )
             maskD_padded = np.pad(maskD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' )
 
-
-            Dir_TestSamples = Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders[sFi] + '/Test'
-
-
-            try:
-                os.stat(Dir_TestSamples)
-            except:
-                os.makedirs(Dir_TestSamples)
+            Dir_TestSamples = mkDir(Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders[sFi] + '/Test')
+            # try:
+            #     os.stat(Dir_TestSamples)
+            # except:
+            #     os.makedirs(Dir_TestSamples)
 
             for sliceInd in range(imD2.shape[2]):
 

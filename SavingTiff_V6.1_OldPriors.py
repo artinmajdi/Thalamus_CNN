@@ -11,6 +11,7 @@ def testNme(A,ii):
         TestName = 'Test_WMnMPRAGE_bias_corr_Deformed'
     else:
         TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
+
     return TestName
 
 def mkDir(dir):
@@ -29,7 +30,7 @@ def subFoldersFunc(Dir_Prior):
 
     return subFolders
 
-for ind in [1]: # ,4,5,7,9,11,13]: # 1,6,8,10,12
+def initialDirectories(ind = 1, mode = 'oldDatasetV2'):
 
     if ind == 1:
         NucleusName = '1-THALAMUS'
@@ -79,34 +80,30 @@ for ind in [1]: # ,4,5,7,9,11,13]: # 1,6,8,10,12
     # Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
     # Dir_Prior = '/array/hdd/msmajdi/data/test'
 
-
     Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/oldDatasetV2'
-
-
-    subFolders = subFoldersFunc(Dir_Prior)
-
 
     A = [[0,0],[6,1],[1,2],[1,3],[4,1]] # [4,3],
 
+    return NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A
 
-    ManualDir = 'Manual_Delineation_Sanitized/'
+
+for ind in [1]: # ,4,5,7,9,11,13]: # 1,6,8,10,12
+
+    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'oldDatasetV2')
+
+    subFolders = subFoldersFunc(Dir_Prior)
 
     Name_allTests_Nuclei  = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
-    Name_priors_San_Label = ManualDir + NucleusName + '_deformed.nii.gz'
+    Name_priors_San_Label = 'Manual_Delineation_Sanitized/' + NucleusName + '_deformed.nii.gz'
 
 
     for ii in range(1): # len(A)):
 
-        # if ii == 0:
-        #     TestName = 'WMnMPRAGE_bias_corr_Deformed'
-        # else:
-        #     TestName = 'WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
-
         TestName = testNme(A,ii)
 
-        Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + '/' + Name_allTests_Nuclei + '/Test_' + TestName
+        Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + '/' + Name_allTests_Nuclei + '/' + TestName
 
-        inputName = TestName + '.nii.gz'
+        inputName = TestName.split('Test_')[1] + '.nii.gz'
 
         print('---------------------------------------')
         # subFolders = ['vimp2_765_04162013_AW']
@@ -169,4 +166,3 @@ for ind in [1]: # ,4,5,7,9,11,13]: # 1,6,8,10,12
                     Name_PredictedImage = subFolders[sFi_parent] + '_Slice_' + str(SliceNumbers[slcIx])
                     tifffile.imsave( Dir + '/' + Name_PredictedImage + '.tif' , imFull[:,:,slcIx,sFi_parent] )
                     tifffile.imsave( Dir + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi_parent] )
-

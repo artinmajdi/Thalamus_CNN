@@ -16,15 +16,30 @@ import tensorflow as tf
 gpuNum = '4' # nan'
 mode = 'oldDatasetV2'
 
-# 10-MGN_deformed.nii.gz	  13-Hb_deformed.nii.gz       4567-VL_deformed.nii.gz  6-VLP_deformed.nii.gz  9-LGN_deformed.nii.gz
-# 11-CM_deformed.nii.gz	  1-THALAMUS_deformed.nii.gz  4-VA_deformed.nii.gz     7-VPL_deformed.nii.gz
-# 12-MD-Pf_deformed.nii.gz  2-AV_deformed.nii.gz	      5-VLa_deformed.nii.gz    8-Pul_deformed.nii.gz
+def testNme(A,ii):
+    if ii == 0:
+        TestName = 'Test_WMnMPRAGE_bias_corr_Deformed'
+    else:
+        TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
 
-for ind in [1,4]: # [1,4,6,8,10,12]
-    # ind = 1
+    return TestName
+
+def subFoldersFunc(Dir_Prior):
+    subFolders = []
+    subFlds = os.listdir(Dir_Prior)
+    for i in range(len(subFlds)):
+        if subFlds[i][:5] == 'vimp2':
+            subFolders.append(subFlds[i])
+
+    return subFolders
+
+def initialDirectories(ind = 1, mode = 'oldDatasetV2'):
+
     if ind == 1:
         NucleusName = '1-THALAMUS'
-        SliceNumbers = range(106,143)
+        # SliceNumbers = range(106,143)
+        SliceNumbers = range(103,147)
+        # SliceNumbers = range(107,140) # original one
     elif ind == 2:
         NucleusName = '2-AV'
         SliceNumbers = range(126,143)
@@ -62,15 +77,12 @@ for ind in [1,4]: # [1,4,6,8,10,12]
         NucleusName = '13-Hb'
         SliceNumbers = range(116,129)
 
-    if mode == 'oldDatasetV2':
-        NeucleusFolder  = 'oldDatasetV2/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
-        ThalamusFolder  = 'oldDatasetV2/CNN1_THALAMUS_2D_SanitizedNN'
-    else if mode == 'oldDataset':
-        NeucleusFolder  = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
-        ThalamusFolder  = 'CNN1_THALAMUS_2D_SanitizedNN'
-
-
-    ManualDir = '/Manual_Delineation_Sanitized/'
+    # if mode == 'oldDatasetV2':
+    NeucleusFolder  = mode + '/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
+    ThalamusFolder  = mode + '/CNN1_THALAMUS_2D_SanitizedNN'
+    # else if mode == 'oldDataset':
+    #     NeucleusFolder  = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
+    #     ThalamusFolder  = 'CNN1_THALAMUS_2D_SanitizedNN'
 
     A = [[0,0],[4,3],[6,1],[1,2],[1,3],[4,1]]
     # SliceNumbers = range(107,140)
@@ -79,26 +91,40 @@ for ind in [1,4]: # [1,4,6,8,10,12]
         Dir_AllTests = '/media/artin-laptop/D0E2340CE233F5761/Thalamus_Segmentation/Data/'
         Dir_Prior = Dir_AllTests + 'Manual_Delineation_Sanitized_Full/'
 
-    else if (mode == 'oldDataset') | (mode == 'oldDatasetV2'):
+    else if mode == 'oldDatasetV2':
         Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/'
         Dir_Prior =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
 
 
+    return NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, SliceNumbers, A
+
+
+for ind in [1,4]: # [1,4,6,8,10,12]
+
+
+    NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'oldDatasetV2')
+
+    ManualDir = '/Manual_Delineation_Sanitized/'
+
     for ii in range(len(A)):
 
-        if ii == 0:
-            TestName = 'Test_WMnMPRAGE_bias_corr_Deformed'
-        else:
-            TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
+        # if ii == 0:
+        #     TestName = 'Test_WMnMPRAGE_bias_corr_Deformed'
+        # else:
+        #     TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
+
+        TestName = testNme(A,ii)
 
         Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + NeucleusFolder + '/' + TestName + '/'
         Dir_AllTests_Thalamus_EnhancedFld = Dir_AllTests + ThalamusFolder + '/' + TestName + '/'
 
-        subFolders = []
-        subFlds = os.listdir(Dir_AllTests_Nuclei_EnhancedFld)
-        for i in range(len(subFlds)):
-            if subFlds[i][:5] == 'vimp2':
-                subFolders.append(subFlds[i])
+        # subFolders = []
+        # subFlds = os.listdir(Dir_AllTests_Nuclei_EnhancedFld)
+        # for i in range(len(subFlds)):
+        #     if subFlds[i][:5] == 'vimp2':
+        #         subFolders.append(subFlds[i])
+
+        subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
         for sFi in range(len(subFolders)):
             # try:

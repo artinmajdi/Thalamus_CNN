@@ -82,11 +82,11 @@ def initialDirectories(ind = 1, mode = 'oldDataset'):
         Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/'
         Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS/'
 
-    return NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior
+    return NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, SliceNumbers
 
 for ind in [1]:
     mode = 'oldDatasetV2'
-    NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior = initialDirectories(ind , mode)
+    NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, SliceNumbers = initialDirectories(ind , mode)
 
 
     A = [[0,0],[6,1],[1,2],[1,3],[4,1]] # [4,3],

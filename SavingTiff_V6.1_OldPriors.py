@@ -15,12 +15,12 @@ def subFoldersFunc(Dir_Prior):
 
     return subFolders
 
-for ind in [2]: # ,4,5,7,9,11,13]: # 1,6,8,10,12
+for ind in [1]: # ,4,5,7,9,11,13]: # 1,6,8,10,12
 
     if ind == 1:
         NucleusName = '1-THALAMUS'
         SliceNumbers = range(106,143)
-        # SliceNumbers = range(107,140)  original one
+        # SliceNumbers = range(107,140) # original one
     elif ind == 2:
         NucleusName = '2-AV'
         SliceNumbers = range(126,143)
@@ -65,7 +65,7 @@ for ind in [2]: # ,4,5,7,9,11,13]: # 1,6,8,10,12
     # Dir_Prior = '/array/hdd/msmajdi/data/test'
 
 
-    Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/oldDatasetV2b'
+    Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/oldDatasetV2'
 
 
     subFolders = subFoldersFunc(Dir_Prior)

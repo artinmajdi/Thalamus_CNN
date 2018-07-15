@@ -101,6 +101,8 @@ def initialDirectories(ind = 1, mode = 'oldDatasetV2'):
     #     NeucleusFolder = 'newDataset/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
     #     ThalamusFolder = 'newDataset/CNN1_THALAMUS_2D_SanitizedNN'
 
+    A = [[0,0],[6,1],[1,2],[1,3],[4,1]] # [4,3],
+
 
     if mode == 'localMachine':
         Dir_AllTests = '/media/artin-laptop/D0E2340CE233F5761/Thalamus_Segmentation/Data/'
@@ -112,14 +114,16 @@ def initialDirectories(ind = 1, mode = 'oldDatasetV2'):
         Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/'
         Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS/'
 
-    return NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, SliceNumbers
+    return NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, SliceNumbers, A
+
+
 
 for ind in [1]:
     mode = 'oldDatasetV2'
-    NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, SliceNumbers = initialDirectories(ind , mode)
+    NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , mode)
 
 
-    A = [[0,0],[6,1],[1,2],[1,3],[4,1]] # [4,3],
+
 
 
 

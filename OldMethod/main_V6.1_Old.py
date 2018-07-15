@@ -87,8 +87,8 @@ def initialDirectories(ind = 1, mode = 'oldDataset'):
 
 
     # mode:= oldDatasetV2 newDataset
-    NeucleusFolder = mode + 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
-    ThalamusFolder = mode + 'CNN1_THALAMUS_2D_SanitizedNN'
+    NeucleusFolder = mode + '/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
+    ThalamusFolder = mode + '/CNN1_THALAMUS_2D_SanitizedNN'
 
     # if mode == 'oldDatasetV2':
     #     NeucleusFolder = 'oldDatasetV2/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'

@@ -6,6 +6,20 @@ import tifffile
 import pickle
 from PIL import ImageEnhance , Image , ImageFilter
 
+def testNme(A,ii):
+    if ii == 0:
+        TestName = 'Test_WMnMPRAGE_bias_corr_Deformed'
+    else:
+        TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
+    return TestName
+
+def mkDir(dir):
+    try:
+        os.stat(dir)
+    except:
+        os.makedirs(dir)
+    return dir
+
 def subFoldersFunc(Dir_Prior):
     subFolders = []
     subFlds = os.listdir(Dir_Prior)
@@ -83,10 +97,12 @@ for ind in [1]: # ,4,5,7,9,11,13]: # 1,6,8,10,12
 
     for ii in range(1): # len(A)):
 
-        if ii == 0:
-            TestName = 'WMnMPRAGE_bias_corr_Deformed'
-        else:
-            TestName = 'WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
+        # if ii == 0:
+        #     TestName = 'WMnMPRAGE_bias_corr_Deformed'
+        # else:
+        #     TestName = 'WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
+
+        TestName = testNme(A,ii)
 
         Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + '/' + Name_allTests_Nuclei + '/Test_' + TestName
 
@@ -121,17 +137,19 @@ for ind in [1]: # ,4,5,7,9,11,13]: # 1,6,8,10,12
                 imFull = np.append(imFull,imD_padded[...,np.newaxis],axis=3)
                 mskFull = np.append(mskFull,maskD_padded[...,np.newaxis],axis=3)
 
-            Dir = Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders[sFi] + '/Test'
-            try:
-                os.stat(Dir)
-            except:
-                os.makedirs(Dir)
+            Dir = mkDir(Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders[sFi] + '/Test')
+            # Dir = Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders[sFi] + '/Test'
+            # try:
+            #     os.stat(Dir)
+            # except:
+            #     os.makedirs(Dir)
 
-            Dir = Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders[sFi] + '/Train'
-            try:
-                os.stat(Dir)
-            except:
-                os.makedirs(Dir)
+            Dir = mkDir(Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders[sFi] + '/Train')
+            # Dir = Dir_AllTests_Nuclei_EnhancedFld + '/' + subFolders[sFi] + '/Train'
+            # try:
+            #     os.stat(Dir)
+            # except:
+            #     os.makedirs(Dir)
 
         print('---------------------------------------')
 

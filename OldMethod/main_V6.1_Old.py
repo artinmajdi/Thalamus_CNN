@@ -22,30 +22,43 @@ def initialDirectories(ind = 1, mode = 'oldDataset'):
 
     if ind == 1:
         NucleusName = '1-THALAMUS'
+        SliceNumbers = range(106,143)
     elif ind == 2:
         NucleusName = '2-AV'
+        SliceNumbers = range(126,143)
     elif ind == 4567:
         NucleusName = '4567-VL'
+        SliceNumbers = range(114,143)
     elif ind == 4:
         NucleusName = '4-VA'
+        SliceNumbers = range(116,140)
     elif ind == 5:
         NucleusName = '5-VLa'
+        SliceNumbers = range(115,133)
     elif ind == 6:
         NucleusName = '6-VLP'
+        SliceNumbers = range(115,145)
     elif ind == 7:
         NucleusName = '7-VPL'
+        SliceNumbers = range(114,141)
     elif ind == 8:
         NucleusName = '8-Pul'
+        SliceNumbers = range(112,141)
     elif ind == 9:
         NucleusName = '9-LGN'
+        SliceNumbers = range(105,119)
     elif ind == 10:
         NucleusName = '10-MGN'
+        SliceNumbers = range(107,121)
     elif ind == 11:
         NucleusName = '11-CM'
+        SliceNumbers = range(115,131)
     elif ind == 12:
         NucleusName = '12-MD-Pf'
+        SliceNumbers = range(115,140)
     elif ind == 13:
         NucleusName = '13-Hb'
+        SliceNumbers = range(116,129)
 
 
     if mode == 'oldDatasetV2':
@@ -77,7 +90,7 @@ for ind in [1]:
 
 
     A = [[0,0],[6,1],[1,2],[1,3],[4,1]] # [4,3],
-    SliceNumbers = range(107,140)
+
 
 
     for ii in range(1): # len(A)): # [1,4]: #

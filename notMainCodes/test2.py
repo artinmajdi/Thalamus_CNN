@@ -11,7 +11,7 @@ from TestData_V6_1 import TestData3
 from tf_unet import unet, util, image_util
 import multiprocessing
 import tensorflow as tf
-
+import matplotlib.pyplot as plt
 def DiceCoefficientCalculator(msk1,msk2):
     intersection = msk1*msk2  # np.logical_and(msk1,msk2)
     DiceCoef = intersection.sum()*2/(msk1.sum()+msk2.sum() + np.finfo(float).eps)
@@ -94,6 +94,15 @@ ind = 1
 mode = 'oldDatasetV2'
 NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior = initialDirectories(ind , mode)
 
+# dir = '/media/artin/D0E2340CE233F576/Thalamus_Segmentation/Data/Manual_Delineation_Sanitized_Full/vimp2_ctrl_920_07122013_SW/Manual_Delineation_Sanitized/'
+# msk = nib.load(dir + NucleusName + '_deformed.nii.gz')
+#
+# msk = msk.get_data()
+# msk.shape
+# a = msk.sum(axis=0)
+# a = a.sum(axis=0)
+# a.shape
+# np.where(a>0)
 
 A = [[0,0],[6,1],[1,2],[1,3],[4,1]] # [4,3],
 

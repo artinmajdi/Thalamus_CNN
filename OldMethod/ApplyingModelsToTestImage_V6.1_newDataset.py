@@ -20,30 +20,53 @@ gpuNum = '3' # nan'
 # 12-MD-Pf_deformed.nii.gz  2-AV_deformed.nii.gz	      5-VLa_deformed.nii.gz    8-Pul_deformed.nii.gz
 
 for ind in [1,6,8,10,12]:
-    if ind == 1:
-        NeucleusFolder = 'CNN1_THALAMUS_2D_SanitizedNN'
-        NucleusName = '1-THALAMUS'
-    elif ind == 4:
-        NeucleusFolder = 'CNN4567_VL_2D_SanitizedNN' # 'CNN12_MD_Pf_2D_SanitizedNN' #  'CNN1_THALAMUS_2D_SanitizedNN' 'CNN6_VLP_2D_SanitizedNN'  #
-        NucleusName = '4567-VL'
-    elif ind == 6:
-        NeucleusFolder = 'CNN6_VLP_2D_SanitizedNN'
-        NucleusName = '6-VLP'
-    elif ind == 8:
-        NeucleusFolder = 'CNN8_Pul_2D_SanitizedNN'
-        NucleusName = '8-Pul'
-    elif ind == 10:
-        NeucleusFolder = 'CNN10_MGN_2D_SanitizedNN'
-        NucleusName = '10-MGN'
-    elif ind == 12:
-        NeucleusFolder = 'CNN12_MD_Pf_2D_SanitizedNN'
-        NucleusName = '12-MD-Pf'
 
+    if ind == 1:
+        NucleusName = '1-THALAMUS'
+        SliceNumbers = range(106,143)
+    elif ind == 2:
+        NucleusName = '2-AV'
+        SliceNumbers = range(126,143)
+    elif ind == 4567:
+        NucleusName = '4567-VL'
+        SliceNumbers = range(114,143)
+    elif ind == 4:
+        NucleusName = '4-VA'
+        SliceNumbers = range(116,140)
+    elif ind == 5:
+        NucleusName = '5-VLa'
+        SliceNumbers = range(115,133)
+    elif ind == 6:
+        NucleusName = '6-VLP'
+        SliceNumbers = range(115,145)
+    elif ind == 7:
+        NucleusName = '7-VPL'
+        SliceNumbers = range(114,141)
+    elif ind == 8:
+        NucleusName = '8-Pul'
+        SliceNumbers = range(112,141)
+    elif ind == 9:
+        NucleusName = '9-LGN'
+        SliceNumbers = range(105,119)
+    elif ind == 10:
+        NucleusName = '10-MGN'
+        SliceNumbers = range(107,121)
+    elif ind == 11:
+        NucleusName = '11-CM'
+        SliceNumbers = range(115,131)
+    elif ind == 12:
+        NucleusName = '12-MD-Pf'
+        SliceNumbers = range(115,140)
+    elif ind == 13:
+        NucleusName = '13-Hb'
+        SliceNumbers = range(116,129)
+
+        NeucleusFolder  = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
 
     ManualDir = '/Manual_Delineation_Sanitized/' #ManualDelineation
 
     A = [[0,0],[1,2],[1,3],[4,1],[6,1]] # [4,3],
-    SliceNumbers = range(107,140)
+    # SliceNumbers = range(107,140)
 
     Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' #
     #Dir_AllTests = '/media/artin-laptop/D0E2340CE233F5761/Thalamus_Segmentation/Data/'

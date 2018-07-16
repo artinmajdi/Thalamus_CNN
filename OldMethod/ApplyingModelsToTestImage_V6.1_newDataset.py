@@ -112,6 +112,7 @@ gpuNum, IxNuclei, testMode = input_GPU_Ix()
 for ind in [IxNuclei]:
 
 
+
     NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'newDataset')
 
     NeucleusFolder  = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'

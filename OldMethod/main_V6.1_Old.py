@@ -153,29 +153,18 @@ for ind in [8]:
 
             Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Test/'
             Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
-            Dir_NucleiModelOut = Dir_NucleiTrainSamples + 'model/'
-            Dir_ResultsOut   = Dir_NucleiTestSamples  + 'Results/'
 
             Dir_ThalamusTestSamples  = Dir_AllTests_Thalamus_EnhancedFld + subFolders[sFi] + '/Test/'
             Dir_ThalamusModelOut = Dir_AllTests_Thalamus_EnhancedFld + subFolders[sFi] + '/Train/model/'
 
 
-            Dir_NucleiModelOut = mkDir(Dir_NucleiModelOut)
-            Dir_ResultsOut = mkDir(Dir_ResultsOut)
+            Dir_NucleiModelOut = mkDir(Dir_NucleiTrainSamples + 'model/')
+            Dir_ResultsOut = mkDir(Dir_NucleiTestSamples  + 'Results/')
 
 
-            # if os.path.isfile(Dir_ResultsOut + 'DiceCoefficient__.txt'):
-            #     print('*---  Already Done:   ' + Dir_NucleiModelOut + '  ---*')
-            #     continue
-            # else:
-            # print('*---  Not Done:   ' + Dir_NucleiModelOut + '  ---*')
             TrainData = image_util.ImageDataProvider(Dir_NucleiTrainSamples + "*.tif")
 
             logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
-            # config = tf.ConfigProto()
-            # config.gpu_options.allow_growth = True
-            # config.gpu_options.per_process_gpu_memory_fraction = 0.4
-            # unet.config = config
 
             net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
 

@@ -11,8 +11,9 @@ from TestData_V6_1 import TestData3
 from tf_unet import unet, util, image_util
 import multiprocessing
 import tensorflow as tf
+import sys
 
-gpuNum = '5' # nan'
+
 
 def mkDir(dir):
     try:
@@ -116,21 +117,32 @@ def initialDirectories(ind = 1, mode = 'oldDatasetV2'):
 
     return NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, SliceNumbers, A
 
+def input_GPU_Ix():
+
+    gpuNum = '5'  # 'nan'
+    IxNuclei = 1
+    testMode = 'EnhancedSeperately' # 'AllTrainings'
+
+    for input in sys.argv:
+        if input.split('=')[0] == 'nuclei':
+            IxNuclei = int(input.split('=')[1])
+        elif input.split('=')[0] == 'gpu':
+            gpuNum = input.split('=')[1]
+        elif input.split('=')[0] == 'testMode':
+            testMode = input.split('=')[1] # 'AllTrainings'
+
+    return gpuNum, IxNuclei, testMode
 
 
-testMode = 'AllTrainings'
+gpuNum, IxNuclei, testMode = input_GPU_Ix()
+# gpuNum = '5' # nan'
 
-for ind in [8]:
+for ind in [IxNuclei]:
 
     NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'oldDatasetV2')
 
-    L = 1 if testMode == 'AllTrainings' else 1 # len(A)
-    # if testMode == 'AllTrainings':
-    #     L = 1
-    # else:
-    #     L = 1 # len(A)
-
-    for ii in range(L): # len(A)): # [1,4]: #
+    L = 1 if testMode == 'AllTrainings' else 1 # len(A)  # [1,4]: #
+    for ii in range(L):
 
         TestName = 'Test_AllTrainings' if testMode == 'AllTrainings' else testNme(A,ii)
         # if testMode == 'AllTrainings':
@@ -144,7 +156,7 @@ for ind in [8]:
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
 
-        for sFi in range(1): # len(subFolders)):
+        for sFi in range(len(subFolders)):
 
             K = 'Test_' if testMode == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
             print(NucleusName,TestName.split(K)[1],subFolders[sFi])

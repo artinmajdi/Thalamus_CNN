@@ -87,7 +87,7 @@ def initialDirectories(ind = 1, mode = 'oldDatasetV2'):
     return NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A
 
 
-for ind in [2,4567,8]: # ,4,5,7,9,11,13]: # 1,6,8,10,12
+for ind in [8]: # ,4,5,7,9,11,13]: # 1,6,8,10,12
 
     NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'oldDatasetV2')
     subFolders = subFoldersFunc(Dir_Prior)
@@ -100,7 +100,7 @@ for ind in [2,4567,8]: # ,4,5,7,9,11,13]: # 1,6,8,10,12
         TestName = testNme(A,ii)
 
         Dir_EachTraining = Dir_AllTests + '/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN/' + TestName
-        Dir_AllTrainings = Dir_AllTests + '/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN/' + 'AllTrainings'
+        Dir_AllTrainings = Dir_AllTests + '/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN/' + 'Test_AllTrainings'
 
         inputName = TestName.split('Test_')[1] + '.nii.gz'
 
@@ -134,7 +134,7 @@ for ind in [2,4567,8]: # ,4,5,7,9,11,13]: # 1,6,8,10,12
             mkDir(Dir_EachTraining + '/' + subFolders[sFi] + '/Test')
             mkDir(Dir_EachTraining + '/' + subFolders[sFi] + '/Train')
 
-            mkDir(Dir_AllTrainings + '/' + subFolders[sFi] + '/Test')
+            mkDir(Dir_AllTrainings + '/' + subFolders[sFi] + '/Test' + str(ii))
             mkDir(Dir_AllTrainings + '/' + subFolders[sFi] + '/Train')
 
         print('---------------------------------------')
@@ -146,7 +146,7 @@ for ind in [2,4567,8]: # ,4,5,7,9,11,13]: # 1,6,8,10,12
 
                 if sFi_parent == sFi_child:
                     Dir_Each = Dir_EachTraining + '/' + subFolders[sFi_child] + '/Test'
-                    Dir_All  = Dir_AllTrainings + '/' + subFolders[sFi_child] + '/Test'
+                    Dir_All  = Dir_AllTrainings + '/' + subFolders[sFi_child] + '/Test' + str(ii)
 
                 else:
                     Dir_Each = Dir_EachTraining + '/' + subFolders[sFi_child] + '/Train'

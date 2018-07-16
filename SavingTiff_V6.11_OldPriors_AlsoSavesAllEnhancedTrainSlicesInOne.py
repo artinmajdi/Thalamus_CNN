@@ -32,7 +32,7 @@ def subFoldersFunc(Dir_Prior):
 
     return subFolders
 
-def initialDirectories(ind = 1, mode = 'oldDatasetV2'):
+def initialDirectories(ind = 1, mode = 'oldDataset'):
 
     if ind == 1:
         NucleusName = '1-THALAMUS'
@@ -82,7 +82,7 @@ def initialDirectories(ind = 1, mode = 'oldDatasetV2'):
     # Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
     # Dir_Prior = '/array/hdd/msmajdi/data/test'
 
-    Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/oldDatasetV2'
+    Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/oldDataset'
 
     A = [[0,0],[6,1],[1,2],[1,3],[4,1]] # [4,3],
 
@@ -107,15 +107,15 @@ def input_GPU_Ix():
 
 gpuNum, IxNuclei, testMode = input_GPU_Ix()
 
-for ind in [IxNuclei]: # [1,2,8,9,10,13]:
+for ind in [10]: # 1,2,8,9,10,13]: # IxNuclei]: # 
 
-    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'oldDatasetV2')
+    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'oldDataset')
     subFolders = subFoldersFunc(Dir_Prior)
 
     Name_priors_San_Label = 'Manual_Delineation_Sanitized/' + NucleusName + '_deformed.nii.gz'
 
 
-    for ii in range(1): # ,len(A)):
+    for ii in range(1,len(A)):
 
         TestName = testNme(A,ii)
 

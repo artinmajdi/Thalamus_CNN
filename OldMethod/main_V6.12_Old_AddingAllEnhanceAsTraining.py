@@ -117,6 +117,7 @@ def initialDirectories(ind = 1, mode = 'oldDatasetV2'):
     return NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, SliceNumbers, A
 
 
+
 testMode == 'AllTrainings'
 
 for ind in [8]:

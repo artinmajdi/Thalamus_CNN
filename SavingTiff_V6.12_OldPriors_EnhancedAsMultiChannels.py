@@ -134,7 +134,7 @@ for ind in [2,4567,8]: # ,4,5,7,9,11,13]: # 1,6,8,10,12
             mkDir(Dir_EachTraining + '/' + subFolders[sFi] + '/Test')
             mkDir(Dir_EachTraining + '/' + subFolders[sFi] + '/Train')
 
-            mkDir(Dir_AllTrainings + '/' + subFolders[sFi] + '/Test')
+            mkDir(Dir_AllTrainings + '/' + subFolders[sFi] + '/Test' + str(ii))
             mkDir(Dir_AllTrainings + '/' + subFolders[sFi] + '/Train')
 
         print('---------------------------------------')

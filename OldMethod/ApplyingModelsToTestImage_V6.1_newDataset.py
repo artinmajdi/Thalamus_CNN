@@ -13,8 +13,6 @@ import multiprocessing
 import tensorflow as tf
 
 
-gpuNum = '3' # nan'
-
 def subFoldersFunc(Dir_Prior):
     subFolders = []
     subFlds = os.listdir(Dir_Prior)
@@ -90,10 +88,28 @@ def initialDirectories(ind = 1, mode = 'newDataset'):
 
     return NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A
 
+def input_GPU_Ix():
+
+    gpuNum = '5'  # 'nan'
+    IxNuclei = 1
+    testMode = 'EnhancedSeperately' # 'AllTrainings'
+
+    for input in sys.argv:
+        if input.split('=')[0] == 'nuclei':
+            IxNuclei = int(input.split('=')[1])
+        elif input.split('=')[0] == 'gpu':
+            gpuNum = input.split('=')[1]
+        elif input.split('=')[0] == 'testMode':
+            testMode = input.split('=')[1] # 'AllTrainings'
+
+    return gpuNum, IxNuclei, testMode
+
 
 subFoldersModel = 'vimp2_964_08092013_TG'
+gpuNum, IxNuclei, testMode = input_GPU_Ix()
+# gpuNum = '5' # nan'
 
-for ind in [1,6,8,10,12]:
+for ind in [IxNuclei]:
 
 
     NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'newDataset')
@@ -104,11 +120,6 @@ for ind in [1,6,8,10,12]:
 
 
     for ii in range(len(A)):
-
-        # if ii == 0:
-        #     TestName = 'Test_WMnMPRAGE_bias_corr_Deformed' # _Deformed_Cropped
-        # else:
-        #     TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
 
         TestName = testNme(A,ii)
 
@@ -121,7 +132,7 @@ for ind in [1,6,8,10,12]:
         #     if subFlds[i][:5] == 'vimp2':
         #         subFolders.append(subFlds[i])
 
-        subFolders = subFoldersFunc(Dir_Prior)
+        subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
         for sFi in range(len(subFolders)):
             # try:
@@ -133,33 +144,14 @@ for ind in [1,6,8,10,12]:
 
 
             # Dir_NucleiModelOut = Dir_AllTests + NeucleusFolder + '/' + TestName + '/' + subFoldersModel + '/Train/model/'  # 'model_momentum/'
-            Dir_NucleiModelOut = Dir_AllTests + 'oldDatasetV2/' + NeucleusFolder + '/' + TestName + '/' + subFoldersModel + '/Train/model/'
+            Dir_NucleiModelOut = Dir_AllTests + 'oldDataset/' + NeucleusFolder + '/' + TestName + '/' + subFoldersModel + '/Train/model/'
 
 
             Dir_ThalamusTestSamples  = Dir_AllTests_Thalamus_EnhancedFld + subFolders[sFi] + '/Test/'
             Dir_ThalamusModelOut = Dir_AllTests_Thalamus_EnhancedFld + subFolders[sFi] + '/Train/model/'
 
-
-            # if os.path.isfile(Dir_ResultsOut + 'DiceCoefficient__.txt'):
-            #     print('*---  Already Done:   ' + Dir_NucleiModelOut + '  ---*')
-            #     continue
-            # else:
-            #     print('*---  Not Done:   ' + Dir_NucleiModelOut + '  ---*')
-                # TrainData = image_util.ImageDataProvider(Dir_NucleiTrainSamples + "*.tif")
-
             logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
-            # config = tf.ConfigProto()
-            # config.gpu_options.allow_growth = True
-            # config.gpu_options.per_process_gpu_memory_fraction = 0.4
-            # unet.config = config
-
             net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) #  , cost="dice_coefficient"
-
-            # trainer = unet.Trainer(net)
-            # if gpuNum != 'nan':
-            #     path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500, GPU_Num=gpuNum) #  , cost="dice_coefficient" restore=True
-            # else:
-            #     path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500) #  , cost="dice_coefficient" restore=True
 
             NucleiOrigSeg = nib.load(Dir_Prior_NucleiSample)
             ThalamusOrigSeg = nib.load(Dir_Prior_ThalamusSample)
@@ -169,11 +161,3 @@ for ind in [1,6,8,10,12]:
             padSize = 90
             MultByThalamusFlag = 0
             [Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical] = TestData3(net , MultByThalamusFlag, Dir_NucleiTestSamples , Dir_NucleiModelOut , ThalamusOrigSeg , NucleiOrigSeg , subFolders[sFi], CropDimensions , padSize , Dir_ThalamusTestSamples , Dir_ThalamusModelOut , NucleusName , SliceNumbers , gpuNum)
-
-
-            # TestData = image_util.ImageDataProvider(  Directory_Nuclei_Test0 + '*.tif',shuffle_data=False)
-            # Data , Label = TestData(L)
-            # prediction2 = net.predict( Directory_Nuclei_Train_Model_cpkt, data, GPU_Num=gpuNum)
-            # except:
-            #     print('-------------------------------------------------------')
-            #     print('subFolders: ',subFolders[sFi])

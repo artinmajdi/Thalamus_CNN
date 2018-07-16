@@ -118,7 +118,7 @@ def initialDirectories(ind = 1, mode = 'oldDatasetV2'):
 
 
 
-testMode == 'AllTrainings'
+testMode = 'AllTrainings'
 
 for ind in [8]:
 

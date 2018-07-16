@@ -159,6 +159,6 @@ for ind in [8]: # ,4,5,7,9,11,13]: # 1,6,8,10,12
                     tifffile.imsave( Dir_Each + '/' + Name_PredictedImage + '.tif' , imFull[:,:,slcIx,sFi_parent] )
                     tifffile.imsave( Dir_Each + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi_parent] )
 
-                    if (ii == 0) | (sFi_parent != sFi_child) :  # the first argument will save both test and train files in the non enhanced version . the second argument will only save the train files for the enhanced version
-                        tifffile.imsave( Dir_All + '/' + Name_PredictedImage + '.tif' , imFull[:,:,slcIx,sFi_parent] )
-                        tifffile.imsave( Dir_All + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi_parent] )
+                    # if (ii == 0) | (sFi_parent != sFi_child) :  # the first argument will save both test and train files in the non enhanced version . the second argument will only save the train files for the enhanced version
+                    tifffile.imsave( Dir_All + '/' + Name_PredictedImage + '.tif' , imFull[:,:,slcIx,sFi_parent] )
+                    tifffile.imsave( Dir_All + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi_parent] )

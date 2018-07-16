@@ -108,19 +108,20 @@ for ind in [8]: # [1,4,6,8,10,12]
 
     for ii in range(len(A)):
 
-        TestName = testNme(A,ii)
+        TestName = 'Test_AllTrainings' if testMode == 'AllTrainings' else testNme(A,ii)
 
         Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + NeucleusFolder + '/' + TestName + '/'
         Dir_AllTests_Thalamus_EnhancedFld = Dir_AllTests + ThalamusFolder + '/' + TestName + '/'
 
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
-        for sFi in range(len(subFolders)):
+        for sFi in range(1): # len(subFolders)):
             # try:
             Dir_Prior_NucleiSample = Dir_Prior +  subFolders[sFi] + ManualDir + NucleusName + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
             Dir_Prior_ThalamusSample = Dir_Prior +  subFolders[sFi] + ManualDir +'1-THALAMUS' + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
 
-            Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Test/'
+            K = '/Test' + str(ii) + '/' if testMode == 'AllTrainings' else '/Test/'
+            Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + K
             Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
             Dir_NucleiModelOut = Dir_NucleiTrainSamples + 'model/'
             Dir_ResultsOut   = Dir_NucleiTestSamples  + 'Results/'
@@ -129,9 +130,11 @@ for ind in [8]: # [1,4,6,8,10,12]
             Dir_ThalamusModelOut = Dir_AllTests_Thalamus_EnhancedFld + subFolders[sFi] + '/Train/model/'
 
 
+
             TrainData = image_util.ImageDataProvider(Dir_NucleiTrainSamples + "*.tif")
 
             logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
+
             net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) #  , cost="dice_coefficient"
 
             NucleiOrigSeg = nib.load(Dir_Prior_NucleiSample)

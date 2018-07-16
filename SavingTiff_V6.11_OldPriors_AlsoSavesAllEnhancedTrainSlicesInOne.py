@@ -87,7 +87,7 @@ def initialDirectories(ind = 1, mode = 'oldDatasetV2'):
     return NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A
 
 
-for ind in [8]: # ,4,5,7,9,11,13]: # 1,6,8,10,12
+for ind in [1,2,9,10,13]: # ,4,5,7,9,11,13]: # 1,6,8,10,12
 
     NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'oldDatasetV2')
     subFolders = subFoldersFunc(Dir_Prior)

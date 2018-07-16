@@ -117,36 +117,36 @@ def initialDirectories(ind = 1, mode = 'oldDatasetV2'):
     return NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, SliceNumbers, A
 
 
+testMode == 'AllTrainings'
 
-for ind in [1]:
-    mode = 'oldDatasetV2'
-    NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , mode)
+for ind in [8]:
 
+    NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'oldDatasetV2')
 
-    for ii in range(1): # len(A)): # [1,4]: #
+    L = 1 if testMode == 'AllTrainings' else 1 # len(A)
+    # if testMode == 'AllTrainings':
+    #     L = 1
+    # else:
+    #     L = 1 # len(A)
 
-        # if ii == 0:
-        #     TestName = 'Test_WMnMPRAGE_bias_corr_Deformed'
+    for ii in range(L): # len(A)): # [1,4]: #
+
+        TestName = 'Test_AllTrainings' if testMode == 'AllTrainings' else testNme(A,ii)
+        # if testMode == 'AllTrainings':
+        #     TestName = 'Test_AllTrainings'
         # else:
-        #     TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
-
-        TestName = testNme(A,ii)
-        # TestName = 'AllTrainings'
+        #     TestName = testNme(A,ii)
 
         Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + NeucleusFolder + '/' + TestName + '/'
         Dir_AllTests_Thalamus_EnhancedFld = Dir_AllTests + ThalamusFolder + '/' + TestName + '/'
-
-        # subFolders = []
-        # subFlds = os.listdir(Dir_AllTests_Nuclei_EnhancedFld)
-        # for i in range(len(subFlds)):
-        #     if subFlds[i][:5] == 'vimp2':
-        #         subFolders.append(subFlds[i])
 
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
 
         for sFi in range(1): # len(subFolders)):
-            print(NucleusName,TestName.split('Test_WMnMPRAGE_bias_corr_')[1],subFolders[sFi])
+
+            K = 'Test_' if testMode == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
+            print(NucleusName,TestName.split(K)[1],subFolders[sFi])
 
             Dir_Prior_NucleiSample = Dir_Prior +  subFolders[sFi] + '/Manual_Delineation_Sanitized/' + NucleusName + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
             Dir_Prior_ThalamusSample = Dir_Prior +  subFolders[sFi] + '/Manual_Delineation_Sanitized/' +'1-THALAMUS' + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
@@ -163,12 +163,6 @@ for ind in [1]:
             Dir_NucleiModelOut = mkDir(Dir_NucleiModelOut)
             Dir_ResultsOut = mkDir(Dir_ResultsOut)
 
-
-            # if os.path.isfile(Dir_ResultsOut + 'DiceCoefficient__.txt'):
-            #     print('*---  Already Done:   ' + Dir_NucleiModelOut + '  ---*')
-            #     continue
-            # else:
-            # print('*---  Not Done:   ' + Dir_NucleiModelOut + '  ---*')
             TrainData = image_util.ImageDataProvider(Dir_NucleiTrainSamples + "*.tif")
 
             logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
@@ -192,5 +186,4 @@ for ind in [1]:
 
             padSize = 90
             MultByThalamusFlag = 0
-            # Directories = {'ResultsOut':Dir_ResultsOut , 'NucleiModelOut':Dir_NucleiModelOut , 'ThalamusTestSamples':Dir_ThalamusTestSamples,'ThalamusModelOut':Dir_ThalamusModelOut}
             [Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical] = TestData3(net , MultByThalamusFlag, Dir_NucleiTestSamples , Dir_NucleiModelOut , ThalamusOrigSeg , NucleiOrigSeg , subFolders[sFi], CropDimensions , padSize , Dir_ThalamusTestSamples , Dir_ThalamusModelOut , NucleusName , SliceNumbers , gpuNum)

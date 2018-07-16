@@ -100,7 +100,7 @@ for ind in [2,4567,8]: # ,4,5,7,9,11,13]: # 1,6,8,10,12
         TestName = testNme(A,ii)
 
         Dir_EachTraining = Dir_AllTests + '/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN/' + TestName
-        Dir_AllTrainings = Dir_AllTests + '/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN/' + 'AllTrainings'
+        Dir_AllTrainings = Dir_AllTests + '/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN/' + 'Test_AllTrainings'
 
         inputName = TestName.split('Test_')[1] + '.nii.gz'
 

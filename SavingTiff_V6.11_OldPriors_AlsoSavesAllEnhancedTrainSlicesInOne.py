@@ -107,7 +107,7 @@ def input_GPU_Ix():
 
 gpuNum, IxNuclei, testMode = input_GPU_Ix()
 
-for ind in [10]: # 1,2,8,9,10,13]: # IxNuclei]: # 
+for ind in [IxNuclei]: # 1,2,8,9,10,13]: # IxNuclei]: #
 
     NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'oldDataset')
     subFolders = subFoldersFunc(Dir_Prior)
@@ -115,7 +115,7 @@ for ind in [10]: # 1,2,8,9,10,13]: # IxNuclei]: #
     Name_priors_San_Label = 'Manual_Delineation_Sanitized/' + NucleusName + '_deformed.nii.gz'
 
 
-    for ii in range(1,len(A)):
+    for ii in range(len(A)):
 
         TestName = testNme(A,ii)
 

@@ -12,7 +12,7 @@ from tf_unet import unet, util, image_util
 import multiprocessing
 import tensorflow as tf
 
-gpuNum = '5' # nan'
+gpuNum = '6' # nan'
 
 def mkDir(dir):
     try:
@@ -118,7 +118,7 @@ def initialDirectories(ind = 1, mode = 'oldDatasetV2'):
 
 
 
-for ind in [1]:
+for ind in [8]:
     mode = 'oldDatasetV2'
     NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , mode)
 

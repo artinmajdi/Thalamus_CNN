@@ -95,7 +95,7 @@ for ind in [9,10,13]: #  1,2,
     Name_priors_San_Label = 'Manual_Delineation_Sanitized/' + NucleusName + '_deformed.nii.gz'
 
 
-    for ii in range(1): # len(A)):
+    for ii in range(1,len(A)):
 
         TestName = testNme(A,ii)
 

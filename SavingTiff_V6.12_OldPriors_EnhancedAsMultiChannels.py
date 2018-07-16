@@ -146,7 +146,7 @@ for ind in [2,4567,8]: # ,4,5,7,9,11,13]: # 1,6,8,10,12
 
                 if sFi_parent == sFi_child:
                     Dir_Each = Dir_EachTraining + '/' + subFolders[sFi_child] + '/Test'
-                    Dir_All  = Dir_AllTrainings + '/' + subFolders[sFi_child] + '/Test'
+                    Dir_All  = Dir_AllTrainings + '/' + subFolders[sFi_child] + '/Test' + str(ii)
 
                 else:
                     Dir_Each = Dir_EachTraining + '/' + subFolders[sFi_child] + '/Train'

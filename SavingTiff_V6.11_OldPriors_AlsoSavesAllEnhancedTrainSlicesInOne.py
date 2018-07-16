@@ -86,8 +86,26 @@ def initialDirectories(ind = 1, mode = 'oldDatasetV2'):
 
     return NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A
 
+def input_GPU_Ix():
 
-for ind in [1,2,8,9,10,13]: #
+    gpuNum = '5'  # 'nan'
+    IxNuclei = 1
+    testMode = 'EnhancedSeperately' # 'AllTrainings'
+
+    for input in sys.argv:
+        if input.split('=')[0] == 'nuclei':
+            IxNuclei = int(input.split('=')[1])
+        elif input.split('=')[0] == 'gpu':
+            gpuNum = input.split('=')[1]
+        elif input.split('=')[0] == 'testMode':
+            testMode = input.split('=')[1] # 'AllTrainings'
+
+    return gpuNum, IxNuclei, testMode
+
+
+gpuNum, IxNuclei, testMode = input_GPU_Ix()
+
+for ind in [IxNuclei]: # [1,2,8,9,10,13]:
 
     NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'oldDatasetV2')
     subFolders = subFoldersFunc(Dir_Prior)

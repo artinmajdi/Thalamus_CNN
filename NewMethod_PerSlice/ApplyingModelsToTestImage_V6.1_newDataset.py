@@ -32,6 +32,9 @@ def testNme(A,ii):
 
 def initialDirectories(ind = 1, mode = 'newDataset'):
 
+    A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
+
+
     if ind == 1:
         NucleusName = '1-THALAMUS'
         # SliceNumbers = range(106,143)
@@ -84,7 +87,6 @@ def initialDirectories(ind = 1, mode = 'newDataset'):
     Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS/'
     # Dir_Prior = '/array/hdd/msmajdi/data/test/'
 
-    A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
 
     return NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A
 
@@ -109,14 +111,15 @@ subFoldersModel = 'vimp2_964_08092013_TG'
 gpuNum, IxNuclei, testMode = input_GPU_Ix()
 # gpuNum = '5' # nan'
 
+SliceNumbers = range(107,140)
+
 for ind in [IxNuclei]:
 
 
 
     NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'newDataset')
-
+    
     NeucleusFolder  = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
-
     ManualDir = '/Manual_Delineation_Sanitized/' #ManualDelineation
 
 

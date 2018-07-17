@@ -98,6 +98,22 @@ def initialDirectories(ind = 1, mode = 'oldDatasetV2'):
 
     return NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, SliceNumbers, A
 
+def input_GPU_Ix():
+
+    gpuNum = '5'  # 'nan'
+    IxNuclei = 1
+    testMode = 'EnhancedSeperately' # 'AllTrainings'
+
+    for input in sys.argv:
+        if input.split('=')[0] == 'nuclei':
+            IxNuclei = int(input.split('=')[1])
+        elif input.split('=')[0] == 'gpu':
+            gpuNum = input.split('=')[1]
+        elif input.split('=')[0] == 'testMode':
+            testMode = input.split('=')[1] # 'AllTrainings'
+
+    return gpuNum, IxNuclei, testMode
+
 
 for ind in [8]: # [1,4,6,8,10,12]
 

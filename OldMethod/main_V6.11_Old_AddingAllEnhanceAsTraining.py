@@ -39,7 +39,7 @@ def testNme(A,ii):
 
     return TestName
 
-def initialDirectories(ind = 1, mode = 'oldDatasetV2'):
+def initialDirectories(ind = 1, mode = 'oldDataset'):
 
     # 10-MGN_deformed.nii.gz	  13-Hb_deformed.nii.gz       4567-VL_deformed.nii.gz  6-VLP_deformed.nii.gz  9-LGN_deformed.nii.gz
     # 11-CM_deformed.nii.gz	  1-THALAMUS_deformed.nii.gz  4-VA_deformed.nii.gz     7-VPL_deformed.nii.gz
@@ -139,7 +139,7 @@ gpuNum, IxNuclei, testMode = input_GPU_Ix()
 
 for ind in [IxNuclei]:
 
-    NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'oldDatasetV2')
+    NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'oldDataset')
 
     L = 1 if testMode == 'AllTrainings' else len(A)  # [1,4]: #
     for ii in range(L):
@@ -185,7 +185,8 @@ for ind in [IxNuclei]:
             # config.gpu_options.per_process_gpu_memory_fraction = 0.4
             # unet.config = config
 
-            net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , class_weights=[0,1]) # , cost="dice_coefficient"
+            cost_kwargs = {'class_weights':[0.1,0.9]}
+            net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=cost_kwargs) # , cost="dice_coefficient"
 
             trainer = unet.Trainer(net, optimizer = "adam") # ,learning_rate=0.03
             if gpuNum != 'nan':

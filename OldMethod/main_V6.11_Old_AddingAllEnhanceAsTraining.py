@@ -141,7 +141,7 @@ for ind in [IxNuclei]:
 
     NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'oldDatasetV2')
 
-    L = 1 if testMode == 'AllTrainings' else 1 # len(A)  # [1,4]: #
+    L = 1 if testMode == 'AllTrainings' else len(A)  # [1,4]: #
     for ii in range(L):
 
         TestName = 'Test_AllTrainings' if testMode == 'AllTrainings' else testNme(A,ii)
@@ -185,7 +185,7 @@ for ind in [IxNuclei]:
             # config.gpu_options.per_process_gpu_memory_fraction = 0.4
             # unet.config = config
 
-            net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
+            net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , class_weights=[0,1]) # , cost="dice_coefficient"
 
             trainer = unet.Trainer(net, optimizer = "adam") # ,learning_rate=0.03
             if gpuNum != 'nan':

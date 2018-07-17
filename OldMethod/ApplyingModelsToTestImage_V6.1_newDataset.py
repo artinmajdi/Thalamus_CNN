@@ -144,7 +144,7 @@ for ind in [IxNuclei]:
             Dir_ResultsOut   = Dir_NucleiTestSamples  + 'Results/'
 
 
-            # Dir_NucleiModelOut = Dir_AllTests + NeucleusFolder + '/' + TestName + '/' + subFoldersModel + '/Train/model/'  # 'model_momentum/'
+            # Dir_NucleiModelOut = Dir_AllTests + NeucleusFoklder + '/' + TestName + '/' + subFoldersModel + '/Train/model/'  # 'model_momentum/'
             Dir_NucleiModelOut = Dir_AllTests + 'oldDataset/' + NeucleusFolder + '/' + TestName + '/' + subFoldersModel + '/Train/model/'
 
 

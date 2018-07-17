@@ -3,8 +3,9 @@ import pickle
 import nibabel as nib
 import numpy as np
 import matplotlib.pyplot as plt
-from skimage import filters
+# from skimage import filters
 import pickle
+import sys
 
 def DiceCoefficientCalculator(msk1,msk2):
     intersection = msk1*msk2  # np.logical_and(msk1,msk2)

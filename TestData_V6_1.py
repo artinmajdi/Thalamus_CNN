@@ -263,7 +263,7 @@ def TestData3(net , MultByThalamusFlag, Directory_Nuclei_Test0 , Dir_NucleiModel
     Header = Thalamus_OriginalSeg.header
     Affine = Thalamus_OriginalSeg.affine
 
-    sz = Thalamus_OriginalSeg_Data.shape
+    sz = Nuclei_OriginalSeg_Data.shape
 
     Prediction3D_Mult_logical = np.zeros(sz)
     Prediction3D_Mult = np.zeros(sz)

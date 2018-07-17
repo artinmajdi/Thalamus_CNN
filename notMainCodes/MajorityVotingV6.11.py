@@ -147,7 +147,7 @@ for ind in [IxNuclei]: # [1,2,8,9,10,13]:
 
     subFolders = subFolderList(Dir_AllTests_nucleiFld)
 
-    for reslt in ['Results_momentum']: # 'Results' ,  , 'Results_MultByManualThalamus'
+    for reslt in ['Results']: # 'Results_momentum']: 
 
         print(reslt + '--------------->>>>>---------------')
         Dice = np.zeros((len(subFolders), len(A)+1))

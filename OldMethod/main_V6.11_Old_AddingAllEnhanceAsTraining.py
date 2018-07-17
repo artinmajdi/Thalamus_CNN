@@ -41,9 +41,7 @@ def testNme(A,ii):
 
 def initialDirectories(ind = 1, mode = 'oldDatasetV2'):
 
-    # 10-MGN_deformed.nii.gz	  13-Hb_deformed.nii.gz       4567-VL_deformed.nii.gz  6-VLP_deformed.nii.gz  9-LGN_deformed.nii.gz
-    # 11-CM_deformed.nii.gz	  1-THALAMUS_deformed.nii.gz  4-VA_deformed.nii.gz     7-VPL_deformed.nii.gz
-    # 12-MD-Pf_deformed.nii.gz  2-AV_deformed.nii.gz	      5-VLa_deformed.nii.gz    8-Pul_deformed.nii.gz
+    A = [[0,0],[6,1],[1,2],[1,3],[4,1]] # [4,3],
 
     if ind == 1:
         NucleusName = '1-THALAMUS'
@@ -101,9 +99,6 @@ def initialDirectories(ind = 1, mode = 'oldDatasetV2'):
     # elif mode == 'newDataset':
     #     NeucleusFolder = 'newDataset/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
     #     ThalamusFolder = 'newDataset/CNN1_THALAMUS_2D_SanitizedNN'
-
-    A = [[0,0],[6,1],[1,2],[1,3],[4,1]] # [4,3],
-
 
     if mode == 'localMachine':
         Dir_AllTests = '/media/artin-laptop/D0E2340CE233F5761/Thalamus_Segmentation/Data/'

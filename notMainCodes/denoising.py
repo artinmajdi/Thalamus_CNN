@@ -167,6 +167,7 @@ def inputParameteres():
 
     return init
 
+
 def normalizationFunc(im):
     params = {}
     params['max'] = im.max()

@@ -1,0 +1,30 @@
+#!/bin/csh
+
+
+set TestDirectory = '/array/hdd/msmajdi/Tests/Thalamus_CNN/newDataset'
+
+cd $TestDirectory
+foreach FolderTest (CNN*)
+echo $FolderTest
+
+
+cd $TestDirectory/$FolderTest
+foreach Test (Test_W*)
+echo $Test
+
+cd $TestDirectory/$FolderTest/$Test
+foreach vimp (vimp2_*)
+
+
+	foreach reslt ('Results', 'Results_momentum') 
+
+	set Directory = $TestDirectory/$FolderTest/$Test/$vimp/Test/$reslt
+	rm -r $Directory
+	end
+
+	set Directory = $TestDirectory/$FolderTest/$Test/$vimp/Train/model
+	rm -r $Directory
+
+end
+end
+end

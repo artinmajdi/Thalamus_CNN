@@ -108,7 +108,7 @@ def initialDirectories(ind = 1, mode = 'oldDataset'):
     if mode == 'localMachine':
         Dir_AllTests = '/media/artin-laptop/D0E2340CE233F5761/Thalamus_Segmentation/Data/'
         Dir_Prior = ''
-    elif 'oldDataset' in mode:
+    elif (mode == 'oldDataset') | (mode == 'oldDatasetV2'):
         Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/'
         Dir_Prior =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
     elif mode == 'newDataset':
@@ -137,7 +137,7 @@ def input_GPU_Ix():
 gpuNum, IxNuclei, testMode = input_GPU_Ix()
 # gpuNum = '5' # nan'
 
-for ind in [1,2,8,9,10,13]: # [IxNuclei]:
+for ind in [IxNuclei]:
 
     NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'oldDataset')
 
@@ -185,7 +185,8 @@ for ind in [1,2,8,9,10,13]: # [IxNuclei]:
             # config.gpu_options.per_process_gpu_memory_fraction = 0.4
             # unet.config = config
 
-            net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
+            cost_kwargs = {'class_weights':[0.7,0.3]}
+            net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True ) # , cost_kwargs=cost_kwargs, cost="dice_coefficient"
 
             trainer = unet.Trainer(net, optimizer = "adam") # ,learning_rate=0.03
             if gpuNum != 'nan':

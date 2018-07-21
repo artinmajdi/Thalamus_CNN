@@ -1,23 +1,23 @@
 #!/bin/csh
 
 
-set TestDirectory = '/array/hdd/msmajdi/Tests/Thalamus_CNN/oldDatasetV2'
-set priorfolderName = 'Manual_Delineation_Sanitized'
+set TestDirectory = '/array/hdd/msmajdi/Tests/Thalamus_CNN/newDataset'
 
-foreach FolderTest ('CNN8_Pul_2D_SanitizedNN'  'CNN6_VLP_2D_SanitizedNN' 'CNN4567_VL_2D_SanitizedNN' 'CNN12_MD_Pf_2D_SanitizedNN'  ) #  # 'CNN1_THALAMUS_2D_SanitizedNN'
-#
-# set reslt = 'Results'
+cd $TestDirectory
+foreach FolderTest (CNN*)
+echo $FolderTest
 
-set reusltDirectory = $TestDirectory/Results_V2
 
 cd $TestDirectory/$FolderTest
-foreach Test (Test_*)
+foreach Test (Test_W*)
 echo $Test
 
-cd $Test
+cd $TestDirectory/$FolderTest/$Test
 foreach vimp (vimp2_*)
 
-	foreach reslt ( 'Results_momentum' , 'Results') #'Results' 'Results_MultByManualThalamus' ) # 'results' 'Results2'
+
+	foreach reslt ('Results', 'Results_momentum') 
+
 	set Directory = $TestDirectory/$FolderTest/$Test/$vimp/Test/$reslt
 	rm -r $Directory
 	end
@@ -26,6 +26,5 @@ foreach vimp (vimp2_*)
 	rm -r $Directory
 
 end
-cd ../
 end
 end

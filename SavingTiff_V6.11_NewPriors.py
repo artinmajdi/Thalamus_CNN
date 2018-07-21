@@ -82,9 +82,9 @@ def initialDirectories(ind = 1, mode = 'oldDataset'):
     # Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
     # Dir_Prior = '/array/hdd/msmajdi/data/test'
 
-    Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/oldDataset'
+    Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + mode
 
-    A = [[0,0],[6,1],[1,2],[1,3],[4,1]] # [4,3],
+    A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
 
     return NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A
 
@@ -107,9 +107,9 @@ def input_GPU_Ix():
 
 gpuNum, IxNuclei, testMode = input_GPU_Ix()
 
-for ind in [IxNuclei]: # 1,2,8,9,10,13]: # IxNuclei]: #
+for ind in [1,2,8,9,10,13]: # IxNuclei]: #
 
-    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'oldDataset')
+    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'oldDataset_newMethod')
     subFolders = subFoldersFunc(Dir_Prior)
 
     Name_priors_San_Label = 'Manual_Delineation_Sanitized/' + NucleusName + '_deformed.nii.gz'
@@ -184,15 +184,3 @@ for ind in [IxNuclei]: # 1,2,8,9,10,13]: # IxNuclei]: #
                         # if (ii == 0) | (sFi_parent != sFi_child) :  # the first argument will save both test and train files in the non enhanced version . the second argument will only save the train files for the enhanced version
                         tifffile.imsave( Dir_All + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx_child ,sFi_parent] )
                         tifffile.imsave( Dir_All + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx_child ,sFi_parent] )
-
-
-
-
-
-
-
-
-
-
-
-print('llllllllllllllllllllllllll')

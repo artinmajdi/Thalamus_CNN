@@ -119,9 +119,6 @@ for ind in [IxNuclei]: # 1,2,8,9,10,13]: #
     NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A, Params = initialDirectories(ind , 'oldDataset')
     subFolders = subFoldersFunc(Dir_Prior)
 
-    Name_priors_San_Label =
-
-
     for ii in range(1): # len(A)):
 
         TestName = testNme(A,ii)

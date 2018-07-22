@@ -89,7 +89,7 @@ def initialDirectories(ind = 1, mode = 'oldDataset'):
         Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + mode + '_newMethod'
     elif 'oldDataset' in mode:
         Dir_Prior = '/array/hdd/msmajdi/data/priors_forCNN_Ver2'
-        Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + mode + '_newMethod'
+        Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + mode + '_newMethod2'
 
     CropDim = np.array([ [50,198] , [130,278] , [SliceNumbers[0] , SliceNumbers[len(SliceNumbers)-1]] ])
 
@@ -113,8 +113,8 @@ def input_GPU_Ix():
 
 
 gpuNum, IxNuclei, testMode = input_GPU_Ix()
-gpuNum = 'nan'
-for ind in [1]: # IxNuclei]: # 1,2,8,9,10,13]: #
+# gpuNum = 'nan'
+for ind in [IxNuclei]: # 1,2,8,9,10,13]: #
 
     NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A, CropDim = initialDirectories(ind , 'oldDataset')
     subFolders = subFoldersFunc(Dir_Prior)

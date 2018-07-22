@@ -13,8 +13,6 @@ import multiprocessing
 import tensorflow as tf
 import sys
 
-
-
 def mkDir(dir):
     try:
         os.stat(dir)
@@ -40,10 +38,6 @@ def testNme(A,ii):
     return TestName
 
 def initialDirectories(ind = 1, mode = 'oldDataset'):
-
-    # 10-MGN_deformed.nii.gz	  13-Hb_deformed.nii.gz       4567-VL_deformed.nii.gz  6-VLP_deformed.nii.gz  9-LGN_deformed.nii.gz
-    # 11-CM_deformed.nii.gz	  1-THALAMUS_deformed.nii.gz  4-VA_deformed.nii.gz     7-VPL_deformed.nii.gz
-    # 12-MD-Pf_deformed.nii.gz  2-AV_deformed.nii.gz	      5-VLa_deformed.nii.gz    8-Pul_deformed.nii.gz
 
     if ind == 1:
         NucleusName = '1-THALAMUS'
@@ -102,7 +96,7 @@ def initialDirectories(ind = 1, mode = 'oldDataset'):
     #     NeucleusFolder = 'newDataset/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
     #     ThalamusFolder = 'newDataset/CNN1_THALAMUS_2D_SanitizedNN'
 
-    A = [[0,0],[6,1],[1,2],[1,3],[4,1]] # [4,3],
+    A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
 
 
     if mode == 'localMachine':
@@ -167,11 +161,11 @@ for ind in [IxNuclei]:
             K = '/Test0/' if testMode == 'AllTrainings' else '/Test/'
             Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + K
             Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
-            Dir_NucleiModelOut = Dir_NucleiTrainSamples + 'model_CE/'
+            Dir_NucleiModelOut = Dir_NucleiTrainSamples + 'model/'
             Dir_ResultsOut   = Dir_NucleiTestSamples  + 'Results_CE/'
 
             Dir_ThalamusTestSamples  = Dir_AllTests_Thalamus_EnhancedFld + subFolders[sFi] + '/Test/'
-            Dir_ThalamusModelOut = Dir_AllTests_Thalamus_EnhancedFld + subFolders[sFi] + '/Train/model/'
+            Dir_ThalamusModelOut = Dir_AllTests_Thalamus_EnhancedFld + subFolders[sFi] + '/Train/model_CE/'
 
 
             Dir_NucleiModelOut = mkDir(Dir_NucleiModelOut)
@@ -199,6 +193,18 @@ for ind in [IxNuclei]:
 
             CropDimensions = np.array([ [50,198] , [130,278] , [SliceNumbers[0] , SliceNumbers[len(SliceNumbers)-1]] ])
 
-            padSize = 90
-            MultByThalamusFlag = 0
-            [Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical] = TestData3(net , MultByThalamusFlag, Dir_ResultsOut , Dir_NucleiTestSamples , Dir_NucleiModelOut , ThalamusOrigSeg , NucleiOrigSeg , subFolders[sFi], CropDimensions , padSize , Dir_ThalamusTestSamples , Dir_ThalamusModelOut , NucleusName , SliceNumbers , gpuNum)
+            info = {}
+            info['Dir_NucleiTestSamples'] = Dir_NucleiTestSamples
+            info['Dir_ResultsOut'] = Dir_ResultsOut
+            info['MultByThalamusFlag'] = 0
+            info['Dir_NucleiModelOut'] = Dir_NucleiModelOut
+            info['padSize'] = 90
+            info['CropDim'] = CropDimensions
+            info['subFolders'] = subFolders[sFi]
+            info['NucleusName'] = NucleusName
+            info['SliceNumbers'] = SliceNumbers
+            info['gpuNum'] = gpuNum
+
+
+            [Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical] = TestData3_cleanedup(net , NucleiOrigSeg)
+            # [Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical] = TestData3(net , MultByThalamusFlag, Dir_NucleiTestSamples , Dir_NucleiModelOut , ThalamusOrigSeg , NucleiOrigSeg , subFolders[sFi], CropDimensions , padSize , Dir_ThalamusTestSamples , Dir_ThalamusModelOut , NucleusName , SliceNumbers , gpuNum)

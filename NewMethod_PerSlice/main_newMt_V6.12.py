@@ -147,12 +147,8 @@ def trainFunc(Params , slcIx):
 
     sliceNum = Params['SliceNumbers'][slcIx]
 
-    Dir_NucleiModelOut = Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum) + '/model/'
-    Dir_ResultsOut     = Params['Dir_NucleiTestSamples']  + '/Slice_' + str(sliceNum) + '/Results/'
-
-
-    Dir_NucleiModelOut = mkDir(Dir_NucleiModelOut)
-    Dir_ResultsOut = mkDir(Dir_ResultsOut)
+    Dir_NucleiModelOut = mkDir( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum) + '/model/' )
+    Dir_ResultsOut = mkDir( Params['Dir_NucleiTestSamples']  + '/Slice_' + str(sliceNum) + '/Results/' )
 
     TrainData = image_util.ImageDataProvider(Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum) + '/*.tif')
 
@@ -160,7 +156,7 @@ def trainFunc(Params , slcIx):
 
     trainer = unet.Trainer(Params['net'], optimizer = Params['optimizer']) # ,learning_rate=0.03
     if gpuNum != 'nan':
-        path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=100, display_step=500 ,prediction_path=Dir_ResultsOut , GPU_Num=gpuNum) #  restore=True
+        path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500 ,prediction_path=Dir_ResultsOut , GPU_Num=gpuNum) #  restore=True
     else:
         path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=3, epochs=1, display_step=500 ,prediction_path=Dir_ResultsOut) #   restore=True
 
@@ -186,9 +182,9 @@ def testFunc(Params , slcIx):
 
         Data , Label = TestData(L)
         if gpuNum != 'nan':
-            prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + '/model/model.ckpt', np.asarray(Data,dtype=np.float32), GPU_Num=gpuNum)
+            prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + '/model/model.cpkt', np.asarray(Data,dtype=np.float32), GPU_Num=gpuNum)
         else:
-            prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + '/model/model.ckpt', np.asarray(Data,dtype=np.float32))
+            prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + '/model/model.cpkt', np.asarray(Data,dtype=np.float32))
 
 
         try:
@@ -206,7 +202,7 @@ gpuNum, IxNuclei, testMode = input_GPU_Ix()
 
 for ind in [1]: # IxNuclei]:
 
-    Params = initialDirectories(ind , 'local_OldDataset')
+    Params = initialDirectories(ind , 'oldDataset')
 
     L = 1 if testMode == 'AllTrainings' else len(Params['A'])  # [1,4]: #
     for ii in range(1): # L):

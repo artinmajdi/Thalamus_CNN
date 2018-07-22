@@ -206,7 +206,7 @@ gpuNum, IxNuclei, testMode = input_GPU_Ix()
 
 for ind in [1]: # IxNuclei]:
 
-    Params = initialDirectories(ind , 'local_OldDataset')
+    Params = initialDirectories(ind , 'oldDataset')
 
     L = 1 if testMode == 'AllTrainings' else len(Params['A'])  # [1,4]: #
     for ii in range(1): # L):

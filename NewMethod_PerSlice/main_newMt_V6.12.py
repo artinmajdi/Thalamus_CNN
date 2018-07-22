@@ -147,12 +147,8 @@ def trainFunc(Params , slcIx):
 
     sliceNum = Params['SliceNumbers'][slcIx]
 
-    Dir_NucleiModelOut = Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum) + '/model/'
-    Dir_ResultsOut     = Params['Dir_NucleiTestSamples']  + '/Slice_' + str(sliceNum) + '/Results/'
-
-
-    Dir_NucleiModelOut = mkDir(Dir_NucleiModelOut)
-    Dir_ResultsOut = mkDir(Dir_ResultsOut)
+    Dir_NucleiModelOut = mkDir( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum) + '/model/' )
+    Dir_ResultsOut = mkDir( Params['Dir_NucleiTestSamples']  + '/Slice_' + str(sliceNum) + '/Results/' )
 
     TrainData = image_util.ImageDataProvider(Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum) + '/*.tif')
 

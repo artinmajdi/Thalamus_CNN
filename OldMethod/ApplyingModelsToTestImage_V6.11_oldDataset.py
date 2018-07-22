@@ -115,14 +115,14 @@ def input_GPU_Ix():
     return gpuNum, IxNuclei, testMode
 
 
-for ind in [8]: # [1,4,6,8,10,12]
+for ind in [1]: # [1,4,6,8,10,12]
 
 
     NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'oldDatasetV2')
 
     ManualDir = '/Manual_Delineation_Sanitized/'
 
-    for ii in range(len(A)):
+    for ii in range(1): # len(A)):
 
         TestName = 'Test_AllTrainings' if testMode == 'AllTrainings' else testNme(A,ii)
 

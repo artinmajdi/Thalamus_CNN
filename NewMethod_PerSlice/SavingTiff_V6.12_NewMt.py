@@ -34,9 +34,10 @@ def subFoldersFunc(Dir_Prior):
 
 def initialDirectories(ind = 1, mode = 'oldDataset'):
 
+    A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
+
     if ind == 1:
         NucleusName = '1-THALAMUS'
-        # SliceNumbers = range(106,143)
         SliceNumbers = range(103,147)
         # SliceNumbers = range(107,140) # original one
     elif ind == 2:
@@ -77,16 +78,22 @@ def initialDirectories(ind = 1, mode = 'oldDataset'):
         SliceNumbers = range(116,129)
 
 
-    # Dir_Prior = '/media/data1/artin/data/Thalamus/'+ Name_allTests_Nuclei + '/OriginalDeformedPriors'
-    Dir_Prior = '/array/hdd/msmajdi/data/priors_forCNN_Ver2'
-    # Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
-    # Dir_Prior = '/array/hdd/msmajdi/data/test'
+    if 'local_OldDataset' in mode:
+        Dir_Prior = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
+        Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/oldDataset'
+    elif 'local_NewDataset' in mode:
+        Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/7T_MS'
+        Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/newDataset'
+    elif 'newDataset' in mode:
+        Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
+        Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + mode
+    elif 'oldDataset' in mode:
+        Dir_Prior = '/array/hdd/msmajdi/data/priors_forCNN_Ver2'
+        Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + mode
 
-    Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + mode
+    Params['CropDim'] = np.array([ [50,198] , [130,278] , [SliceNumbers[0] , SliceNumbers[len(SliceNumbers)-1]] ])
 
-    A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
-
-    return NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A
+    return NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A, Params
 
 def input_GPU_Ix():
 
@@ -107,15 +114,15 @@ def input_GPU_Ix():
 
 gpuNum, IxNuclei, testMode = input_GPU_Ix()
 
-for ind in [1,2,8,9,10,13]: # IxNuclei]: #
+for ind in [1]: # IxNuclei]: # 1,2,8,9,10,13]: #
 
-    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'oldDataset_newMethod')
+    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A, Params = initialDirectories(ind , 'local_OldDataset')
     subFolders = subFoldersFunc(Dir_Prior)
 
-    Name_priors_San_Label = 'Manual_Delineation_Sanitized/' + NucleusName + '_deformed.nii.gz'
+    Name_priors_San_Label =
 
 
-    for ii in range(len(A)):
+    for ii in range(1): # len(A)):
 
         TestName = testNme(A,ii)
 
@@ -125,10 +132,10 @@ for ind in [1,2,8,9,10,13]: # IxNuclei]: #
         inputName = TestName.split('Test_')[1] + '.nii.gz'
 
         print('---------------------------------------')
-        for sFi in range(len(subFolders)): # subFolders = ['vimp2_765_04162013_AW']
+        for sFi in range(len(subFolders)):
 
             print('Reading Images:  ',NucleusName,inputName.split('WMnMPRAGE_bias_corr_')[1].split('nii.gz')[0] , str(sFi) + ' ' + subFolders[sFi])
-            mask   = nib.load(Dir_Prior + '/'  + subFolders[sFi] + '/' + Name_priors_San_Label)
+            mask   = nib.load(Dir_Prior + '/'  + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + NucleusName + '_deformed.nii.gz')
             im     = nib.load(Dir_Prior + '/'  + subFolders[sFi] + '/' + inputName)
 
             imD    = im.get_data()
@@ -136,8 +143,9 @@ for ind in [1,2,8,9,10,13]: # IxNuclei]: #
             Header = im.header
             Affine = im.affine
 
-            imD2 = imD[50:198,130:278,SliceNumbers]
-            maskD2 = maskD[50:198,130:278,SliceNumbers]
+            Cp = Params['CropDim']
+            imD2 = imD[ Cp[0,0]:Cp[0,1] , Cp[1,0]:Cp[1,1] , SliceNumbers ]
+            maskD2 = maskD[ Cp[0,0]:Cp[0,1] , Cp[1,0]:Cp[1,1] , SliceNumbers ]
 
             padSizeFull = 90
             padSize = int(padSizeFull/2)
@@ -152,26 +160,26 @@ for ind in [1,2,8,9,10,13]: # IxNuclei]: #
                 mskFull = np.append(mskFull,maskD_padded[...,np.newaxis],axis=3)
 
             for slcIx in range(imFull.shape[2]):
-                mkDir(Dir_EachTraining + '/' + subFolders[sFi] + '/' + 'Slice_' + str(SliceNumbers[slcIx]) + '/Test')
-                mkDir(Dir_EachTraining + '/' + subFolders[sFi] + '/' + 'Slice_' + str(SliceNumbers[slcIx]) + '/Train')
+                mkDir(Dir_EachTraining + '/' + subFolders[sFi] + '/Test/'  + 'Slice_' + str(SliceNumbers[slcIx]))
+                mkDir(Dir_EachTraining + '/' + subFolders[sFi] + '/Train/' + 'Slice_' + str(SliceNumbers[slcIx]))
 
-                mkDir(Dir_AllTrainings + '/' + subFolders[sFi] + '/' + 'Slice_' + str(SliceNumbers[slcIx]) + '/Test' + str(ii))
-                mkDir(Dir_AllTrainings + '/' + subFolders[sFi] + '/' + 'Slice_' + str(SliceNumbers[slcIx]) + '/Train')
+                mkDir(Dir_AllTrainings + '/' + subFolders[sFi] + '/Test' + str(ii) + '/Slice_' + str(SliceNumbers[slcIx]))
+                mkDir(Dir_AllTrainings + '/' + subFolders[sFi] + '/Train'          + '/Slice_' + str(SliceNumbers[slcIx]))
 
         print('---------------------------------------')
 
 
         for sFi_parent in range(len(subFolders)):
             print('Writing Images:  ',NucleusName,str(sFi_parent) + ' ' + subFolders[sFi_parent])
-            for sFi_child in range(len(subFolders)):
+            for sFi_child in range(1): # len(subFolders)):
 
                 for slcIx_parent in range(imFull.shape[2]):
 
 
 
                     if sFi_parent == sFi_child:
-                        Dir_Each = Dir_EachTraining + '/' + subFolders[sFi_child] + '/' + 'Slice_' + str(SliceNumbers[slcIx_parent]) + '/Test'
-                        Dir_All  = Dir_AllTrainings + '/' + subFolders[sFi_child] + '/' + 'Slice_' + str(SliceNumbers[slcIx_parent]) + '/Test' + str(ii)
+                        Dir_Each = Dir_EachTraining + '/' + subFolders[sFi_child] + '/Test'           + '/Slice_' + str(SliceNumbers[slcIx_parent])
+                        Dir_All  = Dir_AllTrainings + '/' + subFolders[sFi_child] + '/Test' + str(ii) + '/Slice_' + str(SliceNumbers[slcIx_parent])
 
                         Name_PredictedImage = subFolders[sFi_parent] + '_Sh' + str(A[ii][0]) + '_Ct' + str(A[ii][1]) + '_Slice_' + str(SliceNumbers[slcIx_parent])
                         tifffile.imsave( Dir_Each + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx_parent ,sFi_parent] )
@@ -184,8 +192,8 @@ for ind in [1,2,8,9,10,13]: # IxNuclei]: #
 
 
                     else:
-                        Dir_Each = Dir_EachTraining + '/' + subFolders[sFi_child] + '/' + 'Slice_' + str(SliceNumbers[slcIx_parent]) + '/Train'
-                        Dir_All  = Dir_AllTrainings + '/' + subFolders[sFi_child] + '/' + 'Slice_' + str(SliceNumbers[slcIx_parent]) + '/Train'
+                        Dir_Each = Dir_EachTraining + '/' + subFolders[sFi_child] + '/Train' + '/Slice_' + str(SliceNumbers[slcIx_parent])
+                        Dir_All  = Dir_AllTrainings + '/' + subFolders[sFi_child] + '/Train' + '/Slice_' + str(SliceNumbers[slcIx_parent])
 
                         for slcIx_child in range(  max(0,slcIx_parent-1) , min(imFull.shape[2],slcIx_parent+2)  ):
 

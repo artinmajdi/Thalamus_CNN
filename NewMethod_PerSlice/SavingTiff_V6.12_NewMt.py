@@ -80,16 +80,16 @@ def initialDirectories(ind = 1, mode = 'oldDataset'):
 
     if 'local_OldDataset' in mode:
         Dir_Prior = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
-        Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/oldDataset'
+        Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/oldDataset_newMethod'
     elif 'local_NewDataset' in mode:
         Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/7T_MS'
-        Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/newDataset'
+        Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/newDataset_newMethod'
     elif 'newDataset' in mode:
         Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
-        Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + mode
+        Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + mode + '_newMethod'
     elif 'oldDataset' in mode:
         Dir_Prior = '/array/hdd/msmajdi/data/priors_forCNN_Ver2'
-        Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + mode
+        Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + mode + '_newMethod'
 
     Params['CropDim'] = np.array([ [50,198] , [130,278] , [SliceNumbers[0] , SliceNumbers[len(SliceNumbers)-1]] ])
 
@@ -116,7 +116,7 @@ gpuNum, IxNuclei, testMode = input_GPU_Ix()
 
 for ind in [IxNuclei]: # 1,2,8,9,10,13]: #
 
-    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A, Params = initialDirectories(ind , 'local_OldDataset')
+    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A, Params = initialDirectories(ind , 'oldDataset')
     subFolders = subFoldersFunc(Dir_Prior)
 
     Name_priors_San_Label =

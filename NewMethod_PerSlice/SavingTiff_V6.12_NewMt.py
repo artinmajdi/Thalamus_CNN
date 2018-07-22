@@ -91,9 +91,9 @@ def initialDirectories(ind = 1, mode = 'oldDataset'):
         Dir_Prior = '/array/hdd/msmajdi/data/priors_forCNN_Ver2'
         Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + mode + '_newMethod'
 
-    Params['CropDim'] = np.array([ [50,198] , [130,278] , [SliceNumbers[0] , SliceNumbers[len(SliceNumbers)-1]] ])
+    CropDim = np.array([ [50,198] , [130,278] , [SliceNumbers[0] , SliceNumbers[len(SliceNumbers)-1]] ])
 
-    return NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A, Params
+    return NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A, CropDim
 
 def input_GPU_Ix():
 
@@ -113,10 +113,10 @@ def input_GPU_Ix():
 
 
 gpuNum, IxNuclei, testMode = input_GPU_Ix()
+gpuNum = 'nan'
+for ind in [1]: # IxNuclei]: # 1,2,8,9,10,13]: #
 
-for ind in [IxNuclei]: # 1,2,8,9,10,13]: #
-
-    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A, Params = initialDirectories(ind , 'oldDataset')
+    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A, CropDim = initialDirectories(ind , 'oldDataset')
     subFolders = subFoldersFunc(Dir_Prior)
 
     for ii in range(1): # len(A)):
@@ -140,7 +140,7 @@ for ind in [IxNuclei]: # 1,2,8,9,10,13]: #
             Header = im.header
             Affine = im.affine
 
-            Cp = Params['CropDim']
+            Cp = CropDim
             imD2 = imD[ Cp[0,0]:Cp[0,1] , Cp[1,0]:Cp[1,1] , SliceNumbers ]
             maskD2 = maskD[ Cp[0,0]:Cp[0,1] , Cp[1,0]:Cp[1,1] , SliceNumbers ]
 

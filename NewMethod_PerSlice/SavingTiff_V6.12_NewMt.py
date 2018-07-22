@@ -114,7 +114,7 @@ def input_GPU_Ix():
 
 gpuNum, IxNuclei, testMode = input_GPU_Ix()
 
-for ind in [1]: # IxNuclei]: # 1,2,8,9,10,13]: #
+for ind in [IxNuclei]: # 1,2,8,9,10,13]: #
 
     NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A, Params = initialDirectories(ind , 'local_OldDataset')
     subFolders = subFoldersFunc(Dir_Prior)
@@ -160,8 +160,8 @@ for ind in [1]: # IxNuclei]: # 1,2,8,9,10,13]: #
                 mskFull = np.append(mskFull,maskD_padded[...,np.newaxis],axis=3)
 
             for slcIx in range(imFull.shape[2]):
-                mkDir(Dir_EachTraining + '/' + subFolders[sFi] + '/Test/'  + 'Slice_' + str(SliceNumbers[slcIx]))
-                mkDir(Dir_EachTraining + '/' + subFolders[sFi] + '/Train/' + 'Slice_' + str(SliceNumbers[slcIx]))
+                mkDir(Dir_EachTraining + '/' + subFolders[sFi] + '/Test'  + '/Slice_' + str(SliceNumbers[slcIx]))
+                mkDir(Dir_EachTraining + '/' + subFolders[sFi] + '/Train' + '/Slice_' + str(SliceNumbers[slcIx]))
 
                 mkDir(Dir_AllTrainings + '/' + subFolders[sFi] + '/Test' + str(ii) + '/Slice_' + str(SliceNumbers[slcIx]))
                 mkDir(Dir_AllTrainings + '/' + subFolders[sFi] + '/Train'          + '/Slice_' + str(SliceNumbers[slcIx]))
@@ -171,7 +171,7 @@ for ind in [1]: # IxNuclei]: # 1,2,8,9,10,13]: #
 
         for sFi_parent in range(len(subFolders)):
             print('Writing Images:  ',NucleusName,str(sFi_parent) + ' ' + subFolders[sFi_parent])
-            for sFi_child in range(1): # len(subFolders)):
+            for sFi_child in range(len(subFolders)):
 
                 for slcIx_parent in range(imFull.shape[2]):
 

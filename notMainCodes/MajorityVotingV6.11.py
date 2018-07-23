@@ -79,7 +79,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
 
     NeucleusFolder = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
 
-    return NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, A, SliceNumbers
+    return NucleusName, NeucleusFolder, Dir_AllTests, Dir_Prior, A, SliceNumbers
 
 def subFolderList(dir):
     subFolders = os.listdir(dir + '/Test_WMnMPRAGE_bias_corr_Deformed/')
@@ -133,7 +133,7 @@ UserEntries = input_GPU_Ix()
 
 for ind in [UserEntries['IxNuclei']]: # [1,2,8,9,10,13]:
 
-    NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, A, SliceNumbers = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    NucleusName, NeucleusFolder, Dir_AllTests, Dir_Prior, A, SliceNumbers = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Dir_SaveMWFld = mkDir( Dir_AllTests + 'Folder_MajorityVoting/' )
     subFolders = subFolderList(Dir_AllTests +  NeucleusFolder)
 

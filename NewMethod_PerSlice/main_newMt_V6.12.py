@@ -7,7 +7,6 @@ import nibabel as nib
 import shutil
 from collections import OrderedDict
 import logging
-from TestData_V6_12_newMt import TestData3
 from tf_unet import unet, util, image_util
 import multiprocessing
 import tensorflow as tf
@@ -39,7 +38,7 @@ def testNme(A,ii):
 
     return TestName
 
-def initialDirectories(ind = 1, mode = 'oldDataset'):
+def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new'):
 
     if ind == 1:
         NucleusName = '1-THALAMUS'
@@ -83,18 +82,23 @@ def initialDirectories(ind = 1, mode = 'oldDataset'):
         SliceNumbers = range(116,129)
 
 
-    if 'local_OldDataset' in mode:
-        Dir_Prior = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
-        Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/oldDataset_newMethod'
-    elif 'local_NewDataset' in mode:
-        Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/7T_MS'
-        Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/newDataset_newMethod'
-    elif 'newDataset' in mode:
-        Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
-        Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + mode + '_newMethod'
-    elif 'oldDataset' in mode:
-        Dir_Prior = '/array/hdd/msmajdi/data/priors_forCNN_Ver2'
-        Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + mode + '_newMethod'
+    if 'local' in mode:
+
+        if 'old' in dataset:
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
+        elif 'new' in dataset:
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/7T_MS'
+
+        Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + dataset + 'Dataset_' + method +'Method'
+
+    elif 'server' in mode:
+
+        if 'old' in dataset:
+            Dir_Prior = '/array/hdd/msmajdi/data/priors_forCNN_Ver2'
+        elif 'new' in dataset:
+            Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
+
+        Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + dataset + '_' + method
 
 
     Params = {}
@@ -122,19 +126,24 @@ def initialDirectories(ind = 1, mode = 'oldDataset'):
 
 def input_GPU_Ix():
 
-    gpuNum = 'nan'  # '5'  #
-    IxNuclei = 1
-    testMode = 'EnhancedSeperately' # 'AllTrainings'
+    UserEntries = {}
+    UserEntries['gpuNum'] = 'nan'  # '5'  #
+    UserEntries['IxNuclei'] = 1
+    UserEntries['testMode'] = 'EnhancedSeperately' # 'AllTrainings'
 
     for input in sys.argv:
         if input.split('=')[0] == 'nuclei':
-            IxNuclei = int(input.split('=')[1])
+            UserEntries['IxNuclei'] = int(input.split('=')[1])
         elif input.split('=')[0] == 'gpu':
-            gpuNum = input.split('=')[1]
+            UserEntries['gpuNum'] = input.split('=')[1]
         elif input.split('=')[0] == 'testMode':
-            testMode = input.split('=')[1] # 'AllTrainings'
+            UserEntries['testMode'] = input.split('=')[1] # 'AllTrainings'
+        elif input.split('=')[0] == 'dataset':
+            UserEntries['dataset'] = input.split('=')[1] # 'AllTrainings'
+        elif input.split('=')[0] == 'method':
+            UserEntries['method'] = input.split('=')[1] # 'AllTrainings'
 
-    return gpuNum, IxNuclei, testMode
+    return UserEntries
 
 def DiceCoefficientCalculator(msk1,msk2):
 
@@ -155,8 +164,8 @@ def trainFunc(Params , slcIx):
     logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
 
     trainer = unet.Trainer(Params['net'], optimizer = Params['optimizer']) # ,learning_rate=0.03
-    if gpuNum != 'nan':
-        path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500 ,prediction_path=Dir_ResultsOut , GPU_Num=gpuNum) #  restore=True
+    if Params['gpuNum'] != 'nan':
+        path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500 ,prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum']) #  restore=True
     else:
         path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=3, epochs=1, display_step=500 ,prediction_path=Dir_ResultsOut) #   restore=True
 
@@ -181,8 +190,8 @@ def testFunc(Params , slcIx):
     else:
 
         Data , Label = TestData(L)
-        if gpuNum != 'nan':
-            prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + '/model/model.cpkt', np.asarray(Data,dtype=np.float32), GPU_Num=gpuNum)
+        if Params['gpuNum'] != 'nan':
+            prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + '/model/model.cpkt', np.asarray(Data,dtype=np.float32), GPU_Num=Params['gpuNum'])
         else:
             prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + '/model/model.cpkt', np.asarray(Data,dtype=np.float32))
 
@@ -196,18 +205,19 @@ def testFunc(Params , slcIx):
 
     return prediction2 , PredictedSeg
 
+UserEntries = input_GPU_Ix()
 
-gpuNum, IxNuclei, testMode = input_GPU_Ix()
+
+for ind in [1]: # UserEntries['IxNuclei']:
+
+    Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = 'new'):
+    Params['gpuNum'] = UserEntries['gpuNum']
 
 
-for ind in [1]: # IxNuclei]:
-
-    Params = initialDirectories(ind , 'oldDataset')
-
-    L = 1 if testMode == 'AllTrainings' else len(Params['A'])  # [1,4]: #
+    L = 1 if UserEntries['testMode'] == 'AllTrainings' else len(Params['A'])  # [1,4]: #
     for ii in range(1): # L):
 
-        TestName = 'Test_AllTrainings' if testMode == 'AllTrainings' else testNme(Params['A'],ii)
+        TestName = 'Test_AllTrainings' if UserEntries['testMode'] == 'AllTrainings' else testNme(Params['A'],ii)
 
         Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + TestName + '/'
         Dir_AllTests_Thalamus_EnhancedFld = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + TestName + '/'
@@ -216,13 +226,13 @@ for ind in [1]: # IxNuclei]:
 
         for sFi in range(1): # len(subFolders)):
 
-            K = 'Test_' if testMode == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
+            K = 'Test_' if UserEntries['testMode'] == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
             print(Params['NucleusName'],TestName.split(K)[1],subFolders[sFi])
 
             Dir_Prior_NucleiSample = Params['Dir_Prior'] +  subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz'
             Dir_Prior_ThalamusSample = Params['Dir_Prior'] +  subFolders[sFi] + '/Manual_Delineation_Sanitized/' +'1-THALAMUS' + '_deformed.nii.gz'
 
-            K = '/Test0' if testMode == 'AllTrainings' else '/Test'
+            K = '/Test0' if UserEntries['testMode'] == 'AllTrainings' else '/Test'
             Params['Dir_NucleiTestSamples']  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + K
             Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train'
 

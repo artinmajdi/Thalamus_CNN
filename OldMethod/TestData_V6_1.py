@@ -4,6 +4,12 @@ import nibabel as nib
 from tf_unet import unet, util, image_util
 from skimage import filters
 
+def mkDir(dir):
+    try:
+        os.stat(dir)
+    except:
+        os.makedirs(dir)
+    return dir
 
 eps = np.finfo(float).eps
 
@@ -261,6 +267,97 @@ def TestData3(net , MultByThalamusFlag, Dir_ResultsOut , Directory_Nuclei_Test0 
         Prediction3D_logical_nifti = nib.Nifti1Image(Prediction3D_Mult_logical,Affine)
         Prediction3D_logical_nifti.get_header = Header
         nib.save(Prediction3D_logical_nifti,Directory_Test_Results_Thalamus + subFolders + '_' + NucleusName + '_Logical.nii.gz')
+
+
+    return Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical
+
+def TestData3_cleanedup(info , Nuclei_OriginalSeg):
+
+    net = info['net']
+    mkDir(info['Dir_ResultsOut'])
+
+    Nuclei_OriginalSeg_Data = Nuclei_OriginalSeg.get_data()
+    Header = Nuclei_OriginalSeg.header
+    Affine = Nuclei_OriginalSeg.affine
+
+    sz = Nuclei_OriginalSeg_Data.shape
+
+    Prediction3D_PureNuclei = np.zeros(sz)
+    Prediction3D_PureNuclei_logical = np.zeros(sz)
+
+    trainer = unet.Trainer(net)
+
+    TestData = image_util.ImageDataProvider(  info['Dir_NucleiTestSamples'] + '*.tif',shuffle_data=False)
+
+    L = len(info['SliceNumbers'])
+    DiceCoefficient  = np.zeros(L+1)
+    DiceCoefficient_Mult  = np.zeros(L+1)
+    LogLoss  = np.zeros(L)
+    LogLoss_Mult  = np.zeros(L)
+
+    SliceIdx = np.zeros(L)
+    SliceIdxOrig = np.zeros(L)
+    for sliceNum in range(L):
+        Stng = TestData.data_files[sliceNum]
+        d = Stng.find('_Slice')
+        S = int(Stng[d+7:].split('.')[0])
+        SliceIdx[sliceNum] = S - info['CropDim'][2,0]
+        SliceIdxOrig[sliceNum]  = S
+
+    Data , Label = TestData(L)
+
+
+    szD = Data.shape
+    szL = Label.shape
+
+    data  = np.zeros((1,szD[1],szD[2],szD[3]))
+    label = np.zeros((1,szL[1],szL[2],szL[3]))
+
+    shiftFlag = 0
+
+    for slInd in range(len(SliceIdx)):
+
+        data[0,:,:,:]  = Data[slInd,:,:,:].copy()
+        label[0,:,:,:] = Label[slInd,:,:,:].copy()
+
+        if info['gpuNum'] != 'nan':
+            prediction2 = net.predict( info['Dir_NucleiModelOut'] , data, GPU_Num=info['gpuNum'])
+        else:
+            prediction2 = net.predict( info['Dir_NucleiModelOut'] , data)
+
+        try:
+            Thresh = max(filters.threshold_otsu(prediction2[0,...,1]),0.2)
+        except:
+            Thresh = 0.2
+
+        PredictedSeg = prediction2[0,...,1] > Thresh
+
+        Prediction3D_PureNuclei[ info['CropDim'][0,0]:info['CropDim'][0,1],info['CropDim'][1,0]:info['CropDim'][1,1], info['CropDim'][2,0] + int(SliceIdx[slInd]) ] = prediction2[0,...,1]
+        Prediction3D_PureNuclei_logical[ info['CropDim'][0,0]:info['CropDim'][0,1],info['CropDim'][1,0]:info['CropDim'][1,1], info['CropDim'][2,0] + int(SliceIdx[slInd]) ] = PredictedSeg
+
+        sz = label.shape
+
+        A = int((info['padSize']/2))
+        imgCombined = util.combine_img_prediction(data, label, prediction2)
+        DiceCoefficient[int(SliceIdx[slInd])] = DiceCoefficientCalculator(PredictedSeg,label[0,A:sz[1]-A,A:sz[2]-A,1])  # 20 is for zero padding done for input
+        util.save_image(imgCombined, info['Dir_ResultsOut']+"prediction_slice"+ str( info['CropDim'][2,0] + int(SliceIdx[slInd]) ) + ".jpg")
+
+        Loss = unet.error_rate(prediction2,label[:,A:sz[1]-A,A:sz[2]-A,:])
+        LogLoss[int(SliceIdx[slInd])] = np.log10(Loss)
+        np.savetxt(info['Dir_ResultsOut'] + 'DiceCoefficient.txt',DiceCoefficient)
+        np.savetxt(info['Dir_ResultsOut'] + 'LogLoss.txt',LogLoss)
+
+
+    DiceCoefficient[len(SliceIdx)] = DiceCoefficientCalculator(Prediction3D_PureNuclei_logical,Nuclei_OriginalSeg_Data)  # 20 is for zero padding done for input
+    np.savetxt(info['Dir_ResultsOut'] + 'DiceCoefficient.txt',DiceCoefficient)
+
+    Prediction3D_nifti = nib.Nifti1Image(Prediction3D_PureNuclei,Affine)
+    Prediction3D_nifti.get_header = Header
+    nib.save(Prediction3D_nifti,info['Dir_ResultsOut'] + info['subFolders'] + '_' + info['NucleusName'] + '.nii.gz')
+
+    Prediction3D_logical_nifti = nib.Nifti1Image(Prediction3D_PureNuclei_logical,Affine)
+    Prediction3D_logical_nifti.get_header = Header
+    nib.save(Prediction3D_logical_nifti,info['Dir_ResultsOut'] + info['subFolders'] + '_' + info['NucleusName'] + '_Logical.nii.gz')
 
 
     return Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical

@@ -7,7 +7,7 @@ import nibabel as nib
 import shutil
 from collections import OrderedDict
 import logging
-from TestData_V6_1 import TestData3
+from TestData_V6_1 import TestData3_cleanedup
 from tf_unet import unet, util, image_util
 import multiprocessing
 import tensorflow as tf
@@ -19,6 +19,13 @@ def mkDir(dir):
     except:
         os.makedirs(dir)
     return dir
+
+eps = np.finfo(float).eps
+
+def DiceCoefficientCalculator(msk1,msk2):
+    intersection = msk1*msk2
+    DiceCoef = intersection.sum()*2/(msk1.sum()+msk2.sum() + np.finfo(float).eps)
+    return DiceCoef
 
 def subFoldersFunc(Dir_Prior):
     subFolders = []
@@ -37,7 +44,9 @@ def testNme(A,ii):
 
     return TestName
 
-def initialDirectories(ind = 1, mode = 'oldDataset'):
+def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old'):
+
+    Params = {}
 
     if ind == 1:
         NucleusName = '1-THALAMUS'
@@ -81,130 +90,131 @@ def initialDirectories(ind = 1, mode = 'oldDataset'):
         NucleusName = '13-Hb'
         SliceNumbers = range(116,129)
 
+    if 'local' in mode:
 
-    # mode:= oldDatasetV2 newDataset
-    NeucleusFolder = mode + '/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
-    ThalamusFolder = mode + '/CNN1_THALAMUS_2D_SanitizedNN'
+        Params['modelFormat'] = 'model.ckpt'
+        if 'old' in dataset:
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
+        elif 'new' in dataset:
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/7T_MS'
 
-    # if mode == 'oldDatasetV2':
-    #     NeucleusFolder = 'oldDatasetV2/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
-    #     ThalamusFolder = 'oldDatasetV2/CNN1_THALAMUS_2D_SanitizedNN'
-    # # elif mode == 'oldDataset':
-    # #     NeucleusFolder = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
-    # #     ThalamusFolder = 'CNN1_THALAMUS_2D_SanitizedNN'
-    # elif mode == 'newDataset':
-    #     NeucleusFolder = 'newDataset/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
-    #     ThalamusFolder = 'newDataset/CNN1_THALAMUS_2D_SanitizedNN'
+        Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + dataset + 'Dataset_' + method +'Method'
 
-    A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
+    elif 'server' in mode:
+
+        Params['modelFormat'] = 'model.cpkt'
+        if 'old' in dataset:
+            Dir_Prior = '/array/hdd/msmajdi/data/priors_forCNN_Ver2'
+        elif 'new' in dataset:
+            Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
+
+        Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + dataset + '_' + method
 
 
-    if mode == 'localMachine':
-        Dir_AllTests = '/media/artin-laptop/D0E2340CE233F5761/Thalamus_Segmentation/Data/'
-        Dir_Prior = ''
-    elif (mode == 'oldDataset') | (mode == 'oldDatasetV2'):
-        Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/'
-        Dir_Prior =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
-    elif mode == 'newDataset':
-        Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/'
-        Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS/'
+    Params['A'] = [[0,0],[6,1],[1,2],[1,3],[4,1]]
+    Params['Flag_cross_entropy'] = 0
+    Params['NeucleusFolder'] = '/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
+    Params['ThalamusFolder'] = '/CNN1_THALAMUS_2D_SanitizedNN'
+    Params['Dir_Prior']    = Dir_Prior
+    Params['Dir_AllTests'] = Dir_AllTests
+    Params['SliceNumbers'] = SliceNumbers
+    Params['NucleusName']  = NucleusName
+    Params['optimizer'] = 'adam'
+    Params['CropDim'] = np.array([ [50,198] , [130,278] , [Params['SliceNumbers'][0] , Params['SliceNumbers'][len(Params['SliceNumbers'])-1]] ])
 
-    return NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, SliceNumbers, A
+
+    if Params['Flag_cross_entropy'] == 1:
+        cost_kwargs = {'class_weights':[0.7,0.3]}
+        Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=cost_kwargs) # , cost="dice_coefficient"
+    else:
+        Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
+
+    return Params
 
 def input_GPU_Ix():
 
-    gpuNum = '5'  # 'nan'
-    IxNuclei = 1
-    testMode = 'EnhancedSeperately' # 'AllTrainings'
+    UserEntries = {}
+    UserEntries['gpuNum'] = 'nan'  # '5'  #
+    UserEntries['mode'] = 'local'
+    UserEntries['dataset'] = 'old'
+    UserEntries['IxNuclei'] = 1
+    UserEntries['testMode'] = 'EnhancedSeperately' # 'AllTrainings'
 
     for input in sys.argv:
         if input.split('=')[0] == 'nuclei':
-            IxNuclei = int(input.split('=')[1])
+            UserEntries['IxNuclei'] = int(input.split('=')[1])
         elif input.split('=')[0] == 'gpu':
-            gpuNum = input.split('=')[1]
+            UserEntries['gpuNum'] = input.split('=')[1]
         elif input.split('=')[0] == 'testMode':
-            testMode = input.split('=')[1] # 'AllTrainings'
+            UserEntries['testMode'] = input.split('=')[1] # 'AllTrainings'
+        elif input.split('=')[0] == 'dataset':
+            UserEntries['dataset'] = input.split('=')[1] # 'AllTrainings'
+        elif input.split('=')[0] == 'method':
+            UserEntries['method'] = input.split('=')[1] # 'AllTrainings'
 
-    return gpuNum, IxNuclei, testMode
+    return UserEntries
 
 
-gpuNum, IxNuclei, testMode = input_GPU_Ix()
+UserEntries = input_GPU_Ix()
 # gpuNum = '5' # nan'
 
-for ind in [IxNuclei]:
+for ind in [1]: # UserEntries['IxNuclei']:
 
-    NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'oldDataset')
+    Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = 'old')
+    Params['gpuNum'] = UserEntries['gpuNum']
 
-    L = 1 if testMode == 'AllTrainings' else len(A)  # [1,4]: #
+
+    L = 1 if UserEntries['testMode'] == 'AllTrainings' else len(Params['A'])  # [1,4]: #
     for ii in range(1): # L):
 
-        TestName = 'Test_AllTrainings' if testMode == 'AllTrainings' else testNme(A,ii)
-        # if testMode == 'AllTrainings':
-        #     TestName = 'Test_AllTrainings'
-        # else:
-        #     TestName = testNme(A,ii)
+        TestName = 'Test_AllTrainings' if UserEntries['testMode'] == 'AllTrainings' else testNme(Params['A'],ii)
 
-        Dir_AllTests_Nuclei_EnhancedFld = Dir_AllTests + NeucleusFolder + '/' + TestName + '/'
-        Dir_AllTests_Thalamus_EnhancedFld = Dir_AllTests + ThalamusFolder + '/' + TestName + '/'
+        Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + TestName + '/'
 
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
 
-        for sFi in range(len(subFolders)):
+        for sFi in range(1): # len(subFolders)):
 
-            K = 'Test_' if testMode == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
-            print(NucleusName,TestName.split(K)[1],subFolders[sFi])
+            K = 'Test_' if UserEntries['testMode'] == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
+            print(Params['NucleusName'],TestName.split(K)[1],subFolders[sFi])
 
-            Dir_Prior_NucleiSample = Dir_Prior +  subFolders[sFi] + '/Manual_Delineation_Sanitized/' + NucleusName + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
-            Dir_Prior_ThalamusSample = Dir_Prior +  subFolders[sFi] + '/Manual_Delineation_Sanitized/' +'1-THALAMUS' + '_deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
-
-            K = '/Test0/' if testMode == 'AllTrainings' else '/Test/'
+            K = '/Test0/' if UserEntries['testMode'] == 'AllTrainings' else '/Test/'
             Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + K
             Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
-            Dir_NucleiModelOut = Dir_NucleiTrainSamples + 'model/'
-            Dir_ResultsOut   = Dir_NucleiTestSamples  + 'Results_CE/'
 
-            Dir_ThalamusTestSamples  = Dir_AllTests_Thalamus_EnhancedFld + subFolders[sFi] + '/Test/'
-            Dir_ThalamusModelOut = Dir_AllTests_Thalamus_EnhancedFld + subFolders[sFi] + '/Train/model_CE/'
+            Dir_ThalamusTestSamples = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + TestName + '/' + subFolders[sFi] + '/Test/'
+            Dir_ThalamusModelOut    = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + TestName + '/' + subFolders[sFi] + '/Train/model_CE/'
 
 
-            Dir_NucleiModelOut = mkDir(Dir_NucleiModelOut)
-            Dir_ResultsOut = mkDir(Dir_ResultsOut)
+            Dir_NucleiModelOut = mkDir(Dir_NucleiTrainSamples + 'model/')
+            Dir_ResultsOut = mkDir(Dir_NucleiTestSamples  + 'Results_CE/')
 
             TrainData = image_util.ImageDataProvider(Dir_NucleiTrainSamples + "*.tif")
-
             logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
-            # config = tf.ConfigProto()
-            # config.gpu_options.allow_growth = True
-            # config.gpu_options.per_process_gpu_memory_fraction = 0.4
-            # unet.config = config
 
-            cost_kwargs = {'class_weights':[0.7,0.3]}
-            net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=cost_kwargs) # , cost="dice_coefficient"
 
-            trainer = unet.Trainer(net, optimizer = "adam") # ,learning_rate=0.03
-            if gpuNum != 'nan':
-                path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500, GPU_Num=gpuNum ,prediction_path=Dir_ResultsOut) #  restore=True
+            trainer = unet.Trainer(Params['net'], optimizer = "adam")
+            if Params['gpuNum'] != 'nan':
+                path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500, GPU_Num=Params['gpuNum'] ,prediction_path=Dir_ResultsOut) #  restore=True
             else:
-                path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500 ,prediction_path=Dir_ResultsOut) #   restore=True
+                path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=50, epochs=4, display_step=500 ,prediction_path=Dir_ResultsOut) #   restore=True
 
-            NucleiOrigSeg = nib.load(Dir_Prior_NucleiSample)
-            ThalamusOrigSeg = nib.load(Dir_Prior_ThalamusSample)
 
-            CropDimensions = np.array([ [50,198] , [130,278] , [SliceNumbers[0] , SliceNumbers[len(SliceNumbers)-1]] ])
+            NucleiOrigSeg   = nib.load( Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz' )
+            ThalamusOrigSeg = nib.load( Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Manual_Delineation_Sanitized/' +        '1-THALAMUS'   + '_deformed.nii.gz' )
 
             info = {}
             info['Dir_NucleiTestSamples'] = Dir_NucleiTestSamples
-            info['Dir_ResultsOut'] = Dir_ResultsOut
+            info['Dir_ResultsOut']     = Dir_ResultsOut
             info['MultByThalamusFlag'] = 0
-            info['Dir_NucleiModelOut'] = Dir_NucleiModelOut
-            info['padSize'] = 90
-            info['CropDim'] = CropDimensions
-            info['subFolders'] = subFolders[sFi]
-            info['NucleusName'] = NucleusName
-            info['SliceNumbers'] = SliceNumbers
-            info['gpuNum'] = gpuNum
+            info['Dir_NucleiModelOut'] = Dir_NucleiModelOut + Params['modelFormat']
+            info['padSize']      = 90
+            info['CropDim']      = Params['CropDim']
+            info['subFolders']   = subFolders[sFi]
+            info['NucleusName']  = Params['NucleusName']
+            info['SliceNumbers'] = Params['SliceNumbers']
+            info['gpuNum']       = UserEntries['gpuNum']
+            info['net']          = Params['net']
 
-
-            [Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical] = TestData3_cleanedup(net , NucleiOrigSeg)
-            # [Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical] = TestData3(net , MultByThalamusFlag, Dir_NucleiTestSamples , Dir_NucleiModelOut , ThalamusOrigSeg , NucleiOrigSeg , subFolders[sFi], CropDimensions , padSize , Dir_ThalamusTestSamples , Dir_ThalamusModelOut , NucleusName , SliceNumbers , gpuNum)
+            [Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical] = TestData3_cleanedup(info , NucleiOrigSeg)

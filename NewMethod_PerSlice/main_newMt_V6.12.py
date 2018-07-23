@@ -156,6 +156,14 @@ def DiceCoefficientCalculator(msk1,msk2):
 
 def trainFunc(Params , slcIx):
 
+    if Params['IxNuclei'] == 9:
+        if (slcIx < 2) | (slcIx > len(Params['SliceNumbers'])-2  ):
+            epochNum = 30
+        else:
+            epochNum = 10
+    else:
+        epochNum = 100
+
     sliceNum = Params['SliceNumbers'][slcIx]
 
     Dir_NucleiModelOut = mkDir( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum) + '/model/' )
@@ -167,7 +175,7 @@ def trainFunc(Params , slcIx):
 
     trainer = unet.Trainer(Params['net'], optimizer = Params['optimizer']) # ,learning_rate=0.03
     if Params['gpuNum'] != 'nan':
-        path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=50, display_step=500 ,prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum']) #  restore=True
+        path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=epochNum, display_step=500 ,prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum']) #  restore=True
     else:
         path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=3, epochs=1, display_step=500 ,prediction_path=Dir_ResultsOut) #   restore=True
 
@@ -207,6 +215,11 @@ def testFunc(Params , slcIx):
 
     return prediction2 , PredictedSeg
 
+
+
+
+
+
 UserEntries = input_GPU_Ix()
 
 
@@ -214,6 +227,7 @@ for ind in [UserEntries['IxNuclei']]:
 
     Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']
+    Params['IxNuclei'] = UserEntries['IxNuclei']
 
 
     L = 1 if UserEntries['testMode'] == 'AllTrainings' else len(Params['A'])  # [1,4]: #
@@ -226,7 +240,7 @@ for ind in [UserEntries['IxNuclei']]:
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
 
-        for sFi in range(1): # len(subFolders)):
+        for sFi in range(len(subFolders)):
 
             K = 'Test_' if UserEntries['testMode'] == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
             print(Params['NucleusName'],TestName.split(K)[1],subFolders[sFi])

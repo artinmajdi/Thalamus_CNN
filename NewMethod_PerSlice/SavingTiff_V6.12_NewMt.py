@@ -125,7 +125,7 @@ for ind in [IxNuclei]: # 1,2,8,9,10,13]: #
     NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A, CropDim = initialDirectories(ind , mode = 'server' , dataset = 'old' , method = 'new')
     subFolders = subFoldersFunc(Dir_Prior)
 
-    for ii in range(1): # len(A)):
+    for ii in range(1): # ,len(A)):
 
         TestName = testNme(A,ii)
 

@@ -142,14 +142,14 @@ for ind in [UserEntries['IxNuclei']]: # [1,2,8,9,10,13]:
         print(reslt + '--------------->>>>>---------------')
         Dice = np.zeros((len(subFolders), len(A)+1))
 
-        Directory_Nuclei_Label = Dir_Prior +  subFolders[0] + '/Manual_Delineation_Sanitized/' + NucleusName + '_deformed.nii.gz'
+        Directory_Nuclei_Label = Dir_Prior + '/' + subFolders[0] + '/Manual_Delineation_Sanitized/' + NucleusName + '_deformed.nii.gz'
         Label = nib.load(Directory_Nuclei_Label)
         Label = Label.get_data()
         sz = Label.shape
 
         for sFi in range(len(subFolders)):
             print(str(sFi) + ': ' + str(subFolders[sFi]))
-            Directory_Nuclei_Label = Dir_Prior +  subFolders[sFi] + '/Manual_Delineation_Sanitized/' + NucleusName + '_deformed.nii.gz'
+            Directory_Nuclei_Label = Dir_Prior + '/' + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + NucleusName + '_deformed.nii.gz'
             Label = nib.load(Directory_Nuclei_Label)
             Label = Label.get_data()
 

@@ -134,8 +134,8 @@ UserEntries = input_GPU_Ix()
 for ind in [UserEntries['IxNuclei']]: # [1,2,8,9,10,13]:
 
     NucleusName, NeucleusFolder, Dir_AllTests, Dir_Prior, A, SliceNumbers = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
-    Dir_SaveMWFld = mkDir( Dir_AllTests + 'Folder_MajorityVoting/' )
-    subFolders = subFolderList(Dir_AllTests +  NeucleusFolder)
+    Dir_SaveMWFld = mkDir( Dir_AllTests + '/Folder_MajorityVoting/' )
+    subFolders = subFolderList(Dir_AllTests + '/' + NeucleusFolder)
 
     for reslt in ['Results']:
 
@@ -161,8 +161,8 @@ for ind in [UserEntries['IxNuclei']]: # [1,2,8,9,10,13]:
             for ii in range(len(A)):
                 TestName = testNme(A,ii)
 
-                Dir_AllTests_nucleiFld_Ehd   = Dir_AllTests +  NeucleusFolder + '/' + TestName + '/'
-                Dir_AllTests_ThalamusFld_Ehd = Dir_AllTests + 'CNN1_THALAMUS_2D_SanitizedNN/' + TestName + '/'
+                Dir_AllTests_nucleiFld_Ehd   = Dir_AllTests + '/' + NeucleusFolder + '/' + TestName + '/'
+                Dir_AllTests_ThalamusFld_Ehd = Dir_AllTests + '/CNN1_THALAMUS_2D_SanitizedNN/' + TestName + '/'
                 Directory_Nuclei_Test  = Dir_AllTests_nucleiFld_Ehd + subFolders[sFi] + '/Test/' + reslt + '/'
 
                 # try:

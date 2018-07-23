@@ -39,7 +39,7 @@ def testNme(A,ii):
     return TestName
 
 def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new'):
-
+    
     if ind == 1:
         NucleusName = '1-THALAMUS'
         SliceNumbers = range(103,147)

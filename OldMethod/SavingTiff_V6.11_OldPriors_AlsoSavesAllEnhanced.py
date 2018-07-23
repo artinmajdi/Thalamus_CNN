@@ -109,7 +109,7 @@ def input_GPU_Ix():
 
     UserEntries = {}
     UserEntries['gpuNum'] = 'nan'  # '5'  #
-    UserEntries['mode'] = 'local'
+    UserEntries['method'] = 'old'
     UserEntries['dataset'] = 'old'
     UserEntries['IxNuclei'] = 1
     UserEntries['testMode'] = 'EnhancedSeperately' # 'AllTrainings'
@@ -133,7 +133,7 @@ UserEntries = input_GPU_Ix()
 
 for ind in [1]: # UserEntries['IxNuclei']:
 
-    Params = initialDirectories(ind = ind, mode = 'local' , dataset = 'old' , method = 'old')
+    Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'] )
     subFolders = subFoldersFunc(Params['Dir_Prior'])
 
     Name_priors_San_Label = 'Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz'
@@ -186,7 +186,7 @@ for ind in [1]: # UserEntries['IxNuclei']:
 
         for sFi_parent in range(len(subFolders)):
             print('Writing Images:  ',Params['NucleusName'],str(sFi_parent) + ' ' + subFolders[sFi_parent])
-            for sFi_child in range(4): # len(subFolders)):
+            for sFi_child in range(2): # len(subFolders)):
 
                 if sFi_parent == sFi_child:
                     Dir_Each = Dir_EachTraining + '/' + subFolders[sFi_child] + '/Test'

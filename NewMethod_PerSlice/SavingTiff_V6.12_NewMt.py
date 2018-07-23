@@ -122,7 +122,7 @@ gpuNum, IxNuclei, testMode = input_GPU_Ix()
 # gpuNum = 'nan'
 for ind in [1]: # IxNuclei]: # 1,2,8,9,10,13]: #
 
-    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A, CropDim = initialDirectories(ind , mode = 'local' , dataset = 'old' , method = 'new')
+    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A, CropDim = initialDirectories(ind , mode = 'server' , dataset = 'old' , method = 'new')
     subFolders = subFoldersFunc(Dir_Prior)
 
     for ii in range(1): # len(A)):

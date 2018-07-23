@@ -135,7 +135,7 @@ def input_GPU_Ix():
 
     UserEntries = {}
     UserEntries['gpuNum'] = 'nan'  # '5'  #
-    UserEntries['mode'] = 'local'
+    UserEntries['method'] = 'old'
     UserEntries['dataset'] = 'old'
     UserEntries['IxNuclei'] = 1
     UserEntries['testMode'] = 'EnhancedSeperately' # 'AllTrainings'
@@ -160,7 +160,7 @@ UserEntries = input_GPU_Ix()
 
 for ind in [1]: # UserEntries['IxNuclei']:
 
-    Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = 'old')
+    Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']
 
 

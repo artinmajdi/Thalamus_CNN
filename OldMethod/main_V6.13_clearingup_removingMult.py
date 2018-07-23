@@ -108,7 +108,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
         elif 'new' in dataset:
             Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
 
-        Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + dataset + '_' + method
+        Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method'
 
 
     Params['A'] = [[0,0],[6,1],[1,2],[1,3],[4,1]]

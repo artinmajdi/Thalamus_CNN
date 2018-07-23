@@ -108,11 +108,11 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
         elif 'new' in dataset:
             Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
 
-        Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method'
+        Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/oldDataset' # + dataset + 'Dataset_' + method +'Method'
 
 
     Params['A'] = [[0,0],[6,1],[1,2],[1,3],[4,1]]
-    Params['Flag_cross_entropy'] = 0
+    Params['Flag_cross_entropy'] = 1
     Params['NeucleusFolder'] = '/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
     Params['ThalamusFolder'] = '/CNN1_THALAMUS_2D_SanitizedNN'
     Params['Dir_Prior']    = Dir_Prior
@@ -158,14 +158,14 @@ def input_GPU_Ix():
 UserEntries = input_GPU_Ix()
 # gpuNum = '5' # nan'
 
-for ind in [1]: # UserEntries['IxNuclei']:
+for ind in [UserEntries['IxNuclei']]:
 
     Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']
 
 
     L = 1 if UserEntries['testMode'] == 'AllTrainings' else len(Params['A'])  # [1,4]: #
-    for ii in range(1): # L):
+    for ii in range(L):
 
         TestName = 'Test_AllTrainings' if UserEntries['testMode'] == 'AllTrainings' else testNme(Params['A'],ii)
 
@@ -174,7 +174,7 @@ for ind in [1]: # UserEntries['IxNuclei']:
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
 
-        for sFi in range(1): # len(subFolders)):
+        for sFi in range(5): # len(subFolders)):
 
             K = 'Test_' if UserEntries['testMode'] == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
             print(Params['NucleusName'],TestName.split(K)[1],subFolders[sFi])
@@ -184,10 +184,10 @@ for ind in [1]: # UserEntries['IxNuclei']:
             Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
 
             Dir_ThalamusTestSamples = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + TestName + '/' + subFolders[sFi] + '/Test/'
-            Dir_ThalamusModelOut    = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + TestName + '/' + subFolders[sFi] + '/Train/model_CE/'
+            # Dir_ThalamusModelOut    = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + TestName + '/' + subFolders[sFi] + '/Train/model/'
 
 
-            Dir_NucleiModelOut = mkDir(Dir_NucleiTrainSamples + 'model/')
+            Dir_NucleiModelOut = mkDir(Dir_NucleiTrainSamples + 'model_CE/')
             Dir_ResultsOut = mkDir(Dir_NucleiTestSamples  + 'Results_CE/')
 
             TrainData = image_util.ImageDataProvider(Dir_NucleiTrainSamples + "*.tif")

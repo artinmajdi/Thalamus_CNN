@@ -167,7 +167,7 @@ def trainFunc(Params , slcIx):
 
     trainer = unet.Trainer(Params['net'], optimizer = Params['optimizer']) # ,learning_rate=0.03
     if Params['gpuNum'] != 'nan':
-        path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500 ,prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum']) #  restore=True
+        path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=50, display_step=500 ,prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum']) #  restore=True
     else:
         path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=3, epochs=1, display_step=500 ,prediction_path=Dir_ResultsOut) #   restore=True
 
@@ -210,9 +210,9 @@ def testFunc(Params , slcIx):
 UserEntries = input_GPU_Ix()
 
 
-for ind in [1]: # UserEntries['IxNuclei']:
+for ind in [UserEntries['IxNuclei']]:
 
-    Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method']):
+    Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']
 
 

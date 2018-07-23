@@ -129,9 +129,7 @@ def testNme(A,ii):
 
     return TestName
 
-
 UserEntries = input_GPU_Ix()
-
 
 for ind in [UserEntries['IxNuclei']]: # [1,2,8,9,10,13]:
 

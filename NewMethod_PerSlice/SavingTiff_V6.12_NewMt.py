@@ -34,6 +34,8 @@ def subFoldersFunc(Dir_Prior):
 
 def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old'):
 
+    Params = {}
+    
     A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
 
     if ind == 1:
@@ -80,6 +82,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
 
     if 'local' in mode:
 
+        Params['modelFormat'] = 'model.ckpt'
         if 'old' in dataset:
             Dir_Prior = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
         elif 'new' in dataset:
@@ -89,12 +92,14 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
 
     elif 'server' in mode:
 
+        Params['modelFormat'] = 'model.cpkt'
         if 'old' in dataset:
             Dir_Prior = '/array/hdd/msmajdi/data/priors_forCNN_Ver2'
         elif 'new' in dataset:
             Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
 
-        Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method'
+        Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method' # 'oldDataset' #
+
 
 
     CropDim = np.array([ [50,198] , [130,278] , [SliceNumbers[0] , SliceNumbers[len(SliceNumbers)-1]] ])
@@ -103,26 +108,33 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
 
 def input_GPU_Ix():
 
-    gpuNum = '5'  # 'nan'
-    IxNuclei = 1
-    testMode = 'EnhancedSeperately' # 'AllTrainings'
+    UserEntries = {}
+    UserEntries['gpuNum'] =  '4'  # 'nan'  #
+    UserEntries['IxNuclei'] = 1
+    UserEntries['dataset'] = 'old'
+    UserEntries['method'] = 'new'
+    UserEntries['testMode'] = 'EnhancedSeperately' # 'AllTrainings'
 
     for input in sys.argv:
         if input.split('=')[0] == 'nuclei':
-            IxNuclei = int(input.split('=')[1])
+            UserEntries['IxNuclei'] = int(input.split('=')[1])
         elif input.split('=')[0] == 'gpu':
-            gpuNum = input.split('=')[1]
+            UserEntries['gpuNum'] = input.split('=')[1]
         elif input.split('=')[0] == 'testMode':
-            testMode = input.split('=')[1] # 'AllTrainings'
+            UserEntries['testMode'] = input.split('=')[1] # 'AllTrainings'
+        elif input.split('=')[0] == 'dataset':
+            UserEntries['dataset'] = input.split('=')[1]
+        elif input.split('=')[0] == 'method':
+            UserEntries['method'] = input.split('=')[1]
 
-    return gpuNum, IxNuclei, testMode
+    return UserEntries
 
 
-gpuNum, IxNuclei, testMode = input_GPU_Ix()
+UserEntries = input_GPU_Ix()
 # gpuNum = 'nan'
-for ind in [IxNuclei]: # 1,2,8,9,10,13]: #
+for ind in [9]: # UserEntries['IxNuclei']]: # 1,2,8,9,10,13]: #
 
-    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A, CropDim = initialDirectories(ind , mode = 'server' , dataset = 'old' , method = 'new')
+    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A, CropDim = initialDirectories(ind = ind, mode = 'local' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     subFolders = subFoldersFunc(Dir_Prior)
 
     for ii in range(1): # ,len(A)):
@@ -174,7 +186,7 @@ for ind in [IxNuclei]: # 1,2,8,9,10,13]: #
 
         for sFi_parent in range(len(subFolders)):
             print('Writing Images:  ',NucleusName,str(sFi_parent) + ' ' + subFolders[sFi_parent])
-            for sFi_child in range(len(subFolders)):
+            for sFi_child in range(1): # len(subFolders)):
 
                 for slcIx_parent in range(imFull.shape[2]):
 

@@ -14,6 +14,8 @@ def DiceCoefficientCalculator(msk1,msk2):
 
 def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new'):
 
+    Params = {}
+    
     A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
 
     if ind == 1:
@@ -60,6 +62,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
 
     if 'local' in mode:
 
+        Params['modelFormat'] = 'ckpt'
         if 'old' in dataset:
             Dir_Prior = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
         elif 'new' in dataset:
@@ -69,12 +72,13 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
 
     elif 'server' in mode:
 
+        Params['modelFormat'] = 'cpkt'
         if 'old' in dataset:
             Dir_Prior = '/array/hdd/msmajdi/data/priors_forCNN_Ver2'
         elif 'new' in dataset:
             Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
 
-        Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + 'oldDataset' # dataset + 'Dataset_' + method +'Method'
+        Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method' # 'oldDataset' #
 
 
     NeucleusFolder = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
@@ -196,7 +200,6 @@ for ind in [UserEntries['IxNuclei']]: # [1,2,8,9,10,13]:
         Dice2[:len(subFolders),:] = Dice
         Dice2[len(subFolders),:] = np.mean(Dice,axis=0)
 
-        np.savetxt(Dir_SaveMWFld + NeucleusFolder + '/DiceCoefsAll_' + reslt + '.txt',100*Dice2, fmt='%2.1f')
-
-        with open(Dir_SaveMWFld + NeucleusFolder + "/subFoldersList_MW_"+reslt+".txt" ,"wb") as fp:
+        np.savetxt(Dir_SaveMWFld + NeucleusFolder + '/DiceCoefsAll_' + reslt + '.txt' , 100*Dice2 , fmt='%2.1f')
+        with open(Dir_SaveMWFld + NeucleusFolder + "/subFoldersList_MW_" + reslt + ".txt" ,"wb") as fp:
             pickle.dump(subFolders,fp)

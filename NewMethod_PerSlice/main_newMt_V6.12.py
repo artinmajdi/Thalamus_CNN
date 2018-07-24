@@ -39,6 +39,8 @@ def testNme(A,ii):
     return TestName
 
 def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new'):
+
+    Params = {}
     
     if ind == 1:
         NucleusName = '1-THALAMUS'
@@ -84,6 +86,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
 
     if 'local' in mode:
 
+        Params['modelFormat'] = 'ckpt'
         if 'old' in dataset:
             Dir_Prior = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
         elif 'new' in dataset:
@@ -93,15 +96,16 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
 
     elif 'server' in mode:
 
+        Params['modelFormat'] = 'cpkt'
         if 'old' in dataset:
             Dir_Prior = '/array/hdd/msmajdi/data/priors_forCNN_Ver2'
         elif 'new' in dataset:
             Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
 
-        Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method'
+        Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method' # 'oldDataset' #
 
 
-    Params = {}
+
     Params['A'] = [[0,0],[6,1],[1,2],[1,3],[4,1]]
     Params['Flag_cross_entropy'] = 0
     Params['NeucleusFolder'] = '/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
@@ -175,9 +179,9 @@ def trainFunc(Params , slcIx):
 
     trainer = unet.Trainer(Params['net'], optimizer = Params['optimizer']) # ,learning_rate=0.03
     if Params['gpuNum'] != 'nan':
-        path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=epochNum, display_step=500 ,prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum']) #  restore=True
+        path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=200 , epochs=epochNum, display_step=500 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum']) #  restore=True
     else:
-        path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=3, epochs=1, display_step=500 ,prediction_path=Dir_ResultsOut) #   restore=True
+        path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=3 , epochs=2, display_step=500 , prediction_path=Dir_ResultsOut) #   restore=True
 
     return path
 
@@ -201,9 +205,9 @@ def testFunc(Params , slcIx):
 
         Data , Label = TestData(L)
         if Params['gpuNum'] != 'nan':
-            prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + '/model/model.cpkt', np.asarray(Data,dtype=np.float32), GPU_Num=Params['gpuNum'])
+            prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + '/model/model.' + Params['modelFormat'], np.asarray(Data,dtype=np.float32), GPU_Num=Params['gpuNum'])
         else:
-            prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + '/model/model.cpkt', np.asarray(Data,dtype=np.float32))
+            prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + '/model/model.' + Params['modelFormat'], np.asarray(Data,dtype=np.float32))
 
 
         try:
@@ -223,9 +227,9 @@ def testFunc(Params , slcIx):
 UserEntries = input_GPU_Ix()
 
 
-for ind in [UserEntries['IxNuclei']]:
+for ind in [9]: # [UserEntries['IxNuclei']]:
 
-    Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    Params = initialDirectories(ind = ind, mode = 'local' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']
     Params['IxNuclei'] = UserEntries['IxNuclei']
 
@@ -240,7 +244,7 @@ for ind in [UserEntries['IxNuclei']]:
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
 
-        for sFi in range(len(subFolders)):
+        for sFi in range(1): # len(subFolders)):
 
             K = 'Test_' if UserEntries['testMode'] == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
             print(Params['NucleusName'],TestName.split(K)[1],subFolders[sFi])
@@ -275,4 +279,4 @@ for ind in [UserEntries['IxNuclei']]:
             nib.save(output2 , Params['Dir_NucleiTestSamples'] + '/' + subFolders[sFi] + '_' + Params['NucleusName'] + '.nii.gz')
 
             Dice = DiceCoefficientCalculator(output,label.get_data())
-            np.savetxt(Params['Dir_NucleiTestSamples'] + '/Dice.txt',Dice)
+            np.savetxt(Params['Dir_NucleiTestSamples'] + '/DiceCoefficient.txt',Dice)

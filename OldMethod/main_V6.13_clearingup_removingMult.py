@@ -92,7 +92,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
 
     if 'local' in mode:
 
-        Params['modelFormat'] = 'model.ckpt'
+        Params['modelFormat'] = 'ckpt'
         if 'old' in dataset:
             Dir_Prior = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
         elif 'new' in dataset:
@@ -102,13 +102,13 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
 
     elif 'server' in mode:
 
-        Params['modelFormat'] = 'model.cpkt'
+        Params['modelFormat'] = 'cpkt'
         if 'old' in dataset:
             Dir_Prior = '/array/hdd/msmajdi/data/priors_forCNN_Ver2'
         elif 'new' in dataset:
             Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
 
-        Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/oldDataset' # + dataset + 'Dataset_' + method +'Method'
+        Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method' # 'oldDataset' #
 
 
     Params['A'] = [[0,0],[6,1],[1,2],[1,3],[4,1]]
@@ -208,7 +208,7 @@ for ind in [UserEntries['IxNuclei']]:
             info['Dir_NucleiTestSamples'] = Dir_NucleiTestSamples
             info['Dir_ResultsOut']     = Dir_ResultsOut
             info['MultByThalamusFlag'] = 0
-            info['Dir_NucleiModelOut'] = Dir_NucleiModelOut + Params['modelFormat']
+            info['Dir_NucleiModelOut'] = Dir_NucleiModelOut + 'model.' + Params['modelFormat']
             info['padSize']      = 90
             info['CropDim']      = Params['CropDim']
             info['subFolders']   = subFolders[sFi]

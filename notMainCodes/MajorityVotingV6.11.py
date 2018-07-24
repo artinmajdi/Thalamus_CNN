@@ -15,7 +15,7 @@ def DiceCoefficientCalculator(msk1,msk2):
 def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new'):
 
     Params = {}
-    
+
     A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
 
     if ind == 1:

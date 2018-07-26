@@ -97,7 +97,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
         else:
             Params['modelFormat'] = 'cpkt'
             Dir_Prior = '/media/groot/aaa/Manual_Delineation_Sanitized_Full'
-            Dir_AllTests  = '/media/groot/Seagate Backup Plus Drive/code/mine/' + dataset + 'Dataset_' + method +'Method'
+            Dir_AllTests  = '/media/groot/aaa/AllTests/' + dataset + 'Dataset_' + method +'Method'
 
     elif 'server' in mode:
 
@@ -165,13 +165,13 @@ def DiceCoefficientCalculator(msk1,msk2):
 
 def trainFunc(Params , slcIx):
 
-    if Params['IxNuclei'] == 9:
-        if (slcIx < 2) | (slcIx > len(Params['SliceNumbers'])-2  ):
-            epochNum = 30
-        else:
-            epochNum = 10
-    else:
-        epochNum = 100
+    # if Params['IxNuclei'] == 9:
+    #     if (slcIx < 2) | (slcIx > len(Params['SliceNumbers'])-2  ):
+    #         Params['epochNum'] = 30
+    #     else:
+    #         Params['epochNum'] = 10
+    # else:
+    #     Params['epochNum'] = 100
 
     sliceNum = Params['SliceNumbers'][slcIx]
 
@@ -184,9 +184,9 @@ def trainFunc(Params , slcIx):
 
     trainer = unet.Trainer(Params['net'], optimizer = Params['optimizer']) # ,learning_rate=0.03
     if Params['gpuNum'] != 'nan':
-        path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=200 , epochs=epochNum, display_step=500 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum']) #  restore=True
+        path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochNum'], display_step=100 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum']) #  restore=True
     else:
-        path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=200 , epochs=20, display_step=500 , prediction_path=Dir_ResultsOut) #   restore=True
+        path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochNum'], display_step=100 , prediction_path=Dir_ResultsOut) #   restore=True
 
     return path
 
@@ -265,8 +265,9 @@ for ind in [1]: # [UserEntries['IxNuclei']]:
 
             label  = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz')
             output = np.zeros(label.shape)
-
-            for slcIx in range(5,6): # len(Params['SliceNumbers'])): # 1): #
+            Params['epochNum'] = 40
+            Params['training_iters'] = 100
+            for slcIx in range(4,5): # len(Params['SliceNumbers'])): # 1): #
 
                 # ---------------------------  training -----------------------------------
                 path = trainFunc(Params , slcIx)
@@ -277,15 +278,15 @@ for ind in [1]: # [UserEntries['IxNuclei']]:
 
 
             a = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ]
-            print('dice' , DiceCoefficientCalculator(pred , a) )
+            print('dice' , DiceCoefficientCalculator(pred , a) )  #  epoch:40 iter 300 dice:0.55 ;;; epoch:40 iter 100 dice:0.54
             ax,fig = plt.subplots(1,2)
             fig[0].imshow(pred,cmap='gray')
             fig[1].imshow(a,cmap='gray')
             plt.show()
             # ---------------------------  writing -----------------------------------
-            output2 = nib.Nifti1Image(output,label.affine)
-            output2.get_header = label.header
-            nib.save(output2 , Params['Dir_NucleiTestSamples'] + '/' + subFolders[sFi] + '_' + Params['NucleusName'] + '.nii.gz')
-
-            Dice = DiceCoefficientCalculator(output,label.get_data())
-            np.savetxt(Params['Dir_NucleiTestSamples'] + '/DiceCoefficient.txt',Dice)
+            # output2 = nib.Nifti1Image(output,label.affine)
+            # output2.get_header = label.header
+            # nib.save(output2 , Params['Dir_NucleiTestSamples'] + '/' + subFolders[sFi] + '_' + Params['NucleusName'] + '.nii.gz')
+            #
+            # Dice = DiceCoefficientCalculator(output,label.get_data())
+            # np.savetxt(Params['Dir_NucleiTestSamples'] + '/DiceCoefficient.txt',Dice)

@@ -35,7 +35,7 @@ def subFoldersFunc(Dir_Prior):
 def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old'):
 
     Params = {}
-    
+
     A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
 
     if ind == 1:
@@ -83,12 +83,18 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
     if 'local' in mode:
 
         Params['modelFormat'] = 'model.ckpt'
-        if 'old' in dataset:
-            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
-        elif 'new' in dataset:
-            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/7T_MS'
 
-        Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + dataset + 'Dataset_' + method +'Method'
+        if 'oldDGX' not in dataset:
+            if 'old' in dataset:
+                Dir_Prior = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
+            elif 'new' in dataset:
+                Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/7T_MS'
+
+            Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + dataset + 'Dataset_' + method +'Method'
+        else:
+            Dir_Prior = '/media/groot/aaa/Manual_Delineation_Sanitized_Full'
+            Dir_AllTests  = '/media/groot/Seagate Backup Plus Drive/code/mine/' + dataset + 'Dataset_' + method +'Method'
+
 
     elif 'server' in mode:
 
@@ -111,7 +117,7 @@ def input_GPU_Ix():
     UserEntries = {}
     UserEntries['gpuNum'] =  '4'  # 'nan'  #
     UserEntries['IxNuclei'] = 1
-    UserEntries['dataset'] = 'old'
+    UserEntries['dataset'] = 'oldDGX' # 'old'
     UserEntries['method'] = 'new'
     UserEntries['testMode'] = 'EnhancedSeperately' # 'AllTrainings'
 
@@ -132,7 +138,7 @@ def input_GPU_Ix():
 
 UserEntries = input_GPU_Ix()
 # gpuNum = 'nan'
-for ind in [9]: # UserEntries['IxNuclei']]: # 1,2,8,9,10,13]: #
+for ind in [1]: # UserEntries['IxNuclei']]: # 1,2,8,9,10,13]: #
 
     NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A, CropDim = initialDirectories(ind = ind, mode = 'local' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     subFolders = subFoldersFunc(Dir_Prior)
@@ -148,7 +154,6 @@ for ind in [9]: # UserEntries['IxNuclei']]: # 1,2,8,9,10,13]: #
 
         print('---------------------------------------')
         for sFi in range(len(subFolders)):
-
             print('Reading Images:  ',NucleusName,inputName.split('WMnMPRAGE_bias_corr_')[1].split('nii.gz')[0] , str(sFi) + ' ' + subFolders[sFi])
             mask   = nib.load(Dir_Prior + '/'  + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + NucleusName + '_deformed.nii.gz')
             im     = nib.load(Dir_Prior + '/'  + subFolders[sFi] + '/' + inputName)

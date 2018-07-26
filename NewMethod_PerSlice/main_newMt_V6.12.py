@@ -41,7 +41,7 @@ def testNme(A,ii):
 def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new'):
 
     Params = {}
-    
+
     if ind == 1:
         NucleusName = '1-THALAMUS'
         SliceNumbers = range(103,147)
@@ -86,13 +86,18 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
 
     if 'local' in mode:
 
-        Params['modelFormat'] = 'ckpt'
-        if 'old' in dataset:
-            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
-        elif 'new' in dataset:
-            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/7T_MS'
+        if 'oldDGX' not in dataset:
+            Params['modelFormat'] = 'ckpt'
+            if 'old' in dataset:
+                Dir_Prior = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
+            elif 'new' in dataset:
+                Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/7T_MS'
 
-        Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + dataset + 'Dataset_' + method +'Method'
+            Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + dataset + 'Dataset_' + method +'Method'
+        else:
+            Params['modelFormat'] = 'cpkt'
+            Dir_Prior = '/media/groot/aaa/Manual_Delineation_Sanitized_Full'
+            Dir_AllTests  = '/media/groot/Seagate Backup Plus Drive/code/mine/' + dataset + 'Dataset_' + method +'Method'
 
     elif 'server' in mode:
 
@@ -133,7 +138,7 @@ def input_GPU_Ix():
     UserEntries = {}
     UserEntries['gpuNum'] = 'nan'  # '5'  #
     UserEntries['IxNuclei'] = 1
-    UserEntries['dataset'] = 'old'
+    UserEntries['dataset'] = 'oldDGX' # 'old'
     UserEntries['method'] = 'new'
     UserEntries['testMode'] = 'EnhancedSeperately' # 'AllTrainings'
 
@@ -181,7 +186,7 @@ def trainFunc(Params , slcIx):
     if Params['gpuNum'] != 'nan':
         path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=200 , epochs=epochNum, display_step=500 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum']) #  restore=True
     else:
-        path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=3 , epochs=2, display_step=500 , prediction_path=Dir_ResultsOut) #   restore=True
+        path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=200 , epochs=20, display_step=500 , prediction_path=Dir_ResultsOut) #   restore=True
 
     return path
 
@@ -227,7 +232,7 @@ def testFunc(Params , slcIx):
 UserEntries = input_GPU_Ix()
 
 
-for ind in [9]: # [UserEntries['IxNuclei']]:
+for ind in [1]: # [UserEntries['IxNuclei']]:
 
     Params = initialDirectories(ind = ind, mode = 'local' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']
@@ -243,9 +248,8 @@ for ind in [9]: # [UserEntries['IxNuclei']]:
         Dir_AllTests_Thalamus_EnhancedFld = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + TestName + '/'
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
-
+        subFolders = ['vimp2_ANON724_03272013'] #
         for sFi in range(1): # len(subFolders)):
-
             K = 'Test_' if UserEntries['testMode'] == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
             print(Params['NucleusName'],TestName.split(K)[1],subFolders[sFi])
 
@@ -262,17 +266,22 @@ for ind in [9]: # [UserEntries['IxNuclei']]:
             label  = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz')
             output = np.zeros(label.shape)
 
-            for slcIx in range(len(Params['SliceNumbers'])): # 1): #
+            for slcIx in range(5,6): # len(Params['SliceNumbers'])): # 1): #
 
                 # ---------------------------  training -----------------------------------
                 path = trainFunc(Params , slcIx)
 
                 # ---------------------------  testing -----------------------------------
                 _ , pred = testFunc(Params , slcIx)
-                output[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , slcIx] = pred
+                output[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ] = pred
 
 
-
+            a = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ]
+            print('dice' , DiceCoefficientCalculator(pred , a) )
+            ax,fig = plt.subplots(1,2)
+            fig[0].imshow(pred,cmap='gray')
+            fig[1].imshow(a,cmap='gray')
+            plt.show()
             # ---------------------------  writing -----------------------------------
             output2 = nib.Nifti1Image(output,label.affine)
             output2.get_header = label.header

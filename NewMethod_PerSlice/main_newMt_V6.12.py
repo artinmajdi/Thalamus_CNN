@@ -267,7 +267,7 @@ for ind in [1]: # [UserEntries['IxNuclei']]:
             output = np.zeros(label.shape)
             Params['epochNum'] = 40
             Params['training_iters'] = 100
-            for slcIx in range(4,5): # len(Params['SliceNumbers'])): # 1): #
+            for slcIx in range(len(Params['SliceNumbers'])): # 1): #
 
                 # ---------------------------  training -----------------------------------
                 path = trainFunc(Params , slcIx)
@@ -276,17 +276,18 @@ for ind in [1]: # [UserEntries['IxNuclei']]:
                 _ , pred = testFunc(Params , slcIx)
                 output[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ] = pred
 
+            # ---------------------------  showing -----------------------------------
+            # a = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ]
+            # print('dice' , DiceCoefficientCalculator(pred , a) )  #  epoch:40 iter 300 dice:0.55 ;;; epoch:40 iter 100 dice:0.54
+            # ax,fig = plt.subplots(1,2)
+            # fig[0].imshow(pred,cmap='gray')
+            # fig[1].imshow(a,cmap='gray')
+            # plt.show()
 
-            a = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ]
-            print('dice' , DiceCoefficientCalculator(pred , a) )  #  epoch:40 iter 300 dice:0.55 ;;; epoch:40 iter 100 dice:0.54
-            ax,fig = plt.subplots(1,2)
-            fig[0].imshow(pred,cmap='gray')
-            fig[1].imshow(a,cmap='gray')
-            plt.show()
             # ---------------------------  writing -----------------------------------
-            # output2 = nib.Nifti1Image(output,label.affine)
-            # output2.get_header = label.header
-            # nib.save(output2 , Params['Dir_NucleiTestSamples'] + '/' + subFolders[sFi] + '_' + Params['NucleusName'] + '.nii.gz')
-            #
-            # Dice = DiceCoefficientCalculator(output,label.get_data())
-            # np.savetxt(Params['Dir_NucleiTestSamples'] + '/DiceCoefficient.txt',Dice)
+            output2 = nib.Nifti1Image(output,label.affine)
+            output2.get_header = label.header
+            nib.save(output2 , Params['Dir_NucleiTestSamples'] + '/' + subFolders[sFi] + '_' + Params['NucleusName'] + '.nii.gz')
+
+            Dice = DiceCoefficientCalculator(output,label.get_data())
+            np.savetxt(Params['Dir_NucleiTestSamples'] + '/DiceCoefficient.txt',Dice)

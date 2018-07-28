@@ -154,6 +154,13 @@ def input_GPU_Ix():
         elif input.split('=')[0] == 'method':
             UserEntries['method'] = input.split('=')[1] # 'AllTrainings'
 
+        elif input.split('=')[0] == 'temp_Iter':
+            UserEntries['dataset'] = input.split('=')[1] # 'AllTrainings'
+        elif input.split('=')[0] == 'temp_Epoch':
+            UserEntries['method'] = input.split('=')[1] # 'AllTrainings'
+        elif input.split('=')[0] == 'temp_Slice':
+            UserEntries['method'] = input.split('=')[1] # 'AllTrainings'
+
     return UserEntries
 
 def DiceCoefficientCalculator(msk1,msk2):
@@ -234,7 +241,7 @@ UserEntries = input_GPU_Ix()
 
 for ind in [1]: # [UserEntries['IxNuclei']]:
 
-    Params = initialDirectories(ind = ind, mode = 'local' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']
     Params['IxNuclei'] = UserEntries['IxNuclei']
 
@@ -248,7 +255,7 @@ for ind in [1]: # [UserEntries['IxNuclei']]:
         Dir_AllTests_Thalamus_EnhancedFld = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + TestName + '/'
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
-        subFolders = ['vimp2_ANON724_03272013'] #
+        # subFolders = ['vimp2_ANON724_03272013'] #
         for sFi in range(1): # len(subFolders)):
             K = 'Test_' if UserEntries['testMode'] == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
             print(Params['NucleusName'],TestName.split(K)[1],subFolders[sFi])
@@ -265,9 +272,10 @@ for ind in [1]: # [UserEntries['IxNuclei']]:
 
             label  = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz')
             output = np.zeros(label.shape)
-            Params['epochNum'] = 40
-            Params['training_iters'] = 100
-            for slcIx in range(len(Params['SliceNumbers'])): # 1): #
+            Params['epochNum'] = UserEntries['temp_Epoch'] # 40
+            Params['training_iters'] = UserEntries['temp_Iter'] # 100
+
+            for slcIx in [UserEntries['temp_Slice']]: # range(len(Params['SliceNumbers'])): # 1): #
 
                 # ---------------------------  training -----------------------------------
                 path = trainFunc(Params , slcIx)

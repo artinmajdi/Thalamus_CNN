@@ -268,14 +268,15 @@ for ind in [1]: # [UserEntries['IxNuclei']]:
             Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train'
 
 
+
             # ---------------------------  main part-----------------------------------
 
             label  = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz')
             output = np.zeros(label.shape)
-            Params['epochNum'] = UserEntries['temp_Epoch'] # 40
-            Params['training_iters'] = UserEntries['temp_Iter'] # 100
+            Params['epochNum'] = int(UserEntries['temp_Epoch']) # 40
+            Params['training_iters'] = int(UserEntries['temp_Iter']) # 100
 
-            for slcIx in [UserEntries['temp_Slice']]: # range(len(Params['SliceNumbers'])): # 1): #
+            for slcIx in [int(UserEntries['temp_Slice'])]: # range(len(Params['SliceNumbers'])): # 1): #
 
                 # ---------------------------  training -----------------------------------
                 path = trainFunc(Params , slcIx)

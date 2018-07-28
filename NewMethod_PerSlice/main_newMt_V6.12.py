@@ -182,6 +182,7 @@ def trainFunc(Params , slcIx):
 
     sliceNum = Params['SliceNumbers'][slcIx]
 
+
     Dir_NucleiModelOut = mkDir( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum) + '/model/' )
     Dir_ResultsOut = mkDir( Params['Dir_NucleiTestSamples']  + '/Slice_' + str(sliceNum) + '/Results/' )
 

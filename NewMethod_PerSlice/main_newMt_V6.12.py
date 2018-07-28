@@ -217,11 +217,12 @@ def testFunc(Params , slcIx):
 
     else:
 
+        model = '/model_Epc_' + str(Params['epochNum']) + '_Iter_' + str(Params['training_iters'] + '/')
         Data , Label = TestData(L)
         if Params['gpuNum'] != 'nan':
-            prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + '/model/model.' + Params['modelFormat'], np.asarray(Data,dtype=np.float32), GPU_Num=Params['gpuNum'])
+            prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + model + 'model.' + Params['modelFormat'], np.asarray(Data,dtype=np.float32), GPU_Num=Params['gpuNum'])
         else:
-            prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + '/model/model.' + Params['modelFormat'], np.asarray(Data,dtype=np.float32))
+            prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + model + 'model.' + Params['modelFormat'], np.asarray(Data,dtype=np.float32))
 
 
         try:

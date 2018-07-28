@@ -136,7 +136,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
 def input_GPU_Ix():
 
     UserEntries = {}
-    UserEntries['gpuNum'] = 'nan'  # '5'  #
+    UserEntries['gpuNum'] = '4'  # '5'  #
     UserEntries['IxNuclei'] = 1
     UserEntries['dataset'] = 'old' # 'old'
     UserEntries['method'] = 'new'

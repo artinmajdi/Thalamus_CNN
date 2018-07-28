@@ -86,6 +86,8 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
 
     if 'local' in mode:
 
+        print(mode)
+        
         if 'oldDGX' not in dataset:
             Params['modelFormat'] = 'ckpt'
             if 'old' in dataset:
@@ -101,10 +103,14 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
 
     elif 'server' in mode:
 
+        print(mode)
+
         Params['modelFormat'] = 'cpkt'
         if 'old' in dataset:
+            print(dataset)
             Dir_Prior = '/array/hdd/msmajdi/data/priors_forCNN_Ver2'
         elif 'new' in dataset:
+            print(dataset)
             Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
 
         Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method' # 'oldDataset' #

@@ -87,7 +87,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
     if 'local' in mode:
 
         print(mode)
-        
+
         if 'oldDGX' not in dataset:
             Params['modelFormat'] = 'ckpt'
             if 'old' in dataset:
@@ -104,7 +104,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
     elif 'server' in mode:
 
         print(mode)
-
+        print(dataset)
         Params['modelFormat'] = 'cpkt'
         if 'old' in dataset:
             print(dataset)

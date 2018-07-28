@@ -182,7 +182,8 @@ def trainFunc(Params , slcIx):
 
     sliceNum = Params['SliceNumbers'][slcIx]
 
-    Dir_NucleiModelOut = mkDir( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum) + '/model/' )
+    model = '/model_Epc_' + str(Params['epochNum']) + '_Iter_' + str(Params['training_iters'] + '/')
+    Dir_NucleiModelOut = mkDir( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum) +  model) # '/model/'
     Dir_ResultsOut = mkDir( Params['Dir_NucleiTestSamples']  + '/Slice_' + str(sliceNum) + '/Results/' )
 
     TrainData = image_util.ImageDataProvider(Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum) + '/*.tif')
@@ -190,8 +191,9 @@ def trainFunc(Params , slcIx):
     logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
 
     trainer = unet.Trainer(Params['net'], optimizer = Params['optimizer']) # ,learning_rate=0.03
+
     if Params['gpuNum'] != 'nan':
-        path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochNum'], display_step=100 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum']) #  restore=True
+        path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochNum'], display_step=100 , prediction_path=Dir_ResultsOut  , GPU_Num=Params['gpuNum']) #  restore=True
     else:
         path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochNum'], display_step=100 , prediction_path=Dir_ResultsOut) #   restore=True
 

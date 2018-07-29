@@ -172,13 +172,7 @@ def DiceCoefficientCalculator(msk1,msk2):
 
 def trainFunc(Params , slcIx):
 
-    # if Params['IxNuclei'] == 9:
-    #     if (slcIx < 2) | (slcIx > len(Params['SliceNumbers'])-2  ):
-    #         Params['epochNum'] = 30
-    #     else:
-    #         Params['epochNum'] = 10
-    # else:
-    #     Params['epochNum'] = 100
+
 
     sliceNum = Params['SliceNumbers'][slcIx]
 
@@ -192,9 +186,9 @@ def trainFunc(Params , slcIx):
 
     trainer = unet.Trainer(Params['net'], optimizer = Params['optimizer']) # ,learning_rate=0.03
     if Params['gpuNum'] != 'nan':
-        path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochNum'], display_step=100 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum']) #  restore=True
+        path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=100 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum']) #  restore=True
     else:
-        path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochNum'], display_step=100 , prediction_path=Dir_ResultsOut) #   restore=True
+        path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=100 , prediction_path=Dir_ResultsOut) #   restore=True
 
     return path
 
@@ -232,23 +226,42 @@ def testFunc(Params , slcIx):
 
     return prediction2 , PredictedSeg
 
+def paramIterEpoch(Params , slcIx):
 
+    Params['training_iters'] = 200
 
+    if Params['IxNuclei'] == 9:
+        if (slcIx < 2) | (slcIx > len(Params['SliceNumbers'])-2  ):
+            Params['epochs'] = 30
+        else:
+            Params['epochs'] = 10
+
+    elif Params['IxNuclei'] == 1:
+        if (slcIx < 5) | (slcIx > len(Params['SliceNumbers'])-5  ):
+            Params['epochs'] = 40
+        else:
+            Params['epochs'] = 60
+    else:
+        Params['epochs'] = 50
+
+    return Params
 
 
 
 UserEntries = input_GPU_Ix()
 
 
-for ind in [1]: # [UserEntries['IxNuclei']]:
+for ind in [UserEntries['IxNuclei']]:
 
     Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']
     Params['IxNuclei'] = UserEntries['IxNuclei']
 
 
+
+
     L = 1 if UserEntries['testMode'] == 'AllTrainings' else len(Params['A'])  # [1,4]: #
-    for ii in range(1): # L):
+    for ii in range(2): #@ L):
 
         TestName = 'Test_AllTrainings' if UserEntries['testMode'] == 'AllTrainings' else testNme(Params['A'],ii)
 
@@ -257,7 +270,7 @@ for ind in [1]: # [UserEntries['IxNuclei']]:
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
         # subFolders = ['vimp2_ANON724_03272013'] #
-        for sFi in range(1): # len(subFolders)):
+        for sFi in range(len(subFolders)):
             K = 'Test_' if UserEntries['testMode'] == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
             print(Params['NucleusName'],TestName.split(K)[1],subFolders[sFi])
 
@@ -274,10 +287,12 @@ for ind in [1]: # [UserEntries['IxNuclei']]:
 
             label  = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz')
             output = np.zeros(label.shape)
-            Params['epochNum'] = int(UserEntries['temp_Epoch']) # 40
+            Params['epochs'] = int(UserEntries['temp_Epoch']) # 40
             Params['training_iters'] = int(UserEntries['temp_Iter']) # 100
 
-            for slcIx in [int(UserEntries['temp_Slice'])]: # range(len(Params['SliceNumbers'])): # 1): #
+            for slcIx in range(len(Params['SliceNumbers'])):
+
+                Params = paramIterEpoch(Params , slcIx)
 
                 # ---------------------------  training -----------------------------------
                 path = trainFunc(Params , slcIx)
@@ -287,14 +302,15 @@ for ind in [1]: # [UserEntries['IxNuclei']]:
                 output[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ] = pred
 
             # ---------------------------  showing -----------------------------------
-            print('-------------------------------------------------------------------')
-            a = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ]
-            print('dice' , DiceCoefficientCalculator(pred , a) )  #  epoch:40 iter 300 dice:0.55 ;;; epoch:40 iter 100 dice:0.54
+            # print('-------------------------------------------------------------------')
+            # a = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ]
+            # print('dice' , DiceCoefficientCalculator(pred , a) )  #  epoch:40 iter 300 dice:0.55 ;;; epoch:40 iter 100 dice:0.54
             # ax,fig = plt.subplots(1,2)
             # fig[0].imshow(pred,cmap='gray')
             # fig[1].imshow(a,cmap='gray')
             # plt.show()
-            print('-------------------------------------------------------------------')
+            # print('-------------------------------------------------------------------')
+
             # ---------------------------  writing -----------------------------------
             output2 = nib.Nifti1Image(output,label.affine)
             output2.get_header = label.header

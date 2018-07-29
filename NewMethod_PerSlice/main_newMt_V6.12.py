@@ -289,8 +289,8 @@ for ind in [UserEntries['IxNuclei']]:
 
             label  = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz')
             output = np.zeros(label.shape)
-            Params['epochs'] = int(UserEntries['epochs']) # 40
-            Params['training_iters'] = int(UserEntries['training_iters']) # 100
+            # Params['epochs'] = int(UserEntries['epochs']) # 40
+            # Params['training_iters'] = int(UserEntries['training_iters']) # 100
 
             for slcIx in range(len(Params['SliceNumbers'])):
 

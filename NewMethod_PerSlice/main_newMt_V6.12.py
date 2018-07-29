@@ -253,7 +253,7 @@ def paramIterEpoch(Params , slcIx):
 UserEntries = input_GPU_Ix()
 
 
-for ind in [UserEntries['IxNuclei']]:
+for ind in [int(UserEntries['IxNuclei'])]:
 
     Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']

@@ -186,9 +186,9 @@ def trainFunc(Params , slcIx):
 
     trainer = unet.Trainer(Params['net'], optimizer = Params['optimizer']) # ,learning_rate=0.03
     if Params['gpuNum'] != 'nan':
-        path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=100 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum']) #  restore=True
+        path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=500 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum']) #  restore=True
     else:
-        path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=100 , prediction_path=Dir_ResultsOut) #   restore=True
+        path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=500 , prediction_path=Dir_ResultsOut) #   restore=True
 
     return path
 

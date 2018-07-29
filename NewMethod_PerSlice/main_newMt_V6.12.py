@@ -150,16 +150,18 @@ def input_GPU_Ix():
         elif input.split('=')[0] == 'testMode':
             UserEntries['testMode'] = input.split('=')[1] # 'AllTrainings'
         elif input.split('=')[0] == 'dataset':
-            UserEntries['dataset'] = input.split('=')[1] # 'AllTrainings'
+            UserEntries['dataset'] = input.split('=')[1] #
         elif input.split('=')[0] == 'method':
-            UserEntries['method'] = input.split('=')[1] # 'AllTrainings'
+            UserEntries['method'] = input.split('=')[1] #
+        elif input.split('=')[0] == 'enhancedIx':
+            UserEntries['enhancedIx'] = input.split('=')[1] #
 
-        elif input.split('=')[0] == 'temp_Iter':
-            UserEntries['temp_Iter'] = input.split('=')[1] # 'AllTrainings'
-        elif input.split('=')[0] == 'temp_Epoch':
-            UserEntries['temp_Epoch'] = input.split('=')[1] # 'AllTrainings'
-        elif input.split('=')[0] == 'temp_Slice':
-            UserEntries['temp_Slice'] = input.split('=')[1] # 'AllTrainings'
+        # elif input.split('=')[0] == 'temp_Iter':
+        #     UserEntries['temp_Iter'] = input.split('=')[1] # 'AllTrainings'
+        # elif input.split('=')[0] == 'temp_Epoch':
+        #     UserEntries['temp_Epoch'] = input.split('=')[1] # 'AllTrainings'
+        # elif input.split('=')[0] == 'temp_Slice':
+        #     UserEntries['temp_Slice'] = input.split('=')[1] # 'AllTrainings'
 
     return UserEntries
 
@@ -261,7 +263,7 @@ for ind in [UserEntries['IxNuclei']]:
 
 
     L = 1 if UserEntries['testMode'] == 'AllTrainings' else len(Params['A'])  # [1,4]: #
-    for ii in range(2): #@ L):
+    for ii in [UserEntries['enhancedIx']]: # range(2): #@ L):
 
         TestName = 'Test_AllTrainings' if UserEntries['testMode'] == 'AllTrainings' else testNme(Params['A'],ii)
 

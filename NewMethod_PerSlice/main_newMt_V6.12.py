@@ -154,7 +154,7 @@ def input_GPU_Ix():
         elif input.split('=')[0] == 'method':
             UserEntries['method'] = input.split('=')[1] #
         elif input.split('=')[0] == 'enhancedIx':
-            UserEntries['enhancedIx'] = input.split('=')[1] #
+            UserEntries['enhancedIx'] = int(input.split('=')[1]) #
 
         # elif input.split('=')[0] == 'temp_Iter':
         #     UserEntries['temp_Iter'] = input.split('=')[1] # 'AllTrainings'
@@ -253,7 +253,7 @@ def paramIterEpoch(Params , slcIx):
 UserEntries = input_GPU_Ix()
 
 
-for ind in [int(UserEntries['IxNuclei'])]:
+for ind in [UserEntries['IxNuclei']]:
 
     Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']

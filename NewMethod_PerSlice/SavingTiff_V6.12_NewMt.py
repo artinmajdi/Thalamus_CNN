@@ -8,6 +8,8 @@ from PIL import ImageEnhance , Image , ImageFilter
 import sys
 
 
+A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
+
 def testNme(A,ii):
     if ii == 0:
         TestName = 'Test_WMnMPRAGE_bias_corr_Deformed'
@@ -36,7 +38,6 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
 
     Params = {}
 
-    A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
 
     if ind == 1:
         NucleusName = '1-THALAMUS'
@@ -110,7 +111,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
 
     CropDim = np.array([ [50,198] , [130,278] , [SliceNumbers[0] , SliceNumbers[len(SliceNumbers)-1]] ])
 
-    return NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A, CropDim
+    return NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, CropDim
 
 def input_GPU_Ix():
 
@@ -133,7 +134,10 @@ def input_GPU_Ix():
         elif input.split('=')[0] == 'method':
             UserEntries['method'] = input.split('=')[1]
         elif input.split('=')[0] == 'enhance':
-            UserEntries['enhanced_Index'] = int(input.split('=')[1]) #
+            if 'all' in input.split('=')[1]:
+                UserEntries['enhanced_Index'] = range(len(A))
+            else:
+                UserEntries['enhanced_Index'] = int(input.split('=')[1]) #
 
 
     return UserEntries

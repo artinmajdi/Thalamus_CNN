@@ -154,7 +154,10 @@ def input_GPU_Ix():
         elif input.split('=')[0] == 'method':
             UserEntries['method'] = input.split('=')[1] #
         elif input.split('=')[0] == 'enhance':
-            UserEntries['enhanced_Index'] = int(input.split('=')[1]) #
+            if 'all' in input.split('=')[1]:
+                UserEntries['enhanced_Index'] = range(len(A))
+            else:
+                UserEntries['enhanced_Index'] = int(input.split('=')[1]) #
 
         # elif input.split('=')[0] == 'training_iters':
         #     UserEntries['training_iters'] = input.split('=')[1] # 'AllTrainings'

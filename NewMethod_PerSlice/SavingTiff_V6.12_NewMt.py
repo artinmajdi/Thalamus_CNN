@@ -117,7 +117,7 @@ def input_GPU_Ix():
     UserEntries = {}
     UserEntries['gpuNum'] =  '4'  # 'nan'  #
     UserEntries['IxNuclei'] = 1
-    UserEntries['dataset'] = 'oldDGX' # 'old'
+    UserEntries['dataset'] = 'old' #'oldDGX' #
     UserEntries['method'] = 'new'
     UserEntries['testMode'] = 'EnhancedSeperately' # 'AllTrainings'
 
@@ -141,12 +141,12 @@ def input_GPU_Ix():
 
 UserEntries = input_GPU_Ix()
 # gpuNum = 'nan'
-for ind in [UserEntries['IxNuclei']]: # 1,2,8,9,10,13]: #
+for ind in [9]: # UserEntries['IxNuclei']]: # 1,2,8,9,10,13]: #
 
-    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A, CropDim = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A, CropDim = initialDirectories(ind = ind, mode = 'local' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     subFolders = subFoldersFunc(Dir_Prior)
 
-    for ii in [UserEntries['enhanced_Index']]: # range(2): #@ L):
+    for ii in [0]: # UserEntries['enhanced_Index']]: # range(2): #@ L):
 
         TestName = testNme(A,ii)
 
@@ -195,6 +195,7 @@ for ind in [UserEntries['IxNuclei']]: # 1,2,8,9,10,13]: #
         for sFi_parent in range(len(subFolders)):
             print('Writing Images:  ',NucleusName,str(sFi_parent) + ' ' + subFolders[sFi_parent])
             for sFi_child in range(len(subFolders)):
+                print('sFi_parent',sFi_parent , 'sFi_child' , sFi_child)
 
                 for slcIx_parent in range(len(SliceNumbers)):
 
@@ -212,14 +213,11 @@ for ind in [UserEntries['IxNuclei']]: # 1,2,8,9,10,13]: #
                         tifffile.imsave( Dir_All + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx_parent ,sFi_parent] )
                         tifffile.imsave( Dir_All + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx_parent ,sFi_parent] )
 
-
-
                     else:
                         Dir_Each = Dir_EachTraining + '/' + subFolders[sFi_child] + '/Train' + '/Slice_' + str(SliceNumbers[slcIx_parent])
                         Dir_All  = Dir_AllTrainings + '/' + subFolders[sFi_child] + '/Train' + '/Slice_' + str(SliceNumbers[slcIx_parent])
 
                         for slcIx_child in range(  max(0,slcIx_parent-1) , min(len(SliceNumbers),slcIx_parent+2)  ):
-                            print('slcIx_parent',slcIx_parent , 'sFi_parent' , sFi_parent, 'slcIx_child',slcIx_child)
                             Name_PredictedImage = subFolders[sFi_parent] + '_Sh' + str(A[ii][0]) + '_Ct' + str(A[ii][1]) + '_Slice_' + str(SliceNumbers[slcIx_child])
                             tifffile.imsave( Dir_Each + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx_child ,sFi_parent] )
                             tifffile.imsave( Dir_Each + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx_child ,sFi_parent] )

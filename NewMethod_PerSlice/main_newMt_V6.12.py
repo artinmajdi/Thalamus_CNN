@@ -102,12 +102,13 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
     elif 'server' in mode:
 
         Params['modelFormat'] = 'cpkt'
+        hardDrive = 'ssd'
         if 'old' in dataset:
-            Dir_Prior = '/array/hdd/msmajdi/data/priors_forCNN_Ver2'
+            Dir_Prior = '/array/' + hardDrive + '/msmajdi/data/priors_forCNN_Ver2'
         elif 'new' in dataset:
-            Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS'
+            Dir_Prior = '/array/' + hardDrive + '/msmajdi/data/newPriors/7T_MS'
 
-        Dir_AllTests  = '/array/hdd/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method' # 'oldDataset' #
+        Dir_AllTests  = '/array/' + hardDrive + '/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method' # 'oldDataset' #
 
 
 

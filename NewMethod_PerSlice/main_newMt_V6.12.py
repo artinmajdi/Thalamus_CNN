@@ -1,4 +1,4 @@
-UserEntries['enhanced_Index']from tf_unet import unet, util, image_util
+from tf_unet import unet, util, image_util
 import matplotlib.pylab as plt
 import numpy as np
 import os

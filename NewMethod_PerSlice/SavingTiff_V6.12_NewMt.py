@@ -132,18 +132,21 @@ def input_GPU_Ix():
             UserEntries['dataset'] = input.split('=')[1]
         elif input.split('=')[0] == 'method':
             UserEntries['method'] = input.split('=')[1]
+        elif input.split('=')[0] == 'enhance':
+            UserEntries['enhanced_Index'] = int(input.split('=')[1]) #
+
 
     return UserEntries
 
 
 UserEntries = input_GPU_Ix()
 # gpuNum = 'nan'
-for ind in [1]: # UserEntries['IxNuclei']]: # 1,2,8,9,10,13]: #
+for ind in [UserEntries['IxNuclei']]: # 1,2,8,9,10,13]: #
 
     NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A, CropDim = initialDirectories(ind = ind, mode = 'local' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     subFolders = subFoldersFunc(Dir_Prior)
 
-    for ii in range(1): # ,len(A)):
+    for ii in [UserEntries['enhanced_Index']]: # range(2): #@ L):
 
         TestName = testNme(A,ii)
 
@@ -191,7 +194,7 @@ for ind in [1]: # UserEntries['IxNuclei']]: # 1,2,8,9,10,13]: #
 
         for sFi_parent in range(len(subFolders)):
             print('Writing Images:  ',NucleusName,str(sFi_parent) + ' ' + subFolders[sFi_parent])
-            for sFi_child in range(1): # len(subFolders)):
+            for sFi_child in range(len(subFolders)):
 
                 for slcIx_parent in range(imFull.shape[2]):
 

@@ -121,6 +121,7 @@ def input_GPU_Ix():
     UserEntries['dataset'] = 'old' #'oldDGX' #
     UserEntries['method'] = 'new'
     UserEntries['testMode'] = 'EnhancedSeperately' # 'AllTrainings'
+    UserEntries['enhanced_Index'] = range(len(A))
 
     for input in sys.argv:
         if input.split('=')[0] == 'nuclei':
@@ -137,7 +138,7 @@ def input_GPU_Ix():
             if 'all' in input.split('=')[1]:
                 UserEntries['enhanced_Index'] = range(len(A))
             else:
-                UserEntries['enhanced_Index'] = int(input.split('=')[1]) #
+                UserEntries['enhanced_Index'] = [int(input.split('=')[1])] #
 
 
     return UserEntries
@@ -147,11 +148,11 @@ UserEntries = input_GPU_Ix()
 # gpuNum = 'nan'
 for ind in [UserEntries['IxNuclei']]: # 1,2,8,9,10,13]: #
 
-    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A, CropDim = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, CropDim = initialDirectories(ind = ind, mode = 'local' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     subFolders = subFoldersFunc(Dir_Prior)
 
-    for ii in [UserEntries['enhanced_Index']]: # range(2): #@ L):
-
+    for ii in UserEntries['enhanced_Index']: # range(2): #@ L):
+        print(ii)
         TestName = testNme(A,ii)
 
         Dir_EachTraining = Dir_AllTests + '/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN/' + TestName

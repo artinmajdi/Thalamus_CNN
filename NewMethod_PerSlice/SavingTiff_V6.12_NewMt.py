@@ -218,7 +218,7 @@ for ind in [UserEntries['IxNuclei']]: # 1,2,8,9,10,13]: #
                         Dir_Each = Dir_EachTraining + '/' + subFolders[sFi_child] + '/Train' + '/Slice_' + str(SliceNumbers[slcIx_parent])
                         Dir_All  = Dir_AllTrainings + '/' + subFolders[sFi_child] + '/Train' + '/Slice_' + str(SliceNumbers[slcIx_parent])
 
-                        for slcIx_child in range(  max(0,slcIx_parent-1) , min(imFull.shape[2],slcIx_parent+2)  ):
+                        for slcIx_child in range(  max(0,slcIx_parent-1) , min(len(SliceNumbers),slcIx_parent+2)  ):
 
                             Name_PredictedImage = subFolders[sFi_parent] + '_Sh' + str(A[ii][0]) + '_Ct' + str(A[ii][1]) + '_Slice_' + str(SliceNumbers[slcIx_child])
                             tifffile.imsave( Dir_Each + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx_child ,sFi_parent] )

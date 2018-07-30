@@ -148,11 +148,11 @@ UserEntries = input_GPU_Ix()
 # gpuNum = 'nan'
 for ind in [UserEntries['IxNuclei']]: # 1,2,8,9,10,13]: #
 
-    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, CropDim = initialDirectories(ind = ind, mode = 'local' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, CropDim = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     subFolders = subFoldersFunc(Dir_Prior)
 
     for ii in UserEntries['enhanced_Index']: # range(2): #@ L):
-        print(ii)
+        print('-------','enhanced:',A[ii],'-------')
         TestName = testNme(A,ii)
 
         Dir_EachTraining = Dir_AllTests + '/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN/' + TestName
@@ -200,7 +200,7 @@ for ind in [UserEntries['IxNuclei']]: # 1,2,8,9,10,13]: #
         for sFi_parent in range(len(subFolders)):
             print('Writing Images:  ',NucleusName,str(sFi_parent) + ' ' + subFolders[sFi_parent])
             for sFi_child in range(len(subFolders)):
-                print( 'sFi_child' , sFi_child , subFolders[sFi_child][:15],'/', 'sFi_parent', sFi_parent , subFolders[sFi_parent][:15])
+                # print( 'sFi_child' , sFi_child , subFolders[sFi_child][:15],'/', 'sFi_parent', sFi_parent , subFolders[sFi_parent][:15])
 
                 for slcIx_parent in range(len(SliceNumbers)):
 

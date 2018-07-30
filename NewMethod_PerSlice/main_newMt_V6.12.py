@@ -1,4 +1,4 @@
-from tf_unet import unet, util, image_util
+UserEntries['enhanced_Index']from tf_unet import unet, util, image_util
 import matplotlib.pylab as plt
 import numpy as np
 import os
@@ -153,8 +153,8 @@ def input_GPU_Ix():
             UserEntries['dataset'] = input.split('=')[1] #
         elif input.split('=')[0] == 'method':
             UserEntries['method'] = input.split('=')[1] #
-        elif input.split('=')[0] == 'enhancedIx':
-            UserEntries['enhancedIx'] = int(input.split('=')[1]) #
+        elif input.split('=')[0] == 'enhance':
+            UserEntries['enhanced_Index'] = int(input.split('=')[1]) #
 
         # elif input.split('=')[0] == 'training_iters':
         #     UserEntries['training_iters'] = input.split('=')[1] # 'AllTrainings'
@@ -263,7 +263,7 @@ for ind in [UserEntries['IxNuclei']]:
 
 
     L = 1 if UserEntries['testMode'] == 'AllTrainings' else len(Params['A'])  # [1,4]: #
-    for ii in [UserEntries['enhancedIx']]: # range(2): #@ L):
+    for ii in [UserEntries['enhanced_Index']]: # range(2): #@ L):
 
         TestName = 'Test_AllTrainings' if UserEntries['testMode'] == 'AllTrainings' else testNme(Params['A'],ii)
 

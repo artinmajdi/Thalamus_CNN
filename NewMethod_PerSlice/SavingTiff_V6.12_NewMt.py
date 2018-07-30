@@ -182,7 +182,7 @@ for ind in [UserEntries['IxNuclei']]: # 1,2,8,9,10,13]: #
                 imFull = np.append(imFull,imD_padded[...,np.newaxis],axis=3)
                 mskFull = np.append(mskFull,maskD_padded[...,np.newaxis],axis=3)
 
-            for slcIx in range(imFull.shape[2]):
+            for slcIx in range(len(SliceNumbers)):
                 mkDir(Dir_EachTraining + '/' + subFolders[sFi] + '/Test'  + '/Slice_' + str(SliceNumbers[slcIx]))
                 mkDir(Dir_EachTraining + '/' + subFolders[sFi] + '/Train' + '/Slice_' + str(SliceNumbers[slcIx]))
 
@@ -196,7 +196,7 @@ for ind in [UserEntries['IxNuclei']]: # 1,2,8,9,10,13]: #
             print('Writing Images:  ',NucleusName,str(sFi_parent) + ' ' + subFolders[sFi_parent])
             for sFi_child in range(len(subFolders)):
 
-                for slcIx_parent in range(imFull.shape[2]):
+                for slcIx_parent in range(len(SliceNumbers)):
 
 
 

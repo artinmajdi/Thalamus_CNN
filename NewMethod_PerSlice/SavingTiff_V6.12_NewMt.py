@@ -141,12 +141,12 @@ def input_GPU_Ix():
 
 UserEntries = input_GPU_Ix()
 # gpuNum = 'nan'
-for ind in [9]: # UserEntries['IxNuclei']]: # 1,2,8,9,10,13]: #
+for ind in [UserEntries['IxNuclei']]: # 1,2,8,9,10,13]: #
 
     NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, A, CropDim = initialDirectories(ind = ind, mode = 'local' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     subFolders = subFoldersFunc(Dir_Prior)
 
-    for ii in [0]: # UserEntries['enhanced_Index']]: # range(2): #@ L):
+    for ii in [UserEntries['enhanced_Index']]: # range(2): #@ L):
 
         TestName = testNme(A,ii)
 

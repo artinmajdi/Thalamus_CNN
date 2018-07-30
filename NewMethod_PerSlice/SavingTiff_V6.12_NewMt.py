@@ -132,15 +132,14 @@ def input_GPU_Ix():
             UserEntries['dataset'] = input.split('=')[1]
         elif input.split('=')[0] == 'method':
             UserEntries['method'] = input.split('=')[1]
-            
+
         elif input.split('=')[0] == 'nuclei':
             if 'all' in input.split('=')[1]:
                 a = range(4,14)
                 UserEntries['IxNuclei'] = np.append([1,2,4567],a)
 
             elif input.split('=')[1][0] == '[':
-                A = input.split('=')[1]
-                B = A.split('[')[1].split(']')[0].split(",")
+                B = input.split('=')[1].split('[')[1].split(']')[0].split(",")
                 UserEntries['IxNuclei'] = [int(k) for k in B]
 
             else:
@@ -151,13 +150,11 @@ def input_GPU_Ix():
                 UserEntries['enhanced_Index'] = range(len(A))
 
             elif input.split('=')[1][0] == '[':
-                A = input.split('=')[1]
-                B = A.split('[')[1].split(']')[0].split(",")
+                B = input.split('=')[1].split('[')[1].split(']')[0].split(",")
                 UserEntries['enhanced_Index'] = [int(k) for k in B]
 
             else:
                 UserEntries['enhanced_Index'] = [int(input.split('=')[1])]
-
 
     return UserEntries
 
@@ -166,7 +163,7 @@ UserEntries = input_GPU_Ix()
 # gpuNum = 'nan'
 for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
-    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, CropDim = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    NucleusName, Dir_AllTests, Dir_Prior, SliceNumbers, CropDim = initialDirectories(ind = ind, mode = 'local' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     subFolders = subFoldersFunc(Dir_Prior)
 
     for ii in UserEntries['enhanced_Index']: # range(2): #@ L):

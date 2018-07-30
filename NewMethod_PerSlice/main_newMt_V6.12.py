@@ -12,7 +12,7 @@ import multiprocessing
 import tensorflow as tf
 import sys
 
-
+A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
 
 def mkDir(dir):
     try:
@@ -111,7 +111,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
 
 
 
-    Params['A'] = [[0,0],[6,1],[1,2],[1,3],[4,1]]
+    Params['A'] = A
     Params['Flag_cross_entropy'] = 0
     Params['NeucleusFolder'] = '/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
     Params['ThalamusFolder'] = '/CNN1_THALAMUS_2D_SanitizedNN'
@@ -160,8 +160,7 @@ def input_GPU_Ix():
                 UserEntries['IxNuclei'] = np.append([1,2,4567],a)
 
             elif input.split('=')[1][0] == '[':
-                A = input.split('=')[1]
-                B = A.split('[')[1].split(']')[0].split(",")
+                B = input.split('=')[1].split('[')[1].split(']')[0].split(",")
                 UserEntries['IxNuclei'] = [int(k) for k in B]
 
             else:
@@ -172,8 +171,7 @@ def input_GPU_Ix():
                 UserEntries['enhanced_Index'] = range(len(A))
 
             elif input.split('=')[1][0] == '[':
-                A = input.split('=')[1]
-                B = A.split('[')[1].split(']')[0].split(",")
+                B = input.split('=')[1].split('[')[1].split(']')[0].split(",")
                 UserEntries['enhanced_Index'] = [int(k) for k in B]
 
             else:

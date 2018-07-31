@@ -41,7 +41,7 @@ def testNme(A,ii):
 def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new'):
 
     Params = {}
-
+    print(ind)
     if ind == 1:
         NucleusName = '1-THALAMUS'
         SliceNumbers = range(103,147)
@@ -275,9 +275,9 @@ def paramIterEpoch(Params , slcIx):
 UserEntries = input_GPU_Ix()
 
 
-for ind in [UserEntries['IxNuclei']]:
+for ind in UserEntries['IxNuclei']:
 
-    Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    Params = initialDirectories(ind = ind, mode = 'local' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']
     Params['IxNuclei'] = UserEntries['IxNuclei']
 
@@ -285,7 +285,7 @@ for ind in [UserEntries['IxNuclei']]:
 
 
     L = 1 if UserEntries['testMode'] == 'AllTrainings' else len(Params['A'])  # [1,4]: #
-    for ii in [UserEntries['enhanced_Index']]: # range(2): #@ L):
+    for ii in UserEntries['enhanced_Index']: # range(2): #@ L):
 
         TestName = 'Test_AllTrainings' if UserEntries['testMode'] == 'AllTrainings' else testNme(Params['A'],ii)
 

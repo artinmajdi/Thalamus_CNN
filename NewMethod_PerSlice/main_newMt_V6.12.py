@@ -256,13 +256,13 @@ def paramIterEpoch(Params , slcIx):
 
     Params['training_iters'] = 200
 
-    if Params['IxNuclei'] == 9:
+    if Params['IxNuclei'] == [9]:
         if (slcIx < 2) | (slcIx > len(Params['SliceNumbers'])-2  ):
             Params['epochs'] = 30
         else:
             Params['epochs'] = 10
 
-    elif Params['IxNuclei'] == 1:
+    elif Params['IxNuclei'] == [1]:
         if (slcIx < 5) | (slcIx > len(Params['SliceNumbers'])-5  ):
             Params['epochs'] = 3 # 40
         else:
@@ -279,7 +279,7 @@ UserEntries = input_GPU_Ix()
 
 for ind in UserEntries['IxNuclei']:
 
-    Params = initialDirectories(ind = ind, mode = 'flash' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']
     Params['IxNuclei'] = UserEntries['IxNuclei']
 
@@ -320,6 +320,7 @@ for ind in UserEntries['IxNuclei']:
             for slcIx in range(len(Params['SliceNumbers'])):
 
                 Params = paramIterEpoch(Params , slcIx)
+                print('epochs',Params['epochs'],'IxNuclei',Params['IxNuclei'],'iter',Params['training_iters'])
 
                 # ---------------------------  training -----------------------------------
                 path = trainFunc(Params , slcIx)
@@ -330,14 +331,14 @@ for ind in UserEntries['IxNuclei']:
 
                 # ---------------------------  showing -----------------------------------
                 # print('-------------------------------------------------------------------')
-                dice[slcIx] = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ]
+                labelOrig = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ]
+                dice[slcIx] = DiceCoefficientCalculator(pred , labelOrig)
                 np.savetxt(Params['Dir_NucleiTestSamples'] + '/DiceCoefficient.txt',dice)
-                # print('dice' , DiceCoefficientCalculator(pred , a) )  #  epoch:40 iter 300 dice:0.55 ;;; epoch:40 iter 100 dice:0.54
                 # ax,fig = plt.subplots(1,2)
                 # fig[0].imshow(pred,cmap='gray')
                 # fig[1].imshow(a,cmap='gray')
                 # plt.show()
-                # print('-------------------------------------------------------------------')
+
 
 
             # ---------------------------  writing -----------------------------------

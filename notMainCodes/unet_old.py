@@ -27,7 +27,7 @@ import logging
 import tensorflow as tf
 from tf_unet import util
 from tf_unet.layers import (weight_variable, weight_variable_devonc, bias_variable,
-                            conv2d, deconv2d, max_pool, crop_and_concat, pixel_wise_softmax_2,
+                            conv2d, deconv2d, max_pool, crop_and_concat, pixel_wise_softmax, pixel_wise_softmax_2,
                             cross_entropy)
 from skimage import filters
 # import tensorlayer
@@ -269,14 +269,14 @@ class Unet(object):
             elif myMethod == 4:
                 print('myMethod: ',myMethod)
 
-                # prediction = pixel_wise_softmax(logits)
+                prediction = pixel_wise_softmax(logits)
                 flat_logits = tf.reshape(prediction[...,0] , [-1, self.n_class])
                 flat_labels = tf.reshape(self.y[...,0] , [-1, self.n_class])
 
                 union =  eps + tf.reduce_sum(flat_labels) + tf.reduce_sum(flat_logits)
                 intersection = tf.reduce_sum(flat_labels * flat_logits)
 
-                loss = -(2 * intersection/ (union))
+                loss = 1-(2 * intersection/ (union))
             else:
 
                 intersection = tf.reduce_sum(prediction * self.y)
@@ -305,7 +305,8 @@ class Unet(object):
         init = tf.global_variables_initializer()
 
         # with tf.device('/device:GPU:2'):
-        config = tf.ConfigProto( allow_soft_placement=True)  # intra_op_parallelism_threads=4,inter_op_parallelism_threads=20, 
+        config = tf.ConfigProto(intra_op_parallelism_threads=4,\
+               inter_op_parallelism_threads=4, allow_soft_placement=True)
         config.gpu_options.allow_growth = True
         config.gpu_options.visible_device_list=GPU_Num
 
@@ -357,7 +358,7 @@ class Trainer(object):
 
     """
 
-    verification_batch_size = 10
+    verification_batch_size = 7
 
     def __init__(self, net, batch_size=1, norm_grads=False, optimizer="momentum", opt_kwargs={}):
         self.net = net
@@ -450,7 +451,8 @@ class Trainer(object):
         init = self._initialize(training_iters, output_path, restore, prediction_path)
 
         # with tf.device('/device:GPU:2'):
-        config = tf.ConfigProto(allow_soft_placement=True) # intra_op_parallelism_threads=4,inter_op_parallelism_threads=20, 
+        config = tf.ConfigProto(intra_op_parallelism_threads=4,\
+               inter_op_parallelism_threads=4, allow_soft_placement=True)
         config.gpu_options.allow_growth = True
         config.gpu_options.visible_device_list=GPU_Num
 
@@ -576,4 +578,3 @@ def get_image_summary(img, idx=0):
     V = tf.transpose(V, (2, 0, 1))
     V = tf.reshape(V, tf.stack((-1, img_w, img_h, 1)))
     return V
-

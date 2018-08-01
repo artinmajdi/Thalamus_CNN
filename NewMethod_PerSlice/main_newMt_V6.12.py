@@ -103,7 +103,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
 
     elif 'server' in mode:
 
-        Params['modelFormat'] = 'cpkt'
+        Params['modelFormat'] = 'ckpt'
         hardDrive = 'ssd'
         if 'old' in dataset:
             Dir_Prior = '/array/' + hardDrive + '/msmajdi/data/priors_forCNN_Ver2'

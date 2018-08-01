@@ -86,18 +86,20 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
 
     if 'local' in mode:
 
-        if 'oldDGX' not in dataset:
-            Params['modelFormat'] = 'ckpt'
-            if 'old' in dataset:
-                Dir_Prior = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
-            elif 'new' in dataset:
-                Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/7T_MS'
+        Params['modelFormat'] = 'ckpt'
+        if 'old' in dataset:
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
+        elif 'new' in dataset:
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/7T_MS'
 
-            Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + dataset + 'Dataset_' + method +'Method'
-        else:
-            Params['modelFormat'] = 'cpkt'
-            Dir_Prior = '/media/groot/aaa/Manual_Delineation_Sanitized_Full'
-            Dir_AllTests  = '/media/groot/aaa/AllTests/' + dataset + 'Dataset_' + method +'Method'
+        Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + dataset + 'Dataset_' + method +'Method'
+
+
+    elif 'flash' in mode:
+        machine = 'artin' # groot
+        Params['modelFormat'] = 'ckpt'
+        Dir_Prior = '/media/' + machine + '/aaa/Manual_Delineation_Sanitized_Full'
+        Dir_AllTests  = '/media/' + machine + '/aaa/AllTests/' + dataset + 'Dataset_' + method +'Method'
 
     elif 'server' in mode:
 
@@ -203,7 +205,7 @@ def trainFunc(Params , slcIx):
 
     Dir_NucleiModelOut = mkDir( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum) + '/model/' )
     Dir_ResultsOut = mkDir( Params['Dir_NucleiTestSamples']  + '/Slice_' + str(sliceNum) + '/Results/' )
-
+    print(Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum))
     TrainData = image_util.ImageDataProvider(Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum) + '/*.tif')
 
     logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
@@ -262,9 +264,9 @@ def paramIterEpoch(Params , slcIx):
 
     elif Params['IxNuclei'] == 1:
         if (slcIx < 5) | (slcIx > len(Params['SliceNumbers'])-5  ):
-            Params['epochs'] = 40
+            Params['epochs'] = 3 # 40
         else:
-            Params['epochs'] = 60
+            Params['epochs'] = 3 # 60
     else:
         Params['epochs'] = 50
 
@@ -277,15 +279,15 @@ UserEntries = input_GPU_Ix()
 
 for ind in UserEntries['IxNuclei']:
 
-    Params = initialDirectories(ind = ind, mode = 'local' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    Params = initialDirectories(ind = ind, mode = 'flash' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']
     Params['IxNuclei'] = UserEntries['IxNuclei']
 
 
 
 
-    L = 1 if UserEntries['testMode'] == 'AllTrainings' else len(Params['A'])  # [1,4]: #
-    for ii in UserEntries['enhanced_Index']: # range(2): #@ L):
+    L = [0] if UserEntries['testMode'] == 'AllTrainings' else UserEntries['enhanced_Index'] # len(Params['A'])  # [1,4]: #
+    for ii in L: # range(2): #@ L):
 
         TestName = 'Test_AllTrainings' if UserEntries['testMode'] == 'AllTrainings' else testNme(Params['A'],ii)
 
@@ -314,6 +316,7 @@ for ind in UserEntries['IxNuclei']:
             # Params['epochs'] = int(UserEntries['epochs']) # 40
             # Params['training_iters'] = int(UserEntries['training_iters']) # 100
 
+            dice = np.zeros(len(Params['SliceNumbers'])+1)
             for slcIx in range(len(Params['SliceNumbers'])):
 
                 Params = paramIterEpoch(Params , slcIx)
@@ -325,20 +328,22 @@ for ind in UserEntries['IxNuclei']:
                 _ , pred = testFunc(Params , slcIx)
                 output[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ] = pred
 
-            # ---------------------------  showing -----------------------------------
-            # print('-------------------------------------------------------------------')
-            # a = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ]
-            # print('dice' , DiceCoefficientCalculator(pred , a) )  #  epoch:40 iter 300 dice:0.55 ;;; epoch:40 iter 100 dice:0.54
-            # ax,fig = plt.subplots(1,2)
-            # fig[0].imshow(pred,cmap='gray')
-            # fig[1].imshow(a,cmap='gray')
-            # plt.show()
-            # print('-------------------------------------------------------------------')
+                # ---------------------------  showing -----------------------------------
+                # print('-------------------------------------------------------------------')
+                dice[slcIx] = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ]
+                np.savetxt(Params['Dir_NucleiTestSamples'] + '/DiceCoefficient.txt',dice)
+                # print('dice' , DiceCoefficientCalculator(pred , a) )  #  epoch:40 iter 300 dice:0.55 ;;; epoch:40 iter 100 dice:0.54
+                # ax,fig = plt.subplots(1,2)
+                # fig[0].imshow(pred,cmap='gray')
+                # fig[1].imshow(a,cmap='gray')
+                # plt.show()
+                # print('-------------------------------------------------------------------')
+
 
             # ---------------------------  writing -----------------------------------
             output2 = nib.Nifti1Image(output,label.affine)
             output2.get_header = label.header
             nib.save(output2 , Params['Dir_NucleiTestSamples'] + '/' + subFolders[sFi] + '_' + Params['NucleusName'] + '.nii.gz')
 
-            Dice = DiceCoefficientCalculator(output,label.get_data())
-            np.savetxt(Params['Dir_NucleiTestSamples'] + '/DiceCoefficient.txt',Dice)
+            dice[len(Params['SliceNumbers'])] = DiceCoefficientCalculator(output,label.get_data())
+            np.savetxt(Params['Dir_NucleiTestSamples'] + '/DiceCoefficient.txt',dice)

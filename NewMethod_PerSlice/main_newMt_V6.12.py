@@ -212,6 +212,11 @@ def trainFunc(Params , slcIx):
     #
     trainer = unet.Trainer(Params['net'], optimizer = Params['optimizer']) # ,learning_rate=0.03
     if Params['gpuNum'] != 'nan':
+
+        print('----------------------------------------------------------------------------------------------')
+        print('----------------------------------------------------------------------------------------------')
+        print('----------------------------------------------------------------------------------------------')
+
         if slcIx > 0:
             copyPreviousModel( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum-1) + '/model/' , Dir_NucleiModelOut )
             path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=500 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum'] , restore=True , write_graph=True)

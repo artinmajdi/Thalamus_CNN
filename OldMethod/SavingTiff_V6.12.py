@@ -122,7 +122,7 @@ def input_GPU_Ix():
 
     UserEntries = {}
     UserEntries['gpuNum'] =  '4'  # 'nan'  #
-    UserEntries['IxNuclei'] = 1
+    UserEntries['IxNuclei'] = [1]
     UserEntries['dataset'] = 'old' #'oldDGX' #
     UserEntries['method'] = 'old'
     UserEntries['testMode'] = 'EnhancedSeperately' # 'AllTrainings'

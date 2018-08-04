@@ -117,7 +117,7 @@ def input_GPU_Ix():
 
     UserEntries = {}
     UserEntries['gpuNum'] =  '4'  # 'nan'  #
-    UserEntries['IxNuclei'] = 1
+    UserEntries['IxNuclei'] = [1]
     UserEntries['dataset'] = 'old' #'oldDGX' #
     UserEntries['method'] = 'new'
     UserEntries['testMode'] = 'EnhancedSeperately' # 'AllTrainings'
@@ -168,7 +168,7 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
     subFolders = subFoldersFunc(Dir_Prior)
 
     for ii in UserEntries['enhanced_Index']: # range(2): #@ L):
-        
+
         print('-------','enhanced:',A[ii],'-------')
         TestName = testNme(A,ii)
 

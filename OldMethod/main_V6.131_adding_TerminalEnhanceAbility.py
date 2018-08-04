@@ -200,7 +200,7 @@ def input_GPU_Ix():
 UserEntries = input_GPU_Ix()
 # gpuNum = '5' # nan'
 
-for ind in [UserEntries['IxNuclei']]:
+for ind in UserEntries['IxNuclei']:
     print('ind',ind)
     Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']

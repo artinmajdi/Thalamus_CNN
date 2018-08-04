@@ -207,7 +207,7 @@ for ind in UserEntries['IxNuclei']:
 
 
     L = [0] if UserEntries['testMode'] == 'AllTrainings' else UserEntries['enhanced_Index'] # len(Params['A'])  # [1,4]: #
-    for ii in range(L):
+    for ii in L:
 
         TestName = 'Test_AllTrainings' if UserEntries['testMode'] == 'AllTrainings' else testNme(Params['A'],ii)
 

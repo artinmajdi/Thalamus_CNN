@@ -112,6 +112,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
             Dir_Prior = '/array/' + hardDrive + '/msmajdi/data/newPriors/7T_MS'
 
         Dir_AllTests  = '/array/' + hardDrive + '/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method' # 'oldDataset' #
+        Dir_AllTests_restore  = '/array/' + hardDrive + '/msmajdi/Tests/Thalamus_CNN/' + 'old' + 'Dataset_' + 'old' +'Method'
 
 
 
@@ -121,6 +122,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
     Params['ThalamusFolder'] = '/CNN1_THALAMUS_2D_SanitizedNN'
     Params['Dir_Prior']    = Dir_Prior
     Params['Dir_AllTests'] = Dir_AllTests
+    Params['Dir_AllTests_restore'] = Dir_AllTests_restore
     Params['SliceNumbers'] = SliceNumbers
     Params['NucleusName']  = NucleusName
     Params['optimizer'] = 'adam'
@@ -224,13 +226,16 @@ def trainFunc(Params , slcIx):
 
         if slcIx > -100:
             # copyPreviousModel( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum-1) + '/' + Params['modelName'] , Dir_NucleiModelOut )
+            copyPreviousModel( Params['restorePath'], Dir_NucleiModelOut )
             path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=500 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum'] , restore='True') # , write_graph=True
         else:
             path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=500 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum'])
     else:
-        if slcIx > 0:
-            copyPreviousModel( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum-1) + '/' + Params['modelName'] , Dir_NucleiModelOut )
+        if slcIx > -10:
+            # copyPreviousModel( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum-1) + '/' + Params['modelName'] , Dir_NucleiModelOut )
+            copyPreviousModel( Params['restorePath'], Dir_NucleiModelOut )
             path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=500 , prediction_path=Dir_ResultsOut , restore=True) #  , write_graph=True
+
         else:
             path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=500 , prediction_path=Dir_ResultsOut) #   restore=True
 
@@ -331,7 +336,7 @@ for ind in UserEntries['IxNuclei']:
             K = '/Test0' if UserEntries['testMode'] == 'AllTrainings' else '/Test'
             Params['Dir_NucleiTestSamples']  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + K
             Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train'
-
+            Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['ThalamusFolder'] + '/' + TestName + '/' + subFolders[sFi] + K +  '/' + Params['modelName']
 
 
             # ---------------------------  main part-----------------------------------

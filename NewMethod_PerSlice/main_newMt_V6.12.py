@@ -130,9 +130,13 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
     if Params['Flag_cross_entropy'] == 1:
         cost_kwargs = {'class_weights':[0.7,0.3]}
         Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=cost_kwargs) # , cost="dice_coefficient"
+
+        Params['modelName'] = 'model_CE/'
+        Params['resultName'] = 'Results_CE/'
     else:
         Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
-
+        Params['modelName'] = 'model/'
+        Params['resultName'] = 'Results/'
 
 
     return Params
@@ -204,8 +208,8 @@ def trainFunc(Params , slcIx):
     sliceNum = Params['SliceNumbers'][slcIx]
 
 
-    Dir_NucleiModelOut = mkDir( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum) + '/model/' )
-    Dir_ResultsOut = mkDir( Params['Dir_NucleiTestSamples']  + '/Slice_' + str(sliceNum) + '/Results/' )
+    Dir_NucleiModelOut = mkDir( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum) + '/' + Params['modelName'] )
+    Dir_ResultsOut = mkDir( Params['Dir_NucleiTestSamples']  + '/Slice_' + str(sliceNum) + '/' + Params['resultName'] )
     print(Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum))
     TrainData = image_util.ImageDataProvider(Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum) + '/*.tif')
 
@@ -219,13 +223,13 @@ def trainFunc(Params , slcIx):
         print('----------------------------------------------------------------------------------------------')
 
         if slcIx > 0:
-            copyPreviousModel( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum-1) + '/model/' , Dir_NucleiModelOut )
+            copyPreviousModel( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum-1) + '/' + Params['modelName'] , Dir_NucleiModelOut )
             path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=500 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum'] , restore='True') # , write_graph=True
         else:
             path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=500 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum'])
     else:
         if slcIx > 0:
-            copyPreviousModel( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum-1) + '/model/' , Dir_NucleiModelOut )
+            copyPreviousModel( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum-1) + '/' + Params['modelName'] , Dir_NucleiModelOut )
             path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=500 , prediction_path=Dir_ResultsOut , restore=True) #  , write_graph=True
         else:
             path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=500 , prediction_path=Dir_ResultsOut) #   restore=True

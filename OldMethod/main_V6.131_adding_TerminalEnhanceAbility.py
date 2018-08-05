@@ -138,8 +138,13 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
     if Params['Flag_cross_entropy'] == 1:
         cost_kwargs = {'class_weights':[0.7,0.3]}
         Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=cost_kwargs) # , cost="dice_coefficient"
+
+        Params['modelName'] = 'model_CE/'
+        Params['resultName'] = 'Results_CE/'
     else:
         Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
+        Params['modelName'] = 'model/'
+        Params['resultName'] = 'Results/'
 
     return Params
 
@@ -229,8 +234,8 @@ for ind in UserEntries['IxNuclei']:
             # Dir_ThalamusModelOut    = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + TestName + '/' + subFolders[sFi] + '/Train/model/'
 
 
-            Dir_NucleiModelOut = mkDir(Dir_NucleiTrainSamples + 'model_CE/')
-            Dir_ResultsOut = mkDir(Dir_NucleiTestSamples  + 'Results_CE/')
+            Dir_NucleiModelOut = mkDir(Dir_NucleiTrainSamples + Params['modelName'])
+            Dir_ResultsOut = mkDir(Dir_NucleiTestSamples  + Params['resultName'])
 
             TrainData = image_util.ImageDataProvider(Dir_NucleiTrainSamples + "*.tif")
             logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')

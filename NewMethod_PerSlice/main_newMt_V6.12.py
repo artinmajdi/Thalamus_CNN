@@ -222,8 +222,8 @@ def trainFunc(Params , slcIx):
         print('----------------------------------------------------------------------------------------------')
         print('----------------------------------------------------------------------------------------------')
 
-        if slcIx > 0:
-            copyPreviousModel( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum-1) + '/' + Params['modelName'] , Dir_NucleiModelOut )
+        if slcIx > -100:
+            # copyPreviousModel( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum-1) + '/' + Params['modelName'] , Dir_NucleiModelOut )
             path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=500 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum'] , restore='True') # , write_graph=True
         else:
             path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=500 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum'])
@@ -272,7 +272,7 @@ def testFunc(Params , slcIx):
 
 def paramIterEpoch(Params , slcIx):
 
-    Params['training_iters'] = 200
+    Params['training_iters'] = 100
 
     if Params['IxNuclei'] == [9]:
         if (slcIx < 2) | (slcIx > len(Params['SliceNumbers'])-2  ):
@@ -286,7 +286,7 @@ def paramIterEpoch(Params , slcIx):
         else:
             Params['epochs'] = 3 # 60
     else:
-        Params['epochs'] = 50
+        Params['epochs'] = 40
 
     return Params
 
@@ -321,7 +321,7 @@ for ind in UserEntries['IxNuclei']:
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
         # subFolders = ['vimp2_ANON724_03272013'] #
-        for sFi in range(len(subFolders)):
+        for sFi in range(1): # len(subFolders)):
             K = 'Test_' if UserEntries['testMode'] == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
             print(Params['NucleusName'],TestName.split(K)[1],subFolders[sFi])
 
@@ -342,7 +342,7 @@ for ind in UserEntries['IxNuclei']:
             # Params['training_iters'] = int(UserEntries['training_iters']) # 100
 
             dice = np.zeros(len(Params['SliceNumbers'])+1)
-            for slcIx in range(len(Params['SliceNumbers'])):
+            for slcIx in range(5,6): # ,len(Params['SliceNumbers'])):
 
                 Params = paramIterEpoch(Params , slcIx)
                 print('epochs',Params['epochs'],'IxNuclei',Params['IxNuclei'],'iter',Params['training_iters'])

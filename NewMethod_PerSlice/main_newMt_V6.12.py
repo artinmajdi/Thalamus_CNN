@@ -277,7 +277,7 @@ def testFunc(Params , slcIx):
 
 def paramIterEpoch(Params , slcIx):
 
-    Params['training_iters'] = 100
+    Params['training_iters'] = 200
 
     if Params['IxNuclei'] == [9]:
         if (slcIx < 2) | (slcIx > len(Params['SliceNumbers'])-2  ):
@@ -291,7 +291,7 @@ def paramIterEpoch(Params , slcIx):
         else:
             Params['epochs'] = 3 # 60
     else:
-        Params['epochs'] = 40
+        Params['epochs'] = 50
 
     return Params
 
@@ -336,7 +336,7 @@ for ind in UserEntries['IxNuclei']:
             K = '/Test0' if UserEntries['testMode'] == 'AllTrainings' else '/Test'
             Params['Dir_NucleiTestSamples']  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + K
             Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train'
-            Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['ThalamusFolder'] + '/' + TestName + '/' + subFolders[sFi] + K +  '/' + Params['modelName']
+            Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + subFolders[sFi] + '/Train/' + Params['modelName']
 
 
             # ---------------------------  main part-----------------------------------

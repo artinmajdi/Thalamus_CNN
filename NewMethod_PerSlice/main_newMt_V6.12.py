@@ -140,7 +140,6 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
         Params['modelName'] = 'model/'
         Params['resultName'] = 'Results/'
 
-
     return Params
 
 def input_GPU_Ix():
@@ -216,7 +215,13 @@ def trainFunc(Params , slcIx):
     TrainData = image_util.ImageDataProvider(Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum) + '/*.tif')
 
     logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
-    #
+
+    if Params['Flag_cross_entropy'] == 1:
+        Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=cost_kwargs) # , cost="dice_coefficient"
+    else:
+        Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
+
+
     trainer = unet.Trainer(Params['net'], optimizer = Params['optimizer']) # ,learning_rate=0.03
     if Params['gpuNum'] != 'nan':
 
@@ -224,7 +229,7 @@ def trainFunc(Params , slcIx):
         print('----------------------------------------------------------------------------------------------')
         print('----------------------------------------------------------------------------------------------')
 
-        if slcIx > -100:
+        if slcIx > -10:
             # copyPreviousModel( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum-1) + '/' + Params['modelName'] , Dir_NucleiModelOut )
             copyPreviousModel( Params['restorePath'], Dir_NucleiModelOut )
             path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=500 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum'] , restore='True') # , write_graph=True
@@ -242,6 +247,11 @@ def trainFunc(Params , slcIx):
     return path
 
 def testFunc(Params , slcIx):
+
+    if Params['Flag_cross_entropy'] == 1:
+        Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=cost_kwargs) # , cost="dice_coefficient"
+    else:
+        Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
 
     net = Params['net']
     sliceNumSubFld = Params['SliceNumbers'][slcIx]

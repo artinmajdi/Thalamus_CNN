@@ -357,7 +357,7 @@ for ind in UserEntries['IxNuclei']:
             # Params['training_iters'] = int(UserEntries['training_iters']) # 100
 
             dice = np.zeros(len(Params['SliceNumbers'])+1)
-            for slcIx in range(5,6): # ,len(Params['SliceNumbers'])):
+            for slcIx in range(5,len(Params['SliceNumbers'])):
 
                 Params = paramIterEpoch(Params , slcIx)
                 print('epochs',Params['epochs'],'IxNuclei',Params['IxNuclei'],'iter',Params['training_iters'])

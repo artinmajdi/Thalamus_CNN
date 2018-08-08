@@ -298,7 +298,7 @@ def paramIterEpoch(Params , slcIx):
         else:
             Params['epochs'] = 3 # 60
     else:
-        Params['epochs'] = 40
+        Params['epochs'] = 50
 
     return Params
 
@@ -316,7 +316,7 @@ UserEntries = input_GPU_Ix()
 
 for ind in UserEntries['IxNuclei']:
 
-    Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    Params = initialDirectories(ind = ind, mode = 'local' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']
     Params['IxNuclei'] = UserEntries['IxNuclei']
 
@@ -333,7 +333,7 @@ for ind in UserEntries['IxNuclei']:
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
         # subFolders = ['vimp2_ANON724_03272013'] #
-        for sFi in range(1): # len(subFolders)):
+        for sFi in range(len(subFolders)):
             K = 'Test_' if UserEntries['testMode'] == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
             print(Params['NucleusName'],TestName.split(K)[1],subFolders[sFi])
 
@@ -355,15 +355,13 @@ for ind in UserEntries['IxNuclei']:
             # Params['training_iters'] = int(UserEntries['training_iters']) # 100
 
             dice = np.zeros(len(Params['SliceNumbers'])+1)
-
             for slcIx in range(5,len(Params['SliceNumbers'])):
-
 
                 Params = paramIterEpoch(Params , slcIx)
                 print('epochs',Params['epochs'],'IxNuclei',Params['IxNuclei'],'iter',Params['training_iters'])
 
                 # ---------------------------  training -----------------------------------
-                path = trainFunc(Params , slcIx)
+                # path = trainFunc(Params , slcIx)
 
                 # ---------------------------  testing -----------------------------------
                 _ , pred = testFunc(Params , slcIx)

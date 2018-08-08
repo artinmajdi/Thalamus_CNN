@@ -1,17 +1,20 @@
-import sys
-
-
-for input in sys.argv:
-    if input.split('=')[0] == 'nuclei':
-        A = input.split('=')[1]
-
-        if A[0] == '[':
-            B = A.split('[')[1].split(']')[0]
-            B = B.split(",")
-            B = [int(k) for k in B]
-            print(B)
-
+from tf_unet import unet, util, image_util
 import numpy as np
-a = range(4,14)
-a = np.append([1,2,4567],a)
-a
+import matplotlib.pyplot as plt
+
+dir = '/media/artin/dataLocal1/dataThalamus/AllTests/oldDataset_newMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ANON724_03272013/Train/Slice_135/'
+TestData = image_util.ImageDataProvider( dir + '/*.tif',shuffle_data=False)
+
+data,label = TestData(10)
+label.shape
+label[np.newaxis,:,:,:,1].shape
+
+
+v = np.transpose(label,[1,2,3,0])
+v.shape
+
+im = label[0,...]
+A = im[...,1]
+B = 1 - A
+
+a = np.append(B[...,np.newaxis],A[...,np.newaxis],axis=2)

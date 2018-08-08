@@ -332,6 +332,10 @@ def ReadingTestImage(Params,subFolders,TestName):
     TestLabel = TestLabel[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
     TestLabel = np.pad(TestLabel,((Params['padSize'],Params['padSize']),(Params['padSize'],Params['padSize']),(0,0)),'constant' )
 
+    B = 1 - TestLabel
+    a = np.append(B[...,np.newaxis],TestLabel[...,np.newaxis],axis=3)
+    TestLabel = np.transpose(a,[0,1,3,2])
+
     return TestImage, TestLabel, OrigShape
 
 UserEntries = input_GPU_Ix()
@@ -339,7 +343,7 @@ UserEntries = input_GPU_Ix()
 
 for ind in UserEntries['IxNuclei']:
 
-    Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    Params = initialDirectories(ind = ind, mode = 'local' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']
     Params['IxNuclei'] = UserEntries['IxNuclei']
 
@@ -366,7 +370,8 @@ for ind in UserEntries['IxNuclei']:
             K = '/Test0' if UserEntries['testMode'] == 'AllTrainings' else '/Test'
             Params['Dir_NucleiTestSamples']  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + K
             Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train'
-            Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + subFolders[sFi] + '/Train/' + Params['modelName']
+            if Params['gpuNum'] != 'nan':
+                Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + subFolders[sFi] + '/Train/' + Params['modelName']
 
 
             # ---------------------------  main part-----------------------------------
@@ -387,8 +392,8 @@ for ind in UserEntries['IxNuclei']:
                 # path = trainFunc(Params , slcIx)
 
                 # ---------------------------  testing -----------------------------------
-                Params['TestSliceImage'] = TestImage[...,slcIx]
-                Params['TestSliceLabel'] = TestLabel[...,slcIx]
+                Params['TestSliceImage'] = TestImage[np.newaxis,...,slcIx]
+                Params['TestSliceLabel'] = TestLabel[np.newaxis,...,slcIx]
 
                 _ , pred = testFunc(Params , slcIx)
                 output[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ] = pred

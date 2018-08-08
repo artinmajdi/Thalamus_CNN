@@ -355,7 +355,7 @@ for ind in UserEntries['IxNuclei']:
         Dir_AllTests_Thalamus_EnhancedFld = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + TestName + '/'
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
-        # subFolders = ['vimp2_ANON724_03272013'] #
+        subFolders = ['vimp2_ANON724_03272013'] #
         for sFi in range(len(subFolders)):
             K = 'Test_' if UserEntries['testMode'] == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
             print(Params['NucleusName'],TestName.split(K)[1],subFolders[sFi])
@@ -384,7 +384,7 @@ for ind in UserEntries['IxNuclei']:
                 print('epochs',Params['epochs'],'IxNuclei',Params['IxNuclei'],'iter',Params['training_iters'])
 
                 # ---------------------------  training -----------------------------------
-                path = trainFunc(Params , slcIx)
+                # path = trainFunc(Params , slcIx)
 
                 # ---------------------------  testing -----------------------------------
                 Params['TestSliceImage'] = TestImage[...,slcIx]

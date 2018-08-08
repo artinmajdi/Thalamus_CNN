@@ -256,10 +256,10 @@ def testFunc(Params , slcIx):
     sliceNumSubFld = Params['SliceNumbers'][slcIx]
 
 
-    readingFromSlices = 1
+    readingFromSlices = 0
     if readingFromSlices == 0:
-        Data = Params['TestSliceImage']
-        Label = Params['TestSliceLabel']
+        Data = Params['TestSliceImage'][np.newaxis,:,:,np.newaxis]
+        # Label = Params['TestSliceLabel']
         sliceNum = [sliceNumSubFld]
     else:
         TestData = image_util.ImageDataProvider(  Params['Dir_NucleiTestSamples']  + '/Slice_' + str(sliceNumSubFld) + '/*.tif',shuffle_data=False)
@@ -326,18 +326,18 @@ def ReadingTestImage(Params,subFolders,TestName):
     TestImage = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + TestName.split('Test_')[1] + '.nii.gz').get_data()
     TestImage = TestImage[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
     TestImage = np.pad(TestImage,((Params['padSize'],Params['padSize']),(Params['padSize'],Params['padSize']),(0,0)),'constant' )
-    TestImage = TestImage[...,np.newaxis]
-    TestImage = np.transpose(TestImage,[0,1,3,2])
+    # TestImage = TestImage[...,np.newaxis]
+    # TestImage = np.transpose(TestImage,[0,1,3,2])
 
     label = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz')
-    TestLabel = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
-    TestLabel = np.pad(TestLabel,((Params['padSize'],Params['padSize']),(Params['padSize'],Params['padSize']),(0,0)),'constant' )
+    # TestLabel = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
+    # TestLabel = np.pad(TestLabel,((Params['padSize'],Params['padSize']),(Params['padSize'],Params['padSize']),(0,0)),'constant' )
+    #
+    # B = 1 - TestLabel
+    # a = np.append(B[...,np.newaxis],TestLabel[...,np.newaxis],axis=3)
+    # TestLabel = np.transpose(a,[0,1,3,2])
 
-    B = 1 - TestLabel
-    a = np.append(B[...,np.newaxis],TestLabel[...,np.newaxis],axis=3)
-    TestLabel = np.transpose(a,[0,1,3,2])
-
-    return TestImage, TestLabel, label
+    return TestImage, label # , TestLabel
 
 UserEntries = input_GPU_Ix()
 
@@ -377,7 +377,7 @@ for ind in UserEntries['IxNuclei']:
 
             # ---------------------------  main part-----------------------------------
 
-            TestImage, TestLabel, label = ReadingTestImage(Params,subFolders[sFi],TestName)
+            TestImage, label = ReadingTestImage(Params,subFolders[sFi],TestName)
             output = np.zeros(label.shape)
 
             # Params['epochs'] = int(UserEntries['epochs']) # 40
@@ -393,8 +393,8 @@ for ind in UserEntries['IxNuclei']:
                 # path = trainFunc(Params , slcIx)
 
                 # ---------------------------  testing -----------------------------------
-                Params['TestSliceImage'] = TestImage[np.newaxis,...,slcIx]
-                Params['TestSliceLabel'] = TestLabel[np.newaxis,...,slcIx]
+                Params['TestSliceImage'] = TestImage[...,slcIx]
+                # Params['TestSliceLabel'] = TestLabel[np.newaxis,...,slcIx]
 
                 _ , pred = testFunc(Params , slcIx)
                 output[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ] = pred

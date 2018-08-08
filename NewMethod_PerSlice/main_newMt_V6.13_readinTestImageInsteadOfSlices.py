@@ -124,6 +124,8 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
     Params['NucleusName']  = NucleusName
     Params['optimizer'] = 'adam'
     Params['CropDim'] = np.array([ [50,198] , [130,278] , [Params['SliceNumbers'][0] , Params['SliceNumbers'][len(Params['SliceNumbers'])-1]] ])
+    padSizeFull = 90
+    Params['padSize'] = int(padSizeFull/2)
 
 
     if Params['Flag_cross_entropy'] == 1:
@@ -252,21 +254,30 @@ def testFunc(Params , slcIx):
 
     net = Params['net']
     sliceNumSubFld = Params['SliceNumbers'][slcIx]
-    TestData = image_util.ImageDataProvider(  Params['Dir_NucleiTestSamples']  + '/Slice_' + str(sliceNumSubFld) + '/*.tif',shuffle_data=False)
 
-    L = len(TestData.data_files)
-    data,label = TestData(L)
 
-    sliceNum = []
-    for l in range(L):
-        sliceNum.append(int(TestData.data_files[l].split('_Slice_')[1].split('.tif')[0]))
+
+    if readingFromSlices == 0:
+        Data = Params['TestSliceImage']
+        Label = Params['TestSliceLabel']
+        sliceNum = [sliceNumSubFld]
+    else:
+        TestData = image_util.ImageDataProvider(  Params['Dir_NucleiTestSamples']  + '/Slice_' + str(sliceNumSubFld) + '/*.tif',shuffle_data=False)
+
+        L = len(TestData.data_files)
+        Data,Label = TestData(L)
+
+        sliceNum = []
+        for l in range(L):
+            sliceNum.append(int(TestData.data_files[l].split('_Slice_')[1].split('.tif')[0]))
+
+
 
     if (len(sliceNum) > 1) | (sliceNum[0] != sliceNumSubFld):
         print('error , test files incompatible with new method')
 
     else:
 
-        Data , Label = TestData(L)
         if Params['gpuNum'] != 'nan':
             prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + '/model/model.' + Params['modelFormat'], np.asarray(Data,dtype=np.float32), GPU_Num=Params['gpuNum'])
         else:
@@ -311,12 +322,24 @@ def copyPreviousModel(src, dst, symlinks=False, ignore=None):
         else:
             shutil.copy2(s, d)
 
+def ReadingTestImage(Params,subFolders,TestName):
+    TestImage = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + TestName.split('Test_')[1] + '.nii.gz').get_data()
+    TestImage = TestImage[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
+    TestImage = np.pad(TestImage,((Params['padSize'],Params['padSize']),(Params['padSize'],Params['padSize']),(0,0)),'constant' )
+
+    TestLabel = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz')
+    OrigShape = TestLabel.shape
+    TestLabel = TestLabel[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
+    TestLabel = np.pad(TestLabel,((Params['padSize'],Params['padSize']),(Params['padSize'],Params['padSize']),(0,0)),'constant' )
+
+    return TestImage, TestLabel, OrigShape
+
 UserEntries = input_GPU_Ix()
 
 
 for ind in UserEntries['IxNuclei']:
 
-    Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    Params = initialDirectories(ind = ind, mode = 'local' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']
     Params['IxNuclei'] = UserEntries['IxNuclei']
 
@@ -333,7 +356,7 @@ for ind in UserEntries['IxNuclei']:
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
         # subFolders = ['vimp2_ANON724_03272013'] #
-        for sFi in range(1): # len(subFolders)):
+        for sFi in range(len(subFolders)):
             K = 'Test_' if UserEntries['testMode'] == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
             print(Params['NucleusName'],TestName.split(K)[1],subFolders[sFi])
 
@@ -348,8 +371,9 @@ for ind in UserEntries['IxNuclei']:
 
             # ---------------------------  main part-----------------------------------
 
-            label  = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz')
-            output = np.zeros(label.shape)
+            TestImage, TestLabel, OrigShape = ReadingTestImage(Params,subFolders[sFi],TestName)
+            output = np.zeros(OrigShape)
+
             # Params['epochs'] = int(UserEntries['epochs']) # 40
             # Params['training_iters'] = int(UserEntries['training_iters']) # 100
 
@@ -363,6 +387,9 @@ for ind in UserEntries['IxNuclei']:
                 path = trainFunc(Params , slcIx)
 
                 # ---------------------------  testing -----------------------------------
+                Params['TestSliceImage'] = TestImage[...,slcIx]
+                Params['TestSliceLabel'] = TestLabel[...,slcIx]
+
                 _ , pred = testFunc(Params , slcIx)
                 output[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ] = pred
 

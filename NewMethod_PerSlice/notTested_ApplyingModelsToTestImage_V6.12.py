@@ -316,7 +316,7 @@ UserEntries = input_GPU_Ix()
 
 for ind in UserEntries['IxNuclei']:
 
-    Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    Params = initialDirectories(ind = ind, mode = 'local' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']
     Params['IxNuclei'] = UserEntries['IxNuclei']
 
@@ -333,7 +333,7 @@ for ind in UserEntries['IxNuclei']:
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
         # subFolders = ['vimp2_ANON724_03272013'] #
-        for sFi in range(1): # len(subFolders)):
+        for sFi in range(len(subFolders)):
             K = 'Test_' if UserEntries['testMode'] == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
             print(Params['NucleusName'],TestName.split(K)[1],subFolders[sFi])
 
@@ -343,7 +343,8 @@ for ind in UserEntries['IxNuclei']:
             K = '/Test0' if UserEntries['testMode'] == 'AllTrainings' else '/Test'
             Params['Dir_NucleiTestSamples']  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + K
             Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train'
-            Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + subFolders[sFi] + '/Train/' + Params['modelName']
+            if Params['gpuNum'] != 'nan':
+                Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + subFolders[sFi] + '/Train/' + Params['modelName']
 
 
             # ---------------------------  main part-----------------------------------
@@ -360,7 +361,7 @@ for ind in UserEntries['IxNuclei']:
                 print('epochs',Params['epochs'],'IxNuclei',Params['IxNuclei'],'iter',Params['training_iters'])
 
                 # ---------------------------  training -----------------------------------
-                path = trainFunc(Params , slcIx)
+                # path = trainFunc(Params , slcIx)
 
                 # ---------------------------  testing -----------------------------------
                 _ , pred = testFunc(Params , slcIx)

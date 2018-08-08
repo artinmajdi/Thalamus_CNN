@@ -326,6 +326,7 @@ def ReadingTestImage(Params,subFolders,TestName):
     TestImage = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + TestName.split('Test_')[1] + '.nii.gz').get_data()
     TestImage = TestImage[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
     TestImage = np.pad(TestImage,((Params['padSize'],Params['padSize']),(Params['padSize'],Params['padSize']),(0,0)),'constant' )
+    TestImage = TestImage[:,:,np.newaxis,:]
 
     TestLabel = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz').get_data()
     OrigShape = TestLabel.shape
@@ -343,7 +344,7 @@ UserEntries = input_GPU_Ix()
 
 for ind in UserEntries['IxNuclei']:
 
-    Params = initialDirectories(ind = ind, mode = 'local' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']
     Params['IxNuclei'] = UserEntries['IxNuclei']
 

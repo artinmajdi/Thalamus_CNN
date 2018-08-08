@@ -328,9 +328,9 @@ def ReadingTestImage(Params,subFolders,TestName):
     TestImage = np.pad(TestImage,((Params['padSize'],Params['padSize']),(Params['padSize'],Params['padSize']),(0,0)),'constant' )
     TestImage = TestImage[:,:,np.newaxis,:]
 
-    TestLabel = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz').get_data()
-    label = TestLabel[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
-    TestLabel = np.pad(label,((Params['padSize'],Params['padSize']),(Params['padSize'],Params['padSize']),(0,0)),'constant' )
+    label = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz')
+    TestLabel = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
+    TestLabel = np.pad(TestLabel,((Params['padSize'],Params['padSize']),(Params['padSize'],Params['padSize']),(0,0)),'constant' )
 
     B = 1 - TestLabel
     a = np.append(B[...,np.newaxis],TestLabel[...,np.newaxis],axis=3)
@@ -400,7 +400,8 @@ for ind in UserEntries['IxNuclei']:
 
                 # ---------------------------  showing -----------------------------------
                 # print('-------------------------------------------------------------------')
-                dice[slcIx] = DiceCoefficientCalculator(pred , label[...,slcIx])
+                Lbl = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ]
+                dice[slcIx] = DiceCoefficientCalculator(pred , Lbl )
                 np.savetxt(Params['Dir_NucleiTestSamples'] + '/DiceCoefficient.txt',dice)
                 # ax,fig = plt.subplots(1,2)
                 # fig[0].imshow(pred,cmap='gray')

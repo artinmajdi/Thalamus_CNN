@@ -7,7 +7,7 @@ TestData = image_util.ImageDataProvider( dir + '/*.tif',shuffle_data=False)
 
 data,label = TestData(10)
 label.shape
-label[np.newaxis,:,:,:,1].shape
+label[:,:,np.newaxis,:,:].shape
 
 
 v = np.transpose(label,[1,2,3,0])

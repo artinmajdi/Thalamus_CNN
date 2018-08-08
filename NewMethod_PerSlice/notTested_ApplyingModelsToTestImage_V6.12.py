@@ -343,8 +343,8 @@ for ind in UserEntries['IxNuclei']:
             K = '/Test0' if UserEntries['testMode'] == 'AllTrainings' else '/Test'
             Params['Dir_NucleiTestSamples']  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + K
             Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train'
-            if Params['gpuNum'] != 'nan':
-                Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + subFolders[sFi] + '/Train/' + Params['modelName']
+            # if Params['gpuNum'] != 'nan':
+            Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + subFolders[sFi] + '/Train/' + Params['modelName']
 
 
             # ---------------------------  main part-----------------------------------

@@ -329,15 +329,14 @@ def ReadingTestImage(Params,subFolders,TestName):
     TestImage = TestImage[:,:,np.newaxis,:]
 
     TestLabel = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz').get_data()
-    OrigShape = TestLabel.shape
-    TestLabel = TestLabel[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
-    TestLabel = np.pad(TestLabel,((Params['padSize'],Params['padSize']),(Params['padSize'],Params['padSize']),(0,0)),'constant' )
+    label = TestLabel[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
+    TestLabel = np.pad(label,((Params['padSize'],Params['padSize']),(Params['padSize'],Params['padSize']),(0,0)),'constant' )
 
     B = 1 - TestLabel
     a = np.append(B[...,np.newaxis],TestLabel[...,np.newaxis],axis=3)
     TestLabel = np.transpose(a,[0,1,3,2])
 
-    return TestImage, TestLabel, OrigShape
+    return TestImage, TestLabel, label
 
 UserEntries = input_GPU_Ix()
 
@@ -377,8 +376,8 @@ for ind in UserEntries['IxNuclei']:
 
             # ---------------------------  main part-----------------------------------
 
-            TestImage, TestLabel, OrigShape = ReadingTestImage(Params,subFolders[sFi],TestName)
-            output = np.zeros(OrigShape)
+            TestImage, TestLabel, label = ReadingTestImage(Params,subFolders[sFi],TestName)
+            output = np.zeros(label.shape)
 
             # Params['epochs'] = int(UserEntries['epochs']) # 40
             # Params['training_iters'] = int(UserEntries['training_iters']) # 100
@@ -401,8 +400,7 @@ for ind in UserEntries['IxNuclei']:
 
                 # ---------------------------  showing -----------------------------------
                 # print('-------------------------------------------------------------------')
-                labelOrig = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ]
-                dice[slcIx] = DiceCoefficientCalculator(pred , labelOrig)
+                dice[slcIx] = DiceCoefficientCalculator(pred , label[...,slcIx])
                 np.savetxt(Params['Dir_NucleiTestSamples'] + '/DiceCoefficient.txt',dice)
                 # ax,fig = plt.subplots(1,2)
                 # fig[0].imshow(pred,cmap='gray')

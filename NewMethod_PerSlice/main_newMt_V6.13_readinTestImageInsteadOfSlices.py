@@ -256,7 +256,7 @@ def testFunc(Params , slcIx):
     sliceNumSubFld = Params['SliceNumbers'][slcIx]
 
 
-    readingFromSlices = 0
+    readingFromSlices = 1
     if readingFromSlices == 0:
         Data = Params['TestSliceImage']
         Label = Params['TestSliceLabel']
@@ -326,7 +326,8 @@ def ReadingTestImage(Params,subFolders,TestName):
     TestImage = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + TestName.split('Test_')[1] + '.nii.gz').get_data()
     TestImage = TestImage[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
     TestImage = np.pad(TestImage,((Params['padSize'],Params['padSize']),(Params['padSize'],Params['padSize']),(0,0)),'constant' )
-    TestImage = TestImage[:,:,np.newaxis,:]
+    TestImage = TestImage[...,np.newaxis]
+    TestImage = np.transpose(TestImage,[0,1,3,2])
 
     label = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz')
     TestLabel = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]

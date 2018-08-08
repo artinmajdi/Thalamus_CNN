@@ -259,6 +259,9 @@ def testFunc(Params , slcIx):
     readingFromSlices = 0
     if readingFromSlices == 0:
         Data = Params['TestSliceImage'][np.newaxis,:,:,np.newaxis]
+        mn = np.min(Data)
+        mx = np.max(Data)
+        Data = (Data - mn) / (mx - mn)
         # Label = Params['TestSliceLabel']
         sliceNum = [sliceNumSubFld]
     else:

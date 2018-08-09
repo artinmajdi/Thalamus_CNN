@@ -112,7 +112,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
 
 
     Params['A'] = [[0,0],[6,1],[1,2],[1,3],[4,1]]
-    Params['Flag_cross_entropy'] = 1
+    Params['Flag_cross_entropy'] = 0
     Params['NeucleusFolder'] = '/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
     Params['ThalamusFolder'] = '/CNN1_THALAMUS_2D_SanitizedNN'
     Params['Dir_Prior']    = Dir_Prior
@@ -121,13 +121,6 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
     Params['NucleusName']  = NucleusName
     Params['optimizer'] = 'adam'
     Params['CropDim'] = np.array([ [50,198] , [130,278] , [Params['SliceNumbers'][0] , Params['SliceNumbers'][len(Params['SliceNumbers'])-1]] ])
-
-
-    if Params['Flag_cross_entropy'] == 1:
-        cost_kwargs = {'class_weights':[0.7,0.3]}
-        Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=cost_kwargs) # , cost="dice_coefficient"
-    else:
-        Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
 
     return Params
 
@@ -192,6 +185,13 @@ for ind in [UserEntries['IxNuclei']]:
 
             TrainData = image_util.ImageDataProvider(Dir_NucleiTrainSamples + "*.tif")
             logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
+
+
+            if Params['Flag_cross_entropy'] == 1:
+                cost_kwargs = {'class_weights':[0.7,0.3]}
+                Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=cost_kwargs) # , cost="dice_coefficient"
+            else:
+                Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
 
 
             trainer = unet.Trainer(Params['net'], optimizer = "adam")

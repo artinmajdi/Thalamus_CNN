@@ -134,7 +134,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
 def input_GPU_Ix():
 
     UserEntries = {}
-    UserEntries['gpuNum'] = 'nan'  # '5'  #
+    UserEntries['gpuNum'] = '6'  # '5'  #
     UserEntries['method'] = 'old'
     UserEntries['dataset'] = 'old'
     UserEntries['IxNuclei'] = 1
@@ -173,8 +173,8 @@ for ind in [UserEntries['IxNuclei']]:
 
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
-
-        for sFi in range(5): # len(subFolders)):
+        subFolders = ['vimp2_ctrl_921_07122013_MP']
+        for sFi in range(len(subFolders)):
 
             K = 'Test_' if UserEntries['testMode'] == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
             print(Params['NucleusName'],TestName.split(K)[1],subFolders[sFi])

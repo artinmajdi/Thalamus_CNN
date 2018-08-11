@@ -59,7 +59,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
         NucleusName = '13-Hb'
         SliceNumbers = range(116,129)
 
-
+    print('-----------------',dataset)
     Params['modelFormat'] = 'ckpt' # cpkt
     if 'local' in mode:
 
@@ -88,11 +88,10 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
 
         Params['Dir_AllTests']  = '/array/' + hardDrive + '/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method' # 'oldDataset' #
 
-
+    print(ind)
     Params['NucleusName'] = NucleusName
     Params['NeucleusFolder'] = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
     Params['SliceNumbers'] = SliceNumbers
-
 
     return Params
 
@@ -115,6 +114,7 @@ def input_GPU_Ix():
     UserEntries['method'] = 'old'
     UserEntries['testMode'] = 'EnhancedSeperately' # 'AllTrainings'
     UserEntries['enhanced_Index'] = range(len(A))
+    UserEntries['mode'] = 'server'
 
     for input in sys.argv:
 
@@ -124,6 +124,8 @@ def input_GPU_Ix():
             UserEntries['testMode'] = input.split('=')[1] # 'AllTrainings'
         elif input.split('=')[0] == 'dataset':
             UserEntries['dataset'] = input.split('=')[1]
+        elif input.split('=')[0] == 'mode':
+            UserEntries['mode'] = input.split('=')[1]            
         elif input.split('=')[0] == 'method':
             UserEntries['method'] = input.split('=')[1]
 
@@ -156,7 +158,7 @@ def input_GPU_Ix():
         #     UserEntries['epochs'] = input.split('=')[1] # 'AllTrainings'
         # elif input.split('=')[0] == 'temp_Slice':
         #     UserEntries['temp_Slice'] = input.split('=')[1] # 'AllTrainings'
-
+    print('---------------------',UserEntries['dataset'])
     return UserEntries
 
 def mkDir(dir):
@@ -176,9 +178,9 @@ def testNme(A,ii):
 
 UserEntries = input_GPU_Ix()
 
-for ind in [UserEntries['IxNuclei']]: # [1,2,8,9,10,13]:
+for ind in UserEntries['IxNuclei']: # [1,2,8,9,10,13]:
 
-    Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Dir_SaveMWFld = mkDir( Params['Dir_AllTests'] + '/Folder_MajorityVoting/' )
     subFolders = subFolderList(Params['Dir_AllTests'] + '/' + Params['NeucleusFolder'])
 
@@ -203,7 +205,7 @@ for ind in [UserEntries['IxNuclei']]: # [1,2,8,9,10,13]:
 
             Prediction_full = np.zeros((sz[0],sz[1],sz[2],len(A)))
             Er = 0
-            
+
             L = [0] if UserEntries['testMode'] == 'AllTrainings' else UserEntries['enhanced_Index'] # len(Params['A'])  # [1,4]: #
             for ii in L:
                 TestName = testNme(A,ii)

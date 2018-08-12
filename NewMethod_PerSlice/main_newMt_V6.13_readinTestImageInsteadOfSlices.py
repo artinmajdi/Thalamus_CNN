@@ -363,7 +363,7 @@ for ind in UserEntries['IxNuclei']:
         Dir_AllTests_Thalamus_EnhancedFld = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + TestName + '/'
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
-        subFolders = ['vimp2_ANON724_03272013'] #
+        subFolders = ['vimp2_ctrl_921_07122013_MP'] #
         for sFi in range(len(subFolders)):
             K = 'Test_' if UserEntries['testMode'] == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
             print(Params['NucleusName'],TestName.split(K)[1],subFolders[sFi])
@@ -387,13 +387,14 @@ for ind in UserEntries['IxNuclei']:
             # Params['training_iters'] = int(UserEntries['training_iters']) # 100
 
             dice = np.zeros(len(Params['SliceNumbers'])+1)
-            for slcIx in range(len(Params['SliceNumbers'])):
+            Params['Dir_Results'] = mkDir(Params['Dir_NucleiTestSamples'] + '/Results')
+            for slcIx in range(7): # len(Params['SliceNumbers'])):
 
                 Params = paramIterEpoch(Params , slcIx)
                 print('epochs',Params['epochs'],'IxNuclei',Params['IxNuclei'],'iter',Params['training_iters'])
 
                 # ---------------------------  training -----------------------------------
-                # path = trainFunc(Params , slcIx)
+                path = trainFunc(Params , slcIx)
 
                 # ---------------------------  testing -----------------------------------
                 Params['TestSliceImage'] = TestImage[...,slcIx]
@@ -406,7 +407,7 @@ for ind in UserEntries['IxNuclei']:
                 # print('-------------------------------------------------------------------')
                 Lbl = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ]
                 dice[slcIx] = DiceCoefficientCalculator(pred , Lbl )
-                np.savetxt(Params['Dir_NucleiTestSamples'] + '/DiceCoefficient.txt',dice)
+                np.savetxt(Params['Dir_Results'] + '/DiceCoefficient.txt',dice)
                 # ax,fig = plt.subplots(1,2)
                 # fig[0].imshow(pred,cmap='gray')
                 # fig[1].imshow(a,cmap='gray')
@@ -417,7 +418,7 @@ for ind in UserEntries['IxNuclei']:
             # ---------------------------  writing -----------------------------------
             output2 = nib.Nifti1Image(output,label.affine)
             output2.get_header = label.header
-            nib.save(output2 , Params['Dir_NucleiTestSamples'] + '/' + subFolders[sFi] + '_' + Params['NucleusName'] + '.nii.gz')
+            nib.save(output2 , Params['Dir_Results'] + '/' + subFolders[sFi] + '_' + Params['NucleusName'] + '_Logical.nii.gz')
 
             dice[len(Params['SliceNumbers'])] = DiceCoefficientCalculator(output,label.get_data())
-            np.savetxt(Params['Dir_NucleiTestSamples'] + '/DiceCoefficient.txt',dice)
+            np.savetxt(Params['Dir_Results'] + '/DiceCoefficient.txt',dice)

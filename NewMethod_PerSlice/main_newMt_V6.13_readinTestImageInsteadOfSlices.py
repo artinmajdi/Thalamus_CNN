@@ -229,11 +229,12 @@ def trainFunc(Params , slcIx):
         print('----------------------------------------------------------------------------------------------')
         print('----------------------------------------------------------------------------------------------')
 
-        if slcIx > -10:
+        if slcIx > -4:
             # copyPreviousModel( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum-1) + '/' + Params['modelName'] , Dir_NucleiModelOut )
             copyPreviousModel( Params['restorePath'], Dir_NucleiModelOut )
             path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=500 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum'] , restore='True') # , write_graph=True
         else:
+            copyPreviousModel( Params['restorePath'], Dir_NucleiModelOut )
             path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=500 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum'])
     else:
         if slcIx > -10:
@@ -287,12 +288,15 @@ def testFunc(Params , slcIx):
         else:
             prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + '/model/model.' + Params['modelFormat'], np.asarray(Data,dtype=np.float32))
 
-        try:
-            Th = filters.threshold_otsu(prediction2[0,...,1])
-            Thresh = max(Th,0.5)
-        except:
-            print('---------------------------error Thresholding------------------')
-            Thresh = 0.5
+
+        # try:
+        Th = filters.threshold_otsu(prediction2[0,...,1])
+        Thresh = max(Th,0.2)
+            # Thresh = max(filters.threshold_otsu(prediction2[0,...,1]),0.5)
+        # except:
+
+            # print('---------------------------error Thresholding------------------')
+            # Thresh = 0.5
 
         PredictedSeg = prediction2[0,...,1] > Thresh
 
@@ -300,15 +304,15 @@ def testFunc(Params , slcIx):
 
 def paramIterEpoch(Params , slcIx):
 
-    Params['training_iters'] = 200
+    Params['training_iters'] = 57
 
-    if Params['IxNuclei'] == [9]:
+    if Params['IxNuclei'] == [900]:
         if (slcIx < 2) | (slcIx > len(Params['SliceNumbers'])-2  ):
             Params['epochs'] = 30
         else:
             Params['epochs'] = 10
 
-    elif Params['IxNuclei'] == [1]:
+    elif Params['IxNuclei'] == [100]:
         if (slcIx < 5) | (slcIx > len(Params['SliceNumbers'])-5  ):
             Params['epochs'] = 3 # 40
         else:
@@ -365,7 +369,7 @@ for ind in UserEntries['IxNuclei']:
         Dir_AllTests_Thalamus_EnhancedFld = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + TestName + '/'
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
-        subFolders = ['vimp2_ctrl_921_07122013_MP'] #
+        # subFolders = ['vimp2_ctrl_921_07122013_MP'] #
         for sFi in range(len(subFolders)):
             K = 'Test_' if UserEntries['testMode'] == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
             print(Params['NucleusName'],TestName.split(K)[1],subFolders[sFi])

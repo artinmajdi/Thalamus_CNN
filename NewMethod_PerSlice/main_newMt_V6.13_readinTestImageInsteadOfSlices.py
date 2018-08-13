@@ -11,6 +11,7 @@ from tf_unet import unet, util, image_util
 import multiprocessing
 import tensorflow as tf
 import sys
+from skimage import filters
 
 A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
 

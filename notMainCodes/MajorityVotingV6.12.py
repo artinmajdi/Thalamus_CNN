@@ -229,8 +229,9 @@ for ind in UserEntries['IxNuclei']: # [1,2,8,9,10,13]:
             Prediction2 = np.sum(Prediction_full,axis=3)
             predictionMV = np.zeros(Prediction2.shape)
             predictionMV[:,:,:] = Prediction2 > 2-Er
-
             Dice[sFi,len(A)] = DiceCoefficientCalculator(Label > 0.5 ,predictionMV)
+            np.savetxt(Dir_SaveMWFld + Params['NeucleusFolder'] + '/' + 'DiceCoefsAll_' + reslt + '.txt',100*Dice, fmt='%2.1f')
+            print('Majority Voting' , Dice[sFi,len(A)])
             # np.savetxt(Dir_SaveMWFld + Params['NeucleusFolder'] + '/' + 'DiceCoefsAll_' + reslt + '.txt',100*Dice, fmt='%2.1f')
 
 

@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 # from skimage import filters
 import pickle
 import sys
+from skimage import filters
 
 A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
 
@@ -125,7 +126,7 @@ def input_GPU_Ix():
         elif input.split('=')[0] == 'dataset':
             UserEntries['dataset'] = input.split('=')[1]
         elif input.split('=')[0] == 'mode':
-            UserEntries['mode'] = input.split('=')[1]            
+            UserEntries['mode'] = input.split('=')[1]
         elif input.split('=')[0] == 'method':
             UserEntries['method'] = input.split('=')[1]
 
@@ -229,8 +230,9 @@ for ind in UserEntries['IxNuclei']: # [1,2,8,9,10,13]:
             Prediction2 = np.sum(Prediction_full,axis=3)
             predictionMV = np.zeros(Prediction2.shape)
             predictionMV[:,:,:] = Prediction2 > 2-Er
-
             Dice[sFi,len(A)] = DiceCoefficientCalculator(Label > 0.5 ,predictionMV)
+            np.savetxt(Dir_SaveMWFld + Params['NeucleusFolder'] + '/' + 'DiceCoefsAll_' + reslt + '.txt',100*Dice, fmt='%2.1f')
+            print('Majority Voting' , Dice[sFi,len(A)])
             # np.savetxt(Dir_SaveMWFld + Params['NeucleusFolder'] + '/' + 'DiceCoefsAll_' + reslt + '.txt',100*Dice, fmt='%2.1f')
 
 

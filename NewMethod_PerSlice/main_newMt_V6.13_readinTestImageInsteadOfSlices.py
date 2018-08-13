@@ -287,10 +287,14 @@ def testFunc(Params , slcIx):
             prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + '/model/model.' + Params['modelFormat'], np.asarray(Data,dtype=np.float32))
 
 
-        try:
-            Thresh = max(filters.threshold_otsu(prediction2[0,...,1]),0.2)
-        except:
-            Thresh = 0.2
+        # try:
+        Th = filters.threshold_otsu(prediction2[0,...,1])
+        Thresh = max(Th,0.5)
+            # Thresh = max(filters.threshold_otsu(prediction2[0,...,1]),0.5)
+        # except:
+
+            # print('---------------------------error Thresholding------------------')
+            # Thresh = 0.5
 
         PredictedSeg = prediction2[0,...,1] > Thresh
 
@@ -312,7 +316,7 @@ def paramIterEpoch(Params , slcIx):
         else:
             Params['epochs'] = 3 # 60
     else:
-        Params['epochs'] = 50
+        Params['epochs'] = 10
 
     return Params
 
@@ -388,7 +392,7 @@ for ind in UserEntries['IxNuclei']:
 
             dice = np.zeros(len(Params['SliceNumbers'])+1)
             Params['Dir_Results'] = mkDir(Params['Dir_NucleiTestSamples'] + '/Results')
-            for slcIx in range(7): # len(Params['SliceNumbers'])):
+            for slcIx in range(len(Params['SliceNumbers'])):
 
                 Params = paramIterEpoch(Params , slcIx)
                 print('epochs',Params['epochs'],'IxNuclei',Params['IxNuclei'],'iter',Params['training_iters'])

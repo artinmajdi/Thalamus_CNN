@@ -1,0 +1,250 @@
+/array/hdd/msmajdi/.local/lib/python3.5/site-packages/dicom/__init__.py:53: UserWarning: 
+This code is using an older version of pydicom, which is no longer 
+maintained as of Jan 2017.  You can access the new pydicom features and API 
+by installing `pydicom` from PyPI.
+See 'Transitioning to pydicom 1.x' section at pydicom.readthedocs.org 
+for more information.
+
+  warnings.warn(msg)
+2018-08-12 17:00:25,337 Layers 4, features 16, filter size 3x3, pool size: 2x2
+WARNING:tensorflow:From /array/hdd/msmajdi/.local/lib/python3.5/site-packages/tf_unet-0.1.1-py3.5.egg/tf_unet/unet.py:229: softmax_cross_entropy_with_logits (from tensorflow.python.ops.nn_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+
+Future major versions of TensorFlow will allow gradients to flow
+into the labels input on backprop by default.
+
+See tf.nn.softmax_cross_entropy_with_logits_v2.
+
+2018-08-12 17:00:26,309 From /array/hdd/msmajdi/.local/lib/python3.5/site-packages/tf_unet-0.1.1-py3.5.egg/tf_unet/unet.py:229: softmax_cross_entropy_with_logits (from tensorflow.python.ops.nn_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+
+Future major versions of TensorFlow will allow gradients to flow
+into the labels input on backprop by default.
+
+See tf.nn.softmax_cross_entropy_with_logits_v2.
+
+WARNING:tensorflow:From /array/hdd/msmajdi/.local/lib/python3.5/site-packages/tf_unet-0.1.1-py3.5.egg/tf_unet/layers.py:90: calling reduce_sum (from tensorflow.python.ops.math_ops) with keep_dims is deprecated and will be removed in a future version.
+Instructions for updating:
+keep_dims is deprecated, use keepdims instead
+2018-08-12 17:00:26,782 From /array/hdd/msmajdi/.local/lib/python3.5/site-packages/tf_unet-0.1.1-py3.5.egg/tf_unet/layers.py:90: calling reduce_sum (from tensorflow.python.ops.math_ops) with keep_dims is deprecated and will be removed in a future version.
+Instructions for updating:
+keep_dims is deprecated, use keepdims instead
+2018-08-12 17:00:28,054 Layers 4, features 16, filter size 3x3, pool size: 2x2
+2018-08-12 17:00:33.108386: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1326] Found device 0 with properties: 
+name: Tesla P100-PCIE-16GB major: 6 minor: 0 memoryClockRate(GHz): 1.3285
+pciBusID: 0000:89:00.0
+totalMemory: 15.89GiB freeMemory: 15.60GiB
+2018-08-12 17:00:33.108444: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-12 17:00:33.439733: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-12 17:00:33.439792: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-12 17:00:33.439802: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-12 17:00:33.440269: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 15132 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-12 17:00:33,809 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-12 17:00:33,919 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-12 17:00:35,292 Verification error= 0.0%, loss= 0.0006
+/array/hdd/msmajdi/.local/lib/python3.5/site-packages/tf_unet-0.1.1-py3.5.egg/tf_unet/util.py:74: RuntimeWarning: invalid value encountered in true_divide
+  img /= np.amax(img)
+2018-08-12 17:00:35,893 Start optimization
+2018-08-12 17:00:36,966 Iter 0, Minibatch Loss= 0.0005, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-12 17:00:42,473 Epoch 0, Average loss: 0.0010, learning rate: 0.0010
+2018-08-12 17:00:42,537 Verification error= 0.0%, loss= 0.0004
+2018-08-12 17:00:48,865 Epoch 1, Average loss: 0.0008, learning rate: 0.0010
+2018-08-12 17:00:48,926 Verification error= 0.0%, loss= 0.0002
+2018-08-12 17:00:52,322 Iter 500, Minibatch Loss= 0.0001, Training Accuracy= 0.8676, Minibatch error= 0.0%
+2018-08-12 17:00:55,064 Epoch 2, Average loss: 0.0008, learning rate: 0.0010
+2018-08-12 17:00:55,125 Verification error= 0.0%, loss= 0.0000
+2018-08-12 17:01:01,219 Epoch 3, Average loss: 0.0005, learning rate: 0.0010
+2018-08-12 17:01:01,279 Verification error= 0.0%, loss= 0.0000
+2018-08-12 17:01:07,321 Epoch 4, Average loss: 0.0319, learning rate: 0.0010
+2018-08-12 17:01:07,385 Verification error= 0.0%, loss= 0.1004
+2018-08-12 17:01:08,114 Iter 1000, Minibatch Loss= 0.1062, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-12 17:01:13,651 Epoch 5, Average loss: 0.0034, learning rate: 0.0010
+2018-08-12 17:01:13,715 Verification error= 0.0%, loss= 0.0026
+2018-08-12 17:01:19,879 Epoch 6, Average loss: 0.0011, learning rate: 0.0010
+2018-08-12 17:01:19,936 Verification error= 0.0%, loss= 0.0021
+2018-08-12 17:01:23,385 Iter 1500, Minibatch Loss= 0.0006, Training Accuracy= 0.9721, Minibatch error= 0.0%
+2018-08-12 17:01:26,122 Epoch 7, Average loss: 0.0010, learning rate: 0.0010
+2018-08-12 17:01:26,187 Verification error= 0.0%, loss= 0.0005
+2018-08-12 17:01:32,459 Epoch 8, Average loss: 0.0010, learning rate: 0.0010
+2018-08-12 17:01:32,520 Verification error= 0.0%, loss= 0.0015
+2018-08-12 17:01:38,880 Epoch 9, Average loss: 0.0008, learning rate: 0.0010
+2018-08-12 17:01:38,935 Verification error= 0.0%, loss= 0.0011
+2018-08-12 17:01:39,613 Optimization Finished!
+2018-08-12 17:01:39,690 Layers 4, features 16, filter size 3x3, pool size: 2x2
+2018-08-12 17:01:40.953329: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-12 17:01:40.953411: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-12 17:01:40.953423: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-12 17:01:40.953430: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-12 17:01:40.953903: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 14019 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_newMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ctrl_921_07122013_MP/Train/Slice_115/model/model.ckpt
+2018-08-12 17:01:41,107 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_newMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ctrl_921_07122013_MP/Train/Slice_115/model/model.ckpt
+2018-08-12 17:01:41,162 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_newMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ctrl_921_07122013_MP/Train/Slice_115/model/model.ckpt
+2018-08-12 17:01:41,966 Layers 4, features 16, filter size 3x3, pool size: 2x2
+2018-08-12 17:01:44.625603: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-12 17:01:44.625690: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-12 17:01:44.625702: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-12 17:01:44.625709: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-12 17:01:44.626234: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 14019 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-12 17:01:45,010 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-12 17:01:45,122 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-12 17:01:45,456 Verification error= 0.0%, loss= 0.0013
+2018-08-12 17:01:46,043 Start optimization
+2018-08-12 17:01:46,921 Iter 0, Minibatch Loss= 0.0009, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-12 17:01:52,434 Epoch 0, Average loss: 0.0017, learning rate: 0.0010
+2018-08-12 17:01:52,496 Verification error= 0.0%, loss= 0.0012
+2018-08-12 17:01:58,588 Epoch 1, Average loss: 0.0021, learning rate: 0.0010
+2018-08-12 17:01:58,651 Verification error= 0.0%, loss= 0.0012
+2018-08-12 17:02:02,082 Iter 500, Minibatch Loss= 0.0001, Training Accuracy= 0.9302, Minibatch error= 0.0%
+2018-08-12 17:02:04,789 Epoch 2, Average loss: 0.0016, learning rate: 0.0010
+2018-08-12 17:02:04,852 Verification error= 0.0%, loss= 0.0013
+2018-08-12 17:02:10,919 Epoch 3, Average loss: 0.0014, learning rate: 0.0010
+2018-08-12 17:02:10,975 Verification error= 0.0%, loss= 0.0015
+2018-08-12 17:02:17,197 Epoch 4, Average loss: 0.0014, learning rate: 0.0010
+2018-08-12 17:02:17,260 Verification error= 0.0%, loss= 0.0008
+2018-08-12 17:02:17,972 Iter 1000, Minibatch Loss= 0.0001, Training Accuracy= 0.8970, Minibatch error= 0.0%
+2018-08-12 17:02:23,485 Epoch 5, Average loss: 0.0017, learning rate: 0.0010
+2018-08-12 17:02:23,546 Verification error= 0.0%, loss= 0.0012
+2018-08-12 17:02:29,711 Epoch 6, Average loss: 0.0014, learning rate: 0.0010
+2018-08-12 17:02:29,773 Verification error= 0.0%, loss= 0.0014
+2018-08-12 17:02:33,295 Iter 1500, Minibatch Loss= 0.0063, Training Accuracy= 0.9289, Minibatch error= 0.3%
+2018-08-12 17:02:35,995 Epoch 7, Average loss: 0.0015, learning rate: 0.0010
+2018-08-12 17:02:36,052 Verification error= 0.0%, loss= 0.0013
+2018-08-12 17:02:42,177 Epoch 8, Average loss: 0.0016, learning rate: 0.0010
+2018-08-12 17:02:42,238 Verification error= 0.0%, loss= 0.0011
+2018-08-12 17:02:48,465 Epoch 9, Average loss: 0.0013, learning rate: 0.0010
+2018-08-12 17:02:48,526 Verification error= 0.0%, loss= 0.0008
+2018-08-12 17:02:49,277 Optimization Finished!
+2018-08-12 17:02:49,363 Layers 4, features 16, filter size 3x3, pool size: 2x2
+2018-08-12 17:02:50.762230: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-12 17:02:50.762313: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-12 17:02:50.762325: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-12 17:02:50.762332: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-12 17:02:50.762793: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 14019 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_newMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ctrl_921_07122013_MP/Train/Slice_116/model/model.ckpt
+2018-08-12 17:02:50,913 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_newMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ctrl_921_07122013_MP/Train/Slice_116/model/model.ckpt
+2018-08-12 17:02:50,966 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_newMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ctrl_921_07122013_MP/Train/Slice_116/model/model.ckpt
+2018-08-12 17:02:51,111 Layers 4, features 16, filter size 3x3, pool size: 2x2
+2018-08-12 17:02:53.542365: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-12 17:02:53.542438: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-12 17:02:53.542450: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-12 17:02:53.542457: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-12 17:02:53.542900: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 14019 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-12 17:02:53,886 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-12 17:02:53,985 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-12 17:02:54,311 Verification error= 0.1%, loss= 0.0019
+2018-08-12 17:02:55,167 Start optimization
+2018-08-12 17:02:56,177 Iter 0, Minibatch Loss= 0.0008, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-12 17:03:01,639 Epoch 0, Average loss: 0.0035, learning rate: 0.0010
+2018-08-12 17:03:01,696 Verification error= 0.1%, loss= 0.0025
+2018-08-12 17:03:07,794 Epoch 1, Average loss: 0.0033, learning rate: 0.0010
+2018-08-12 17:03:07,855 Verification error= 0.1%, loss= 0.0017
+2018-08-12 17:03:11,335 Iter 500, Minibatch Loss= 0.0006, Training Accuracy= 0.9306, Minibatch error= 0.0%
+2018-08-12 17:03:14,086 Epoch 2, Average loss: 0.0034, learning rate: 0.0010
+2018-08-12 17:03:14,148 Verification error= 0.1%, loss= 0.0018
+2018-08-12 17:03:20,308 Epoch 3, Average loss: 0.0035, learning rate: 0.0010
+2018-08-12 17:03:20,372 Verification error= 0.1%, loss= 0.0018
+2018-08-12 17:03:26,533 Epoch 4, Average loss: 0.0032, learning rate: 0.0010
+2018-08-12 17:03:26,591 Verification error= 0.0%, loss= 0.0014
+2018-08-12 17:03:27,274 Iter 1000, Minibatch Loss= 0.0003, Training Accuracy= 0.9774, Minibatch error= 0.0%
+2018-08-12 17:03:32,766 Epoch 5, Average loss: 0.0032, learning rate: 0.0010
+2018-08-12 17:03:32,823 Verification error= 0.0%, loss= 0.0017
+2018-08-12 17:03:38,976 Epoch 6, Average loss: 0.0032, learning rate: 0.0010
+2018-08-12 17:03:39,037 Verification error= 0.0%, loss= 0.0015
+2018-08-12 17:03:42,511 Iter 1500, Minibatch Loss= 0.0068, Training Accuracy= 0.9198, Minibatch error= 0.4%
+2018-08-12 17:03:45,279 Epoch 7, Average loss: 0.0031, learning rate: 0.0010
+2018-08-12 17:03:45,339 Verification error= 0.1%, loss= 0.0016
+2018-08-12 17:03:51,656 Epoch 8, Average loss: 0.0032, learning rate: 0.0010
+2018-08-12 17:03:51,717 Verification error= 0.1%, loss= 0.0021
+2018-08-12 17:03:57,861 Epoch 9, Average loss: 0.0032, learning rate: 0.0010
+2018-08-12 17:03:57,923 Verification error= 0.0%, loss= 0.0014
+2018-08-12 17:03:58,657 Optimization Finished!
+2018-08-12 17:03:58,744 Layers 4, features 16, filter size 3x3, pool size: 2x2
+2018-08-12 17:04:00.140721: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-12 17:04:00.140800: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-12 17:04:00.140812: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-12 17:04:00.140819: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-12 17:04:00.141285: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 14019 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_newMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ctrl_921_07122013_MP/Train/Slice_117/model/model.ckpt
+2018-08-12 17:04:00,305 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_newMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ctrl_921_07122013_MP/Train/Slice_117/model/model.ckpt
+2018-08-12 17:04:00,361 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_newMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ctrl_921_07122013_MP/Train/Slice_117/model/model.ckpt
+2018-08-12 17:04:00,519 Layers 4, features 16, filter size 3x3, pool size: 2x2
+2018-08-12 17:04:03.094687: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-12 17:04:03.094764: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-12 17:04:03.094776: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-12 17:04:03.094784: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-12 17:04:03.095235: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 14019 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-12 17:04:03,444 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-12 17:04:03,543 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-12 17:04:03,874 Verification error= 0.3%, loss= 0.0061
+2018-08-12 17:04:04,439 Start optimization
+2018-08-12 17:04:05,357 Iter 0, Minibatch Loss= 0.0035, Training Accuracy= 0.9960, Minibatch error= 0.0%
+2018-08-12 17:04:10,831 Epoch 0, Average loss: 0.0052, learning rate: 0.0010
+2018-08-12 17:04:10,886 Verification error= 0.3%, loss= 0.0069
+2018-08-12 17:04:17,019 Epoch 1, Average loss: 0.0054, learning rate: 0.0010
+2018-08-12 17:04:17,080 Verification error= 0.3%, loss= 0.0075
+2018-08-12 17:04:20,546 Iter 500, Minibatch Loss= 0.0029, Training Accuracy= 0.9780, Minibatch error= 0.1%
+2018-08-12 17:04:23,289 Epoch 2, Average loss: 0.0051, learning rate: 0.0010
+2018-08-12 17:04:23,351 Verification error= 0.2%, loss= 0.0055
+2018-08-12 17:04:29,548 Epoch 3, Average loss: 0.0048, learning rate: 0.0010
+2018-08-12 17:04:29,609 Verification error= 0.3%, loss= 0.0082
+2018-08-12 17:04:35,825 Epoch 4, Average loss: 0.0048, learning rate: 0.0010
+2018-08-12 17:04:35,886 Verification error= 0.2%, loss= 0.0070
+2018-08-12 17:04:36,608 Iter 1000, Minibatch Loss= 0.0081, Training Accuracy= 0.9968, Minibatch error= 0.3%
+2018-08-12 17:04:42,046 Epoch 5, Average loss: 0.0049, learning rate: 0.0010
+2018-08-12 17:04:42,102 Verification error= 0.2%, loss= 0.0074
+2018-08-12 17:04:48,285 Epoch 6, Average loss: 0.0046, learning rate: 0.0010
+2018-08-12 17:04:48,346 Verification error= 0.3%, loss= 0.0059
+2018-08-12 17:04:51,789 Iter 1500, Minibatch Loss= 0.0102, Training Accuracy= 0.9907, Minibatch error= 0.5%
+2018-08-12 17:04:54,471 Epoch 7, Average loss: 0.0045, learning rate: 0.0010
+2018-08-12 17:04:54,526 Verification error= 0.3%, loss= 0.0069
+6
+6-VLP Deformed vimp2_ctrl_921_07122013_MP
+epochs 10 IxNuclei [6] iter 200
+/array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_newMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ctrl_921_07122013_MP/Train/Slice_115
+Number of files used: 38
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+---------------------------error Thresholding------------------
+epochs 10 IxNuclei [6] iter 200
+/array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_newMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ctrl_921_07122013_MP/Train/Slice_116
+Number of files used: 57
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+---------------------------error Thresholding------------------
+epochs 10 IxNuclei [6] iter 200
+/array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_newMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ctrl_921_07122013_MP/Train/Slice_117
+Number of files used: 57
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+---------------------------error Thresholding------------------
+epochs 10 IxNuclei [6] iter 200
+/array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_newMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ctrl_921_07122013_MP/Train/Slice_118
+Number of files used: 57
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "main_newMt_V6.13_readinTestImageInsteadOfSlices.py", line 399, in <module>
+    path = trainFunc(Params , slcIx)
+  File "main_newMt_V6.13_readinTestImageInsteadOfSlices.py", line 234, in trainFunc
+    path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=500 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum'] , restore='True') # , write_graph=True
+  File "/array/hdd/msmajdi/.local/lib/python3.5/site-packages/tf_unet-0.1.1-py3.5.egg/tf_unet/unet.py", line 484, in train
+    self.net.keep_prob: dropout})
+  File "/usr/local/lib/python3.5/dist-packages/tensorflow/python/client/session.py", line 905, in run
+    run_metadata_ptr)
+  File "/usr/local/lib/python3.5/dist-packages/tensorflow/python/client/session.py", line 1137, in _run
+    feed_dict_tensor, options, run_metadata)
+  File "/usr/local/lib/python3.5/dist-packages/tensorflow/python/client/session.py", line 1355, in _do_run
+    options, run_metadata)
+  File "/usr/local/lib/python3.5/dist-packages/tensorflow/python/client/session.py", line 1361, in _do_call
+    return fn(*args)
+  File "/usr/local/lib/python3.5/dist-packages/tensorflow/python/client/session.py", line 1340, in _run_fn
+    target_list, status, run_metadata)
+KeyboardInterrupt

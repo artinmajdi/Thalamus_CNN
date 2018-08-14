@@ -289,14 +289,11 @@ def testFunc(Params , slcIx):
             prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + '/model/model.' + Params['modelFormat'], np.asarray(Data,dtype=np.float32))
 
 
-        # try:
-        Th = filters.threshold_otsu(prediction2[0,...,1])
-        Thresh = max(Th,0.2)
-            # Thresh = max(filters.threshold_otsu(prediction2[0,...,1]),0.5)
-        # except:
-
-            # print('---------------------------error Thresholding------------------')
-            # Thresh = 0.5
+        try:
+            Thresh = max( filters.threshold_otsu(prediction2[0,...,1]) ,0.5)
+        except:
+            print('---------------------------error Thresholding------------------')
+            Thresh = 0.5
 
         PredictedSeg = prediction2[0,...,1] > Thresh
 

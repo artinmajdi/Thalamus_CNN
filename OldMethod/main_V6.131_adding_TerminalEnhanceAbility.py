@@ -217,7 +217,7 @@ for ind in UserEntries['IxNuclei']:
 
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
-        subFolders = ['vimp2_869_06142013_BL']
+        # subFolders = ['vimp2_869_06142013_BL']
         # aaa = range(14,len(subFolders))
         # aaa = np.append([0,1],aaa)
         for sFi in range(len(subFolders)):

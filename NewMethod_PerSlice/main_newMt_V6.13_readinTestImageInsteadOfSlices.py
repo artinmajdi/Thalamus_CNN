@@ -392,7 +392,7 @@ for ind in UserEntries['IxNuclei']:
             # Params['training_iters'] = int(UserEntries['training_iters']) # 100
 
             dice = np.zeros(len(Params['SliceNumbers'])+1)
-            Params['Dir_Results'] = mkDir(Params['Dir_NucleiTestSamples'] + '/Results')
+            Params['Dir_Results'] = mkDir(Params['Dir_NucleiTestSamples'] + '/' + Params['resultName'])
             for slcIx in range(len(Params['SliceNumbers'])):
 
                 Params = paramIterEpoch(Params , slcIx)
@@ -412,7 +412,7 @@ for ind in UserEntries['IxNuclei']:
                 # print('-------------------------------------------------------------------')
                 Lbl = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ]
                 dice[slcIx] = DiceCoefficientCalculator(pred , Lbl )
-                np.savetxt(Params['Dir_Results'] + '/DiceCoefficient.txt',dice)
+                np.savetxt(Params['Dir_Results'] + 'DiceCoefficient.txt',dice)
                 # ax,fig = plt.subplots(1,2)
                 # fig[0].imshow(pred,cmap='gray')
                 # fig[1].imshow(a,cmap='gray')
@@ -423,7 +423,7 @@ for ind in UserEntries['IxNuclei']:
             # ---------------------------  writing -----------------------------------
             output2 = nib.Nifti1Image(output,label.affine)
             output2.get_header = label.header
-            nib.save(output2 , Params['Dir_Results'] + '/' + subFolders[sFi] + '_' + Params['NucleusName'] + '_Logical.nii.gz')
+            nib.save(output2 , Params['Dir_Results'] + subFolders[sFi] + '_' + Params['NucleusName'] + '_Logical.nii.gz')
 
             dice[len(Params['SliceNumbers'])] = DiceCoefficientCalculator(output,label.get_data())
-            np.savetxt(Params['Dir_Results'] + '/DiceCoefficient.txt',dice)
+            np.savetxt(Params['Dir_Results'] + 'DiceCoefficient.txt',dice)

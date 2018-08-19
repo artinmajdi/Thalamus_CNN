@@ -1,29 +1,22 @@
-from tf_unet import unet, util, image_util
-import numpy as np
-import matplotlib.pyplot as plt
+from skimage import filters
 import nibabel as nib
+import numpy as np
+
+def DiceCoefficientCalculator(msk1,msk2):
+    intersection = msk1*msk2
+    DiceCoef = intersection.sum()*2/(msk1.sum()+msk2.sum() + np.finfo(float).eps)
+    return DiceCoef
+
+name = 'vimp2_ctrl_920_07122013_SW'
+# name = 'vimp2_ctrl_921_07122013_MP'
+
+dir1 = '/media/artin/D0E2340CE233F576/Results_Epch150_Th02_' + name + '/' + name + '_9-LGN.nii.gz'
+dir2 = '/media/artin/D0E2340CE233F576/Thalamus_Segmentation/Data/Manual_Delineation_Sanitized_Full/' + name + '/Manual_Delineation_Sanitized/9-LGN_deformed.nii.gz'
+
+pred = nib.load(dir1).get_data()
+mask = nib.load(dir2).get_data()
 
 
-SliceNumbers = range(115,145)
-dir = '/media/artin/dataLocal1/dataThalamus/AllTests/oldDataset_newMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ANON724_03272013/Train/Slice_135/'
-image = nib.load('/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2/vimp2_ANON724_03272013/Manual_Delineation_Sanitized/6-VLP_deformed.nii.gz')
-image = image.get_data()[...,135]
-s = 1 - image
-np.unique(image + s)
-plt.imshow(image,cmap='gray')
-
-TestData = image_util.ImageDataProvider( dir + '/*.tif',shuffle_data=False)
-
-data,label = TestData(10)
-label.shape
-label[:,:,np.newaxis,:,:].shape
-np.unique(label)
-
-v = np.transpose(label,[1,2,3,0])
-v.shape
-
-im = label[0,...]
-A = im[...,1]
-B = 1 - A
-
-a = np.append(B[...,np.newaxis],A[...,np.newaxis],axis=2)
+Thresh = max(filters.threshold_otsu(pred),0.2)
+print(Thresh)
+DiceCoefficientCalculator(pred > 0.31 , mask)

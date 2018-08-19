@@ -17,6 +17,7 @@ from skimage import filters
 A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
 
 
+
 def mkDir(dir):
     try:
         os.stat(dir)

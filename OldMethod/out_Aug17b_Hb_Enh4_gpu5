@@ -1,0 +1,164 @@
+/array/hdd/msmajdi/.local/lib/python3.5/site-packages/dicom/__init__.py:53: UserWarning: 
+This code is using an older version of pydicom, which is no longer 
+maintained as of Jan 2017.  You can access the new pydicom features and API 
+by installing `pydicom` from PyPI.
+See 'Transitioning to pydicom 1.x' section at pydicom.readthedocs.org 
+for more information.
+
+  warnings.warn(msg)
+2018-08-18 23:46:57,353 Layers 4, features 16, filter size 3x3, pool size: 2x2
+WARNING:tensorflow:From /array/hdd/msmajdi/.local/lib/python3.5/site-packages/tf_unet-0.1.1-py3.5.egg/tf_unet/unet.py:229: softmax_cross_entropy_with_logits (from tensorflow.python.ops.nn_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+
+Future major versions of TensorFlow will allow gradients to flow
+into the labels input on backprop by default.
+
+See tf.nn.softmax_cross_entropy_with_logits_v2.
+
+2018-08-18 23:46:58,416 From /array/hdd/msmajdi/.local/lib/python3.5/site-packages/tf_unet-0.1.1-py3.5.egg/tf_unet/unet.py:229: softmax_cross_entropy_with_logits (from tensorflow.python.ops.nn_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+
+Future major versions of TensorFlow will allow gradients to flow
+into the labels input on backprop by default.
+
+See tf.nn.softmax_cross_entropy_with_logits_v2.
+
+WARNING:tensorflow:From /array/hdd/msmajdi/.local/lib/python3.5/site-packages/tf_unet-0.1.1-py3.5.egg/tf_unet/layers.py:90: calling reduce_sum (from tensorflow.python.ops.math_ops) with keep_dims is deprecated and will be removed in a future version.
+Instructions for updating:
+keep_dims is deprecated, use keepdims instead
+2018-08-18 23:46:58,923 From /array/hdd/msmajdi/.local/lib/python3.5/site-packages/tf_unet-0.1.1-py3.5.egg/tf_unet/layers.py:90: calling reduce_sum (from tensorflow.python.ops.math_ops) with keep_dims is deprecated and will be removed in a future version.
+Instructions for updating:
+keep_dims is deprecated, use keepdims instead
+2018-08-18 23:47:00,001 Removing '/array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN13_Hb_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_4_Contrast_1_Deformed/vimp2_ANON724_03272013/Test/Results'
+2018-08-18 23:47:00,001 Removing '/array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN13_Hb_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_4_Contrast_1_Deformed/vimp2_ANON724_03272013/Train/model'
+2018-08-18 23:47:00,002 Allocating '/array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN13_Hb_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_4_Contrast_1_Deformed/vimp2_ANON724_03272013/Test/Results'
+2018-08-18 23:47:00,002 Allocating '/array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN13_Hb_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_4_Contrast_1_Deformed/vimp2_ANON724_03272013/Train/model'
+2018-08-18 23:47:00.365332: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1326] Found device 0 with properties: 
+name: Tesla P100-PCIE-16GB major: 6 minor: 0 memoryClockRate(GHz): 1.3285
+pciBusID: 0000:85:00.0
+totalMemory: 15.89GiB freeMemory: 12.66GiB
+2018-08-18 23:47:00.365387: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 5
+2018-08-18 23:47:00.840770: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:47:00.840834: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      5 
+2018-08-18 23:47:00.840844: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 5:   N 
+2018-08-18 23:47:00.841263: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12265 MB memory) -> physical GPU (device: 5, name: Tesla P100-PCIE-16GB, pci bus id: 0000:85:00.0, compute capability: 6.0)
+2018-08-18 23:47:03,020 Verification error= 99.9%, loss= 0.7478
+2018-08-18 23:47:03,773 Start optimization
+2018-08-18 23:47:05,294 Iter 0, Minibatch Loss= 0.7063, Training Accuracy= 0.0114, Minibatch error= 98.9%
+2018-08-18 23:47:16,592 Epoch 0, Average loss: 0.0354, learning rate: 0.0010
+2018-08-18 23:47:16,707 Verification error= 0.1%, loss= 0.0110
+2018-08-18 23:47:27,979 Epoch 1, Average loss: 0.0049, learning rate: 0.0010
+2018-08-18 23:47:28,091 Verification error= 0.1%, loss= 0.0116
+2018-08-18 23:47:34,393 Iter 500, Minibatch Loss= 0.0073, Training Accuracy= 0.9993, Minibatch error= 0.1%
+2018-08-18 23:47:39,386 Epoch 2, Average loss: 0.0041, learning rate: 0.0010
+2018-08-18 23:47:39,495 Verification error= 0.1%, loss= 0.0085
+2018-08-18 23:47:50,696 Epoch 3, Average loss: 0.0029, learning rate: 0.0010
+2018-08-18 23:47:50,806 Verification error= 0.1%, loss= 0.0029
+2018-08-18 23:48:02,049 Epoch 4, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:48:02,161 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:48:02,896 Iter 1000, Minibatch Loss= 0.0021, Training Accuracy= 0.9993, Minibatch error= 0.1%
+2018-08-18 23:48:13,298 Epoch 5, Average loss: 0.0016, learning rate: 0.0010
+2018-08-18 23:48:13,416 Verification error= 0.1%, loss= 0.0016
+2018-08-18 23:48:24,541 Epoch 6, Average loss: 0.0014, learning rate: 0.0010
+2018-08-18 23:48:24,641 Verification error= 0.1%, loss= 0.0015
+2018-08-18 23:48:30,957 Iter 1500, Minibatch Loss= 0.0004, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 23:48:35,875 Epoch 7, Average loss: 0.0013, learning rate: 0.0010
+2018-08-18 23:48:35,974 Verification error= 0.1%, loss= 0.0012
+2018-08-18 23:48:47,250 Epoch 8, Average loss: 0.0013, learning rate: 0.0010
+2018-08-18 23:48:47,348 Verification error= 0.1%, loss= 0.0011
+2018-08-18 23:48:58,602 Epoch 9, Average loss: 0.0010, learning rate: 0.0010
+2018-08-18 23:48:58,685 Verification error= 0.1%, loss= 0.0011
+2018-08-18 23:48:59,461 Iter 2000, Minibatch Loss= 0.0014, Training Accuracy= 0.9991, Minibatch error= 0.1%
+2018-08-18 23:49:09,996 Epoch 10, Average loss: 0.0009, learning rate: 0.0010
+2018-08-18 23:49:10,084 Verification error= 0.1%, loss= 0.0013
+2018-08-18 23:49:21,638 Epoch 11, Average loss: 0.0010, learning rate: 0.0010
+2018-08-18 23:49:21,724 Verification error= 0.1%, loss= 0.0009
+2018-08-18 23:49:28,014 Iter 2500, Minibatch Loss= 0.0012, Training Accuracy= 0.9992, Minibatch error= 0.1%
+2018-08-18 23:49:33,217 Epoch 12, Average loss: 0.0008, learning rate: 0.0010
+2018-08-18 23:49:33,327 Verification error= 0.1%, loss= 0.0009
+2018-08-18 23:49:44,799 Epoch 13, Average loss: 0.0008, learning rate: 0.0010
+2018-08-18 23:49:44,911 Verification error= 0.0%, loss= 0.0009
+2018-08-18 23:49:56,198 Epoch 14, Average loss: 0.0009, learning rate: 0.0010
+2018-08-18 23:49:56,308 Verification error= 0.0%, loss= 0.0010
+2018-08-18 23:49:57,177 Iter 3000, Minibatch Loss= 0.0001, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 23:50:07,753 Epoch 15, Average loss: 0.0009, learning rate: 0.0010
+2018-08-18 23:50:07,864 Verification error= 0.0%, loss= 0.0007
+2018-08-18 23:50:19,603 Epoch 16, Average loss: 0.0011, learning rate: 0.0010
+2018-08-18 23:50:19,709 Verification error= 0.0%, loss= 0.0008
+2018-08-18 23:50:25,865 Iter 3500, Minibatch Loss= 0.0010, Training Accuracy= 0.9963, Minibatch error= 0.1%
+2018-08-18 23:50:31,216 Epoch 17, Average loss: 0.0007, learning rate: 0.0010
+2018-08-18 23:50:31,331 Verification error= 0.0%, loss= 0.0007
+2018-08-18 23:50:42,684 Epoch 18, Average loss: 0.0008, learning rate: 0.0010
+2018-08-18 23:50:42,786 Verification error= 0.0%, loss= 0.0008
+2018-08-18 23:50:54,071 Epoch 19, Average loss: 0.0006, learning rate: 0.0010
+2018-08-18 23:50:54,183 Verification error= 0.0%, loss= 0.0006
+2018-08-18 23:50:55,122 Iter 4000, Minibatch Loss= 0.0001, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 23:51:05,475 Epoch 20, Average loss: 0.0007, learning rate: 0.0010
+2018-08-18 23:51:05,586 Verification error= 0.0%, loss= 0.0006
+2018-08-18 23:51:16,866 Epoch 21, Average loss: 0.0008, learning rate: 0.0010
+2018-08-18 23:51:16,978 Verification error= 0.0%, loss= 0.0008
+2018-08-18 23:51:22,985 Iter 4500, Minibatch Loss= 0.0039, Training Accuracy= 0.9988, Minibatch error= 0.1%
+2018-08-18 23:51:28,291 Epoch 22, Average loss: 0.0007, learning rate: 0.0010
+2018-08-18 23:51:28,402 Verification error= 0.0%, loss= 0.0007
+2018-08-18 23:51:39,540 Epoch 23, Average loss: 0.0006, learning rate: 0.0010
+2018-08-18 23:51:39,649 Verification error= 0.0%, loss= 0.0006
+2018-08-18 23:51:50,864 Epoch 24, Average loss: 0.0007, learning rate: 0.0010
+2018-08-18 23:51:50,975 Verification error= 0.0%, loss= 0.0006
+2018-08-18 23:51:52,076 Iter 5000, Minibatch Loss= 0.0001, Training Accuracy= 0.9490, Minibatch error= 0.0%
+2018-08-18 23:52:02,135 Epoch 25, Average loss: 0.0007, learning rate: 0.0010
+2018-08-18 23:52:02,248 Verification error= 0.0%, loss= 0.0007
+2018-08-18 23:52:13,240 Epoch 26, Average loss: 0.0006, learning rate: 0.0010
+2018-08-18 23:52:13,352 Verification error= 0.0%, loss= 0.0006
+2018-08-18 23:52:19,376 Iter 5500, Minibatch Loss= 0.0012, Training Accuracy= 0.9995, Minibatch error= 0.0%
+2018-08-18 23:52:24,464 Epoch 27, Average loss: 0.0007, learning rate: 0.0010
+2018-08-18 23:52:24,566 Verification error= 0.0%, loss= 0.0005
+2018-08-18 23:52:35,637 Epoch 28, Average loss: 0.0006, learning rate: 0.0010
+2018-08-18 23:52:35,736 Verification error= 0.0%, loss= 0.0006
+2018-08-18 23:52:46,795 Epoch 29, Average loss: 0.0006, learning rate: 0.0010
+2018-08-18 23:52:46,904 Verification error= 0.0%, loss= 0.0005
+2018-08-18 23:52:48,098 Iter 6000, Minibatch Loss= 0.0002, Training Accuracy= 0.8682, Minibatch error= 0.0%
+2018-08-18 23:52:57,921 Epoch 30, Average loss: 0.0008, learning rate: 0.0010
+2018-08-18 23:52:58,019 Verification error= 0.0%, loss= 0.0006
+2018-08-18 23:53:09,150 Epoch 31, Average loss: 0.0008, learning rate: 0.0010
+2018-08-18 23:53:09,252 Verification error= 0.0%, loss= 0.0007
+2018-08-18 23:53:15,616 Iter 6500, Minibatch Loss= 0.0000, Training Accuracy= 0.8107, Minibatch error= 0.0%
+2018-08-18 23:53:20,524 Epoch 32, Average loss: 0.0006, learning rate: 0.0010
+2018-08-18 23:53:20,635 Verification error= 0.0%, loss= 0.0007
+2018-08-18 23:53:31,727 Epoch 33, Average loss: 0.0006, learning rate: 0.0010
+2018-08-18 23:53:31,839 Verification error= 0.0%, loss= 0.0006
+2018-08-18 23:53:42,946 Epoch 34, Average loss: 0.0006, learning rate: 0.0010
+2018-08-18 23:53:43,045 Verification error= 0.0%, loss= 0.0007
+2018-08-18 23:53:44,261 Iter 7000, Minibatch Loss= 0.0000, Training Accuracy= 0.3678, Minibatch error= 0.0%
+2018-08-18 23:53:54,048 Epoch 35, Average loss: 0.0006, learning rate: 0.0010
+2018-08-18 23:53:54,161 Verification error= 0.0%, loss= 0.0005
+2018-08-18 23:54:05,281 Epoch 36, Average loss: 0.0006, learning rate: 0.0010
+2018-08-18 23:54:05,391 Verification error= 0.0%, loss= 0.0006
+2018-08-18 23:54:11,747 Iter 7500, Minibatch Loss= 0.0008, Training Accuracy= 0.6654, Minibatch error= 0.0%
+2018-08-18 23:54:16,654 Epoch 37, Average loss: 0.0007, learning rate: 0.0010
+2018-08-18 23:54:16,766 Verification error= 0.0%, loss= 0.0006
+2018-08-18 23:54:27,905 Epoch 38, Average loss: 0.0007, learning rate: 0.0010
+2018-08-18 23:54:28,018 Verification error= 0.0%, loss= 0.0006
+2018-08-18 23:54:39,103 Epoch 39, Average loss: 0.0008, learning rate: 0.0010
+2018-08-18 23:54:39,216 Verification error= 0.0%, loss= 0.0006
+2018-08-18 23:54:40,616 Iter 8000, Minibatch Loss= 0.0009, Training Accuracy= 0.9624, Minibatch error= 0.0%
+2018-08-18 23:54:50,481 Epoch 40, Average loss: 0.0006, learning rate: 0.0010
+2018-08-18 23:54:50,593 Verification error= 0.0%, loss= 0.0006
+2018-08-18 23:55:01,822 Epoch 41, Average loss: 0.0006, learning rate: 0.0010
+2018-08-18 23:55:01,930 Verification error= 0.0%, loss= 0.0006
+2018-08-18 23:55:08,296 Iter 8500, Minibatch Loss= 0.0007, Training Accuracy= 0.8653, Minibatch error= 0.0%
+2018-08-18 23:55:13,189 Epoch 42, Average loss: 0.0006, learning rate: 0.0010
+2018-08-18 23:55:13,301 Verification error= 0.0%, loss= 0.0006
+2018-08-18 23:55:24,438 Epoch 43, Average loss: 0.0006, learning rate: 0.0010
+2018-08-18 23:55:24,553 Verification error= 0.0%, loss= 0.0006
+2018-08-18 23:55:35,790 Epoch 44, Average loss: 0.0006, learning rate: 0.0010
+2018-08-18 23:55:35,898 Verification error= 0.0%, loss= 0.0005
+2018-08-18 23:55:37,441 Iter 9000, Minibatch Loss= 0.0000, Training Accuracy= 0.4480, Minibatch error= 0.0%
+2018-08-18 23:55:47,248 Epoch 45, Average loss: 0.0005, learning rate: 0.0010
+2018-08-18 23:55:47,361 Verification error= 0.0%, loss= 0.0006
+2018-08-18 23:55:58,523 Epoch 46, Average loss: 0.0007, learning rate: 0.0010
+2018-08-18 23:55:58,634 Verification error= 0.0%, loss= 0.0005
+2018-08-18 23:56:05,047 Iter 9500, Minibatch Loss= 0.0000, Training Accuracy= 0.4208, Minibatch error= 0.0%
+2018-08-18 23:56:09,816 Epoch 47, Average loss: 0.0006, learning rate: 0.0010
+2018-08-18 23:56:09,926 Verification error= 0.0%, loss= 0.0008
+2018-08-18 23:56:21,158 Epoch 48, Average loss: 0.0006, learning rate: 0.0010
+2018-08-18 23:56:21,271 Verification error= 0.0%, loss= 0.0005

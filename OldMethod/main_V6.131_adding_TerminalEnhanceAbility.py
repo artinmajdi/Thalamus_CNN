@@ -217,7 +217,7 @@ for ind in UserEntries['IxNuclei']:
 
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
-        # subFolders = ['vimp2_869_06142013_BL']
+        # subFolders = ['vimp2_ctrl_921_07122013_MP'] # vimp2_ctrl_920_07122013_SW'] # 
         # aaa = range(14,len(subFolders))
         # aaa = np.append([0,1],aaa)
         for sFi in range(len(subFolders)):
@@ -249,6 +249,7 @@ for ind in UserEntries['IxNuclei']:
 
             trainer = unet.Trainer(Params['net'], optimizer = "adam")
             if Params['gpuNum'] != 'nan':
+                # path2 = ''
                 path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500, GPU_Num=Params['gpuNum'] ,prediction_path=Dir_ResultsOut) #  restore=True
             else:
                 path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=50, epochs=4, display_step=500 ,prediction_path=Dir_ResultsOut) #   restore=True

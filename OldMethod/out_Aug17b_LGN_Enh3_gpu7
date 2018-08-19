@@ -1,0 +1,1688 @@
+/array/hdd/msmajdi/.local/lib/python3.5/site-packages/dicom/__init__.py:53: UserWarning: 
+This code is using an older version of pydicom, which is no longer 
+maintained as of Jan 2017.  You can access the new pydicom features and API 
+by installing `pydicom` from PyPI.
+See 'Transitioning to pydicom 1.x' section at pydicom.readthedocs.org 
+for more information.
+
+  warnings.warn(msg)
+2018-08-18 22:28:54,236 Layers 4, features 16, filter size 3x3, pool size: 2x2
+WARNING:tensorflow:From /array/hdd/msmajdi/.local/lib/python3.5/site-packages/tf_unet-0.1.1-py3.5.egg/tf_unet/unet.py:229: softmax_cross_entropy_with_logits (from tensorflow.python.ops.nn_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+
+Future major versions of TensorFlow will allow gradients to flow
+into the labels input on backprop by default.
+
+See tf.nn.softmax_cross_entropy_with_logits_v2.
+
+2018-08-18 22:28:55,223 From /array/hdd/msmajdi/.local/lib/python3.5/site-packages/tf_unet-0.1.1-py3.5.egg/tf_unet/unet.py:229: softmax_cross_entropy_with_logits (from tensorflow.python.ops.nn_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+
+Future major versions of TensorFlow will allow gradients to flow
+into the labels input on backprop by default.
+
+See tf.nn.softmax_cross_entropy_with_logits_v2.
+
+WARNING:tensorflow:From /array/hdd/msmajdi/.local/lib/python3.5/site-packages/tf_unet-0.1.1-py3.5.egg/tf_unet/layers.py:90: calling reduce_sum (from tensorflow.python.ops.math_ops) with keep_dims is deprecated and will be removed in a future version.
+Instructions for updating:
+keep_dims is deprecated, use keepdims instead
+2018-08-18 22:28:55,681 From /array/hdd/msmajdi/.local/lib/python3.5/site-packages/tf_unet-0.1.1-py3.5.egg/tf_unet/layers.py:90: calling reduce_sum (from tensorflow.python.ops.math_ops) with keep_dims is deprecated and will be removed in a future version.
+Instructions for updating:
+keep_dims is deprecated, use keepdims instead
+2018-08-18 22:28:56,689 Removing '/array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Test/Results'
+2018-08-18 22:28:56,690 Removing '/array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model'
+2018-08-18 22:28:56,690 Allocating '/array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Test/Results'
+2018-08-18 22:28:56,690 Allocating '/array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model'
+2018-08-18 22:28:57.034190: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1326] Found device 0 with properties: 
+name: Tesla P100-PCIE-16GB major: 6 minor: 0 memoryClockRate(GHz): 1.3285
+pciBusID: 0000:89:00.0
+totalMemory: 15.89GiB freeMemory: 15.60GiB
+2018-08-18 22:28:57.034247: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 22:28:57.469645: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 22:28:57.469709: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 22:28:57.469718: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 22:28:57.485240: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 15132 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+2018-08-18 22:28:59,262 Verification error= 82.5%, loss= 0.6984
+2018-08-18 22:29:00,011 Start optimization
+2018-08-18 22:29:01,198 Iter 0, Minibatch Loss= 0.6698, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 22:29:07,929 Epoch 0, Average loss: 0.0491, learning rate: 0.0010
+2018-08-18 22:29:07,996 Verification error= 0.3%, loss= 0.0183
+2018-08-18 22:29:14,738 Epoch 1, Average loss: 0.0103, learning rate: 0.0010
+2018-08-18 22:29:14,805 Verification error= 0.3%, loss= 0.0115
+2018-08-18 22:29:18,805 Iter 500, Minibatch Loss= 0.0012, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 22:29:22,762 Epoch 2, Average loss: 0.0066, learning rate: 0.0010
+2018-08-18 22:29:22,848 Verification error= 0.3%, loss= 0.0072
+2018-08-18 22:29:30,877 Epoch 3, Average loss: 0.0045, learning rate: 0.0010
+2018-08-18 22:29:30,966 Verification error= 0.3%, loss= 0.0049
+2018-08-18 22:29:39,708 Epoch 4, Average loss: 0.0039, learning rate: 0.0010
+2018-08-18 22:29:39,791 Verification error= 0.3%, loss= 0.0045
+2018-08-18 22:29:40,502 Iter 1000, Minibatch Loss= 0.0000, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 22:29:48,319 Epoch 5, Average loss: 0.0034, learning rate: 0.0010
+2018-08-18 22:29:48,408 Verification error= 0.3%, loss= 0.0047
+2018-08-18 22:29:56,935 Epoch 6, Average loss: 0.0030, learning rate: 0.0010
+2018-08-18 22:29:57,045 Verification error= 0.2%, loss= 0.0058
+2018-08-18 22:30:01,703 Iter 1500, Minibatch Loss= 0.0067, Training Accuracy= 0.9986, Minibatch error= 0.1%
+2018-08-18 22:30:05,552 Epoch 7, Average loss: 0.0028, learning rate: 0.0010
+2018-08-18 22:30:05,633 Verification error= 0.2%, loss= 0.0044
+2018-08-18 22:30:14,211 Epoch 8, Average loss: 0.0028, learning rate: 0.0010
+2018-08-18 22:30:14,294 Verification error= 0.1%, loss= 0.0040
+2018-08-18 22:30:22,894 Epoch 9, Average loss: 0.0030, learning rate: 0.0010
+2018-08-18 22:30:22,976 Verification error= 0.1%, loss= 0.0039
+2018-08-18 22:30:23,793 Iter 2000, Minibatch Loss= 0.0001, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 22:30:31,609 Epoch 10, Average loss: 0.0030, learning rate: 0.0010
+2018-08-18 22:30:31,692 Verification error= 0.1%, loss= 0.0049
+2018-08-18 22:30:40,227 Epoch 11, Average loss: 0.0027, learning rate: 0.0010
+2018-08-18 22:30:40,307 Verification error= 0.1%, loss= 0.0050
+2018-08-18 22:30:44,946 Iter 2500, Minibatch Loss= 0.0049, Training Accuracy= 0.9983, Minibatch error= 0.2%
+2018-08-18 22:30:49,002 Epoch 12, Average loss: 0.0030, learning rate: 0.0010
+2018-08-18 22:30:49,084 Verification error= 0.1%, loss= 0.0037
+2018-08-18 22:30:57,625 Epoch 13, Average loss: 0.0030, learning rate: 0.0010
+2018-08-18 22:30:57,708 Verification error= 0.2%, loss= 0.0037
+2018-08-18 22:31:06,321 Epoch 14, Average loss: 0.0027, learning rate: 0.0010
+2018-08-18 22:31:06,403 Verification error= 0.1%, loss= 0.0039
+2018-08-18 22:31:07,285 Iter 3000, Minibatch Loss= 0.0005, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 22:31:15,156 Epoch 15, Average loss: 0.0029, learning rate: 0.0010
+2018-08-18 22:31:15,235 Verification error= 0.1%, loss= 0.0074
+2018-08-18 22:31:23,993 Epoch 16, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 22:31:24,096 Verification error= 0.1%, loss= 0.0039
+2018-08-18 22:31:28,886 Iter 3500, Minibatch Loss= 0.0040, Training Accuracy= 0.9999, Minibatch error= 0.0%
+2018-08-18 22:31:32,915 Epoch 17, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 22:31:33,000 Verification error= 0.1%, loss= 0.0034
+2018-08-18 22:31:41,731 Epoch 18, Average loss: 0.0028, learning rate: 0.0010
+2018-08-18 22:31:41,815 Verification error= 0.1%, loss= 0.0032
+2018-08-18 22:31:50,534 Epoch 19, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 22:31:50,620 Verification error= 0.1%, loss= 0.0035
+2018-08-18 22:31:51,560 Iter 4000, Minibatch Loss= 0.0014, Training Accuracy= 0.9998, Minibatch error= 0.0%
+2018-08-18 22:31:59,257 Epoch 20, Average loss: 0.0030, learning rate: 0.0010
+2018-08-18 22:31:59,340 Verification error= 0.1%, loss= 0.0035
+2018-08-18 22:32:08,032 Epoch 21, Average loss: 0.0027, learning rate: 0.0010
+2018-08-18 22:32:08,113 Verification error= 0.1%, loss= 0.0028
+2018-08-18 22:32:12,721 Iter 4500, Minibatch Loss= 0.0044, Training Accuracy= 0.9986, Minibatch error= 0.1%
+2018-08-18 22:32:16,770 Epoch 22, Average loss: 0.0028, learning rate: 0.0010
+2018-08-18 22:32:16,864 Verification error= 0.1%, loss= 0.0037
+2018-08-18 22:32:25,507 Epoch 23, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 22:32:25,589 Verification error= 0.1%, loss= 0.0031
+2018-08-18 22:32:34,559 Epoch 24, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 22:32:34,641 Verification error= 0.2%, loss= 0.0040
+2018-08-18 22:32:35,664 Iter 5000, Minibatch Loss= 0.0051, Training Accuracy= 0.9979, Minibatch error= 0.2%
+2018-08-18 22:32:43,401 Epoch 25, Average loss: 0.0028, learning rate: 0.0010
+2018-08-18 22:32:43,484 Verification error= 0.1%, loss= 0.0035
+2018-08-18 22:32:52,291 Epoch 26, Average loss: 0.0029, learning rate: 0.0010
+2018-08-18 22:32:52,369 Verification error= 0.1%, loss= 0.0039
+2018-08-18 22:32:57,218 Iter 5500, Minibatch Loss= 0.0037, Training Accuracy= 0.9985, Minibatch error= 0.1%
+2018-08-18 22:33:01,216 Epoch 27, Average loss: 0.0027, learning rate: 0.0010
+2018-08-18 22:33:01,302 Verification error= 0.2%, loss= 0.0038
+2018-08-18 22:33:10,484 Epoch 28, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 22:33:10,566 Verification error= 0.1%, loss= 0.0033
+2018-08-18 22:33:19,604 Epoch 29, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 22:33:19,687 Verification error= 0.1%, loss= 0.0036
+2018-08-18 22:33:20,813 Iter 6000, Minibatch Loss= 0.0005, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 22:33:28,990 Epoch 30, Average loss: 0.0027, learning rate: 0.0010
+2018-08-18 22:33:29,077 Verification error= 0.1%, loss= 0.0035
+2018-08-18 22:33:38,422 Epoch 31, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 22:33:38,502 Verification error= 0.1%, loss= 0.0033
+2018-08-18 22:33:43,919 Iter 6500, Minibatch Loss= 0.0044, Training Accuracy= 0.9980, Minibatch error= 0.2%
+2018-08-18 22:33:47,884 Epoch 32, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 22:33:47,945 Verification error= 0.1%, loss= 0.0035
+2018-08-18 22:33:57,105 Epoch 33, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 22:33:57,170 Verification error= 0.1%, loss= 0.0030
+2018-08-18 22:34:06,315 Epoch 34, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 22:34:06,380 Verification error= 0.2%, loss= 0.0043
+2018-08-18 22:34:07,651 Iter 7000, Minibatch Loss= 0.0067, Training Accuracy= 0.9964, Minibatch error= 0.4%
+2018-08-18 22:34:15,435 Epoch 35, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 22:34:15,499 Verification error= 0.1%, loss= 0.0028
+2018-08-18 22:34:24,526 Epoch 36, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 22:34:24,590 Verification error= 0.1%, loss= 0.0030
+2018-08-18 22:34:29,888 Iter 7500, Minibatch Loss= 0.0000, Training Accuracy= 0.9247, Minibatch error= 0.0%
+2018-08-18 22:34:33,443 Epoch 37, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 22:34:33,506 Verification error= 0.2%, loss= 0.0042
+2018-08-18 22:34:42,360 Epoch 38, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 22:34:42,446 Verification error= 0.1%, loss= 0.0033
+2018-08-18 22:34:51,243 Epoch 39, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 22:34:51,328 Verification error= 0.2%, loss= 0.0032
+2018-08-18 22:34:52,702 Iter 8000, Minibatch Loss= 0.0070, Training Accuracy= 0.9835, Minibatch error= 0.4%
+2018-08-18 22:35:00,179 Epoch 40, Average loss: 0.0030, learning rate: 0.0010
+2018-08-18 22:35:00,264 Verification error= 0.1%, loss= 0.0036
+2018-08-18 22:35:09,155 Epoch 41, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 22:35:09,240 Verification error= 0.1%, loss= 0.0029
+2018-08-18 22:35:14,686 Iter 8500, Minibatch Loss= 0.0036, Training Accuracy= 0.9987, Minibatch error= 0.1%
+2018-08-18 22:35:18,067 Epoch 42, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 22:35:18,153 Verification error= 0.1%, loss= 0.0029
+2018-08-18 22:35:26,949 Epoch 43, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 22:35:27,032 Verification error= 0.1%, loss= 0.0029
+2018-08-18 22:35:35,924 Epoch 44, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 22:35:36,010 Verification error= 0.1%, loss= 0.0031
+2018-08-18 22:35:37,435 Iter 9000, Minibatch Loss= 0.0038, Training Accuracy= 0.9637, Minibatch error= 0.2%
+2018-08-18 22:35:44,753 Epoch 45, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 22:35:44,837 Verification error= 0.2%, loss= 0.0034
+2018-08-18 22:35:53,603 Epoch 46, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 22:35:53,687 Verification error= 0.1%, loss= 0.0029
+2018-08-18 22:35:59,177 Iter 9500, Minibatch Loss= 0.0000, Training Accuracy= 0.9888, Minibatch error= 0.0%
+2018-08-18 22:36:02,551 Epoch 47, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 22:36:02,632 Verification error= 0.1%, loss= 0.0027
+2018-08-18 22:36:11,566 Epoch 48, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 22:36:11,647 Verification error= 0.1%, loss= 0.0036
+2018-08-18 22:36:20,707 Epoch 49, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 22:36:20,786 Verification error= 0.1%, loss= 0.0029
+2018-08-18 22:36:22,309 Iter 10000, Minibatch Loss= 0.0060, Training Accuracy= 0.9967, Minibatch error= 0.3%
+2018-08-18 22:36:29,604 Epoch 50, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 22:36:29,692 Verification error= 0.1%, loss= 0.0032
+2018-08-18 22:36:38,656 Epoch 51, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 22:36:38,739 Verification error= 0.1%, loss= 0.0031
+2018-08-18 22:36:43,999 Iter 10500, Minibatch Loss= 0.0026, Training Accuracy= 0.9559, Minibatch error= 0.1%
+2018-08-18 22:36:47,648 Epoch 52, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 22:36:47,735 Verification error= 0.1%, loss= 0.0031
+2018-08-18 22:36:56,719 Epoch 53, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 22:36:56,806 Verification error= 0.2%, loss= 0.0040
+2018-08-18 22:37:05,700 Epoch 54, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 22:37:05,788 Verification error= 0.1%, loss= 0.0035
+2018-08-18 22:37:07,438 Iter 11000, Minibatch Loss= 0.0032, Training Accuracy= 0.9988, Minibatch error= 0.1%
+2018-08-18 22:37:14,796 Epoch 55, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 22:37:14,885 Verification error= 0.1%, loss= 0.0025
+2018-08-18 22:37:23,772 Epoch 56, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 22:37:23,854 Verification error= 0.1%, loss= 0.0031
+2018-08-18 22:37:29,157 Iter 11500, Minibatch Loss= 0.0041, Training Accuracy= 0.9985, Minibatch error= 0.2%
+2018-08-18 22:37:33,105 Epoch 57, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 22:37:33,200 Verification error= 0.1%, loss= 0.0024
+2018-08-18 22:37:42,202 Epoch 58, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 22:37:42,288 Verification error= 0.1%, loss= 0.0031
+2018-08-18 22:37:51,261 Epoch 59, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 22:37:51,344 Verification error= 0.1%, loss= 0.0030
+2018-08-18 22:37:53,051 Iter 12000, Minibatch Loss= 0.0036, Training Accuracy= 0.9986, Minibatch error= 0.1%
+2018-08-18 22:38:00,311 Epoch 60, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 22:38:00,399 Verification error= 0.1%, loss= 0.0039
+2018-08-18 22:38:09,393 Epoch 61, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 22:38:09,475 Verification error= 0.1%, loss= 0.0027
+2018-08-18 22:38:14,688 Iter 12500, Minibatch Loss= 0.0039, Training Accuracy= 0.9981, Minibatch error= 0.2%
+2018-08-18 22:38:18,615 Epoch 62, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 22:38:18,699 Verification error= 0.1%, loss= 0.0033
+2018-08-18 22:38:27,683 Epoch 63, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 22:38:27,769 Verification error= 0.1%, loss= 0.0032
+2018-08-18 22:38:36,849 Epoch 64, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 22:38:36,937 Verification error= 0.1%, loss= 0.0027
+2018-08-18 22:38:38,816 Iter 13000, Minibatch Loss= 0.0046, Training Accuracy= 0.9864, Minibatch error= 0.2%
+2018-08-18 22:38:46,054 Epoch 65, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 22:38:46,140 Verification error= 0.1%, loss= 0.0028
+2018-08-18 22:38:55,315 Epoch 66, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 22:38:55,400 Verification error= 0.1%, loss= 0.0026
+2018-08-18 22:39:00,419 Iter 13500, Minibatch Loss= 0.0031, Training Accuracy= 0.9990, Minibatch error= 0.1%
+2018-08-18 22:39:04,400 Epoch 67, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 22:39:04,490 Verification error= 0.1%, loss= 0.0028
+2018-08-18 22:39:13,589 Epoch 68, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 22:39:13,671 Verification error= 0.1%, loss= 0.0027
+2018-08-18 22:39:22,859 Epoch 69, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 22:39:22,942 Verification error= 0.1%, loss= 0.0030
+2018-08-18 22:39:24,772 Iter 14000, Minibatch Loss= 0.0042, Training Accuracy= 0.9977, Minibatch error= 0.2%
+2018-08-18 22:39:32,090 Epoch 70, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 22:39:32,172 Verification error= 0.1%, loss= 0.0032
+2018-08-18 22:39:41,551 Epoch 71, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 22:39:41,635 Verification error= 0.1%, loss= 0.0028
+2018-08-18 22:39:47,126 Iter 14500, Minibatch Loss= 0.0033, Training Accuracy= 0.8884, Minibatch error= 0.1%
+2018-08-18 22:39:51,085 Epoch 72, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 22:39:51,167 Verification error= 0.1%, loss= 0.0032
+2018-08-18 22:40:00,635 Epoch 73, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 22:40:00,720 Verification error= 0.1%, loss= 0.0033
+2018-08-18 22:40:10,417 Epoch 74, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 22:40:10,503 Verification error= 0.1%, loss= 0.0030
+2018-08-18 22:40:12,442 Iter 15000, Minibatch Loss= 0.0001, Training Accuracy= 0.9874, Minibatch error= 0.0%
+2018-08-18 22:40:19,992 Epoch 75, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 22:40:20,079 Verification error= 0.1%, loss= 0.0026
+2018-08-18 22:40:29,698 Epoch 76, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 22:40:29,783 Verification error= 0.1%, loss= 0.0033
+2018-08-18 22:40:35,654 Iter 15500, Minibatch Loss= 0.0028, Training Accuracy= 0.9854, Minibatch error= 0.1%
+2018-08-18 22:40:39,597 Epoch 77, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 22:40:39,680 Verification error= 0.1%, loss= 0.0027
+2018-08-18 22:40:49,439 Epoch 78, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 22:40:49,522 Verification error= 0.1%, loss= 0.0029
+2018-08-18 22:40:59,432 Epoch 79, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 22:40:59,519 Verification error= 0.1%, loss= 0.0030
+2018-08-18 22:41:01,535 Iter 16000, Minibatch Loss= 0.0000, Training Accuracy= 0.9286, Minibatch error= 0.0%
+2018-08-18 22:41:09,462 Epoch 80, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 22:41:09,560 Verification error= 0.1%, loss= 0.0028
+2018-08-18 22:41:19,555 Epoch 81, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 22:41:19,617 Verification error= 0.1%, loss= 0.0026
+2018-08-18 22:41:26,021 Iter 16500, Minibatch Loss= 0.0002, Training Accuracy= 0.9890, Minibatch error= 0.0%
+2018-08-18 22:41:29,694 Epoch 82, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 22:41:29,761 Verification error= 0.1%, loss= 0.0028
+2018-08-18 22:41:39,651 Epoch 83, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 22:41:39,711 Verification error= 0.1%, loss= 0.0025
+2018-08-18 22:41:49,462 Epoch 84, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 22:41:49,529 Verification error= 0.1%, loss= 0.0028
+2018-08-18 22:41:51,696 Iter 17000, Minibatch Loss= 0.0005, Training Accuracy= 0.9035, Minibatch error= 0.0%
+2018-08-18 22:41:59,166 Epoch 85, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 22:41:59,231 Verification error= 0.1%, loss= 0.0029
+2018-08-18 22:42:08,739 Epoch 86, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 22:42:08,801 Verification error= 0.1%, loss= 0.0027
+2018-08-18 22:42:15,159 Iter 17500, Minibatch Loss= 0.0031, Training Accuracy= 0.9369, Minibatch error= 0.1%
+2018-08-18 22:42:18,431 Epoch 87, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 22:42:18,502 Verification error= 0.1%, loss= 0.0035
+2018-08-18 22:42:28,189 Epoch 88, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 22:42:28,263 Verification error= 0.1%, loss= 0.0027
+2018-08-18 22:42:37,878 Epoch 89, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 22:42:37,941 Verification error= 0.1%, loss= 0.0022
+2018-08-18 22:42:40,188 Iter 18000, Minibatch Loss= 0.0030, Training Accuracy= 0.6398, Minibatch error= 0.1%
+2018-08-18 22:42:47,358 Epoch 90, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 22:42:47,421 Verification error= 0.1%, loss= 0.0028
+2018-08-18 22:42:56,907 Epoch 91, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 22:42:56,984 Verification error= 0.1%, loss= 0.0030
+2018-08-18 22:43:03,338 Iter 18500, Minibatch Loss= 0.0045, Training Accuracy= 0.9128, Minibatch error= 0.2%
+2018-08-18 22:43:06,384 Epoch 92, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 22:43:06,470 Verification error= 0.1%, loss= 0.0028
+2018-08-18 22:43:15,896 Epoch 93, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 22:43:15,987 Verification error= 0.1%, loss= 0.0025
+2018-08-18 22:43:25,533 Epoch 94, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 22:43:25,613 Verification error= 0.1%, loss= 0.0028
+2018-08-18 22:43:27,972 Iter 19000, Minibatch Loss= 0.0013, Training Accuracy= 0.9996, Minibatch error= 0.0%
+2018-08-18 22:43:35,077 Epoch 95, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 22:43:35,166 Verification error= 0.1%, loss= 0.0031
+2018-08-18 22:43:44,726 Epoch 96, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 22:43:44,813 Verification error= 0.1%, loss= 0.0026
+2018-08-18 22:43:51,037 Iter 19500, Minibatch Loss= 0.0031, Training Accuracy= 0.9983, Minibatch error= 0.1%
+2018-08-18 22:43:54,230 Epoch 97, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 22:43:54,315 Verification error= 0.1%, loss= 0.0030
+2018-08-18 22:44:03,745 Epoch 98, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 22:44:03,829 Verification error= 0.1%, loss= 0.0025
+2018-08-18 22:44:13,296 Epoch 99, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 22:44:13,376 Verification error= 0.1%, loss= 0.0025
+2018-08-18 22:44:15,779 Iter 20000, Minibatch Loss= 0.0022, Training Accuracy= 0.7051, Minibatch error= 0.1%
+2018-08-18 22:44:22,738 Epoch 100, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 22:44:22,816 Verification error= 0.1%, loss= 0.0028
+2018-08-18 22:44:32,324 Epoch 101, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 22:44:32,410 Verification error= 0.1%, loss= 0.0026
+2018-08-18 22:44:38,655 Iter 20500, Minibatch Loss= 0.0002, Training Accuracy= 0.9326, Minibatch error= 0.0%
+2018-08-18 22:44:41,896 Epoch 102, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 22:44:41,983 Verification error= 0.1%, loss= 0.0028
+2018-08-18 22:44:51,384 Epoch 103, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 22:44:51,474 Verification error= 0.1%, loss= 0.0024
+2018-08-18 22:45:01,015 Epoch 104, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 22:45:01,098 Verification error= 0.1%, loss= 0.0026
+2018-08-18 22:45:03,729 Iter 21000, Minibatch Loss= 0.0028, Training Accuracy= 0.9589, Minibatch error= 0.1%
+2018-08-18 22:45:10,744 Epoch 105, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 22:45:10,829 Verification error= 0.2%, loss= 0.0033
+2018-08-18 22:45:20,302 Epoch 106, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 22:45:20,387 Verification error= 0.2%, loss= 0.0035
+2018-08-18 22:45:26,761 Iter 21500, Minibatch Loss= 0.0002, Training Accuracy= 0.9239, Minibatch error= 0.0%
+2018-08-18 22:45:30,022 Epoch 107, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 22:45:30,106 Verification error= 0.1%, loss= 0.0027
+2018-08-18 22:45:39,758 Epoch 108, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 22:45:39,848 Verification error= 0.1%, loss= 0.0026
+2018-08-18 22:45:49,541 Epoch 109, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 22:45:49,628 Verification error= 0.1%, loss= 0.0029
+2018-08-18 22:45:52,329 Iter 22000, Minibatch Loss= 0.0000, Training Accuracy= 0.9133, Minibatch error= 0.0%
+2018-08-18 22:45:59,374 Epoch 110, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 22:45:59,459 Verification error= 0.1%, loss= 0.0029
+2018-08-18 22:46:09,077 Epoch 111, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 22:46:09,164 Verification error= 0.1%, loss= 0.0028
+2018-08-18 22:46:15,399 Iter 22500, Minibatch Loss= 0.0000, Training Accuracy= 0.9862, Minibatch error= 0.0%
+2018-08-18 22:46:19,039 Epoch 112, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 22:46:19,120 Verification error= 0.1%, loss= 0.0029
+2018-08-18 22:46:28,643 Epoch 113, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 22:46:28,729 Verification error= 0.1%, loss= 0.0028
+2018-08-18 22:46:38,454 Epoch 114, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 22:46:38,565 Verification error= 0.1%, loss= 0.0028
+2018-08-18 22:46:41,331 Iter 23000, Minibatch Loss= 0.0033, Training Accuracy= 0.9687, Minibatch error= 0.1%
+2018-08-18 22:46:48,278 Epoch 115, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 22:46:48,360 Verification error= 0.1%, loss= 0.0025
+2018-08-18 22:46:58,239 Epoch 116, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 22:46:58,326 Verification error= 0.1%, loss= 0.0028
+2018-08-18 22:47:04,114 Iter 23500, Minibatch Loss= 0.0000, Training Accuracy= 0.8989, Minibatch error= 0.0%
+2018-08-18 22:47:08,030 Epoch 117, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 22:47:08,119 Verification error= 0.1%, loss= 0.0032
+2018-08-18 22:47:17,735 Epoch 118, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 22:47:17,820 Verification error= 0.1%, loss= 0.0025
+2018-08-18 22:47:27,582 Epoch 119, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 22:47:27,669 Verification error= 0.1%, loss= 0.0024
+2018-08-18 22:47:30,665 Iter 24000, Minibatch Loss= 0.0000, Training Accuracy= 0.7620, Minibatch error= 0.0%
+2018-08-18 22:47:37,610 Epoch 120, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 22:47:37,693 Verification error= 0.1%, loss= 0.0025
+2018-08-18 22:47:47,716 Epoch 121, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 22:47:47,798 Verification error= 0.1%, loss= 0.0026
+2018-08-18 22:47:53,818 Iter 24500, Minibatch Loss= 0.0036, Training Accuracy= 0.9756, Minibatch error= 0.2%
+2018-08-18 22:47:57,869 Epoch 122, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 22:47:57,955 Verification error= 0.1%, loss= 0.0028
+2018-08-18 22:48:08,256 Epoch 123, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 22:48:08,341 Verification error= 0.1%, loss= 0.0025
+2018-08-18 22:48:18,930 Epoch 124, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 22:48:19,015 Verification error= 0.1%, loss= 0.0024
+2018-08-18 22:48:22,009 Iter 25000, Minibatch Loss= 0.0031, Training Accuracy= 0.9694, Minibatch error= 0.1%
+2018-08-18 22:48:29,605 Epoch 125, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 22:48:29,694 Verification error= 0.1%, loss= 0.0030
+2018-08-18 22:48:40,532 Epoch 126, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 22:48:40,620 Verification error= 0.1%, loss= 0.0026
+2018-08-18 22:48:47,337 Iter 25500, Minibatch Loss= 0.0002, Training Accuracy= 0.9622, Minibatch error= 0.0%
+2018-08-18 22:48:51,381 Epoch 127, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 22:48:51,477 Verification error= 0.1%, loss= 0.0024
+2018-08-18 22:49:02,369 Epoch 128, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 22:49:02,449 Verification error= 0.1%, loss= 0.0027
+2018-08-18 22:49:13,375 Epoch 129, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 22:49:13,461 Verification error= 0.1%, loss= 0.0026
+2018-08-18 22:49:16,482 Iter 26000, Minibatch Loss= 0.0031, Training Accuracy= 0.9990, Minibatch error= 0.1%
+2018-08-18 22:49:24,535 Epoch 130, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 22:49:24,621 Verification error= 0.1%, loss= 0.0029
+2018-08-18 22:49:35,708 Epoch 131, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 22:49:35,792 Verification error= 0.1%, loss= 0.0025
+2018-08-18 22:49:42,747 Iter 26500, Minibatch Loss= 0.0029, Training Accuracy= 0.9989, Minibatch error= 0.1%
+2018-08-18 22:49:46,806 Epoch 132, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 22:49:46,889 Verification error= 0.1%, loss= 0.0028
+2018-08-18 22:49:58,300 Epoch 133, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 22:49:58,379 Verification error= 0.1%, loss= 0.0024
+2018-08-18 22:50:09,384 Epoch 134, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 22:50:09,498 Verification error= 0.1%, loss= 0.0024
+2018-08-18 22:50:12,553 Iter 27000, Minibatch Loss= 0.0000, Training Accuracy= 0.9789, Minibatch error= 0.0%
+2018-08-18 22:50:20,538 Epoch 135, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 22:50:20,626 Verification error= 0.1%, loss= 0.0022
+2018-08-18 22:50:31,812 Epoch 136, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 22:50:31,894 Verification error= 0.1%, loss= 0.0022
+2018-08-18 22:50:39,016 Iter 27500, Minibatch Loss= 0.0001, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 22:50:43,067 Epoch 137, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 22:50:43,130 Verification error= 0.1%, loss= 0.0029
+2018-08-18 22:50:54,236 Epoch 138, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 22:50:54,299 Verification error= 0.1%, loss= 0.0029
+2018-08-18 22:51:05,389 Epoch 139, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 22:51:05,454 Verification error= 0.1%, loss= 0.0024
+2018-08-18 22:51:08,601 Iter 28000, Minibatch Loss= 0.0025, Training Accuracy= 0.9983, Minibatch error= 0.1%
+2018-08-18 22:51:16,480 Epoch 140, Average loss: 0.0017, learning rate: 0.0010
+2018-08-18 22:51:16,552 Verification error= 0.1%, loss= 0.0023
+2018-08-18 22:51:27,941 Epoch 141, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 22:51:28,010 Verification error= 0.1%, loss= 0.0022
+2018-08-18 22:51:35,461 Iter 28500, Minibatch Loss= 0.0000, Training Accuracy= 0.9918, Minibatch error= 0.0%
+2018-08-18 22:51:38,851 Epoch 142, Average loss: 0.0017, learning rate: 0.0010
+2018-08-18 22:51:38,919 Verification error= 0.1%, loss= 0.0023
+2018-08-18 22:51:49,660 Epoch 143, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 22:51:49,722 Verification error= 0.1%, loss= 0.0022
+2018-08-18 22:52:00,245 Epoch 144, Average loss: 0.0017, learning rate: 0.0010
+2018-08-18 22:52:00,312 Verification error= 0.1%, loss= 0.0021
+2018-08-18 22:52:03,551 Iter 29000, Minibatch Loss= 0.0020, Training Accuracy= 0.8997, Minibatch error= 0.1%
+2018-08-18 22:52:10,774 Epoch 145, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 22:52:10,834 Verification error= 0.1%, loss= 0.0025
+2018-08-18 22:52:21,252 Epoch 146, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 22:52:21,320 Verification error= 0.1%, loss= 0.0022
+2018-08-18 22:52:28,682 Iter 29500, Minibatch Loss= 0.0002, Training Accuracy= 0.9852, Minibatch error= 0.0%
+2018-08-18 22:52:31,803 Epoch 147, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 22:52:31,865 Verification error= 0.1%, loss= 0.0024
+2018-08-18 22:52:42,254 Epoch 148, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 22:52:42,318 Verification error= 0.1%, loss= 0.0025
+2018-08-18 22:52:52,821 Epoch 149, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 22:52:52,883 Verification error= 0.1%, loss= 0.0024
+2018-08-18 22:52:56,567 Optimization Finished!
+2018-08-18 22:52:58.101899: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 22:52:58.101992: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 22:52:58.102004: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 22:52:58.102012: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 22:52:58.102517: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:00,090 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:01,106 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:01.734713: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 22:53:01.734780: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 22:53:01.734792: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 22:53:01.734800: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 22:53:01.735220: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+/array/hdd/msmajdi/.local/lib/python3.5/site-packages/tf_unet-0.1.1-py3.5.egg/tf_unet/util.py:74: RuntimeWarning: invalid value encountered in true_divide
+  img /= np.amax(img)
+/array/ssd/msmajdi/code/Thalamus_CNN/OldMethod/TestData_V6_1.py:347: RuntimeWarning: divide by zero encountered in log10
+  LogLoss[int(SliceIdx[slInd])] = np.log10(Loss)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:03,560 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:04,548 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:05.087550: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 22:53:05.087624: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 22:53:05.087635: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 22:53:05.087643: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 22:53:05.088101: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:06,932 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:07,893 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:08.414820: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 22:53:08.414907: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 22:53:08.414918: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 22:53:08.414926: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 22:53:08.415385: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:10,373 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:11,310 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:11.809905: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 22:53:11.809975: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 22:53:11.809987: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 22:53:11.809994: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 22:53:11.810435: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:13,771 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:14,699 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:15.210868: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 22:53:15.210943: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 22:53:15.210955: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 22:53:15.210962: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 22:53:15.211408: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:17,001 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:17,979 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:18.500731: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 22:53:18.500799: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 22:53:18.500811: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 22:53:18.500829: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 22:53:18.501283: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:20,302 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:21,314 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:21.798543: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 22:53:21.798612: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 22:53:21.798624: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 22:53:21.798631: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 22:53:21.799070: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:23,585 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:24,613 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:25.121069: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 22:53:25.121141: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 22:53:25.121152: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 22:53:25.121160: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 22:53:25.121600: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:26,897 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:27,896 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:28.376794: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 22:53:28.376891: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 22:53:28.376912: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 22:53:28.376920: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 22:53:28.377493: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:30,133 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:31,133 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:31.674886: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 22:53:31.674956: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 22:53:31.674968: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 22:53:31.674975: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 22:53:31.692994: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:33,545 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:34,553 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:35.051983: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 22:53:35.052049: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 22:53:35.052061: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 22:53:35.052068: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 22:53:35.052511: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:36,794 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:37,703 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:38.205822: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 22:53:38.205889: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 22:53:38.205901: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 22:53:38.205908: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 22:53:38.206331: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:39,985 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:40,902 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:41.469598: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 22:53:41.469673: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 22:53:41.469684: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 22:53:41.469692: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 22:53:41.470137: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:43,428 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:44,368 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON724_03272013/Train/model/model.ckpt
+2018-08-18 22:53:48,360 Layers 4, features 16, filter size 3x3, pool size: 2x2
+2018-08-18 22:53:50,614 Removing '/array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Test/Results'
+2018-08-18 22:53:50,615 Removing '/array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model'
+2018-08-18 22:53:50,615 Allocating '/array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Test/Results'
+2018-08-18 22:53:50,615 Allocating '/array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model'
+2018-08-18 22:53:50.615814: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 22:53:50.615860: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 22:53:50.615883: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 22:53:50.615891: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 22:53:50.616318: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+2018-08-18 22:53:51,665 Verification error= 98.0%, loss= 0.7051
+2018-08-18 22:53:52,319 Start optimization
+2018-08-18 22:53:53,461 Iter 0, Minibatch Loss= 0.6634, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 22:54:02,039 Epoch 0, Average loss: 0.0357, learning rate: 0.0010
+2018-08-18 22:54:02,128 Verification error= 0.2%, loss= 0.0131
+2018-08-18 22:54:11,104 Epoch 1, Average loss: 0.0093, learning rate: 0.0010
+2018-08-18 22:54:11,193 Verification error= 0.2%, loss= 0.0081
+2018-08-18 22:54:15,985 Iter 500, Minibatch Loss= 0.0047, Training Accuracy= 0.9990, Minibatch error= 0.1%
+2018-08-18 22:54:19,793 Epoch 2, Average loss: 0.0062, learning rate: 0.0010
+2018-08-18 22:54:19,877 Verification error= 0.2%, loss= 0.0085
+2018-08-18 22:54:28,450 Epoch 3, Average loss: 0.0042, learning rate: 0.0010
+2018-08-18 22:54:28,540 Verification error= 0.2%, loss= 0.0037
+2018-08-18 22:54:36,983 Epoch 4, Average loss: 0.0034, learning rate: 0.0010
+2018-08-18 22:54:37,067 Verification error= 0.2%, loss= 0.0042
+2018-08-18 22:54:38,790 Iter 1000, Minibatch Loss= 0.0072, Training Accuracy= 0.9945, Minibatch error= 0.5%
+2018-08-18 22:54:46,773 Epoch 5, Average loss: 0.0033, learning rate: 0.0010
+2018-08-18 22:54:46,887 Verification error= 0.2%, loss= 0.0047
+2018-08-18 22:54:55,663 Epoch 6, Average loss: 0.0031, learning rate: 0.0010
+2018-08-18 22:54:55,746 Verification error= 0.2%, loss= 0.0037
+2018-08-18 22:55:00,404 Iter 1500, Minibatch Loss= 0.0045, Training Accuracy= 0.9980, Minibatch error= 0.2%
+2018-08-18 22:55:04,551 Epoch 7, Average loss: 0.0031, learning rate: 0.0010
+2018-08-18 22:55:04,634 Verification error= 0.1%, loss= 0.0035
+2018-08-18 22:55:13,343 Epoch 8, Average loss: 0.0028, learning rate: 0.0010
+2018-08-18 22:55:13,427 Verification error= 0.1%, loss= 0.0036
+2018-08-18 22:55:22,216 Epoch 9, Average loss: 0.0029, learning rate: 0.0010
+2018-08-18 22:55:22,306 Verification error= 0.1%, loss= 0.0031
+2018-08-18 22:55:23,170 Iter 2000, Minibatch Loss= 0.0000, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 22:55:31,187 Epoch 10, Average loss: 0.0029, learning rate: 0.0010
+2018-08-18 22:55:31,270 Verification error= 0.1%, loss= 0.0038
+2018-08-18 22:55:40,156 Epoch 11, Average loss: 0.0029, learning rate: 0.0010
+2018-08-18 22:55:40,261 Verification error= 0.1%, loss= 0.0034
+2018-08-18 22:55:45,012 Iter 2500, Minibatch Loss= 0.0000, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 22:55:49,089 Epoch 12, Average loss: 0.0027, learning rate: 0.0010
+2018-08-18 22:55:49,177 Verification error= 0.1%, loss= 0.0034
+2018-08-18 22:55:58,002 Epoch 13, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 22:55:58,092 Verification error= 0.1%, loss= 0.0033
+2018-08-18 22:56:06,862 Epoch 14, Average loss: 0.0031, learning rate: 0.0010
+2018-08-18 22:56:06,940 Verification error= 0.1%, loss= 0.0032
+2018-08-18 22:56:07,866 Iter 3000, Minibatch Loss= 0.0000, Training Accuracy= 0.9988, Minibatch error= 0.0%
+2018-08-18 22:56:15,819 Epoch 15, Average loss: 0.0028, learning rate: 0.0010
+2018-08-18 22:56:15,903 Verification error= 0.1%, loss= 0.0030
+2018-08-18 22:56:24,635 Epoch 16, Average loss: 0.0027, learning rate: 0.0010
+2018-08-18 22:56:24,723 Verification error= 0.1%, loss= 0.0035
+2018-08-18 22:56:29,578 Iter 3500, Minibatch Loss= 0.0001, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 22:56:33,706 Epoch 17, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 22:56:33,792 Verification error= 0.1%, loss= 0.0031
+2018-08-18 22:56:42,745 Epoch 18, Average loss: 0.0027, learning rate: 0.0010
+2018-08-18 22:56:42,832 Verification error= 0.1%, loss= 0.0033
+2018-08-18 22:56:51,926 Epoch 19, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 22:56:52,003 Verification error= 0.1%, loss= 0.0033
+2018-08-18 22:56:53,037 Iter 4000, Minibatch Loss= 0.0000, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 22:57:01,039 Epoch 20, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 22:57:01,123 Verification error= 0.1%, loss= 0.0030
+2018-08-18 22:57:10,288 Epoch 21, Average loss: 0.0027, learning rate: 0.0010
+2018-08-18 22:57:10,372 Verification error= 0.1%, loss= 0.0032
+2018-08-18 22:57:15,347 Iter 4500, Minibatch Loss= 0.0000, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 22:57:19,454 Epoch 22, Average loss: 0.0028, learning rate: 0.0010
+2018-08-18 22:57:19,540 Verification error= 0.1%, loss= 0.0033
+2018-08-18 22:57:28,682 Epoch 23, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 22:57:28,764 Verification error= 0.1%, loss= 0.0038
+2018-08-18 22:57:38,103 Epoch 24, Average loss: 0.0027, learning rate: 0.0010
+2018-08-18 22:57:38,189 Verification error= 0.1%, loss= 0.0034
+2018-08-18 22:57:39,308 Iter 5000, Minibatch Loss= 0.0003, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 22:57:47,535 Epoch 25, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 22:57:47,618 Verification error= 0.1%, loss= 0.0032
+2018-08-18 22:57:56,948 Epoch 26, Average loss: 0.0027, learning rate: 0.0010
+2018-08-18 22:57:57,018 Verification error= 0.1%, loss= 0.0030
+2018-08-18 22:58:02,414 Iter 5500, Minibatch Loss= 0.0000, Training Accuracy= 0.9995, Minibatch error= 0.0%
+2018-08-18 22:58:06,375 Epoch 27, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 22:58:06,451 Verification error= 0.1%, loss= 0.0032
+2018-08-18 22:58:15,686 Epoch 28, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 22:58:15,754 Verification error= 0.1%, loss= 0.0031
+2018-08-18 22:58:24,995 Epoch 29, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 22:58:25,065 Verification error= 0.1%, loss= 0.0030
+2018-08-18 22:58:26,308 Iter 6000, Minibatch Loss= 0.0028, Training Accuracy= 0.9854, Minibatch error= 0.1%
+2018-08-18 22:58:34,235 Epoch 30, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 22:58:34,302 Verification error= 0.1%, loss= 0.0029
+2018-08-18 22:58:43,466 Epoch 31, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 22:58:43,533 Verification error= 0.1%, loss= 0.0028
+2018-08-18 22:58:49,056 Iter 6500, Minibatch Loss= 0.0047, Training Accuracy= 0.9980, Minibatch error= 0.2%
+2018-08-18 22:58:52,969 Epoch 32, Average loss: 0.0028, learning rate: 0.0010
+2018-08-18 22:58:53,041 Verification error= 0.2%, loss= 0.0036
+2018-08-18 22:59:03,047 Epoch 33, Average loss: 0.0029, learning rate: 0.0010
+2018-08-18 22:59:03,139 Verification error= 0.1%, loss= 0.0031
+2018-08-18 22:59:12,103 Epoch 34, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 22:59:12,190 Verification error= 0.1%, loss= 0.0029
+2018-08-18 22:59:13,550 Iter 7000, Minibatch Loss= 0.0039, Training Accuracy= 0.9794, Minibatch error= 0.2%
+2018-08-18 22:59:21,337 Epoch 35, Average loss: 0.0028, learning rate: 0.0010
+2018-08-18 22:59:21,427 Verification error= 0.1%, loss= 0.0028
+2018-08-18 22:59:30,447 Epoch 36, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 22:59:30,530 Verification error= 0.1%, loss= 0.0026
+2018-08-18 22:59:36,007 Iter 7500, Minibatch Loss= 0.0002, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 22:59:39,638 Epoch 37, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 22:59:39,724 Verification error= 0.1%, loss= 0.0031
+2018-08-18 22:59:48,746 Epoch 38, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 22:59:48,828 Verification error= 0.1%, loss= 0.0030
+2018-08-18 22:59:57,836 Epoch 39, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 22:59:57,919 Verification error= 0.1%, loss= 0.0029
+2018-08-18 22:59:59,255 Iter 8000, Minibatch Loss= 0.0000, Training Accuracy= 0.9931, Minibatch error= 0.0%
+2018-08-18 23:00:06,975 Epoch 40, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 23:00:07,067 Verification error= 0.1%, loss= 0.0029
+2018-08-18 23:00:16,042 Epoch 41, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:00:16,133 Verification error= 0.1%, loss= 0.0029
+2018-08-18 23:00:21,763 Iter 8500, Minibatch Loss= 0.0000, Training Accuracy= 0.6914, Minibatch error= 0.0%
+2018-08-18 23:00:25,301 Epoch 42, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 23:00:25,386 Verification error= 0.1%, loss= 0.0028
+2018-08-18 23:00:34,552 Epoch 43, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 23:00:34,642 Verification error= 0.1%, loss= 0.0030
+2018-08-18 23:00:43,790 Epoch 44, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:00:43,876 Verification error= 0.1%, loss= 0.0027
+2018-08-18 23:00:45,423 Iter 9000, Minibatch Loss= 0.0000, Training Accuracy= 0.9937, Minibatch error= 0.0%
+2018-08-18 23:00:53,129 Epoch 45, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:00:53,213 Verification error= 0.1%, loss= 0.0028
+2018-08-18 23:01:02,418 Epoch 46, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 23:01:02,501 Verification error= 0.1%, loss= 0.0029
+2018-08-18 23:01:07,588 Iter 9500, Minibatch Loss= 0.0047, Training Accuracy= 0.9976, Minibatch error= 0.2%
+2018-08-18 23:01:11,596 Epoch 47, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 23:01:11,678 Verification error= 0.1%, loss= 0.0027
+2018-08-18 23:01:20,841 Epoch 48, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:01:20,929 Verification error= 0.1%, loss= 0.0028
+2018-08-18 23:01:30,135 Epoch 49, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:01:30,226 Verification error= 0.1%, loss= 0.0028
+2018-08-18 23:01:31,836 Iter 10000, Minibatch Loss= 0.0003, Training Accuracy= 0.9293, Minibatch error= 0.0%
+2018-08-18 23:01:39,298 Epoch 50, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 23:01:39,378 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:01:48,422 Epoch 51, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:01:48,506 Verification error= 0.1%, loss= 0.0028
+2018-08-18 23:01:53,715 Iter 10500, Minibatch Loss= 0.0002, Training Accuracy= 0.9270, Minibatch error= 0.0%
+2018-08-18 23:01:57,873 Epoch 52, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 23:01:57,959 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:02:07,047 Epoch 53, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:02:07,129 Verification error= 0.1%, loss= 0.0027
+2018-08-18 23:02:16,010 Epoch 54, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:02:16,094 Verification error= 0.1%, loss= 0.0027
+2018-08-18 23:02:17,854 Iter 11000, Minibatch Loss= 0.0000, Training Accuracy= 0.9984, Minibatch error= 0.0%
+2018-08-18 23:02:25,479 Epoch 55, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:02:25,562 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:02:35,828 Epoch 56, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:02:35,918 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:02:41,462 Iter 11500, Minibatch Loss= 0.0014, Training Accuracy= 0.9998, Minibatch error= 0.0%
+2018-08-18 23:02:45,517 Epoch 57, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:02:45,606 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:02:55,213 Epoch 58, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:02:55,300 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:03:05,050 Epoch 59, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:03:05,134 Verification error= 0.1%, loss= 0.0027
+2018-08-18 23:03:06,953 Iter 12000, Minibatch Loss= 0.0049, Training Accuracy= 0.9977, Minibatch error= 0.2%
+2018-08-18 23:03:14,909 Epoch 60, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 23:03:14,992 Verification error= 0.1%, loss= 0.0033
+2018-08-18 23:03:24,832 Epoch 61, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:03:24,920 Verification error= 0.1%, loss= 0.0028
+2018-08-18 23:03:30,791 Iter 12500, Minibatch Loss= 0.0057, Training Accuracy= 0.9969, Minibatch error= 0.3%
+2018-08-18 23:03:34,836 Epoch 62, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 23:03:34,920 Verification error= 0.1%, loss= 0.0028
+2018-08-18 23:03:44,902 Epoch 63, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:03:44,988 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:03:55,006 Epoch 64, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:03:55,074 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:03:57,018 Iter 13000, Minibatch Loss= 0.0003, Training Accuracy= 0.7910, Minibatch error= 0.0%
+2018-08-18 23:04:05,152 Epoch 65, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 23:04:05,220 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:04:15,113 Epoch 66, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 23:04:15,183 Verification error= 0.1%, loss= 0.0027
+2018-08-18 23:04:21,233 Iter 13500, Minibatch Loss= 0.0029, Training Accuracy= 0.9974, Minibatch error= 0.1%
+2018-08-18 23:04:25,104 Epoch 67, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:04:25,171 Verification error= 0.1%, loss= 0.0027
+2018-08-18 23:04:34,923 Epoch 68, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:04:34,985 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:04:44,726 Epoch 69, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:04:44,793 Verification error= 0.1%, loss= 0.0027
+2018-08-18 23:04:46,735 Iter 14000, Minibatch Loss= 0.0018, Training Accuracy= 0.9638, Minibatch error= 0.0%
+2018-08-18 23:04:54,512 Epoch 70, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:04:54,578 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:05:04,263 Epoch 71, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:05:04,339 Verification error= 0.1%, loss= 0.0027
+2018-08-18 23:05:10,469 Iter 14500, Minibatch Loss= 0.0036, Training Accuracy= 0.9797, Minibatch error= 0.2%
+2018-08-18 23:05:14,100 Epoch 72, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:05:14,168 Verification error= 0.1%, loss= 0.0025
+2018-08-18 23:05:23,833 Epoch 73, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:05:23,903 Verification error= 0.1%, loss= 0.0028
+2018-08-18 23:05:33,504 Epoch 74, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:05:33,572 Verification error= 0.1%, loss= 0.0028
+2018-08-18 23:05:35,636 Iter 15000, Minibatch Loss= 0.0025, Training Accuracy= 0.9932, Minibatch error= 0.1%
+2018-08-18 23:05:43,251 Epoch 75, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 23:05:43,319 Verification error= 0.1%, loss= 0.0027
+2018-08-18 23:05:53,019 Epoch 76, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:05:53,085 Verification error= 0.1%, loss= 0.0027
+2018-08-18 23:06:00,220 Iter 15500, Minibatch Loss= 0.0002, Training Accuracy= 0.9804, Minibatch error= 0.0%
+2018-08-18 23:06:03,490 Epoch 77, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:06:03,580 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:06:13,083 Epoch 78, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 23:06:13,167 Verification error= 0.1%, loss= 0.0025
+2018-08-18 23:06:22,554 Epoch 79, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:06:22,642 Verification error= 0.1%, loss= 0.0025
+2018-08-18 23:06:24,905 Iter 16000, Minibatch Loss= 0.0041, Training Accuracy= 0.9968, Minibatch error= 0.2%
+2018-08-18 23:06:32,127 Epoch 80, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:06:32,217 Verification error= 0.1%, loss= 0.0028
+2018-08-18 23:06:41,506 Epoch 81, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:06:41,593 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:06:47,562 Iter 16500, Minibatch Loss= 0.0005, Training Accuracy= 0.9151, Minibatch error= 0.0%
+2018-08-18 23:06:50,879 Epoch 82, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:06:50,961 Verification error= 0.1%, loss= 0.0025
+2018-08-18 23:07:00,339 Epoch 83, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:07:00,421 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:07:09,883 Epoch 84, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:07:09,973 Verification error= 0.1%, loss= 0.0025
+2018-08-18 23:07:12,274 Iter 17000, Minibatch Loss= 0.0029, Training Accuracy= 0.9505, Minibatch error= 0.1%
+2018-08-18 23:07:19,342 Epoch 85, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:07:19,426 Verification error= 0.1%, loss= 0.0025
+2018-08-18 23:07:28,739 Epoch 86, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:07:28,823 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:07:34,698 Iter 17500, Minibatch Loss= 0.0041, Training Accuracy= 0.9325, Minibatch error= 0.2%
+2018-08-18 23:07:38,272 Epoch 87, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:07:38,356 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:07:47,802 Epoch 88, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:07:47,885 Verification error= 0.1%, loss= 0.0025
+2018-08-18 23:07:57,279 Epoch 89, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:07:57,367 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:07:59,874 Iter 18000, Minibatch Loss= 0.0000, Training Accuracy= 0.9968, Minibatch error= 0.0%
+2018-08-18 23:08:07,084 Epoch 90, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:08:07,169 Verification error= 0.1%, loss= 0.0025
+2018-08-18 23:08:16,688 Epoch 91, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:08:16,773 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:08:22,308 Iter 18500, Minibatch Loss= 0.0000, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 23:08:26,304 Epoch 92, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:08:26,387 Verification error= 0.1%, loss= 0.0025
+2018-08-18 23:08:36,011 Epoch 93, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 23:08:36,102 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:08:45,633 Epoch 94, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:08:45,723 Verification error= 0.1%, loss= 0.0025
+2018-08-18 23:08:48,248 Iter 19000, Minibatch Loss= 0.0000, Training Accuracy= 0.9005, Minibatch error= 0.0%
+2018-08-18 23:08:55,301 Epoch 95, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:08:55,391 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:09:06,265 Epoch 96, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:09:06,347 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:09:12,486 Iter 19500, Minibatch Loss= 0.0016, Training Accuracy= 0.9446, Minibatch error= 0.0%
+2018-08-18 23:09:16,512 Epoch 97, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:09:16,599 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:09:26,907 Epoch 98, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:09:26,988 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:09:37,250 Epoch 99, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:09:37,339 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:09:40,132 Iter 20000, Minibatch Loss= 0.0001, Training Accuracy= 0.7225, Minibatch error= 0.0%
+2018-08-18 23:09:48,109 Epoch 100, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:09:48,201 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:09:58,751 Epoch 101, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:09:58,814 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:10:05,344 Iter 20500, Minibatch Loss= 0.0031, Training Accuracy= 0.9915, Minibatch error= 0.1%
+2018-08-18 23:10:09,301 Epoch 102, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:10:09,368 Verification error= 0.1%, loss= 0.0027
+2018-08-18 23:10:19,905 Epoch 103, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:10:19,973 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:10:30,367 Epoch 104, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:10:30,435 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:10:33,063 Iter 21000, Minibatch Loss= 0.0031, Training Accuracy= 0.8906, Minibatch error= 0.1%
+2018-08-18 23:10:40,820 Epoch 105, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:10:40,888 Verification error= 0.1%, loss= 0.0025
+2018-08-18 23:10:51,198 Epoch 106, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:10:51,264 Verification error= 0.1%, loss= 0.0025
+2018-08-18 23:10:58,052 Iter 21500, Minibatch Loss= 0.0037, Training Accuracy= 0.9774, Minibatch error= 0.2%
+2018-08-18 23:11:01,499 Epoch 107, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:11:01,567 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:11:11,607 Epoch 108, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:11:11,670 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:11:21,624 Epoch 109, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:11:21,692 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:11:24,390 Iter 22000, Minibatch Loss= 0.0001, Training Accuracy= 0.8963, Minibatch error= 0.0%
+2018-08-18 23:11:31,557 Epoch 110, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:11:31,626 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:11:41,817 Epoch 111, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:11:41,880 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:11:48,812 Iter 22500, Minibatch Loss= 0.0040, Training Accuracy= 0.9895, Minibatch error= 0.2%
+2018-08-18 23:11:51,986 Epoch 112, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:11:52,053 Verification error= 0.1%, loss= 0.0037
+2018-08-18 23:12:02,086 Epoch 113, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:12:02,149 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:12:12,589 Epoch 114, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:12:12,678 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:12:15,630 Iter 23000, Minibatch Loss= 0.0002, Training Accuracy= 0.9610, Minibatch error= 0.0%
+2018-08-18 23:12:22,502 Epoch 115, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:12:22,584 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:12:32,303 Epoch 116, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:12:32,386 Verification error= 0.1%, loss= 0.0025
+2018-08-18 23:12:38,853 Iter 23500, Minibatch Loss= 0.0027, Training Accuracy= 0.9985, Minibatch error= 0.1%
+2018-08-18 23:12:42,176 Epoch 117, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:12:42,258 Verification error= 0.1%, loss= 0.0022
+2018-08-18 23:12:51,948 Epoch 118, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:12:52,037 Verification error= 0.1%, loss= 0.0022
+2018-08-18 23:13:01,635 Epoch 119, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:13:01,719 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:13:04,678 Iter 24000, Minibatch Loss= 0.0005, Training Accuracy= 0.9942, Minibatch error= 0.0%
+2018-08-18 23:13:11,589 Epoch 120, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:13:11,674 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:13:21,439 Epoch 121, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:13:21,525 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:13:27,778 Iter 24500, Minibatch Loss= 0.0002, Training Accuracy= 0.9392, Minibatch error= 0.0%
+2018-08-18 23:13:31,306 Epoch 122, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 23:13:31,388 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:13:41,125 Epoch 123, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:13:41,209 Verification error= 0.1%, loss= 0.0022
+2018-08-18 23:13:51,098 Epoch 124, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 23:13:51,183 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:13:54,246 Iter 25000, Minibatch Loss= 0.0000, Training Accuracy= 0.9764, Minibatch error= 0.0%
+2018-08-18 23:14:01,139 Epoch 125, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:14:01,222 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:14:11,088 Epoch 126, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:14:11,168 Verification error= 0.1%, loss= 0.0022
+2018-08-18 23:14:17,157 Iter 25500, Minibatch Loss= 0.0027, Training Accuracy= 0.9988, Minibatch error= 0.1%
+2018-08-18 23:14:20,963 Epoch 127, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:14:21,048 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:14:30,868 Epoch 128, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:14:30,953 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:14:40,850 Epoch 129, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:14:40,937 Verification error= 0.1%, loss= 0.0025
+2018-08-18 23:14:43,943 Iter 26000, Minibatch Loss= 0.0001, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 23:14:50,837 Epoch 130, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:14:50,925 Verification error= 0.1%, loss= 0.0022
+2018-08-18 23:15:02,139 Epoch 131, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 23:15:02,223 Verification error= 0.1%, loss= 0.0025
+2018-08-18 23:15:08,678 Iter 26500, Minibatch Loss= 0.0010, Training Accuracy= 0.9998, Minibatch error= 0.0%
+2018-08-18 23:15:12,683 Epoch 132, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:15:12,768 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:15:23,423 Epoch 133, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 23:15:23,514 Verification error= 0.1%, loss= 0.0022
+2018-08-18 23:15:34,141 Epoch 134, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:15:34,226 Verification error= 0.1%, loss= 0.0021
+2018-08-18 23:15:37,377 Iter 27000, Minibatch Loss= 0.0027, Training Accuracy= 0.9794, Minibatch error= 0.1%
+2018-08-18 23:15:44,872 Epoch 135, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:15:44,954 Verification error= 0.1%, loss= 0.0021
+2018-08-18 23:15:55,849 Epoch 136, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:15:55,932 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:16:02,847 Iter 27500, Minibatch Loss= 0.0036, Training Accuracy= 0.9879, Minibatch error= 0.2%
+2018-08-18 23:16:06,811 Epoch 137, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:16:06,893 Verification error= 0.1%, loss= 0.0021
+2018-08-18 23:16:18,121 Epoch 138, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:16:18,207 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:16:29,377 Epoch 139, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 23:16:29,458 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:16:32,907 Iter 28000, Minibatch Loss= 0.0000, Training Accuracy= 0.7580, Minibatch error= 0.0%
+2018-08-18 23:16:40,800 Epoch 140, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:16:40,891 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:16:52,349 Epoch 141, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 23:16:52,415 Verification error= 0.1%, loss= 0.0022
+2018-08-18 23:16:59,598 Iter 28500, Minibatch Loss= 0.0000, Training Accuracy= 0.9751, Minibatch error= 0.0%
+2018-08-18 23:17:03,556 Epoch 142, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:17:03,637 Verification error= 0.1%, loss= 0.0029
+2018-08-18 23:17:14,649 Epoch 143, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:17:14,733 Verification error= 0.1%, loss= 0.0022
+2018-08-18 23:17:25,355 Epoch 144, Average loss: 0.0017, learning rate: 0.0010
+2018-08-18 23:17:25,439 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:17:28,687 Iter 29000, Minibatch Loss= 0.0021, Training Accuracy= 0.9143, Minibatch error= 0.1%
+2018-08-18 23:17:36,110 Epoch 145, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:17:36,192 Verification error= 0.1%, loss= 0.0022
+2018-08-18 23:17:44,817 Epoch 146, Average loss: 0.0017, learning rate: 0.0010
+2018-08-18 23:17:44,882 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:17:51,027 Iter 29500, Minibatch Loss= 0.0025, Training Accuracy= 0.9904, Minibatch error= 0.1%
+2018-08-18 23:17:53,825 Epoch 147, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 23:17:53,895 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:18:03,658 Epoch 148, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:18:03,723 Verification error= 0.1%, loss= 0.0022
+2018-08-18 23:18:12,840 Epoch 149, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:18:12,907 Verification error= 0.1%, loss= 0.0022
+2018-08-18 23:18:16,370 Optimization Finished!
+2018-08-18 23:18:18.073836: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:18:18.073962: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:18:18.073985: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:18:18.074013: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:18:18.074658: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:20,102 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:21,191 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:21.775682: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:18:21.775756: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:18:21.775767: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:18:21.775775: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:18:21.776238: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:23,798 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:24,842 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:25.406800: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:18:25.406871: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:18:25.406882: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:18:25.406890: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:18:25.407336: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:27,451 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:28,445 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:29.038584: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:18:29.038663: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:18:29.038675: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:18:29.038682: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:18:29.060579: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:31,033 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:31,987 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:32.518726: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:18:32.518807: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:18:32.518819: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:18:32.518826: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:18:32.519256: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:34,388 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:35,449 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:35.967701: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:18:35.967771: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:18:35.967782: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:18:35.967789: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:18:35.972924: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:37,954 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:38,897 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:39.425589: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:18:39.425659: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:18:39.425671: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:18:39.425678: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:18:39.426120: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:41,263 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:42,311 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:42.877748: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:18:42.877824: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:18:42.877836: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:18:42.877843: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:18:42.894056: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:44,765 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:45,743 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:46.271019: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:18:46.271111: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:18:46.271133: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:18:46.271149: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:18:46.271723: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:48,148 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:49,186 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:49.687404: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:18:49.687474: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:18:49.687485: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:18:49.687492: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:18:49.699407: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:51,651 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:52,588 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:53.123438: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:18:53.123512: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:18:53.123524: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:18:53.123532: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:18:53.123956: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:55,275 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:56,230 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:56.735607: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:18:56.735685: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:18:56.735697: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:18:56.735705: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:18:56.736151: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:58,611 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:18:59,552 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:19:00.065721: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:19:00.065788: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:19:00.065799: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:19:00.065807: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:19:00.066247: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:19:01,895 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:19:02,872 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:19:03.424386: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:19:03.424454: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:19:03.424466: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:19:03.424473: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:19:03.441078: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:19:05,359 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:19:06,422 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ctrl_921_07122013_MP/Train/model/model.ckpt
+2018-08-18 23:19:10,375 Layers 4, features 16, filter size 3x3, pool size: 2x2
+2018-08-18 23:19:12,720 Removing '/array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Test/Results'
+2018-08-18 23:19:12,721 Removing '/array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model'
+2018-08-18 23:19:12,721 Allocating '/array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Test/Results'
+2018-08-18 23:19:12,721 Allocating '/array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model'
+2018-08-18 23:19:12.722124: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:19:12.722173: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:19:12.722184: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:19:12.722191: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:19:12.722625: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+2018-08-18 23:19:13,652 Verification error= 64.5%, loss= 0.6952
+2018-08-18 23:19:14,322 Start optimization
+2018-08-18 23:19:15,438 Iter 0, Minibatch Loss= 0.6637, Training Accuracy= 0.9986, Minibatch error= 0.1%
+2018-08-18 23:19:24,155 Epoch 0, Average loss: 0.0384, learning rate: 0.0010
+2018-08-18 23:19:24,248 Verification error= 0.2%, loss= 0.0114
+2018-08-18 23:19:33,185 Epoch 1, Average loss: 0.0085, learning rate: 0.0010
+2018-08-18 23:19:33,276 Verification error= 0.2%, loss= 0.0066
+2018-08-18 23:19:37,839 Iter 500, Minibatch Loss= 0.0083, Training Accuracy= 0.9964, Minibatch error= 0.4%
+2018-08-18 23:19:41,907 Epoch 2, Average loss: 0.0051, learning rate: 0.0010
+2018-08-18 23:19:41,991 Verification error= 0.2%, loss= 0.0051
+2018-08-18 23:19:50,657 Epoch 3, Average loss: 0.0036, learning rate: 0.0010
+2018-08-18 23:19:50,745 Verification error= 0.2%, loss= 0.0043
+2018-08-18 23:19:59,248 Epoch 4, Average loss: 0.0038, learning rate: 0.0010
+2018-08-18 23:19:59,332 Verification error= 0.2%, loss= 0.0052
+2018-08-18 23:20:00,114 Iter 1000, Minibatch Loss= 0.0055, Training Accuracy= 0.9989, Minibatch error= 0.1%
+2018-08-18 23:20:07,923 Epoch 5, Average loss: 0.0032, learning rate: 0.0010
+2018-08-18 23:20:08,008 Verification error= 0.2%, loss= 0.0037
+2018-08-18 23:20:16,533 Epoch 6, Average loss: 0.0033, learning rate: 0.0010
+2018-08-18 23:20:16,614 Verification error= 0.2%, loss= 0.0041
+2018-08-18 23:20:21,223 Iter 1500, Minibatch Loss= 0.0021, Training Accuracy= 0.9996, Minibatch error= 0.0%
+2018-08-18 23:20:25,262 Epoch 7, Average loss: 0.0031, learning rate: 0.0010
+2018-08-18 23:20:25,349 Verification error= 0.1%, loss= 0.0035
+2018-08-18 23:20:33,879 Epoch 8, Average loss: 0.0031, learning rate: 0.0010
+2018-08-18 23:20:33,961 Verification error= 0.1%, loss= 0.0036
+2018-08-18 23:20:42,552 Epoch 9, Average loss: 0.0028, learning rate: 0.0010
+2018-08-18 23:20:42,641 Verification error= 0.2%, loss= 0.0034
+2018-08-18 23:20:43,508 Iter 2000, Minibatch Loss= 0.0000, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 23:20:51,344 Epoch 10, Average loss: 0.0030, learning rate: 0.0010
+2018-08-18 23:20:51,434 Verification error= 0.1%, loss= 0.0031
+2018-08-18 23:20:59,901 Epoch 11, Average loss: 0.0028, learning rate: 0.0010
+2018-08-18 23:20:59,988 Verification error= 0.1%, loss= 0.0031
+2018-08-18 23:21:04,567 Iter 2500, Minibatch Loss= 0.0059, Training Accuracy= 0.9972, Minibatch error= 0.3%
+2018-08-18 23:21:08,545 Epoch 12, Average loss: 0.0027, learning rate: 0.0010
+2018-08-18 23:21:08,629 Verification error= 0.1%, loss= 0.0032
+2018-08-18 23:21:17,205 Epoch 13, Average loss: 0.0031, learning rate: 0.0010
+2018-08-18 23:21:17,290 Verification error= 0.1%, loss= 0.0034
+2018-08-18 23:21:25,123 Epoch 14, Average loss: 0.0027, learning rate: 0.0010
+2018-08-18 23:21:25,207 Verification error= 0.1%, loss= 0.0034
+2018-08-18 23:21:26,203 Iter 3000, Minibatch Loss= 0.0041, Training Accuracy= 0.9983, Minibatch error= 0.2%
+2018-08-18 23:21:33,766 Epoch 15, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 23:21:33,853 Verification error= 0.2%, loss= 0.0036
+2018-08-18 23:21:42,365 Epoch 16, Average loss: 0.0029, learning rate: 0.0010
+2018-08-18 23:21:42,450 Verification error= 0.1%, loss= 0.0037
+2018-08-18 23:21:47,382 Iter 3500, Minibatch Loss= 0.0000, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 23:21:51,057 Epoch 17, Average loss: 0.0028, learning rate: 0.0010
+2018-08-18 23:21:51,141 Verification error= 0.1%, loss= 0.0031
+2018-08-18 23:21:59,817 Epoch 18, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 23:21:59,904 Verification error= 0.1%, loss= 0.0035
+2018-08-18 23:22:08,530 Epoch 19, Average loss: 0.0029, learning rate: 0.0010
+2018-08-18 23:22:08,614 Verification error= 0.1%, loss= 0.0035
+2018-08-18 23:22:12,003 Iter 4000, Minibatch Loss= 0.0020, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 23:22:19,587 Epoch 20, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 23:22:19,673 Verification error= 0.1%, loss= 0.0028
+2018-08-18 23:22:28,427 Epoch 21, Average loss: 0.0027, learning rate: 0.0010
+2018-08-18 23:22:28,514 Verification error= 0.1%, loss= 0.0031
+2018-08-18 23:22:33,361 Iter 4500, Minibatch Loss= 0.0031, Training Accuracy= 0.9987, Minibatch error= 0.1%
+2018-08-18 23:22:37,338 Epoch 22, Average loss: 0.0028, learning rate: 0.0010
+2018-08-18 23:22:37,422 Verification error= 0.1%, loss= 0.0034
+2018-08-18 23:22:46,216 Epoch 23, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 23:22:46,300 Verification error= 0.1%, loss= 0.0029
+2018-08-18 23:22:55,414 Epoch 24, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 23:22:55,498 Verification error= 0.1%, loss= 0.0031
+2018-08-18 23:22:56,716 Iter 5000, Minibatch Loss= 0.0047, Training Accuracy= 0.9976, Minibatch error= 0.2%
+2018-08-18 23:23:04,457 Epoch 25, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 23:23:04,546 Verification error= 0.1%, loss= 0.0030
+2018-08-18 23:23:13,582 Epoch 26, Average loss: 0.0031, learning rate: 0.0010
+2018-08-18 23:23:13,671 Verification error= 0.2%, loss= 0.0036
+2018-08-18 23:23:18,747 Iter 5500, Minibatch Loss= 0.0053, Training Accuracy= 0.9974, Minibatch error= 0.3%
+2018-08-18 23:23:22,737 Epoch 27, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 23:23:22,823 Verification error= 0.1%, loss= 0.0030
+2018-08-18 23:23:31,927 Epoch 28, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 23:23:32,009 Verification error= 0.1%, loss= 0.0028
+2018-08-18 23:23:41,112 Epoch 29, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 23:23:41,194 Verification error= 0.1%, loss= 0.0029
+2018-08-18 23:23:42,487 Iter 6000, Minibatch Loss= 0.0015, Training Accuracy= 0.9996, Minibatch error= 0.0%
+2018-08-18 23:23:50,355 Epoch 30, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:23:50,444 Verification error= 0.1%, loss= 0.0028
+2018-08-18 23:23:59,597 Epoch 31, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 23:23:59,683 Verification error= 0.1%, loss= 0.0030
+2018-08-18 23:24:05,006 Iter 6500, Minibatch Loss= 0.0031, Training Accuracy= 0.9989, Minibatch error= 0.1%
+2018-08-18 23:24:09,040 Epoch 32, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:24:09,125 Verification error= 0.1%, loss= 0.0028
+2018-08-18 23:24:18,492 Epoch 33, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 23:24:18,575 Verification error= 0.1%, loss= 0.0029
+2018-08-18 23:24:27,917 Epoch 34, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 23:24:27,998 Verification error= 0.1%, loss= 0.0032
+2018-08-18 23:24:29,311 Iter 7000, Minibatch Loss= 0.0036, Training Accuracy= 0.9989, Minibatch error= 0.1%
+2018-08-18 23:24:37,320 Epoch 35, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 23:24:37,407 Verification error= 0.1%, loss= 0.0028
+2018-08-18 23:24:46,879 Epoch 36, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 23:24:46,963 Verification error= 0.1%, loss= 0.0028
+2018-08-18 23:24:52,496 Iter 7500, Minibatch Loss= 0.0005, Training Accuracy= 0.9999, Minibatch error= 0.0%
+2018-08-18 23:24:56,464 Epoch 37, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:24:56,531 Verification error= 0.1%, loss= 0.0028
+2018-08-18 23:25:05,952 Epoch 38, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 23:25:06,020 Verification error= 0.1%, loss= 0.0027
+2018-08-18 23:25:15,435 Epoch 39, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 23:25:15,521 Verification error= 0.1%, loss= 0.0031
+2018-08-18 23:25:17,008 Iter 8000, Minibatch Loss= 0.0045, Training Accuracy= 0.9958, Minibatch error= 0.1%
+2018-08-18 23:25:25,014 Epoch 40, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:25:25,098 Verification error= 0.1%, loss= 0.0027
+2018-08-18 23:25:34,571 Epoch 41, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:25:34,655 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:25:40,183 Iter 8500, Minibatch Loss= 0.0005, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 23:25:44,149 Epoch 42, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:25:44,213 Verification error= 0.1%, loss= 0.0027
+2018-08-18 23:25:53,680 Epoch 43, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 23:25:53,753 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:26:03,258 Epoch 44, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:26:03,325 Verification error= 0.1%, loss= 0.0033
+2018-08-18 23:26:05,758 Iter 9000, Minibatch Loss= 0.0053, Training Accuracy= 0.9974, Minibatch error= 0.3%
+2018-08-18 23:26:13,250 Epoch 45, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:26:13,317 Verification error= 0.1%, loss= 0.0032
+2018-08-18 23:26:22,398 Epoch 46, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 23:26:22,466 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:26:28,134 Iter 9500, Minibatch Loss= 0.0054, Training Accuracy= 0.9979, Minibatch error= 0.2%
+2018-08-18 23:26:31,546 Epoch 47, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 23:26:31,605 Verification error= 0.1%, loss= 0.0025
+2018-08-18 23:26:40,652 Epoch 48, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:26:40,726 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:26:49,738 Epoch 49, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:26:49,827 Verification error= 0.1%, loss= 0.0029
+2018-08-18 23:26:51,479 Iter 10000, Minibatch Loss= 0.0013, Training Accuracy= 0.9996, Minibatch error= 0.0%
+2018-08-18 23:26:58,810 Epoch 50, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:26:58,898 Verification error= 0.1%, loss= 0.0027
+2018-08-18 23:27:07,911 Epoch 51, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:27:08,003 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:27:13,678 Iter 10500, Minibatch Loss= 0.0055, Training Accuracy= 0.9970, Minibatch error= 0.3%
+2018-08-18 23:27:17,030 Epoch 52, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:27:17,116 Verification error= 0.1%, loss= 0.0027
+2018-08-18 23:27:26,108 Epoch 53, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:27:26,197 Verification error= 0.1%, loss= 0.0027
+2018-08-18 23:27:35,310 Epoch 54, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 23:27:35,399 Verification error= 0.1%, loss= 0.0028
+2018-08-18 23:27:37,288 Iter 11000, Minibatch Loss= 0.0054, Training Accuracy= 0.9973, Minibatch error= 0.3%
+2018-08-18 23:27:44,705 Epoch 55, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:27:44,793 Verification error= 0.1%, loss= 0.0027
+2018-08-18 23:27:54,032 Epoch 56, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:27:54,116 Verification error= 0.1%, loss= 0.0025
+2018-08-18 23:27:59,994 Iter 11500, Minibatch Loss= 0.0021, Training Accuracy= 0.9987, Minibatch error= 0.1%
+2018-08-18 23:28:03,341 Epoch 57, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:28:03,426 Verification error= 0.1%, loss= 0.0029
+2018-08-18 23:28:12,555 Epoch 58, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:28:12,642 Verification error= 0.1%, loss= 0.0027
+2018-08-18 23:28:21,746 Epoch 59, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:28:21,832 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:28:23,699 Iter 12000, Minibatch Loss= 0.0016, Training Accuracy= 0.8114, Minibatch error= 0.1%
+2018-08-18 23:28:30,773 Epoch 60, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:28:30,860 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:28:40,034 Epoch 61, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:28:40,122 Verification error= 0.1%, loss= 0.0025
+2018-08-18 23:28:46,006 Iter 12500, Minibatch Loss= 0.0029, Training Accuracy= 0.8951, Minibatch error= 0.1%
+2018-08-18 23:28:49,432 Epoch 62, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 23:28:49,516 Verification error= 0.1%, loss= 0.0027
+2018-08-18 23:28:58,692 Epoch 63, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:28:58,779 Verification error= 0.1%, loss= 0.0025
+2018-08-18 23:29:08,057 Epoch 64, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:29:08,141 Verification error= 0.1%, loss= 0.0037
+2018-08-18 23:29:10,057 Iter 13000, Minibatch Loss= 0.0035, Training Accuracy= 0.9950, Minibatch error= 0.1%
+2018-08-18 23:29:17,334 Epoch 65, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:29:17,427 Verification error= 0.1%, loss= 0.0028
+2018-08-18 23:29:26,639 Epoch 66, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:29:26,733 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:29:32,840 Iter 13500, Minibatch Loss= 0.0035, Training Accuracy= 0.9984, Minibatch error= 0.2%
+2018-08-18 23:29:36,791 Epoch 67, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:29:36,876 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:29:46,007 Epoch 68, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:29:46,088 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:29:55,080 Epoch 69, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:29:55,165 Verification error= 0.1%, loss= 0.0022
+2018-08-18 23:29:57,274 Iter 14000, Minibatch Loss= 0.0042, Training Accuracy= 0.9980, Minibatch error= 0.2%
+2018-08-18 23:30:04,456 Epoch 70, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:30:04,541 Verification error= 0.1%, loss= 0.0022
+2018-08-18 23:30:13,741 Epoch 71, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:30:13,827 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:30:18,962 Iter 14500, Minibatch Loss= 0.0041, Training Accuracy= 0.9981, Minibatch error= 0.2%
+2018-08-18 23:30:22,873 Epoch 72, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:30:22,956 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:30:32,119 Epoch 73, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:30:32,204 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:30:41,308 Epoch 74, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:30:41,399 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:30:43,546 Iter 15000, Minibatch Loss= 0.0030, Training Accuracy= 0.8225, Minibatch error= 0.2%
+2018-08-18 23:30:50,752 Epoch 75, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:30:50,838 Verification error= 0.1%, loss= 0.0021
+2018-08-18 23:31:00,121 Epoch 76, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:31:00,208 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:31:05,598 Iter 15500, Minibatch Loss= 0.0016, Training Accuracy= 0.9428, Minibatch error= 0.1%
+2018-08-18 23:31:09,569 Epoch 77, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:31:09,653 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:31:18,903 Epoch 78, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:31:18,987 Verification error= 0.1%, loss= 0.0027
+2018-08-18 23:31:28,104 Epoch 79, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:31:28,191 Verification error= 0.1%, loss= 0.0025
+2018-08-18 23:31:30,461 Iter 16000, Minibatch Loss= 0.0000, Training Accuracy= 0.9629, Minibatch error= 0.0%
+2018-08-18 23:31:37,247 Epoch 80, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:31:37,335 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:31:46,680 Epoch 81, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:31:46,764 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:31:52,297 Iter 16500, Minibatch Loss= 0.0029, Training Accuracy= 0.9912, Minibatch error= 0.1%
+2018-08-18 23:31:56,191 Epoch 82, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:31:56,275 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:32:05,690 Epoch 83, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:32:05,780 Verification error= 0.1%, loss= 0.0031
+2018-08-18 23:32:15,179 Epoch 84, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:32:15,266 Verification error= 0.1%, loss= 0.0025
+2018-08-18 23:32:17,507 Iter 17000, Minibatch Loss= 0.0000, Training Accuracy= 0.9948, Minibatch error= 0.0%
+2018-08-18 23:32:25,224 Epoch 85, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:32:25,316 Verification error= 0.1%, loss= 0.0040
+2018-08-18 23:32:35,169 Epoch 86, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:32:35,253 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:32:42,083 Iter 17500, Minibatch Loss= 0.0000, Training Accuracy= 0.9987, Minibatch error= 0.0%
+2018-08-18 23:32:46,016 Epoch 87, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:32:46,108 Verification error= 0.1%, loss= 0.0022
+2018-08-18 23:32:56,012 Epoch 88, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:32:56,100 Verification error= 0.1%, loss= 0.0021
+2018-08-18 23:33:06,222 Epoch 89, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:33:06,305 Verification error= 0.1%, loss= 0.0021
+2018-08-18 23:33:08,784 Iter 18000, Minibatch Loss= 0.0020, Training Accuracy= 0.9622, Minibatch error= 0.1%
+2018-08-18 23:33:16,623 Epoch 90, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:33:16,707 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:33:26,974 Epoch 91, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:33:27,060 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:33:33,536 Iter 18500, Minibatch Loss= 0.0009, Training Accuracy= 0.9523, Minibatch error= 0.0%
+2018-08-18 23:33:37,486 Epoch 92, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:33:37,573 Verification error= 0.1%, loss= 0.0021
+2018-08-18 23:33:47,846 Epoch 93, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:33:47,936 Verification error= 0.1%, loss= 0.0022
+2018-08-18 23:33:58,302 Epoch 94, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:33:58,386 Verification error= 0.1%, loss= 0.0021
+2018-08-18 23:34:00,903 Iter 19000, Minibatch Loss= 0.0000, Training Accuracy= 0.9481, Minibatch error= 0.0%
+2018-08-18 23:34:08,717 Epoch 95, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:34:08,802 Verification error= 0.1%, loss= 0.0021
+2018-08-18 23:34:19,127 Epoch 96, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 23:34:19,211 Verification error= 0.1%, loss= 0.0022
+2018-08-18 23:34:25,745 Iter 19500, Minibatch Loss= 0.0001, Training Accuracy= 0.9658, Minibatch error= 0.0%
+2018-08-18 23:34:29,711 Epoch 97, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:34:29,797 Verification error= 0.1%, loss= 0.0021
+2018-08-18 23:34:40,343 Epoch 98, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:34:40,410 Verification error= 0.1%, loss= 0.0021
+2018-08-18 23:34:50,951 Epoch 99, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 23:34:51,037 Verification error= 0.1%, loss= 0.0021
+2018-08-18 23:34:53,576 Iter 20000, Minibatch Loss= 0.0001, Training Accuracy= 0.9729, Minibatch error= 0.0%
+2018-08-18 23:35:01,565 Epoch 100, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:35:01,649 Verification error= 0.1%, loss= 0.0022
+2018-08-18 23:35:12,245 Epoch 101, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:35:12,312 Verification error= 0.1%, loss= 0.0022
+2018-08-18 23:35:19,065 Iter 20500, Minibatch Loss= 0.0000, Training Accuracy= 0.9380, Minibatch error= 0.0%
+2018-08-18 23:35:22,901 Epoch 102, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:35:22,969 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:35:33,356 Epoch 103, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 23:35:33,425 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:35:43,885 Epoch 104, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 23:35:43,952 Verification error= 0.1%, loss= 0.0021
+2018-08-18 23:35:46,644 Iter 21000, Minibatch Loss= 0.0001, Training Accuracy= 0.9632, Minibatch error= 0.0%
+2018-08-18 23:35:54,287 Epoch 105, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 23:35:54,354 Verification error= 0.1%, loss= 0.0021
+2018-08-18 23:36:05,249 Epoch 106, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:36:05,318 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:36:12,436 Iter 21500, Minibatch Loss= 0.0000, Training Accuracy= 0.9611, Minibatch error= 0.0%
+2018-08-18 23:36:15,354 Epoch 107, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 23:36:15,438 Verification error= 0.1%, loss= 0.0021
+2018-08-18 23:36:25,186 Epoch 108, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:36:25,270 Verification error= 0.1%, loss= 0.0019
+2018-08-18 23:36:34,992 Epoch 109, Average loss: 0.0017, learning rate: 0.0010
+2018-08-18 23:36:35,076 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:36:37,879 Iter 22000, Minibatch Loss= 0.0000, Training Accuracy= 0.8319, Minibatch error= 0.0%
+2018-08-18 23:36:44,695 Epoch 110, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:36:44,788 Verification error= 0.1%, loss= 0.0022
+2018-08-18 23:36:54,473 Epoch 111, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 23:36:54,562 Verification error= 0.1%, loss= 0.0018
+2018-08-18 23:37:01,029 Iter 22500, Minibatch Loss= 0.0034, Training Accuracy= 0.9566, Minibatch error= 0.2%
+2018-08-18 23:37:04,471 Epoch 112, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:37:04,555 Verification error= 0.1%, loss= 0.0021
+2018-08-18 23:37:14,330 Epoch 113, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:37:14,416 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:37:24,228 Epoch 114, Average loss: 0.0016, learning rate: 0.0010
+2018-08-18 23:37:24,326 Verification error= 0.1%, loss= 0.0017
+2018-08-18 23:37:27,317 Iter 23000, Minibatch Loss= 0.0025, Training Accuracy= 0.9371, Minibatch error= 0.1%
+2018-08-18 23:37:34,501 Epoch 115, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:37:34,586 Verification error= 0.1%, loss= 0.0018
+2018-08-18 23:37:44,820 Epoch 116, Average loss: 0.0017, learning rate: 0.0010
+2018-08-18 23:37:44,903 Verification error= 0.1%, loss= 0.0021
+2018-08-18 23:37:50,852 Iter 23500, Minibatch Loss= 0.0000, Training Accuracy= 0.9880, Minibatch error= 0.0%
+2018-08-18 23:37:54,646 Epoch 117, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 23:37:54,728 Verification error= 0.1%, loss= 0.0021
+2018-08-18 23:38:04,485 Epoch 118, Average loss: 0.0017, learning rate: 0.0010
+2018-08-18 23:38:04,577 Verification error= 0.1%, loss= 0.0019
+2018-08-18 23:38:14,269 Epoch 119, Average loss: 0.0016, learning rate: 0.0010
+2018-08-18 23:38:14,352 Verification error= 0.1%, loss= 0.0018
+2018-08-18 23:38:17,363 Iter 24000, Minibatch Loss= 0.0023, Training Accuracy= 0.9991, Minibatch error= 0.1%
+2018-08-18 23:38:24,142 Epoch 120, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:38:24,231 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:38:34,088 Epoch 121, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:38:34,171 Verification error= 0.1%, loss= 0.0019
+2018-08-18 23:38:40,081 Iter 24500, Minibatch Loss= 0.0003, Training Accuracy= 0.8099, Minibatch error= 0.0%
+2018-08-18 23:38:44,005 Epoch 122, Average loss: 0.0015, learning rate: 0.0010
+2018-08-18 23:38:44,088 Verification error= 0.1%, loss= 0.0018
+2018-08-18 23:38:55,109 Epoch 123, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 23:38:55,192 Verification error= 0.1%, loss= 0.0018
+2018-08-18 23:39:05,574 Epoch 124, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 23:39:05,660 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:39:08,774 Iter 25000, Minibatch Loss= 0.0011, Training Accuracy= 0.9873, Minibatch error= 0.0%
+2018-08-18 23:39:16,072 Epoch 125, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 23:39:16,157 Verification error= 0.1%, loss= 0.0019
+2018-08-18 23:39:26,611 Epoch 126, Average loss: 0.0017, learning rate: 0.0010
+2018-08-18 23:39:26,693 Verification error= 0.1%, loss= 0.0019
+2018-08-18 23:39:33,191 Iter 25500, Minibatch Loss= 0.0000, Training Accuracy= 0.9601, Minibatch error= 0.0%
+2018-08-18 23:39:37,156 Epoch 127, Average loss: 0.0017, learning rate: 0.0010
+2018-08-18 23:39:37,250 Verification error= 0.1%, loss= 0.0018
+2018-08-18 23:39:47,878 Epoch 128, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 23:39:47,969 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:39:58,689 Epoch 129, Average loss: 0.0017, learning rate: 0.0010
+2018-08-18 23:39:58,775 Verification error= 0.1%, loss= 0.0018
+2018-08-18 23:40:01,973 Iter 26000, Minibatch Loss= 0.0035, Training Accuracy= 0.9982, Minibatch error= 0.2%
+2018-08-18 23:40:09,667 Epoch 130, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:40:09,759 Verification error= 0.1%, loss= 0.0017
+2018-08-18 23:40:20,852 Epoch 131, Average loss: 0.0015, learning rate: 0.0010
+2018-08-18 23:40:20,942 Verification error= 0.1%, loss= 0.0019
+2018-08-18 23:40:27,710 Iter 26500, Minibatch Loss= 0.0008, Training Accuracy= 0.9933, Minibatch error= 0.0%
+2018-08-18 23:40:31,702 Epoch 132, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 23:40:31,782 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:40:42,463 Epoch 133, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 23:40:42,542 Verification error= 0.1%, loss= 0.0021
+2018-08-18 23:40:53,245 Epoch 134, Average loss: 0.0017, learning rate: 0.0010
+2018-08-18 23:40:53,331 Verification error= 0.1%, loss= 0.0019
+2018-08-18 23:40:56,731 Iter 27000, Minibatch Loss= 0.0029, Training Accuracy= 0.7564, Minibatch error= 0.1%
+2018-08-18 23:41:04,429 Epoch 135, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:41:04,514 Verification error= 0.1%, loss= 0.0022
+2018-08-18 23:41:15,452 Epoch 136, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 23:41:15,543 Verification error= 0.1%, loss= 0.0019
+2018-08-18 23:41:22,635 Iter 27500, Minibatch Loss= 0.0000, Training Accuracy= 0.9858, Minibatch error= 0.0%
+2018-08-18 23:41:26,582 Epoch 137, Average loss: 0.0016, learning rate: 0.0010
+2018-08-18 23:41:26,666 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:41:37,562 Epoch 138, Average loss: 0.0016, learning rate: 0.0010
+2018-08-18 23:41:37,652 Verification error= 0.1%, loss= 0.0019
+2018-08-18 23:41:48,465 Epoch 139, Average loss: 0.0017, learning rate: 0.0010
+2018-08-18 23:41:48,581 Verification error= 0.1%, loss= 0.0021
+2018-08-18 23:41:52,708 Iter 28000, Minibatch Loss= 0.0050, Training Accuracy= 0.9977, Minibatch error= 0.2%
+2018-08-18 23:42:00,527 Epoch 140, Average loss: 0.0017, learning rate: 0.0010
+2018-08-18 23:42:00,588 Verification error= 0.1%, loss= 0.0017
+2018-08-18 23:42:11,683 Epoch 141, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 23:42:11,751 Verification error= 0.1%, loss= 0.0018
+2018-08-18 23:42:18,023 Iter 28500, Minibatch Loss= 0.0031, Training Accuracy= 0.9492, Minibatch error= 0.1%
+2018-08-18 23:42:20,827 Epoch 142, Average loss: 0.0017, learning rate: 0.0010
+2018-08-18 23:42:20,892 Verification error= 0.1%, loss= 0.0017
+2018-08-18 23:42:29,811 Epoch 143, Average loss: 0.0016, learning rate: 0.0010
+2018-08-18 23:42:29,875 Verification error= 0.1%, loss= 0.0017
+2018-08-18 23:42:38,966 Epoch 144, Average loss: 0.0018, learning rate: 0.0010
+2018-08-18 23:42:39,031 Verification error= 0.1%, loss= 0.0017
+2018-08-18 23:42:42,501 Iter 29000, Minibatch Loss= 0.0000, Training Accuracy= 0.8650, Minibatch error= 0.0%
+2018-08-18 23:42:48,036 Epoch 145, Average loss: 0.0017, learning rate: 0.0010
+2018-08-18 23:42:48,096 Verification error= 0.1%, loss= 0.0017
+2018-08-18 23:42:57,278 Epoch 146, Average loss: 0.0016, learning rate: 0.0010
+2018-08-18 23:42:57,343 Verification error= 0.1%, loss= 0.0018
+2018-08-18 23:43:03,825 Iter 29500, Minibatch Loss= 0.0000, Training Accuracy= 0.8492, Minibatch error= 0.0%
+2018-08-18 23:43:06,560 Epoch 147, Average loss: 0.0017, learning rate: 0.0010
+2018-08-18 23:43:06,621 Verification error= 0.1%, loss= 0.0016
+2018-08-18 23:43:15,720 Epoch 148, Average loss: 0.0016, learning rate: 0.0010
+2018-08-18 23:43:15,782 Verification error= 0.1%, loss= 0.0015
+2018-08-18 23:43:26,623 Epoch 149, Average loss: 0.0017, learning rate: 0.0010
+2018-08-18 23:43:26,708 Verification error= 0.1%, loss= 0.0018
+2018-08-18 23:43:30,351 Optimization Finished!
+2018-08-18 23:43:32.081271: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:43:32.081360: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:43:32.081372: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:43:32.081379: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:43:32.081877: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:43:34,189 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:43:35,211 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:43:35.820529: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:43:35.820623: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:43:35.820641: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:43:35.820654: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:43:35.821238: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:43:37,821 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:43:38,840 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:43:39.446556: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:43:39.446625: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:43:39.446636: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:43:39.446644: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:43:39.447085: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:43:41,609 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:43:42,753 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:43:43.353145: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:43:43.353211: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:43:43.353223: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:43:43.353230: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:43:43.353627: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:43:45,291 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:43:46,292 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:43:46.866140: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:43:46.866218: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:43:46.866229: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:43:46.866237: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:43:46.866666: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:43:48,906 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:43:50,009 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:43:50.621733: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:43:50.621829: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:43:50.621846: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:43:50.621854: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:43:50.622318: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:43:52,709 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:43:53,823 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:43:54.373716: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:43:54.373796: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:43:54.373809: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:43:54.373817: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:43:54.374266: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:43:56,459 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:43:57,599 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:43:58.200345: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:43:58.200426: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:43:58.200444: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:43:58.200458: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:43:58.200904: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:44:00,257 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:44:01,310 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:44:01.858791: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:44:01.858867: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:44:01.858881: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:44:01.858891: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:44:01.859319: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:44:03,923 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:44:04,952 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:44:05.543279: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:44:05.543362: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:44:05.543377: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:44:05.543385: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:44:05.543818: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:44:07,535 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:44:08,595 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:44:09.184530: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:44:09.184609: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:44:09.184624: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:44:09.184633: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:44:09.185073: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:44:11,385 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:44:12,445 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:44:13.091027: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:44:13.091099: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:44:13.091111: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:44:13.091127: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:44:13.091593: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:44:15,149 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:44:16,233 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:44:16.842693: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:44:16.842773: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:44:16.842785: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:44:16.842792: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:44:16.843241: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:44:19,107 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:44:20,183 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:44:20.775691: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:44:20.775762: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:44:20.775774: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:44:20.775781: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:44:20.776221: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+INFO:tensorflow:Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:44:22,741 Restoring parameters from /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:44:23,824 Model restored from file: /array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_901_07052013_AS/Train/model/model.ckpt
+2018-08-18 23:44:27,805 Layers 4, features 16, filter size 3x3, pool size: 2x2
+2018-08-18 23:44:32,345 Removing '/array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON606_20130110/Test/Results'
+2018-08-18 23:44:32,345 Removing '/array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON606_20130110/Train/model'
+2018-08-18 23:44:32,346 Allocating '/array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON606_20130110/Test/Results'
+2018-08-18 23:44:32,346 Allocating '/array/ssd/msmajdi/Tests/Thalamus_CNN/oldDataset_oldMethod/CNN9_LGN_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Sharpness_1_Contrast_3_Deformed/vimp2_ANON606_20130110/Train/model'
+2018-08-18 23:44:32.346806: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1405] Adding visible gpu devices: 7
+2018-08-18 23:44:32.346860: I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-08-18 23:44:32.346872: I tensorflow/core/common_runtime/gpu/gpu_device.cc:912]      7 
+2018-08-18 23:44:32.346880: I tensorflow/core/common_runtime/gpu/gpu_device.cc:925] 7:   N 
+2018-08-18 23:44:32.347362: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1016] Creating TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 12585 MB memory) -> physical GPU (device: 7, name: Tesla P100-PCIE-16GB, pci bus id: 0000:89:00.0, compute capability: 6.0)
+2018-08-18 23:44:33,393 Verification error= 99.8%, loss= 0.7276
+2018-08-18 23:44:34,182 Start optimization
+2018-08-18 23:44:35,596 Iter 0, Minibatch Loss= 0.6997, Training Accuracy= 0.1158, Minibatch error= 88.4%
+2018-08-18 23:44:45,981 Epoch 0, Average loss: 0.0516, learning rate: 0.0010
+2018-08-18 23:44:46,066 Verification error= 0.2%, loss= 0.0129
+2018-08-18 23:44:55,488 Epoch 1, Average loss: 0.0100, learning rate: 0.0010
+2018-08-18 23:44:55,553 Verification error= 0.2%, loss= 0.0055
+2018-08-18 23:45:00,501 Iter 500, Minibatch Loss= 0.0003, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 23:45:04,221 Epoch 2, Average loss: 0.0046, learning rate: 0.0010
+2018-08-18 23:45:04,287 Verification error= 0.2%, loss= 0.0053
+2018-08-18 23:45:12,919 Epoch 3, Average loss: 0.0040, learning rate: 0.0010
+2018-08-18 23:45:12,980 Verification error= 0.2%, loss= 0.0035
+2018-08-18 23:45:21,607 Epoch 4, Average loss: 0.0037, learning rate: 0.0010
+2018-08-18 23:45:21,671 Verification error= 0.2%, loss= 0.0029
+2018-08-18 23:45:22,567 Iter 1000, Minibatch Loss= 0.0003, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 23:45:30,508 Epoch 5, Average loss: 0.0033, learning rate: 0.0010
+2018-08-18 23:45:30,572 Verification error= 0.1%, loss= 0.0034
+2018-08-18 23:45:39,461 Epoch 6, Average loss: 0.0029, learning rate: 0.0010
+2018-08-18 23:45:39,526 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:45:44,636 Iter 1500, Minibatch Loss= 0.0064, Training Accuracy= 0.9980, Minibatch error= 0.2%
+2018-08-18 23:45:48,616 Epoch 7, Average loss: 0.0031, learning rate: 0.0010
+2018-08-18 23:45:48,679 Verification error= 0.1%, loss= 0.0028
+2018-08-18 23:45:57,687 Epoch 8, Average loss: 0.0032, learning rate: 0.0010
+2018-08-18 23:45:57,753 Verification error= 0.1%, loss= 0.0026
+2018-08-18 23:46:06,779 Epoch 9, Average loss: 0.0028, learning rate: 0.0010
+2018-08-18 23:46:06,846 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:46:07,809 Iter 2000, Minibatch Loss= 0.0012, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 23:46:15,983 Epoch 10, Average loss: 0.0030, learning rate: 0.0010
+2018-08-18 23:46:16,083 Verification error= 0.1%, loss= 0.0032
+2018-08-18 23:46:25,189 Epoch 11, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 23:46:25,269 Verification error= 0.1%, loss= 0.0021
+2018-08-18 23:46:30,448 Iter 2500, Minibatch Loss= 0.0003, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 23:46:34,498 Epoch 12, Average loss: 0.0027, learning rate: 0.0010
+2018-08-18 23:46:34,563 Verification error= 0.1%, loss= 0.0041
+2018-08-18 23:46:43,724 Epoch 13, Average loss: 0.0027, learning rate: 0.0010
+2018-08-18 23:46:43,813 Verification error= 0.1%, loss= 0.0027
+2018-08-18 23:46:53,137 Epoch 14, Average loss: 0.0028, learning rate: 0.0010
+2018-08-18 23:46:53,223 Verification error= 0.1%, loss= 0.0048
+2018-08-18 23:46:54,253 Iter 3000, Minibatch Loss= 0.0010, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 23:47:02,437 Epoch 15, Average loss: 0.0027, learning rate: 0.0010
+2018-08-18 23:47:02,524 Verification error= 0.1%, loss= 0.0022
+2018-08-18 23:47:11,400 Epoch 16, Average loss: 0.0027, learning rate: 0.0010
+2018-08-18 23:47:11,488 Verification error= 0.1%, loss= 0.0028
+2018-08-18 23:47:16,257 Iter 3500, Minibatch Loss= 0.0000, Training Accuracy= 0.9364, Minibatch error= 0.0%
+2018-08-18 23:47:20,370 Epoch 17, Average loss: 0.0028, learning rate: 0.0010
+2018-08-18 23:47:20,455 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:47:29,252 Epoch 18, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 23:47:29,334 Verification error= 0.1%, loss= 0.0022
+2018-08-18 23:47:38,083 Epoch 19, Average loss: 0.0028, learning rate: 0.0010
+2018-08-18 23:47:38,172 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:47:39,278 Iter 4000, Minibatch Loss= 0.0002, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 23:47:47,043 Epoch 20, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 23:47:47,132 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:47:55,962 Epoch 21, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 23:47:56,046 Verification error= 0.1%, loss= 0.0022
+2018-08-18 23:48:00,903 Iter 4500, Minibatch Loss= 0.0000, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 23:48:05,009 Epoch 22, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 23:48:05,100 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:48:14,036 Epoch 23, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 23:48:14,120 Verification error= 0.1%, loss= 0.0019
+2018-08-18 23:48:23,173 Epoch 24, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 23:48:23,263 Verification error= 0.1%, loss= 0.0029
+2018-08-18 23:48:24,563 Iter 5000, Minibatch Loss= 0.0038, Training Accuracy= 0.9984, Minibatch error= 0.2%
+2018-08-18 23:48:32,373 Epoch 25, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 23:48:32,456 Verification error= 0.1%, loss= 0.0019
+2018-08-18 23:48:41,515 Epoch 26, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 23:48:41,604 Verification error= 0.1%, loss= 0.0022
+2018-08-18 23:48:47,390 Iter 5500, Minibatch Loss= 0.0029, Training Accuracy= 0.9948, Minibatch error= 0.1%
+2018-08-18 23:48:51,483 Epoch 27, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 23:48:51,567 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:49:00,681 Epoch 28, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 23:49:00,768 Verification error= 0.1%, loss= 0.0024
+2018-08-18 23:49:09,756 Epoch 29, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 23:49:09,839 Verification error= 0.1%, loss= 0.0019
+2018-08-18 23:49:11,139 Iter 6000, Minibatch Loss= 0.0031, Training Accuracy= 0.9070, Minibatch error= 0.2%
+2018-08-18 23:49:18,800 Epoch 30, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 23:49:18,891 Verification error= 0.1%, loss= 0.0019
+2018-08-18 23:49:27,919 Epoch 31, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:49:28,010 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:49:32,963 Iter 6500, Minibatch Loss= 0.0000, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 23:49:37,042 Epoch 32, Average loss: 0.0026, learning rate: 0.0010
+2018-08-18 23:49:37,130 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:49:46,160 Epoch 33, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 23:49:46,246 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:49:55,234 Epoch 34, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:49:55,320 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:49:56,737 Iter 7000, Minibatch Loss= 0.0001, Training Accuracy= 0.9986, Minibatch error= 0.0%
+2018-08-18 23:50:04,312 Epoch 35, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:50:04,395 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:50:13,481 Epoch 36, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 23:50:13,565 Verification error= 0.1%, loss= 0.0019
+2018-08-18 23:50:19,252 Iter 7500, Minibatch Loss= 0.0000, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 23:50:23,270 Epoch 37, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:50:23,360 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:50:32,758 Epoch 38, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:50:32,849 Verification error= 0.1%, loss= 0.0018
+2018-08-18 23:50:42,044 Epoch 39, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:50:42,171 Verification error= 0.1%, loss= 0.0021
+2018-08-18 23:50:43,796 Iter 8000, Minibatch Loss= 0.0031, Training Accuracy= 0.9985, Minibatch error= 0.2%
+2018-08-18 23:50:51,557 Epoch 40, Average loss: 0.0025, learning rate: 0.0010
+2018-08-18 23:50:51,641 Verification error= 0.1%, loss= 0.0018
+2018-08-18 23:51:00,776 Epoch 41, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:51:00,861 Verification error= 0.1%, loss= 0.0018
+2018-08-18 23:51:06,077 Iter 8500, Minibatch Loss= 0.0032, Training Accuracy= 0.9772, Minibatch error= 0.1%
+2018-08-18 23:51:10,245 Epoch 42, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:51:10,324 Verification error= 0.1%, loss= 0.0016
+2018-08-18 23:51:19,584 Epoch 43, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:51:19,670 Verification error= 0.1%, loss= 0.0017
+2018-08-18 23:51:29,143 Epoch 44, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:51:29,226 Verification error= 0.1%, loss= 0.0018
+2018-08-18 23:51:30,869 Iter 9000, Minibatch Loss= 0.0005, Training Accuracy= 0.9903, Minibatch error= 0.0%
+2018-08-18 23:51:38,504 Epoch 45, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:51:38,594 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:51:47,879 Epoch 46, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:51:47,968 Verification error= 0.1%, loss= 0.0017
+2018-08-18 23:51:53,198 Iter 9500, Minibatch Loss= 0.0003, Training Accuracy= 0.9989, Minibatch error= 0.0%
+2018-08-18 23:51:57,192 Epoch 47, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:51:57,283 Verification error= 0.1%, loss= 0.0021
+2018-08-18 23:52:06,426 Epoch 48, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:52:06,512 Verification error= 0.1%, loss= 0.0017
+2018-08-18 23:52:15,678 Epoch 49, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:52:15,766 Verification error= 0.1%, loss= 0.0021
+2018-08-18 23:52:17,458 Iter 10000, Minibatch Loss= 0.0031, Training Accuracy= 0.8641, Minibatch error= 0.2%
+2018-08-18 23:52:25,092 Epoch 50, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:52:25,179 Verification error= 0.1%, loss= 0.0023
+2018-08-18 23:52:35,493 Epoch 51, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:52:35,584 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:52:41,047 Iter 10500, Minibatch Loss= 0.0034, Training Accuracy= 0.9803, Minibatch error= 0.1%
+2018-08-18 23:52:45,085 Epoch 52, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:52:45,171 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:52:54,507 Epoch 53, Average loss: 0.0024, learning rate: 0.0010
+2018-08-18 23:52:54,591 Verification error= 0.1%, loss= 0.0018
+2018-08-18 23:53:04,088 Epoch 54, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:53:04,175 Verification error= 0.1%, loss= 0.0019
+2018-08-18 23:53:05,980 Iter 11000, Minibatch Loss= 0.0014, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 23:53:13,697 Epoch 55, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:53:13,782 Verification error= 0.1%, loss= 0.0019
+2018-08-18 23:53:23,044 Epoch 56, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:53:23,131 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:53:28,389 Iter 11500, Minibatch Loss= 0.0028, Training Accuracy= 0.8910, Minibatch error= 0.1%
+2018-08-18 23:53:32,382 Epoch 57, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:53:32,472 Verification error= 0.1%, loss= 0.0021
+2018-08-18 23:53:41,767 Epoch 58, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:53:41,852 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:53:51,365 Epoch 59, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:53:51,449 Verification error= 0.1%, loss= 0.0019
+2018-08-18 23:53:53,301 Iter 12000, Minibatch Loss= 0.0043, Training Accuracy= 0.6688, Minibatch error= 0.2%
+2018-08-18 23:54:00,540 Epoch 60, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:54:00,624 Verification error= 0.1%, loss= 0.0017
+2018-08-18 23:54:09,774 Epoch 61, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:54:09,864 Verification error= 0.1%, loss= 0.0016
+2018-08-18 23:54:15,089 Iter 12500, Minibatch Loss= 0.0019, Training Accuracy= 0.9994, Minibatch error= 0.1%
+2018-08-18 23:54:19,097 Epoch 62, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:54:19,180 Verification error= 0.1%, loss= 0.0018
+2018-08-18 23:54:28,481 Epoch 63, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:54:28,566 Verification error= 0.1%, loss= 0.0016
+2018-08-18 23:54:37,713 Epoch 64, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:54:37,799 Verification error= 0.0%, loss= 0.0014
+2018-08-18 23:54:39,833 Iter 13000, Minibatch Loss= 0.0002, Training Accuracy= 0.7404, Minibatch error= 0.0%
+2018-08-18 23:54:47,050 Epoch 65, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:54:47,136 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:54:56,212 Epoch 66, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:54:56,301 Verification error= 0.1%, loss= 0.0017
+2018-08-18 23:55:01,456 Iter 13500, Minibatch Loss= 0.0029, Training Accuracy= 0.7109, Minibatch error= 0.1%
+2018-08-18 23:55:05,484 Epoch 67, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:55:05,571 Verification error= 0.1%, loss= 0.0016
+2018-08-18 23:55:14,851 Epoch 68, Average loss: 0.0023, learning rate: 0.0010
+2018-08-18 23:55:14,938 Verification error= 0.1%, loss= 0.0017
+2018-08-18 23:55:24,326 Epoch 69, Average loss: 0.0022, learning rate: 0.0010
+2018-08-18 23:55:24,413 Verification error= 0.1%, loss= 0.0017
+2018-08-18 23:55:26,578 Iter 14000, Minibatch Loss= 0.0001, Training Accuracy= 0.9172, Minibatch error= 0.0%
+2018-08-18 23:55:33,781 Epoch 70, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:55:33,870 Verification error= 0.1%, loss= 0.0017
+2018-08-18 23:55:43,175 Epoch 71, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:55:43,259 Verification error= 0.1%, loss= 0.0019
+2018-08-18 23:55:49,713 Iter 14500, Minibatch Loss= 0.0001, Training Accuracy= 0.8321, Minibatch error= 0.0%
+2018-08-18 23:55:53,744 Epoch 72, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:55:53,826 Verification error= 0.1%, loss= 0.0015
+2018-08-18 23:56:03,548 Epoch 73, Average loss: 0.0021, learning rate: 0.0010
+2018-08-18 23:56:03,633 Verification error= 0.1%, loss= 0.0020
+2018-08-18 23:56:13,414 Epoch 74, Average loss: 0.0020, learning rate: 0.0010
+2018-08-18 23:56:13,495 Verification error= 0.1%, loss= 0.0017
+2018-08-18 23:56:15,728 Iter 15000, Minibatch Loss= 0.0002, Training Accuracy= 1.0000, Minibatch error= 0.0%
+2018-08-18 23:56:23,359 Epoch 75, Average loss: 0.0019, learning rate: 0.0010
+2018-08-18 23:56:23,450 Verification error= 0.1%, loss= 0.0017

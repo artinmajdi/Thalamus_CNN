@@ -325,10 +325,11 @@ def TestData3_cleanedup(info , Nuclei_OriginalSeg):
         else:
             prediction2 = net.predict( info['Dir_NucleiModelOut'] , data)
 
+        # Thresh = max(filters.threshold_otsu(prediction2[0,...,1]),0.5)
         try:
-            Thresh = max(filters.threshold_otsu(prediction2[0,...,1]),0.5)
+            Thresh = max(filters.threshold_otsu(prediction2[0,...,1]),0.2)
         except:
-            Thresh = 0.5
+            Thresh = 0.2
 
         PredictedSeg = prediction2[0,...,1] > Thresh
 

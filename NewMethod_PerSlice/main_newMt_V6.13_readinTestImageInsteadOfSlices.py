@@ -400,7 +400,7 @@ for ind in UserEntries['IxNuclei']:
                 print('epochs',Params['epochs'],'IxNuclei',Params['IxNuclei'],'iter',Params['training_iters'])
 
                 # ---------------------------  training -----------------------------------
-                path = trainFunc(Params , slcIx)
+                # path = trainFunc(Params , slcIx)
 
                 # ---------------------------  testing -----------------------------------
                 Params['TestSliceImage'] = TestImage[...,slcIx]
@@ -421,6 +421,14 @@ for ind in UserEntries['IxNuclei']:
                 # plt.show()
 
 
+
+            # try:
+            #     Thresh = max( filters.threshold_otsu(output) ,0.2)
+            # except:
+            #     print('---------------------------error Thresholding------------------')
+            #     Thresh = 0.2
+            #
+            # output_Lgc = output > Thresh
 
             # ---------------------------  writing -----------------------------------
             output2 = nib.Nifti1Image(output,label.affine)

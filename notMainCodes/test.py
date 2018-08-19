@@ -8,9 +8,9 @@ def DiceCoefficientCalculator(msk1,msk2):
     return DiceCoef
 
 name = 'vimp2_824_05212013_JS'
-
-dir1 = '/media/artin/D0E2340CE233F576/Results/' + name + '_10-MGN.nii.gz'
-dir2 = '/media/artin/D0E2340CE233F576/Thalamus_Segmentation/Data/Manual_Delineation_Sanitized_Full/' + name + '/Manual_Delineation_Sanitized/9-LGN_deformed.nii.gz'
+nuclei = '10-MGN'
+dir1 = '/media/artin/D0E2340CE233F576/Results/' + name + '_' + nuclei + '.nii.gz'
+dir2 = '/media/artin/D0E2340CE233F576/Thalamus_Segmentation/Data/Manual_Delineation_Sanitized_Full/' + name + '/Manual_Delineation_Sanitized/' + nuclei + '_deformed.nii.gz'
 
 pred = nib.load(dir1).get_data()
 mask = nib.load(dir2).get_data()
@@ -18,4 +18,4 @@ mask = nib.load(dir2).get_data()
 
 Thresh = max(filters.threshold_otsu(pred),0.2)
 print(Thresh)
-DiceCoefficientCalculator(pred > 0.31 , mask)
+DiceCoefficientCalculator(pred > Thresh , mask)

@@ -299,7 +299,7 @@ def testFunc(Params , slcIx):
 
         PredictedSeg = prediction2[0,...,1] > Thresh
 
-    return prediction2 , PredictedSeg
+    return prediction2[0,...,1] , PredictedSeg
 
 def paramIterEpoch(Params , slcIx):
 
@@ -387,6 +387,7 @@ for ind in UserEntries['IxNuclei']:
 
             TestImage, label = ReadingTestImage(Params,subFolders[sFi],TestName)
             output = np.zeros(label.shape)
+            output_Lgc = np.zeros(label.shape)
 
             # Params['epochs'] = int(UserEntries['epochs']) # 40
             # Params['training_iters'] = int(UserEntries['training_iters']) # 100
@@ -405,16 +406,17 @@ for ind in UserEntries['IxNuclei']:
                 Params['TestSliceImage'] = TestImage[...,slcIx]
                 # Params['TestSliceLabel'] = TestLabel[np.newaxis,...,slcIx]
 
-                _ , pred = testFunc(Params , slcIx)
+                pred , pred_Lgc = testFunc(Params , slcIx)
                 output[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ] = pred
+                output_Lgc[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ] = pred_Lgc
 
                 # ---------------------------  showing -----------------------------------
                 # print('-------------------------------------------------------------------')
                 Lbl = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ]
-                dice[slcIx] = DiceCoefficientCalculator(pred , Lbl )
+                dice[slcIx] = DiceCoefficientCalculator(pred_Lgc , Lbl )
                 np.savetxt(Params['Dir_Results'] + 'DiceCoefficient.txt',dice)
                 # ax,fig = plt.subplots(1,2)
-                # fig[0].imshow(pred,cmap='gray')
+                # fig[0].imshow(pred_Lgc,cmap='gray')
                 # fig[1].imshow(a,cmap='gray')
                 # plt.show()
 
@@ -423,7 +425,11 @@ for ind in UserEntries['IxNuclei']:
             # ---------------------------  writing -----------------------------------
             output2 = nib.Nifti1Image(output,label.affine)
             output2.get_header = label.header
-            nib.save(output2 , Params['Dir_Results'] + subFolders[sFi] + '_' + Params['NucleusName'] + '_Logical.nii.gz')
+            nib.save(output2 , Params['Dir_Results'] + subFolders[sFi] + '_' + Params['NucleusName'] + '.nii.gz')
 
-            dice[len(Params['SliceNumbers'])] = DiceCoefficientCalculator(output,label.get_data())
+            output_Lgc2 = nib.Nifti1Image(output_Lgc,label.affine)
+            output_Lgc2.get_header = label.header
+            nib.save(output_Lgc2 , Params['Dir_Results'] + subFolders[sFi] + '_' + Params['NucleusName'] + '_Logical.nii.gz')
+
+            dice[len(Params['SliceNumbers'])] = DiceCoefficientCalculator(output_Lgc,label.get_data())
             np.savetxt(Params['Dir_Results'] + 'DiceCoefficient.txt',dice)

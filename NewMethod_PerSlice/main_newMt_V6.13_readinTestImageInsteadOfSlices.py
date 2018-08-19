@@ -138,7 +138,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
     else:
         Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
         Params['modelName'] = 'model/'
-        Params['resultName'] = 'Results_Th05/'
+        Params['resultName'] = 'Results/'
 
     return Params
 
@@ -292,10 +292,10 @@ def testFunc(Params , slcIx):
 
 
         try:
-            Thresh = max( filters.threshold_otsu(prediction2[0,...,1]) ,0.5)
+            Thresh = max( filters.threshold_otsu(prediction2[0,...,1]) ,0.2)
         except:
             print('---------------------------error Thresholding------------------')
-            Thresh = 0.5
+            Thresh = 0.2
 
         PredictedSeg = prediction2[0,...,1] > Thresh
 
@@ -317,7 +317,7 @@ def paramIterEpoch(Params , slcIx):
         else:
             Params['epochs'] = 3 # 60
     else:
-        Params['epochs'] = 10
+        Params['epochs'] = 20
 
     return Params
 
@@ -368,7 +368,7 @@ for ind in UserEntries['IxNuclei']:
         Dir_AllTests_Thalamus_EnhancedFld = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + TestName + '/'
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
-        subFolders = ['vimp2_ctrl_925_07152013_LS'] #
+        # subFolders = ['vimp2_ctrl_925_07152013_LS'] #
         for sFi in range(len(subFolders)):
             K = 'Test_' if UserEntries['testMode'] == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
             print(Params['NucleusName'],TestName.split(K)[1],subFolders[sFi])

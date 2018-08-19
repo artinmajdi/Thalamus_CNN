@@ -159,7 +159,7 @@ def input_GPU_Ix():
         #     UserEntries['epochs'] = input.split('=')[1] # 'AllTrainings'
         # elif input.split('=')[0] == 'temp_Slice':
         #     UserEntries['temp_Slice'] = input.split('=')[1] # 'AllTrainings'
-    print('---------------------',UserEntries['dataset'])
+    print('enhanced_Index: ',UserEntries['enhanced_Index'])
     return UserEntries
 
 def mkDir(dir):

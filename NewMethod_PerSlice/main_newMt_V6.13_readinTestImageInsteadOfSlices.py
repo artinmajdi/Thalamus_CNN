@@ -138,7 +138,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
     else:
         Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
         Params['modelName'] = 'model/'
-        Params['resultName'] = 'Results/'
+        Params['resultName'] = 'Results_Th05/'
 
     return Params
 
@@ -233,9 +233,11 @@ def trainFunc(Params , slcIx):
             # copyPreviousModel( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum-1) + '/' + Params['modelName'] , Dir_NucleiModelOut )
             copyPreviousModel( Params['restorePath'], Dir_NucleiModelOut )
             path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=500 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum'] , restore='True') # , write_graph=True
+            path = ' '
         else:
             copyPreviousModel( Params['restorePath'], Dir_NucleiModelOut )
             path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=500 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum'])
+            path = ' '
     else:
         if slcIx > -10:
             # copyPreviousModel( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum-1) + '/' + Params['modelName'] , Dir_NucleiModelOut )
@@ -366,7 +368,7 @@ for ind in UserEntries['IxNuclei']:
         Dir_AllTests_Thalamus_EnhancedFld = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + TestName + '/'
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
-        # subFolders = ['vimp2_ctrl_921_07122013_MP'] #
+        subFolders = ['vimp2_ctrl_925_07152013_LS'] #
         for sFi in range(len(subFolders)):
             K = 'Test_' if UserEntries['testMode'] == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
             print(Params['NucleusName'],TestName.split(K)[1],subFolders[sFi])
@@ -390,7 +392,7 @@ for ind in UserEntries['IxNuclei']:
             # Params['training_iters'] = int(UserEntries['training_iters']) # 100
 
             dice = np.zeros(len(Params['SliceNumbers'])+1)
-            Params['Dir_Results'] = mkDir(Params['Dir_NucleiTestSamples'] + '/Results')
+            Params['Dir_Results'] = mkDir(Params['Dir_NucleiTestSamples'] + '/' + Params['resultName'])
             for slcIx in range(len(Params['SliceNumbers'])):
 
                 Params = paramIterEpoch(Params , slcIx)
@@ -410,7 +412,7 @@ for ind in UserEntries['IxNuclei']:
                 # print('-------------------------------------------------------------------')
                 Lbl = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ]
                 dice[slcIx] = DiceCoefficientCalculator(pred , Lbl )
-                np.savetxt(Params['Dir_Results'] + '/DiceCoefficient.txt',dice)
+                np.savetxt(Params['Dir_Results'] + 'DiceCoefficient.txt',dice)
                 # ax,fig = plt.subplots(1,2)
                 # fig[0].imshow(pred,cmap='gray')
                 # fig[1].imshow(a,cmap='gray')
@@ -421,7 +423,7 @@ for ind in UserEntries['IxNuclei']:
             # ---------------------------  writing -----------------------------------
             output2 = nib.Nifti1Image(output,label.affine)
             output2.get_header = label.header
-            nib.save(output2 , Params['Dir_Results'] + '/' + subFolders[sFi] + '_' + Params['NucleusName'] + '_Logical.nii.gz')
+            nib.save(output2 , Params['Dir_Results'] + subFolders[sFi] + '_' + Params['NucleusName'] + '_Logical.nii.gz')
 
             dice[len(Params['SliceNumbers'])] = DiceCoefficientCalculator(output,label.get_data())
-            np.savetxt(Params['Dir_Results'] + '/DiceCoefficient.txt',dice)
+            np.savetxt(Params['Dir_Results'] + 'DiceCoefficient.txt',dice)

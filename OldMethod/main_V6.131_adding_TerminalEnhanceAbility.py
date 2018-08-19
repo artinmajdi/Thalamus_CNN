@@ -249,8 +249,8 @@ for ind in UserEntries['IxNuclei']:
 
             trainer = unet.Trainer(Params['net'], optimizer = "adam")
             if Params['gpuNum'] != 'nan':
-                path2 = ''
-                # path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500, GPU_Num=Params['gpuNum'] ,prediction_path=Dir_ResultsOut) #  restore=True
+                # path2 = ''
+                path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500, GPU_Num=Params['gpuNum'] ,prediction_path=Dir_ResultsOut) #  restore=True
             else:
                 path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=50, epochs=4, display_step=500 ,prediction_path=Dir_ResultsOut) #   restore=True
 

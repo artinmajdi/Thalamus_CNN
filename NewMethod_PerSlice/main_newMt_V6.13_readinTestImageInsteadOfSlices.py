@@ -317,7 +317,7 @@ def paramIterEpoch(Params , slcIx):
         else:
             Params['epochs'] = 3 # 60
     else:
-        Params['epochs'] = 20
+        Params['epochs'] = 30
 
     return Params
 

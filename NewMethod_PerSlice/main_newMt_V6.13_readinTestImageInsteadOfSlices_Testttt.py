@@ -84,10 +84,10 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
         NucleusName = '13-Hb'
         SliceNumbers = range(116,129)
 
-
+    Params['modelFormat'] = 'ckpt'
     if 'local' in mode:
 
-        Params['modelFormat'] = 'ckpt'
+
         if 'old' in dataset:
             Dir_Prior = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
         elif 'new' in dataset:
@@ -99,13 +99,11 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
     elif 'flash' in mode:
 
         machine = 'artin' # groot
-        Params['modelFormat'] = 'ckpt'
         Dir_Prior = '/media/' + machine + '/aaa/Manual_Delineation_Sanitized_Full'
         Dir_AllTests  = '/media/' + machine + '/aaa/AllTests/' + dataset + 'Dataset_' + method +'Method'
 
     elif 'server' in mode:
 
-        Params['modelFormat'] = 'ckpt' # cpkt
         hardDrive = 'ssd'
         if 'old' in dataset:
             Dir_Prior = '/array/' + hardDrive + '/msmajdi/data/priors_forCNN_Ver2'
@@ -289,9 +287,9 @@ def testFunc(Params , slcIx):
     else:
 
         if Params['gpuNum'] != 'nan':
-            prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + '/model/model.' + Params['modelFormat'], np.asarray(Data,dtype=np.float32), GPU_Num=Params['gpuNum'])
+            prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + '/' + Params['modelName'] + 'model.' + Params['modelFormat'], np.asarray(Data,dtype=np.float32), GPU_Num=Params['gpuNum'])
         else:
-            prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + '/model/model.' + Params['modelFormat'], np.asarray(Data,dtype=np.float32))
+            prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + '/' + Params['modelName'] + 'model.' + Params['modelFormat'], np.asarray(Data,dtype=np.float32))
 
 
         try:

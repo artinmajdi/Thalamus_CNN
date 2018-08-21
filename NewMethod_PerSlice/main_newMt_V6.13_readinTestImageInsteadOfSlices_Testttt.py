@@ -334,13 +334,6 @@ def paramIterEpoch(Params , slcIx):
             Params['modelName'] = 'model' + str(Params['epochs']) + '/'
             Params['resultName'] = 'Results' + str(Params['epochs']) + '/'
 
-
-    print('----------------------------------------------------------------------------------------------')
-    print('----------------------------------------------------------------------------------------------')
-    print('----------------------------------------------------------------------------------------------')
-    print('----  resultName  ----',  Params['resultName'])
-    print('----  modelName  ----',  Params['modelName'])
-
     return Params
 
 def copyPreviousModel(src, dst, symlinks=False, ignore=None):

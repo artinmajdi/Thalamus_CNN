@@ -188,15 +188,7 @@ def input_GPU_Ix():
                 UserEntries['enhanced_Index'] = [int(input.split('=')[1])]
 
         elif input.split('=')[0] == 'epoch':
-            if 'all' in input.split('=')[1]:
-                UserEntries['epochs'] = range(len(A))
-
-            elif input.split('=')[1][0] == '[':
-                B = input.split('=')[1].split('[')[1].split(']')[0].split(",")
-                UserEntries['epochs'] = [int(k) for k in B]
-
-            else:
-                UserEntries['epochs'] = [int(input.split('=')[1])]
+            UserEntries['epochs'] = int(input.split('=')[1])
 
         # elif input.split('=')[0] == 'training_iters':
         #     UserEntries['training_iters'] = input.split('=')[1] # 'AllTrainings'
@@ -317,7 +309,7 @@ def paramIterEpoch(Params , slcIx):
 
     Params['training_iters'] = 57
 
-    if Params['epochs'] = 'nan':
+    if Params['epochs'] == 'nan':
 
         if Params['IxNuclei'] == [900]:
             if (slcIx < 2) | (slcIx > len(Params['SliceNumbers'])-2  ):
@@ -332,7 +324,15 @@ def paramIterEpoch(Params , slcIx):
                 Params['epochs'] = 3 # 60
         else:
             Params['epochs'] = 30
+    else:
+        if Params['Flag_cross_entropy'] == 1:
+            Params['modelName'] = 'model_CE_' + str(Params['epochs']) + '/'
+            Params['resultName'] = 'Results_CE' + str(Params['epochs']) + '/'
+        else:
+            Params['modelName'] = 'model' + str(Params['epochs']) + '/'
+            Params['resultName'] = 'Results' + str(Params['epochs']) + '/'
 
+        print('----  resultName  ----',  Params['resultName'])
 
     return Params
 
@@ -368,6 +368,7 @@ for ind in UserEntries['IxNuclei']:
     Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']
     Params['IxNuclei'] = UserEntries['IxNuclei']
+    Params['epochs'] = UserEntries['epochs']
 
 
 

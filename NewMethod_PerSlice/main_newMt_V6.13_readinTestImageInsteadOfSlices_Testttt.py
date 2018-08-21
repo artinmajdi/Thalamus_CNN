@@ -213,9 +213,6 @@ def trainFunc(Params , slcIx):
     print('----------------------------------------------------------------------------------------------')
     print('----------------------------------------------------------------------------------------------')
     print('----  modelName  ----',  Params['modelName'])
-    print('Dir_NucleiModelOut', Dir_NucleiModelOut)
-
-
 
     sliceNum = Params['SliceNumbers'][slcIx]
 
@@ -239,11 +236,11 @@ def trainFunc(Params , slcIx):
             # copyPreviousModel( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum-1) + '/' + Params['modelName'] , Dir_NucleiModelOut )
             copyPreviousModel( Params['restorePath'], Dir_NucleiModelOut )
             path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=500 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum'] , restore='True') # , write_graph=True
-            path = ' '
+            # path = ' '
         else:
             copyPreviousModel( Params['restorePath'], Dir_NucleiModelOut )
             path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=500 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum'])
-            path = ' '
+            # path = ' '
     else:
         if slcIx > -10:
             # copyPreviousModel( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum-1) + '/' + Params['modelName'] , Dir_NucleiModelOut )

@@ -232,10 +232,6 @@ def trainFunc(Params , slcIx):
     trainer = unet.Trainer(Params['net'], optimizer = Params['optimizer']) # ,learning_rate=0.03
     if Params['gpuNum'] != 'nan':
 
-        print('----------------------------------------------------------------------------------------------')
-        print('----------------------------------------------------------------------------------------------')
-        print('----------------------------------------------------------------------------------------------')
-
         if slcIx > -4:
             # copyPreviousModel( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum-1) + '/' + Params['modelName'] , Dir_NucleiModelOut )
             copyPreviousModel( Params['restorePath'], Dir_NucleiModelOut )
@@ -416,7 +412,6 @@ for ind in UserEntries['IxNuclei']:
                 output_Lgc[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ] = pred_Lgc
 
                 # ---------------------------  showing -----------------------------------
-                # print('-------------------------------------------------------------------')
                 Lbl = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ]
                 dice[slcIx] = DiceCoefficientCalculator(pred_Lgc , Lbl )
                 np.savetxt(Params['Dir_Results'] + 'DiceCoefficient.txt',dice)

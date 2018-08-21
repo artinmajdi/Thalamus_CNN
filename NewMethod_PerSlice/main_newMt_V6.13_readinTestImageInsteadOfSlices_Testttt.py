@@ -361,7 +361,6 @@ def ReadingTestImage(Params,subFolders,TestName):
     return TestImage, label # , TestLabel
 
 UserEntries = input_GPU_Ix()
-print('---------------',UserEntries['epochs'])
 for ind in UserEntries['IxNuclei']:
 
     Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'])
@@ -369,11 +368,8 @@ for ind in UserEntries['IxNuclei']:
     Params['IxNuclei'] = UserEntries['IxNuclei']
     Params['epochs'] = UserEntries['epochs']
 
-
-
-
     L = [0] if UserEntries['testMode'] == 'AllTrainings' else UserEntries['enhanced_Index'] # len(Params['A'])  # [1,4]: #
-    for ii in L: # range(2): #@ L):
+    for ii in L:
 
         TestName = 'Test_AllTrainings' if UserEntries['testMode'] == 'AllTrainings' else testNme(Params['A'],ii)
 
@@ -424,24 +420,10 @@ for ind in UserEntries['IxNuclei']:
                 output_Lgc[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ] = pred_Lgc
 
                 # ---------------------------  showing -----------------------------------
-                # print('-------------------------------------------------------------------')
                 Lbl = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'][slcIx] ]
                 dice[slcIx] = DiceCoefficientCalculator(pred_Lgc , Lbl )
                 np.savetxt(Params['Dir_Results'] + 'DiceCoefficient.txt',dice)
-                # ax,fig = plt.subplots(1,2)
-                # fig[0].imshow(pred_Lgc,cmap='gray')
-                # fig[1].imshow(a,cmap='gray')
-                # plt.show()
 
-
-
-            # try:
-            #     Thresh = max( filters.threshold_otsu(output) ,0.2)
-            # except:
-            #     print('---------------------------error Thresholding------------------')
-            #     Thresh = 0.2
-            #
-            # output_Lgc = output > Thresh
 
             # ---------------------------  writing -----------------------------------
             output2 = nib.Nifti1Image(output,label.affine)

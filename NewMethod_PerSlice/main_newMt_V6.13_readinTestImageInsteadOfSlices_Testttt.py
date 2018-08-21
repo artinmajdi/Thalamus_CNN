@@ -229,10 +229,6 @@ def trainFunc(Params , slcIx):
     trainer = unet.Trainer(Params['net'], optimizer = Params['optimizer']) # ,learning_rate=0.03
     if Params['gpuNum'] != 'nan':
 
-        print('----------------------------------------------------------------------------------------------')
-        print('----------------------------------------------------------------------------------------------')
-        print('----------------------------------------------------------------------------------------------')
-
         if slcIx > -4:
             # copyPreviousModel( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum-1) + '/' + Params['modelName'] , Dir_NucleiModelOut )
             copyPreviousModel( Params['restorePath'], Dir_NucleiModelOut )
@@ -332,7 +328,12 @@ def paramIterEpoch(Params , slcIx):
             Params['modelName'] = 'model' + str(Params['epochs']) + '/'
             Params['resultName'] = 'Results' + str(Params['epochs']) + '/'
 
-        print('----  resultName  ----',  Params['resultName'])
+
+    print('----------------------------------------------------------------------------------------------')
+    print('----------------------------------------------------------------------------------------------')
+    print('----------------------------------------------------------------------------------------------')
+    print('----  resultName  ----',  Params['resultName'])
+    print('----  modelName  ----',  Params['modelName'])
 
     return Params
 
@@ -394,7 +395,7 @@ for ind in UserEntries['IxNuclei']:
             Params['Dir_NucleiTestSamples']  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + K
             Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train'
             if Params['gpuNum'] != 'nan':
-                Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + subFolders[sFi] + '/Train/' + Params['modelName']
+                Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + subFolders[sFi] + '/Train/' + 'model/' # Params['modelName']
 
 
             # ---------------------------  main part-----------------------------------

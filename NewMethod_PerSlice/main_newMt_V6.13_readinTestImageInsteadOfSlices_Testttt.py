@@ -145,12 +145,13 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
 def input_GPU_Ix():
 
     UserEntries = {}
-    UserEntries['gpuNum'] =  '4'  # 'nan'  #
-    UserEntries['IxNuclei'] = 1
+    UserEntries['gpuNum'] =  '6'  # 'nan'  #
+    UserEntries['IxNuclei'] = 'nan'
     UserEntries['dataset'] = 'old' #'oldDGX' #
     UserEntries['method'] = 'new'
     UserEntries['testMode'] = 'EnhancedSeperately' # 'AllTrainings'
     UserEntries['enhanced_Index'] = range(len(A))
+    UserEntries['epochs'] = 'nan'
 
     for input in sys.argv:
 
@@ -185,6 +186,17 @@ def input_GPU_Ix():
 
             else:
                 UserEntries['enhanced_Index'] = [int(input.split('=')[1])]
+
+        elif input.split('=')[0] == 'epoch':
+            if 'all' in input.split('=')[1]:
+                UserEntries['epochs'] = range(len(A))
+
+            elif input.split('=')[1][0] == '[':
+                B = input.split('=')[1].split('[')[1].split(']')[0].split(",")
+                UserEntries['epochs'] = [int(k) for k in B]
+
+            else:
+                UserEntries['epochs'] = [int(input.split('=')[1])]
 
         # elif input.split('=')[0] == 'training_iters':
         #     UserEntries['training_iters'] = input.split('=')[1] # 'AllTrainings'
@@ -305,19 +317,22 @@ def paramIterEpoch(Params , slcIx):
 
     Params['training_iters'] = 57
 
-    if Params['IxNuclei'] == [900]:
-        if (slcIx < 2) | (slcIx > len(Params['SliceNumbers'])-2  ):
-            Params['epochs'] = 30
-        else:
-            Params['epochs'] = 10
+    if Params['epochs'] = 'nan':
 
-    elif Params['IxNuclei'] == [100]:
-        if (slcIx < 5) | (slcIx > len(Params['SliceNumbers'])-5  ):
-            Params['epochs'] = 3 # 40
+        if Params['IxNuclei'] == [900]:
+            if (slcIx < 2) | (slcIx > len(Params['SliceNumbers'])-2  ):
+                Params['epochs'] = 30
+            else:
+                Params['epochs'] = 10
+
+        elif Params['IxNuclei'] == [100]:
+            if (slcIx < 5) | (slcIx > len(Params['SliceNumbers'])-5  ):
+                Params['epochs'] = 3 # 40
+            else:
+                Params['epochs'] = 3 # 60
         else:
-            Params['epochs'] = 3 # 60
-    else:
-        Params['epochs'] = 30
+            Params['epochs'] = 30
+
 
     return Params
 

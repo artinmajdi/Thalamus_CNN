@@ -151,6 +151,7 @@ def input_GPU_Ix():
     UserEntries['method'] = 'new'
     UserEntries['testMode'] = 'EnhancedSeperately' # 'AllTrainings'
     UserEntries['enhanced_Index'] = range(len(A))
+    UserEntries['epochs'] = 'nan'
 
     for input in sys.argv:
 
@@ -185,6 +186,12 @@ def input_GPU_Ix():
 
             else:
                 UserEntries['enhanced_Index'] = [int(input.split('=')[1])]
+
+        elif input.split('=')[0] == 'epochs':
+            UserEntries['epochs'] = int(input.split('=')[1])
+
+        elif input.split('=')[0] == 'mode':
+            UserEntries['mode'] = input.split('=')[1]
 
         # elif input.split('=')[0] == 'training_iters':
         #     UserEntries['training_iters'] = input.split('=')[1] # 'AllTrainings'
@@ -350,7 +357,7 @@ def ReadingTestImage(Params,subFolders,TestName):
 UserEntries = input_GPU_Ix()
 for ind in UserEntries['IxNuclei']:
 
-    Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']
     Params['IxNuclei'] = UserEntries['IxNuclei']
 

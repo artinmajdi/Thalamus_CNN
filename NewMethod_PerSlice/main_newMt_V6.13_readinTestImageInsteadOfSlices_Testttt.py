@@ -185,8 +185,11 @@ def input_GPU_Ix():
             else:
                 UserEntries['enhanced_Index'] = [int(input.split('=')[1])]
 
-        elif input.split('=')[0] == 'epoch':
+        elif input.split('=')[0] == 'epochs':
             UserEntries['epochs'] = int(input.split('=')[1])
+
+        elif input.split('=')[0] == 'mode':
+            UserEntries['mode'] = input.split('=')[1]
 
         # elif input.split('=')[0] == 'training_iters':
         #     UserEntries['training_iters'] = input.split('=')[1] # 'AllTrainings'
@@ -358,9 +361,10 @@ def ReadingTestImage(Params,subFolders,TestName):
     return TestImage, label # , TestLabel
 
 UserEntries = input_GPU_Ix()
+print('---------------',UserEntries['epochs'])
 for ind in UserEntries['IxNuclei']:
 
-    Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']
     Params['IxNuclei'] = UserEntries['IxNuclei']
     Params['epochs'] = UserEntries['epochs']

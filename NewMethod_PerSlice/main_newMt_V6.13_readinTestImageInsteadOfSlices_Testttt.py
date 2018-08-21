@@ -209,9 +209,15 @@ def DiceCoefficientCalculator(msk1,msk2):
 def trainFunc(Params , slcIx):
 
 
+    print('----------------------------------------------------------------------------------------------')
+    print('----------------------------------------------------------------------------------------------')
+    print('----------------------------------------------------------------------------------------------')
+    print('----  modelName  ----',  Params['modelName'])
+    print('Dir_NucleiModelOut', Dir_NucleiModelOut)
+
+
 
     sliceNum = Params['SliceNumbers'][slcIx]
-
 
     Dir_NucleiModelOut = mkDir( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum) + '/' + Params['modelName'] )
     Dir_ResultsOut = mkDir( Params['Dir_NucleiTestSamples']  + '/Slice_' + str(sliceNum) + '/' + Params['resultName'] )

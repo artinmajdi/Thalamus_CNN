@@ -39,9 +39,9 @@ def testNme(A,ii):
 
     return TestName
 
-def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new'):
+def initialDirectories(Params, ind = 1, mode = 'local' , dataset = 'old' , method = 'new'):
 
-    Params = {}
+    # Params = {}
     print(ind)
     if ind == 1:
         NucleusName = '1-THALAMUS'
@@ -114,7 +114,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
         Params['Dir_AllTests_restore']  = '/array/' + hardDrive + '/msmajdi/Tests/Thalamus_CNN/' + 'old' + 'Dataset_' + 'old' +'Method'
 
     Params['A'] = A
-    Params['Flag_cross_entropy'] = 0
+    #Params['Flag_cross_entropy'] = 0
     Params['NeucleusFolder'] = '/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
     Params['ThalamusFolder'] = '/CNN1_THALAMUS_2D_SanitizedNN'
     Params['Dir_Prior']    = Dir_Prior
@@ -126,17 +126,6 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
     padSizeFull = 90
     Params['padSize'] = int(padSizeFull/2)
 
-
-    if Params['Flag_cross_entropy'] == 1:
-        cost_kwargs = {'class_weights':[0.7,0.3]}
-        Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=cost_kwargs) # , cost="dice_coefficient"
-
-        Params['modelName'] = 'model_CE/'
-        Params['resultName'] = 'Results_CE/'
-    else:
-        Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
-        Params['modelName'] = 'model/'
-        Params['resultName'] = 'Results/'
 
     return Params
 
@@ -150,6 +139,7 @@ def input_GPU_Ix():
     UserEntries['testMode'] = 'EnhancedSeperately' # 'AllTrainings'
     UserEntries['enhanced_Index'] = range(len(A))
     UserEntries['epochs'] = 'nan'
+    UserEntries['Flag_cross_entropy'] = 0
 
     for input in sys.argv:
 
@@ -191,12 +181,20 @@ def input_GPU_Ix():
         elif input.split('=')[0] == 'mode':
             UserEntries['mode'] = input.split('=')[1]
 
-        # elif input.split('=')[0] == 'training_iters':
-        #     UserEntries['training_iters'] = input.split('=')[1] # 'AllTrainings'
-        # elif input.split('=')[0] == 'epochs':
-        #     UserEntries['epochs'] = input.split('=')[1] # 'AllTrainings'
-        # elif input.split('=')[0] == 'temp_Slice':
-        #     UserEntries['temp_Slice'] = input.split('=')[1] # 'AllTrainings'
+        elif input.split('=')[0] == '--cross_entropy':
+            UserEntries['Flag_cross_entropy'] = 1
+
+
+    if UserEntries['Flag_cross_entropy'] == 1:
+        cost_kwargs = {'class_weights':[0.7,0.3]}
+        UserEntries['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=cost_kwargs) # , cost="dice_coefficient"
+
+        UserEntries['modelName'] = 'model_CE/'
+        UserEntries['resultName'] = 'Results_CE/'
+    else:
+        UserEntries['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
+        UserEntries['modelName'] = 'model/'
+        UserEntries['resultName'] = 'Results/'
 
     return UserEntries
 
@@ -208,12 +206,6 @@ def DiceCoefficientCalculator(msk1,msk2):
     return DiceCoef
 
 def trainFunc(Params , slcIx):
-
-
-    print('----------------------------------------------------------------------------------------------')
-    print('----------------------------------------------------------------------------------------------')
-    print('----------------------------------------------------------------------------------------------')
-    print('----  modelName  ----',  Params['modelName'])
 
     sliceNum = Params['SliceNumbers'][slcIx]
 
@@ -328,6 +320,7 @@ def paramIterEpoch(Params , slcIx):
         if Params['Flag_cross_entropy'] == 1:
             Params['modelName'] = 'model_CE_' + str(Params['epochs']) + '/'
             Params['resultName'] = 'Results_CE' + str(Params['epochs']) + '/'
+            print('-------','cross entropy','-----------------------------)
         else:
             Params['modelName'] = 'model' + str(Params['epochs']) + '/'
             Params['resultName'] = 'Results' + str(Params['epochs']) + '/'
@@ -363,10 +356,10 @@ def ReadingTestImage(Params,subFolders,TestName):
 UserEntries = input_GPU_Ix()
 for ind in UserEntries['IxNuclei']:
 
-    Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'])
-    Params['gpuNum'] = UserEntries['gpuNum']
-    Params['IxNuclei'] = UserEntries['IxNuclei']
-    Params['epochs'] = UserEntries['epochs']
+    Params = initialDirectories(Params = UserEntries , ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    #Params['gpuNum'] = UserEntries['gpuNum']
+    #Params['IxNuclei'] = UserEntries['IxNuclei']
+    #Params['epochs'] = UserEntries['epochs']
 
     L = [0] if UserEntries['testMode'] == 'AllTrainings' else UserEntries['enhanced_Index'] # len(Params['A'])  # [1,4]: #
     for ii in L:
@@ -377,7 +370,7 @@ for ind in UserEntries['IxNuclei']:
         Dir_AllTests_Thalamus_EnhancedFld = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + TestName + '/'
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
-        subFolders = ['vimp2_ctrl_921_07122013_MP' , 'vimp2_823_05202013_AJ'] #
+        subFolders = ['vimp2_ctrl_921_07122013_MP' , 'vimp2_823_05202013_AJ' , 'vimp2_ctrl_918_07112013_TQ'] #
         for sFi in range(len(subFolders)):
             K = 'Test_' if UserEntries['testMode'] == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
             print(Params['NucleusName'],TestName.split(K)[1],subFolders[sFi])

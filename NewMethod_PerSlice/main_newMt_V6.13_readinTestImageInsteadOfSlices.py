@@ -343,14 +343,12 @@ def ReadingTestImage(Params,subFolders,TestName):
 
     return TestImage, label # , TestLabel
 
-Params = input_GPU_Ix()
+UserEntries = input_GPU_Ix()
 for ind in UserEntries['IxNuclei']:
 
-    Params = initialDirectories(Params=Params , ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'])
-    Params['gpuNum'] = UserEntries['gpuNum']
-    Params['IxNuclei'] = UserEntries['IxNuclei']
-
-
+    Params = initialDirectories(Params=UserEntries , ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    # Params['gpuNum'] = UserEntries['gpuNum']
+    # Params['IxNuclei'] = UserEntries['IxNuclei']
 
 
     L = [0] if UserEntries['testMode'] == 'AllTrainings' else UserEntries['enhanced_Index'] # len(Params['A'])  # [1,4]: #

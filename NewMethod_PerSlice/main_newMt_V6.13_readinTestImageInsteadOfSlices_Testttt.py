@@ -314,13 +314,21 @@ def paramIterEpoch(Params , slcIx):
                 Params['epochs'] = 3 # 40
             else:
                 Params['epochs'] = 3 # 60
+
+        elif Params['IxNuclei'][0] in [12]:
+            Params['epochs'] = 10
+
+        elif Params['IxNuclei'][0] in [1,6,8,10]:
+            Params['epochs'] = 20
+
         else:
-            Params['epochs'] = 30
+            Params['epochs'] = 20
+
     else:
         if Params['Flag_cross_entropy'] == 1:
             Params['modelName'] = 'model_CE_' + str(Params['epochs']) + '/'
             Params['resultName'] = 'Results_CE' + str(Params['epochs']) + '/'
-            print('-------','cross entropy','-----------------------------)
+            print('-------','cross entropy','-----------------------------')
         else:
             Params['modelName'] = 'model' + str(Params['epochs']) + '/'
             Params['resultName'] = 'Results' + str(Params['epochs']) + '/'

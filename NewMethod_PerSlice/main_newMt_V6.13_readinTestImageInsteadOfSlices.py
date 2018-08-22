@@ -84,10 +84,10 @@ def initialDirectories(Params , ind = 1, mode = 'local' , dataset = 'old' , meth
         NucleusName = '13-Hb'
         SliceNumbers = range(116,129)
 
-
+    Params['modelFormat'] = 'ckpt'
     if 'local' in mode:
 
-        Params['modelFormat'] = 'ckpt'
+        # Params['modelFormat'] = 'ckpt'
         if 'old' in dataset:
             Dir_Prior = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
         elif 'new' in dataset:
@@ -99,13 +99,13 @@ def initialDirectories(Params , ind = 1, mode = 'local' , dataset = 'old' , meth
     elif 'flash' in mode:
 
         machine = 'artin' # groot
-        Params['modelFormat'] = 'ckpt'
+
         Dir_Prior = '/media/' + machine + '/aaa/Manual_Delineation_Sanitized_Full'
         Dir_AllTests  = '/media/' + machine + '/aaa/AllTests/' + dataset + 'Dataset_' + method +'Method'
 
     elif 'server' in mode:
 
-        Params['modelFormat'] = 'ckpt' # cpkt
+        # Params['modelFormat'] = 'ckpt' # cpkt
         hardDrive = 'ssd'
         if 'old' in dataset:
             Dir_Prior = '/array/' + hardDrive + '/msmajdi/data/priors_forCNN_Ver2'
@@ -395,7 +395,7 @@ for ind in UserEntries['IxNuclei']:
             Params['Dir_NucleiTestSamples']  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + K
             Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train'
             if Params['gpuNum'] != 'nan':
-                Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + subFolders[sFi] + '/Train/' + Params['modelName']
+                Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + subFolders[sFi] + '/Train/' + 'model/' # Params['modelName']
 
 
             # ---------------------------  main part-----------------------------------

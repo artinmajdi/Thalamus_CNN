@@ -188,13 +188,10 @@ def input_GPU_Ix():
 
 
     if UserEntries['Flag_cross_entropy'] == 1:
-        cost_kwargs = {'class_weights':[0.7,0.3]}
-        UserEntries['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=cost_kwargs) # , cost="dice_coefficient"
-
+        UserEntries['cost_kwargs'] = {'class_weights':[0.7,0.3]}
         UserEntries['modelName'] = 'model_CE/'
         UserEntries['resultName'] = 'Results_CE/'
     else:
-        UserEntries['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
         UserEntries['modelName'] = 'model/'
         UserEntries['resultName'] = 'Results/'
 
@@ -222,7 +219,7 @@ def trainFunc(Params , slcIx):
     logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
 
     if Params['Flag_cross_entropy'] == 1:
-        Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=cost_kwargs) # , cost="dice_coefficient"
+        Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=UserEntries['cost_kwargs']) # , cost="dice_coefficient"
     else:
         Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
 
@@ -253,7 +250,7 @@ def trainFunc(Params , slcIx):
 def testFunc(Params , slcIx):
 
     if Params['Flag_cross_entropy'] == 1:
-        Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=cost_kwargs) # , cost="dice_coefficient"
+        Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=UserEntries['cost_kwargs']) # , cost="dice_coefficient"
     else:
         Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
 

@@ -328,7 +328,7 @@ def paramIterEpoch(Params , slcIx):
             print('-------','cross entropy','-----------------------------')
         else:
             Params['modelName'] = 'model/'
-            Params['resultName'] = 'Results/'            
+            Params['resultName'] = 'Results/'
 
     else:
         if Params['Flag_cross_entropy'] == 1:

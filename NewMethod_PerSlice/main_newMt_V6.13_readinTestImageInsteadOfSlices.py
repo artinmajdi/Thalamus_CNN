@@ -205,13 +205,10 @@ def DiceCoefficientCalculator(msk1,msk2):
     return DiceCoef
 
 def trainFunc(Params , slcIx):
-
-
-
     sliceNum = Params['SliceNumbers'][slcIx]
 
-
     Dir_NucleiModelOut = mkDir( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum) + '/' + Params['modelName'] )
+    # print(' &&&&&&&&&&&&&&&&  Dir_NucleiModelOut',Dir_NucleiModelOut)
     Dir_ResultsOut = mkDir( Params['Dir_NucleiTestSamples']  + '/Slice_' + str(sliceNum) + '/' + Params['resultName'] )
     print(Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum))
     TrainData = image_util.ImageDataProvider(Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum) + '/*.tif')
@@ -231,11 +228,9 @@ def trainFunc(Params , slcIx):
             # copyPreviousModel( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum-1) + '/' + Params['modelName'] , Dir_NucleiModelOut )
             copyPreviousModel( Params['restorePath'], Dir_NucleiModelOut )
             path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=500 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum'] , restore='True') # , write_graph=True
-            path = ' '
         else:
             copyPreviousModel( Params['restorePath'], Dir_NucleiModelOut )
             path = trainer.train(TrainData , Dir_NucleiModelOut , training_iters=Params['training_iters'] , epochs=Params['epochs'], display_step=500 , prediction_path=Dir_ResultsOut , GPU_Num=Params['gpuNum'])
-            path = ' '
     else:
         if slcIx > -10:
             # copyPreviousModel( Params['Dir_NucleiTrainSamples'] + '/Slice_' + str(sliceNum-1) + '/' + Params['modelName'] , Dir_NucleiModelOut )
@@ -284,9 +279,9 @@ def testFunc(Params , slcIx):
     else:
 
         if Params['gpuNum'] != 'nan':
-            prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + '/model/model.' + Params['modelFormat'], np.asarray(Data,dtype=np.float32), GPU_Num=Params['gpuNum'])
+            prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + '/' + Params['modelName'] + 'model.' + Params['modelFormat'], np.asarray(Data,dtype=np.float32), GPU_Num=Params['gpuNum'])
         else:
-            prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + '/model/model.' + Params['modelFormat'], np.asarray(Data,dtype=np.float32))
+            prediction2 = net.predict( Params['Dir_NucleiTrainSamples']  + '/Slice_' + str(sliceNumSubFld) + '/' + Params['modelName'] + 'model.' + Params['modelFormat'], np.asarray(Data,dtype=np.float32))
 
 
         try:

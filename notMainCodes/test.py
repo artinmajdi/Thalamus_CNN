@@ -22,3 +22,8 @@ DiceCoefficientCalculator(pred > Thresh , mask)
 
 
         subFolders = ['vimp2_ctrl_921_07122013_MP' , 'vimp2_823_05202013_AJ'] #
+
+
+a = [5]
+
+a[0] in [3,4,1]

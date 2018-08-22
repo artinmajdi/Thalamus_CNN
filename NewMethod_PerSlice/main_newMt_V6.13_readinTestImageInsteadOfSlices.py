@@ -39,10 +39,10 @@ def testNme(A,ii):
 
     return TestName
 
-def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new'):
+def initialDirectories(Params , ind = 1, mode = 'local' , dataset = 'old' , method = 'new'):
 
-    Params = {}
-    print(ind)
+    # Params = {}
+    # print(ind)
     if ind == 1:
         NucleusName = '1-THALAMUS'
         SliceNumbers = range(103,147)
@@ -116,7 +116,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
         Params['Dir_AllTests_restore']  = '/array/' + hardDrive + '/msmajdi/Tests/Thalamus_CNN/' + 'old' + 'Dataset_' + 'old' +'Method'
 
     Params['A'] = A
-    Params['Flag_cross_entropy'] = 0
+    # Params['Flag_cross_entropy'] = 0
     Params['NeucleusFolder'] = '/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
     Params['ThalamusFolder'] = '/CNN1_THALAMUS_2D_SanitizedNN'
     Params['Dir_Prior']    = Dir_Prior
@@ -127,18 +127,6 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
     Params['CropDim'] = np.array([ [50,198] , [130,278] , [Params['SliceNumbers'][0] , Params['SliceNumbers'][len(Params['SliceNumbers'])-1]] ])
     padSizeFull = 90
     Params['padSize'] = int(padSizeFull/2)
-
-
-    if Params['Flag_cross_entropy'] == 1:
-        cost_kwargs = {'class_weights':[0.7,0.3]}
-        Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=cost_kwargs) # , cost="dice_coefficient"
-
-        Params['modelName'] = 'model_CE/'
-        Params['resultName'] = 'Results_CE/'
-    else:
-        Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
-        Params['modelName'] = 'model/'
-        Params['resultName'] = 'Results/'
 
     return Params
 
@@ -152,6 +140,8 @@ def input_GPU_Ix():
     UserEntries['testMode'] = 'EnhancedSeperately' # 'AllTrainings'
     UserEntries['enhanced_Index'] = range(len(A))
     UserEntries['epochs'] = 'nan'
+    UserEntries['Flag_cross_entropy'] = 0
+
 
     for input in sys.argv:
 
@@ -193,12 +183,20 @@ def input_GPU_Ix():
         elif input.split('=')[0] == 'mode':
             UserEntries['mode'] = input.split('=')[1]
 
-        # elif input.split('=')[0] == 'training_iters':
-        #     UserEntries['training_iters'] = input.split('=')[1] # 'AllTrainings'
-        # elif input.split('=')[0] == 'epochs':
-        #     UserEntries['epochs'] = input.split('=')[1] # 'AllTrainings'
-        # elif input.split('=')[0] == 'temp_Slice':
-        #     UserEntries['temp_Slice'] = input.split('=')[1] # 'AllTrainings'
+        elif input.split('=')[0] == 'cross_entropy':
+            UserEntries['Flag_cross_entropy'] = 1
+
+
+    if UserEntries['Flag_cross_entropy'] == 1:
+        cost_kwargs = {'class_weights':[0.7,0.3]}
+        UserEntries['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=cost_kwargs) # , cost="dice_coefficient"
+
+        UserEntries['modelName'] = 'model_CE/'
+        UserEntries['resultName'] = 'Results_CE/'
+    else:
+        UserEntries['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
+        UserEntries['modelName'] = 'model/'
+        UserEntries['resultName'] = 'Results/'
 
     return UserEntries
 
@@ -308,17 +306,12 @@ def paramIterEpoch(Params , slcIx):
 
     Params['training_iters'] = 57
 
-    if Params['IxNuclei'] == [900]:
-        if (slcIx < 2) | (slcIx > len(Params['SliceNumbers'])-2  ):
-            Params['epochs'] = 30
-        else:
-            Params['epochs'] = 10
+    if Params['IxNuclei'][0] in [12]:
+        Params['epochs'] = 10
 
-    elif Params['IxNuclei'] == [100]:
-        if (slcIx < 5) | (slcIx > len(Params['SliceNumbers'])-5  ):
-            Params['epochs'] = 3 # 40
-        else:
-            Params['epochs'] = 3 # 60
+    elif Params['IxNuclei'][0] in [1,6,8,10]:
+        Params['epochs'] = 20
+
     else:
         Params['epochs'] = 20
 
@@ -350,10 +343,10 @@ def ReadingTestImage(Params,subFolders,TestName):
 
     return TestImage, label # , TestLabel
 
-UserEntries = input_GPU_Ix()
+Params = input_GPU_Ix()
 for ind in UserEntries['IxNuclei']:
 
-    Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    Params = initialDirectories(Params=Params , ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']
     Params['IxNuclei'] = UserEntries['IxNuclei']
 

@@ -366,7 +366,7 @@ def ReadingTestImage(Params,subFolders,TestName):
 UserEntries = input_GPU_Ix()
 for ind in UserEntries['IxNuclei']:
 
-    Params = initialDirectories(Params=UserEntries , ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    Params = initialDirectories(Params = UserEntries , ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     # Params['gpuNum'] = UserEntries['gpuNum']
     # Params['IxNuclei'] = UserEntries['IxNuclei']
 

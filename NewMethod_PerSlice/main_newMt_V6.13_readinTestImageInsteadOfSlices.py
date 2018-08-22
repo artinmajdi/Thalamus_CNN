@@ -183,7 +183,7 @@ def input_GPU_Ix():
         elif input.split('=')[0] == 'mode':
             UserEntries['mode'] = input.split('=')[1]
 
-        elif input.split('=')[0] == 'cross_entropy':
+        elif input.split('=')[0] == '--cross_entropy':
             UserEntries['Flag_cross_entropy'] = 1
 
 

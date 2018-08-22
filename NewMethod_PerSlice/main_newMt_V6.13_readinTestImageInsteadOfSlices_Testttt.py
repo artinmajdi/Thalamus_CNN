@@ -402,6 +402,7 @@ for ind in UserEntries['IxNuclei']:
             # Params['training_iters'] = int(UserEntries['training_iters']) # 100
 
             dice = np.zeros(len(Params['SliceNumbers'])+1)
+            Params = paramIterEpoch(Params , slcIx=0)
             Params['Dir_Results'] = mkDir(Params['Dir_NucleiTestSamples'] + '/' + Params['resultName'])
             for slcIx in range(len(Params['SliceNumbers'])):
 

@@ -19,3 +19,6 @@ mask = nib.load(dir2).get_data()
 Thresh = max(filters.threshold_otsu(pred),0.2)
 print(Thresh)
 DiceCoefficientCalculator(pred > Thresh , mask)
+
+
+        subFolders = ['vimp2_ctrl_921_07122013_MP' , 'vimp2_823_05202013_AJ'] #

@@ -322,6 +322,14 @@ def paramIterEpoch(Params , slcIx):
         else:
             Params['epochs'] = 20
 
+        if Params['Flag_cross_entropy'] == 1:
+            Params['modelName'] = 'model_CE/'
+            Params['resultName'] = 'Results_CE/'
+            print('-------','cross entropy','-----------------------------')
+        else:
+            Params['modelName'] = 'model/'
+            Params['resultName'] = 'Results/'            
+
     else:
         if Params['Flag_cross_entropy'] == 1:
             Params['modelName'] = 'model_CE_' + str(Params['epochs']) + '/'

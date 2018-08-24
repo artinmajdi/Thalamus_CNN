@@ -311,7 +311,7 @@ def paramIterEpoch(Params , slcIx):
         else:
             Params['epochs'] = 3 # 60
 
-    elif Params['IxNuclei'][0] in [12,13]:
+    elif Params['IxNuclei'][0] in [2,12,13]:
         Params['epochs'] = 10
 
     elif Params['IxNuclei'][0] in [1,6,8,10]:

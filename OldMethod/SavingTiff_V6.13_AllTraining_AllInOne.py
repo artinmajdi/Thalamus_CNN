@@ -141,7 +141,7 @@ def input_GPU_Ix():
             UserEntries['method'] = input.split('=')[1]
         elif input.split('=')[0] == 'mode':
             UserEntries['mode'] = input.split('=')[1]
-            
+
         elif input.split('=')[0] == 'nuclei':
             if 'all' in input.split('=')[1]:
                 a = range(4,14)
@@ -184,7 +184,8 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
         Dir_EachTraining = Params['Dir_AllTests'] + '/CNN' + Params['NucleusName'].replace('-','_') + '_2D_SanitizedNN/' + TestName
         Dir_AllTrainings = Params['Dir_AllTests'] + '/CNN' + Params['NucleusName'].replace('-','_') + '_2D_SanitizedNN/' + 'Test_AllTrainings'
-
+        Dir_All  = mkDir(Dir_AllTrainings + '/Train')
+        
         inputName = TestName.split('Test_')[1] + '.nii.gz'
 
         print('---------------------------------------')
@@ -217,7 +218,7 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
             mkDir(Dir_EachTraining + '/' + subFolders[sFi] + '/Test')
             mkDir(Dir_EachTraining + '/' + subFolders[sFi] + '/Train')
 
-            Dir_All  = mkDir(Dir_AllTrainings + '/Train')
+
 
         print('---------------------------------------')
 

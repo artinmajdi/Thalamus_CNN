@@ -153,15 +153,15 @@ def input_GPU_Ix():
     UserEntries['IxNuclei'] = [1]
     UserEntries['dataset'] = 'old' #'oldDGX' #
     UserEntries['method'] = 'old'
-    UserEntries['testMode'] = 'EnhancedSeperately' # 'AllTrainings'
+    UserEntries['testmode'] = 'EnhancedSeperately' # 'AllTrainings'
     UserEntries['enhanced_Index'] = range(len(A))
 
     for input in sys.argv:
 
         if input.split('=')[0] == 'gpu':
             UserEntries['gpuNum'] = input.split('=')[1]
-        elif input.split('=')[0] == 'testMode':
-            UserEntries['testMode'] = input.split('=')[1] # 'AllTrainings'
+        elif input.split('=')[0] == 'testmode':
+            UserEntries['testmode'] = input.split('=')[1] # 'AllTrainings'
         elif input.split('=')[0] == 'dataset':
             UserEntries['dataset'] = input.split('=')[1]
         elif input.split('=')[0] == 'method':
@@ -209,10 +209,10 @@ for ind in UserEntries['IxNuclei']:
     Params['gpuNum'] = UserEntries['gpuNum']
 
 
-    L = [0] if UserEntries['testMode'] == 'AllTrainings' else UserEntries['enhanced_Index'] # len(Params['A'])  # [1,4]: #
+    L = [0] if UserEntries['testmode'] == 'AllTrainings' else UserEntries['enhanced_Index'] # len(Params['A'])  # [1,4]: #
     for ii in L:
 
-        TestName = 'Test_AllTrainings' if UserEntries['testMode'] == 'AllTrainings' else testNme(Params['A'],ii)
+        TestName = 'Test_AllTrainings' if UserEntries['testmode'] == 'AllTrainings' else testNme(Params['A'],ii)
 
         Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + TestName + '/'
 
@@ -223,10 +223,10 @@ for ind in UserEntries['IxNuclei']:
         # aaa = np.append([0,1],aaa)
         for sFi in range(len(subFolders)):
 
-            K = 'Test_' if UserEntries['testMode'] == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
+            K = 'Test_' if UserEntries['testmode'] == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
             print(Params['NucleusName'],TestName.split(K)[1],subFolders[sFi])
 
-            K = '/Test0/' if UserEntries['testMode'] == 'AllTrainings' else '/Test/'
+            K = '/Test0/' if UserEntries['testmode'] == 'AllTrainings' else '/Test/'
             Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + K
             Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
 
@@ -273,4 +273,3 @@ for ind in UserEntries['IxNuclei']:
             info['net']          = Params['net']
 
             [Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical] = TestData3_cleanedup(info , NucleiOrigSeg)
-

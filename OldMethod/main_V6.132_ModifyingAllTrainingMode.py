@@ -228,7 +228,9 @@ for ind in UserEntries['IxNuclei']:
         for sFi in L:
 
             K = 'Test_' if UserEntries['testmode'] == 'combo' else 'Test_WMnMPRAGE_bias_corr_'
-            print(Params['NucleusName'],TestName.split(K)[1],subFolders[sFi])
+
+            if UserEntries['testmode'] != 'combo':
+                print(Params['NucleusName'],TestName.split(K)[1],subFolders[sFi])
 
             K = 'Test/' if UserEntries['testmode'] == 'combo' else '/Test/'
 

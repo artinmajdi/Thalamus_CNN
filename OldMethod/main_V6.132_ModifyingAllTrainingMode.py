@@ -239,7 +239,7 @@ for ind in UserEntries['IxNuclei']:
                 Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + K
                 Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
 
-                Dir_ThalamusTestSamples = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + TestName + '/' + subFolders[sFi] + '/Test/'
+                # Dir_ThalamusTestSamples = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + TestName + '/' + subFolders[sFi] + '/Test/'
                 # Dir_ThalamusModelOut    = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + TestName + '/' + subFolders[sFi] + '/Train/model/'
 
 

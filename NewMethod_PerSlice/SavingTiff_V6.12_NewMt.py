@@ -120,7 +120,7 @@ def input_GPU_Ix():
     UserEntries['IxNuclei'] = [1]
     UserEntries['dataset'] = 'old' #'oldDGX' #
     UserEntries['method'] = 'new'
-    UserEntries['testMode'] = 'EnhancedSeperately' # 'AllTrainings'
+    UserEntries['testMode'] = 'EnhancedSeperately' # 'combo'
     UserEntries['enhanced_Index'] = range(len(A))
 
     for input in sys.argv:
@@ -128,7 +128,7 @@ def input_GPU_Ix():
         if input.split('=')[0] == 'gpu':
             UserEntries['gpuNum'] = input.split('=')[1]
         elif input.split('=')[0] == 'testMode':
-            UserEntries['testMode'] = input.split('=')[1] # 'AllTrainings'
+            UserEntries['testMode'] = input.split('=')[1] # 'combo'
         elif input.split('=')[0] == 'dataset':
             UserEntries['dataset'] = input.split('=')[1]
         elif input.split('=')[0] == 'method':
@@ -216,7 +216,7 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
         for sFi_parent in range(len(subFolders)):
             print('Writing Images:  ',NucleusName,str(sFi_parent) + ' ' + subFolders[sFi_parent])
-            for sFi_child in range(len(subFolders)): #[subFolders.index('vimp2_ANON724_03272013')]: # 
+            for sFi_child in range(len(subFolders)): #[subFolders.index('vimp2_ANON724_03272013')]: #
                 # print( 'sFi_child' , sFi_child , subFolders[sFi_child][:15],'/', 'sFi_parent', sFi_parent , subFolders[sFi_parent][:15])
 
                 for slcIx_parent in range(len(SliceNumbers)):

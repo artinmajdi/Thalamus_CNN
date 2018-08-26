@@ -136,7 +136,7 @@ def input_GPU_Ix():
     UserEntries['IxNuclei'] = 'nan'
     UserEntries['dataset'] = 'old' #'oldDGX' #
     UserEntries['method'] = 'new'
-    UserEntries['testmode'] = 'EnhancedSeperately' # 'AllTrainings'
+    UserEntries['testmode'] = 'EnhancedSeperately' # 'combo'
     UserEntries['enhanced_Index'] = range(len(A))
     UserEntries['epochs'] = 'nan'
     UserEntries['Flag_cross_entropy'] = 0
@@ -146,7 +146,7 @@ def input_GPU_Ix():
         if input.split('=')[0] == 'gpu':
             UserEntries['gpuNum'] = input.split('=')[1]
         elif input.split('=')[0] == 'testmode':
-            UserEntries['testmode'] = input.split('=')[1] # 'AllTrainings'
+            UserEntries['testmode'] = input.split('=')[1] # 'combo'
         elif input.split('=')[0] == 'dataset':
             UserEntries['dataset'] = input.split('=')[1]
         elif input.split('=')[0] == 'method':
@@ -375,10 +375,10 @@ for ind in UserEntries['IxNuclei']:
     #Params['IxNuclei'] = UserEntries['IxNuclei']
     #Params['epochs'] = UserEntries['epochs']
 
-    L = [0] if UserEntries['testmode'] == 'AllTrainings' else UserEntries['enhanced_Index'] # len(Params['A'])  # [1,4]: #
+    L = [0] if UserEntries['testmode'] == 'combo' else UserEntries['enhanced_Index'] # len(Params['A'])  # [1,4]: #
     for ii in L:
 
-        TestName = 'Test_AllTrainings' if UserEntries['testmode'] == 'AllTrainings' else testNme(Params['A'],ii)
+        TestName = 'Test_AllTrainings' if UserEntries['testmode'] == 'combo' else testNme(Params['A'],ii)
 
         Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + TestName + '/'
         Dir_AllTests_Thalamus_EnhancedFld = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + TestName + '/'
@@ -386,13 +386,13 @@ for ind in UserEntries['IxNuclei']:
 
         subFolders = ['vimp2_ctrl_921_07122013_MP' , 'vimp2_823_05202013_AJ' , 'vimp2_ctrl_918_07112013_TQ'] #
         for sFi in range(len(subFolders)):
-            K = 'Test_' if UserEntries['testmode'] == 'AllTrainings' else 'Test_WMnMPRAGE_bias_corr_'
+            K = 'Test_' if UserEntries['testmode'] == 'combo' else 'Test_WMnMPRAGE_bias_corr_'
             print(Params['NucleusName'],TestName.split(K)[1],subFolders[sFi])
 
             Dir_Prior_NucleiSample = Params['Dir_Prior'] +  subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz'
             Dir_Prior_ThalamusSample = Params['Dir_Prior'] +  subFolders[sFi] + '/Manual_Delineation_Sanitized/' +'1-THALAMUS' + '_deformed.nii.gz'
 
-            K = '/Test0' if UserEntries['testmode'] == 'AllTrainings' else '/Test'
+            K = '/Test0' if UserEntries['testmode'] == 'combo' else '/Test'
             Params['Dir_NucleiTestSamples']  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + K
             Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train'
             if Params['gpuNum'] != 'nan':

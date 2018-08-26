@@ -140,6 +140,7 @@ def input_GPU_Ix():
     UserEntries['testmode'] = 'EnhancedSeperately' # 'combo'
     UserEntries['enhanced_Index'] = range(len(A))
     UserEntries['epochs'] = 'nan'
+    UserEntries['mode'] = 'server'
     UserEntries['Flag_cross_entropy'] = 0
 
 
@@ -153,7 +154,9 @@ def input_GPU_Ix():
             UserEntries['dataset'] = input.split('=')[1]
         elif input.split('=')[0] == 'method':
             UserEntries['method'] = input.split('=')[1]
-
+        elif input.split('=')[0] == 'mode':
+            UserEntries['mode'] = input.split('=')[1]
+            
         elif input.split('=')[0] == 'nuclei':
             if 'all' in input.split('=')[1]:
                 a = range(4,14)
@@ -179,9 +182,6 @@ def input_GPU_Ix():
 
         elif input.split('=')[0] == 'epochs':
             UserEntries['epochs'] = int(input.split('=')[1])
-
-        elif input.split('=')[0] == 'mode':
-            UserEntries['mode'] = input.split('=')[1]
 
         elif input.split('=')[0] == '--cross_entropy':
             UserEntries['Flag_cross_entropy'] = 1

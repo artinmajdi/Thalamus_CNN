@@ -155,6 +155,7 @@ def input_GPU_Ix():
     UserEntries['method'] = 'old'
     UserEntries['testmode'] = 'EnhancedSeperately' # 'combo'
     UserEntries['enhanced_Index'] = range(len(A))
+    UserEntries['mode'] = 'server'
 
     for input in sys.argv:
 
@@ -166,7 +167,9 @@ def input_GPU_Ix():
             UserEntries['dataset'] = input.split('=')[1]
         elif input.split('=')[0] == 'method':
             UserEntries['method'] = input.split('=')[1]
-
+        elif input.split('=')[0] == 'mode':
+            UserEntries['mode'] = input.split('=')[1]
+            
         elif input.split('=')[0] == 'nuclei':
             if 'all' in input.split('=')[1]:
                 a = range(4,14)

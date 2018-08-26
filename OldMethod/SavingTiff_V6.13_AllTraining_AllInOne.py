@@ -141,7 +141,7 @@ def input_GPU_Ix():
             UserEntries['method'] = input.split('=')[1]
         elif input.split('=')[0] == 'mode':
             UserEntries['mode'] = input.split('=')[1]
-
+            
         elif input.split('=')[0] == 'nuclei':
             if 'all' in input.split('=')[1]:
                 a = range(4,14)
@@ -217,8 +217,7 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
             mkDir(Dir_EachTraining + '/' + subFolders[sFi] + '/Test')
             mkDir(Dir_EachTraining + '/' + subFolders[sFi] + '/Train')
 
-            mkDir(Dir_AllTrainings + '/' + subFolders[sFi] + '/Test' + str(ii))
-            mkDir(Dir_AllTrainings + '/' + subFolders[sFi] + '/Train')
+            Dir_All  = mkDir(Dir_AllTrainings + '/Train')
 
         print('---------------------------------------')
 
@@ -229,19 +228,15 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
                 if sFi_parent == sFi_child:
                     Dir_Each = Dir_EachTraining + '/' + subFolders[sFi_child] + '/Test'
-                    Dir_All  = Dir_AllTrainings + '/' + subFolders[sFi_child] + '/Test' + str(ii)
 
                 else:
                     Dir_Each = Dir_EachTraining + '/' + subFolders[sFi_child] + '/Train'
-                    Dir_All  = Dir_AllTrainings + '/' + subFolders[sFi_child] + '/Train'
-
 
                 for slcIx in range(imFull.shape[2]):
 
                     Name_PredictedImage = subFolders[sFi_parent] + '_Sh' + str(Params['A'][ii][0]) + '_Ct' + str(Params['A'][ii][1]) + '_Slice_' + str(Params['SliceNumbers'][slcIx])
-                    tifffile.imsave( Dir_Each + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx,sFi_parent] )
-                    tifffile.imsave( Dir_Each + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi_parent] )
+                    # tifffile.imsave( Dir_Each + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx,sFi_parent] )
+                    # tifffile.imsave( Dir_Each + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi_parent] )
 
-                    # if (ii == 0) | (sFi_parent != sFi_child) :  # the first argument will save both test and train files in the non enhanced version . the second argument will only save the train files for the enhanced version
                     tifffile.imsave( Dir_All + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx,sFi_parent] )
                     tifffile.imsave( Dir_All + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi_parent] )

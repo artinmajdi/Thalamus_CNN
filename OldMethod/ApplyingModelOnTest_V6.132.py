@@ -357,8 +357,11 @@ for ind in UserEntries['IxNuclei']:
             output_Lgc[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ] = pred_Lgc
 
             # ---------------------------  showing -----------------------------------
-            # Lbl = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
-            # dice = DiceCoefficientCalculator(pred_Lgc , Lbl )
+            Lbl = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
+            dice = [0]
+            dice[0] = DiceCoefficientCalculator(pred_Lgc , Lbl )
+            np.savetxt(Params['Dir_ResultsOut'] + 'DiceCoefficient.txt',dice)
+
 
             output2 = nib.Nifti1Image(output,label.affine)
             output2.get_header = label.header
@@ -368,8 +371,9 @@ for ind in UserEntries['IxNuclei']:
             output_Lgc2.get_header = label.header
             nib.save(output_Lgc2 , Params['Dir_ResultsOut'] + subFolders[sFi] + '_' + Params['NucleusName'] + '_Logical.nii.gz')
 
-            dice = DiceCoefficientCalculator(output_Lgc,label.get_data())
-            np.savetxt(Params['Dir_ResultsOut'] + 'DiceCoefficient.txt',dice)
+            diceF = [0]
+            diceF[0] = DiceCoefficientCalculator(output_Lgc,label.get_data())
+            np.savetxt(Params['Dir_ResultsOut'] + 'DiceCoefficient.txt',diceF)
 
 
 

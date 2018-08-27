@@ -152,7 +152,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
 def input_GPU_Ix():
 
     UserEntries = {}
-    UserEntries['gpuNum'] =  '4'  # 'nan'  #
+    UserEntries['gpuNum'] =  '7'  # 'nan'  #
     UserEntries['IxNuclei'] = [1]
     UserEntries['dataset'] = 'old' #'oldDGX' #
     UserEntries['method'] = 'old'
@@ -344,7 +344,7 @@ for ind in UserEntries['IxNuclei']:
             if UserEntries['testmode'] == 'combo':
                 Params['restorePath_full'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + 'Test_AllTrainings' + '/Train'
             else:
-                subFolder_trainModel = 'vimp2_ANON724_03272013'
+                subFolder_trainModel = 'vimp2_901_07052013_AS'
                 Params['restorePath_full'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + Params['TestName'] + '/' + subFolder_trainModel + '/Train'
 
             Params['restorePath'] = Params['restorePath_full'] + '/' + Params['modelName']

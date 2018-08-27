@@ -397,7 +397,7 @@ for ind in UserEntries['IxNuclei']:
             Params['Dir_NucleiTrainSamples'] = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + TestName + '/' + subFolders[sFi] + '/Train'
 
             # if Params['gpuNum'] != 'nan':
-            subFolder_trainModel = 'vimp2_ANON724_03272013'
+            subFolder_trainModel = 'vimp2_819_05172013_DS' # 'vimp2_ANON724_03272013'
             Params['restorePath_full'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + subFolder_trainModel + '/Train'
 
 

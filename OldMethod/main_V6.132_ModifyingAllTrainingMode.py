@@ -149,7 +149,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
 def input_GPU_Ix():
 
     UserEntries = {}
-    UserEntries['gpuNum'] =  '4'  # 'nan'  #
+    UserEntries['gpuNum'] =  '7'  # 'nan'  #
     UserEntries['IxNuclei'] = [1]
     UserEntries['dataset'] = 'old' #'oldDGX' #
     UserEntries['method'] = 'old'
@@ -262,7 +262,7 @@ for ind in UserEntries['IxNuclei']:
             trainer = unet.Trainer(Params['net'], optimizer = "adam")
             if Params['gpuNum'] != 'nan':
                 # path2 = ''
-                path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500, GPU_Num=Params['gpuNum'] ,prediction_path=Dir_ResultsOut) #  restore=True
+                path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=400, epochs=150, display_step=500, GPU_Num=Params['gpuNum'] ,prediction_path=Dir_ResultsOut) #  restore=True
             else:
                 path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=50, epochs=4, display_step=500 ,prediction_path=Dir_ResultsOut) #   restore=True
 

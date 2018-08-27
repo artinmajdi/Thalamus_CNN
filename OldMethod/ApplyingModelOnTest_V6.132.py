@@ -242,14 +242,16 @@ def testFunc(Params):
 
 
     try:
-        Thresh = max( filters.threshold_otsu(prediction2[0,...,1]) ,0.2)
+        Thresh = max( filters.threshold_otsu(prediction2[...,1]) ,0.2)
     except:
         print('---------------------------error Thresholding------------------')
         Thresh = 0.2
 
-    PredictedSeg = prediction2[0,...,1] > Thresh
+    PredictedSeg = prediction2[...,1] > Thresh
+    PredictedSeg = np.transpose(PredictedSeg,[1,2,0])
+    prediction2 = np.transpose(prediction2[...,1], [1,2,0])
 
-    return prediction2[0,...,1] , PredictedSeg
+    return prediction2 , PredictedSeg
 
 def trainFunc(Params):
 

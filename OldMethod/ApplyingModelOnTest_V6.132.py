@@ -137,7 +137,8 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
     Params['NucleusName']  = NucleusName
     Params['optimizer'] = 'adam'
     Params['CropDim'] = np.array([ [50,198] , [130,278] , [Params['SliceNumbers'][0] , Params['SliceNumbers'][len(Params['SliceNumbers'])-1]] ])
-
+    padSizeFull = 90
+    Params['padSize'] = int(padSizeFull/2)
 
     if Params['Flag_cross_entropy'] == 1:
         Params['modelName'] = 'model_CE/'

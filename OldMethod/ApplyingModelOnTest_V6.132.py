@@ -331,7 +331,6 @@ for ind in UserEntries['IxNuclei']:
             Params['Dir_NucleiModelOut'] = mkDir(Params['Dir_NucleiTrainSamples'] + Params['modelName'])
             Params['Dir_ResultsOut'] = mkDir(Params['Dir_NucleiTestSamples']  + Params['resultName'])
 
-
             logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
 
             if Params['Flag_cross_entropy'] == 1:
@@ -363,14 +362,14 @@ for ind in UserEntries['IxNuclei']:
 
             output2 = nib.Nifti1Image(output,label.affine)
             output2.get_header = label.header
-            nib.save(output2 , Params['Dir_Results'] + subFolders[sFi] + '_' + Params['NucleusName'] + '.nii.gz')
+            nib.save(output2 , Params['Dir_ResultsOut'] + subFolders[sFi] + '_' + Params['NucleusName'] + '.nii.gz')
 
             output_Lgc2 = nib.Nifti1Image(output_Lgc,label.affine)
             output_Lgc2.get_header = label.header
-            nib.save(output_Lgc2 , Params['Dir_Results'] + subFolders[sFi] + '_' + Params['NucleusName'] + '_Logical.nii.gz')
+            nib.save(output_Lgc2 , Params['Dir_ResultsOut'] + subFolders[sFi] + '_' + Params['NucleusName'] + '_Logical.nii.gz')
 
             dice = DiceCoefficientCalculator(output_Lgc,label.get_data())
-            np.savetxt(Params['Dir_Results'] + 'DiceCoefficient.txt',dice)
+            np.savetxt(Params['Dir_ResultsOut'] + 'DiceCoefficient.txt',dice)
 
 
 

@@ -369,6 +369,7 @@ for ind in UserEntries['IxNuclei']:
 
 
 
+
             # if UserEntries['testmode'] != 'combo':
             #
             #     NucleiOrigSeg   = nib.load( Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz' )

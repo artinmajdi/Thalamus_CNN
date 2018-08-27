@@ -276,7 +276,8 @@ for ind in UserEntries['IxNuclei']:
 
         Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + Params['TestName'] + '/'
 
-        subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
+        # subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
+        subFolders = subFoldersFunc(Params['Dir_Prior'])
 
         # subFolders = ['vimp2_ctrl_921_07122013_MP'] # vimp2_ctrl_920_07122013_SW'] #
         L = [0] if UserEntries['testmode'] == 'combo' else range(len(subFolders))

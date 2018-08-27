@@ -213,6 +213,9 @@ def ReadingTestImage(Params,subFolders):
     TestImage = TestImage[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
     TestImage = np.pad(TestImage,((Params['padSize'],Params['padSize']),(Params['padSize'],Params['padSize']),(0,0)),'constant' )
 
+    TestImage = np.transpose(TestImage.[2,0,1])
+    TestImage = TestImage[...,np.newaxis]
+
     label = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz')
 
     return TestImage, label
@@ -226,7 +229,8 @@ def testFunc(Params):
 
     net = Params['net']
 
-    Data = Params['TestImage'][np.newaxis,:,:,:]
+    # Data = Params['TestImage'][np.newaxis,:,:,:]
+    Data = Params['TestImage']
     mn = np.min(Data)
     mx = np.max(Data)
     Data = (Data - mn) / (mx - mn)

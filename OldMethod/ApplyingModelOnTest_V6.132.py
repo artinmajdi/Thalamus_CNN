@@ -321,6 +321,10 @@ for ind in UserEntries['IxNuclei']:
                 # Dir_ThalamusModelOut    = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + Params['TestName'] + '/' + subFolders[sFi] + '/Train/model/'
 
             TestImage, label = ReadingTestImage(Params,subFolders[sFi])
+
+            output = np.zeros(label.shape)
+            output_Lgc = np.zeros(label.shape)
+
             Params['TestImage'] = TestImage
 
 
@@ -354,8 +358,8 @@ for ind in UserEntries['IxNuclei']:
             output_Lgc[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ] = pred_Lgc
 
             # ---------------------------  showing -----------------------------------
-            Lbl = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
-            dice = DiceCoefficientCalculator(pred_Lgc , Lbl )
+            # Lbl = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
+            # dice = DiceCoefficientCalculator(pred_Lgc , Lbl )
 
             output2 = nib.Nifti1Image(output,label.affine)
             output2.get_header = label.header
@@ -365,6 +369,7 @@ for ind in UserEntries['IxNuclei']:
             output_Lgc2.get_header = label.header
             nib.save(output_Lgc2 , Params['Dir_Results'] + subFolders[sFi] + '_' + Params['NucleusName'] + '_Logical.nii.gz')
 
+            dice = DiceCoefficientCalculator(output_Lgc,label.get_data())
             np.savetxt(Params['Dir_Results'] + 'DiceCoefficient.txt',dice)
 
 

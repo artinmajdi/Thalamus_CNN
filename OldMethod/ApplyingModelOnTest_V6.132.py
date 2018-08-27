@@ -373,7 +373,7 @@ for ind in UserEntries['IxNuclei']:
 
             diceF = [0]
             diceF[0] = DiceCoefficientCalculator(output_Lgc,label.get_data())
-            np.savetxt(Params['Dir_ResultsOut'] + 'DiceCoefficient.txt',diceF)
+            np.savetxt(Params['Dir_ResultsOut'] + 'DiceCoefficientF.txt',diceF)
 
 
 

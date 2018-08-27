@@ -342,24 +342,24 @@ for ind in UserEntries['IxNuclei']:
             copyPreviousModel( Params['restorePath'], Params['Dir_NucleiModelOut'] )
 
 
-            if 0:
-                pred , pred_Lgc = testFunc(Params)
-                output[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ] = pred
-                output_Lgc[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ] = pred_Lgc
+            # if 0:
+            pred , pred_Lgc = testFunc(Params)
+            output[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ] = pred
+            output_Lgc[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ] = pred_Lgc
 
-                # ---------------------------  showing -----------------------------------
-                Lbl = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
-                dice = DiceCoefficientCalculator(pred_Lgc , Lbl )
+            # ---------------------------  showing -----------------------------------
+            Lbl = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
+            dice = DiceCoefficientCalculator(pred_Lgc , Lbl )
 
-                output2 = nib.Nifti1Image(output,label.affine)
-                output2.get_header = label.header
-                nib.save(output2 , Params['Dir_Results'] + subFolders[sFi] + '_' + Params['NucleusName'] + '.nii.gz')
+            output2 = nib.Nifti1Image(output,label.affine)
+            output2.get_header = label.header
+            nib.save(output2 , Params['Dir_Results'] + subFolders[sFi] + '_' + Params['NucleusName'] + '.nii.gz')
 
-                output_Lgc2 = nib.Nifti1Image(output_Lgc,label.affine)
-                output_Lgc2.get_header = label.header
-                nib.save(output_Lgc2 , Params['Dir_Results'] + subFolders[sFi] + '_' + Params['NucleusName'] + '_Logical.nii.gz')
+            output_Lgc2 = nib.Nifti1Image(output_Lgc,label.affine)
+            output_Lgc2.get_header = label.header
+            nib.save(output_Lgc2 , Params['Dir_Results'] + subFolders[sFi] + '_' + Params['NucleusName'] + '_Logical.nii.gz')
 
-                np.savetxt(Params['Dir_Results'] + 'DiceCoefficient.txt',dice)
+            np.savetxt(Params['Dir_Results'] + 'DiceCoefficient.txt',dice)
 
 
 

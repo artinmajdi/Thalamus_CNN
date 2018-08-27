@@ -325,10 +325,10 @@ for ind in UserEntries['IxNuclei']:
 
             # path = trainFunc(Params)
             if UserEntries['testmode'] == 'combo':
-                Params['restorePath_full'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/Train'
+                Params['restorePath_full'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + Params['TestName'] + '/Train'
             else:
                 subFolder_trainModel = 'vimp2_ANON724_03272013'
-                Params['restorePath_full'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + subFolder_trainModel + '/Train'
+                Params['restorePath_full'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + Params['TestName'] + '/' + subFolder_trainModel + '/Train'
 
             Params['restorePath'] = Params['restorePath_full'] + '/' + Params['modelName']
             copyPreviousModel( Params['restorePath'], Params['Dir_NucleiModelOut'] )

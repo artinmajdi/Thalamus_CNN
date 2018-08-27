@@ -269,33 +269,38 @@ for ind in UserEntries['IxNuclei']:
     Params['gpuNum'] = UserEntries['gpuNum']
 
 
-    L = [0] if UserEntries['testmode'] == 'combo' else UserEntries['enhanced_Index'] # len(Params['A'])  # [1,4]: #
+    # L = [0] if UserEntries['testmode'] == 'combo' else UserEntries['enhanced_Index'] # len(Params['A'])  # [1,4]: #
+    L = UserEntries['enhanced_Index']
     for ii in L:
 
-        Params['TestName'] = 'Test_AllTrainings' if UserEntries['testmode'] == 'combo' else testNme(Params['A'],ii)
+        Params['TestName'] = testNme(Params['A'],ii)
 
+        # if UserEntries['testmode'] == 'combo':
+        #     Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + 'Test_AllTrainings' + '/'
+        # else:
         Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + Params['TestName'] + '/'
 
         # subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
         subFolders = subFoldersFunc(Params['Dir_Prior'])
 
         # subFolders = ['vimp2_ctrl_921_07122013_MP'] # vimp2_ctrl_920_07122013_SW'] #
-        L = [0] if UserEntries['testmode'] == 'combo' else range(len(subFolders))
+        # L = [0] if UserEntries['testmode'] == 'combo' else range(len(subFolders))
+        L = range(len(subFolders))
         for sFi in L:
 
-            K = 'Test_' if UserEntries['testmode'] == 'combo' else 'Test_WMnMPRAGE_bias_corr_'
+            # K = 'Test_' if UserEntries['testmode'] == 'combo' else 'Test_WMnMPRAGE_bias_corr_'
 
-            if UserEntries['testmode'] != 'combo':
-                print(Params['NucleusName'],Params['TestName'].split(K)[1],subFolders[sFi])
+            # if UserEntries['testmode'] != 'combo':
+                # print(Params['NucleusName'],Params['TestName'].split(K)[1],subFolders[sFi])
 
-            K = 'Test/' if UserEntries['testmode'] == 'combo' else '/Test/'
+            # K = 'Test/' if UserEntries['testmode'] == 'combo' else '/Test/'
 
-            if UserEntries['testmode'] == 'combo':
-                Params['Dir_NucleiTestSamples']  = Dir_AllTests_Nuclei_EnhancedFld + K
-                Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + 'Train/'
-            else:
-                Params['Dir_NucleiTestSamples']  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + K
-                Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
+            # if UserEntries['testmode'] == 'combo':
+            #     Params['Dir_NucleiTestSamples']  = Dir_AllTests_Nuclei_EnhancedFld + 'Test/'
+            #     Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + 'Train/'
+            # else:
+            Params['Dir_NucleiTestSamples']  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Test/'
+            Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
 
                 # Dir_ThalamusTestSamples = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + Params['TestName'] + '/' + subFolders[sFi] + '/Test/'
                 # Dir_ThalamusModelOut    = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + Params['TestName'] + '/' + subFolders[sFi] + '/Train/model/'
@@ -321,6 +326,7 @@ for ind in UserEntries['IxNuclei']:
             if UserEntries['testmode'] == 'combo':
                 Params['restorePath_full'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/Train'
             else:
+                subFolder_trainModel = 'vimp2_ANON724_03272013'
                 Params['restorePath_full'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + subFolder_trainModel + '/Train'
 
             Params['restorePath'] = Params['restorePath_full'] + '/' + Params['modelName']

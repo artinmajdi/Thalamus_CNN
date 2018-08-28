@@ -344,7 +344,7 @@ for ind in UserEntries['IxNuclei']:
             if UserEntries['testmode'] == 'combo':
                 Params['restorePath_full'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + 'Test_AllTrainings' + '/Train'
             else:
-                subFolder_trainModel = 'vimp2_901_07052013_AS'
+                subFolder_trainModel = 'vimp2_824_05212013_JS'
                 Params['restorePath_full'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + Params['TestName'] + '/' + subFolder_trainModel + '/Train'
 
             Params['restorePath'] = Params['restorePath_full'] + '/' + Params['modelName']

@@ -342,20 +342,39 @@ for ind in UserEntries['IxNuclei']:
 
             # path = trainFunc(Params)
             if UserEntries['testmode'] == 'combo':
+                
                 Params['restorePath_full'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + 'Test_AllTrainings' + '/Train'
                 Params['restorePath'] = Params['restorePath_full'] + '/' + Params['modelName']
                 copyPreviousModel( Params['restorePath'], Params['Dir_NucleiModelOut'] )
 
                 pred , pred_Lgc = testFunc(Params)
 
-            else:
-                for subFolder_trainModel in range(len(subFolders_TrainedModels)):
-                    # subFolder_trainModel = 'vimp2_ANON724_03272013'
+            elif UserEntries['testmode'] == 'MW':
+
+                cp = Params['CropDim']
+                predFull_Lgc = np.zeros((cp[0,0]:cp[0,1] , cp[1,0]:cp[1,1] , Params['SliceNumbers'],len(subFolders_TrainedModels)))
+                predFull = np.zeros((cp[0,0]:cp[0,1] , cp[1,0]:cp[1,1] , Params['SliceNumbers'],len(subFolders_TrainedModels)))
+
+                for sFi_tr in range(len(subFolders_TrainedModels)):
+
+                    subFolder_trainModel = subFolders_TrainedModels[sFi_tr]
                     Params['restorePath_full'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + Params['TestName'] + '/' + subFolder_trainModel + '/Train'
 
                     Params['restorePath'] = Params['restorePath_full'] + '/' + Params['modelName']
                     copyPreviousModel( Params['restorePath'], Params['Dir_NucleiModelOut'] )
-                    pred , pred_Lgc = testFunc(Params)
+                    predTp , pred_LgcTp = testFunc(Params)
+                    predFull_Lgc[...,sFi_tr] = pred_Lgc
+                    predFull[...,sFi_tr] = pred
+
+                    pred = np.mean(predTp,axis=3)
+                    pred_Lgc = np.sum(pred_LgcTp,axis=3) > int(len(subFolders_TrainedModels)/2)
+
+            else:
+                subFolder_trainModel = 'vimp2_ANON724_03272013'
+                Params['restorePath_full'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + Params['TestName'] + '/' + subFolder_trainModel + '/Train'
+                Params['restorePath'] = Params['restorePath_full'] + '/' + Params['modelName']
+                copyPreviousModel( Params['restorePath'], Params['Dir_NucleiModelOut'] )
+                pred , pred_Lgc = testFunc(Params)
 
 
             output[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ] = pred

@@ -2,6 +2,7 @@ from tf_unet import unet, util, image_util
 import nibabel as nib
 import numpy as np
 
+
 dir2 = '/media/artin/dataLocal1/dataThalamus/AllTests/oldDataset_newMethod/CNN6_VLP_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr_Deformed/vimp2_ANON724_03272013/Train/Slice_116/'
 
 TrainData = image_util.ImageDataProvider(dir2 + "*.tif")

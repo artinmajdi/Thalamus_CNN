@@ -366,8 +366,8 @@ for ind in UserEntries['IxNuclei']:
                     predFull_Lgc[...,sFi_tr] = pred_LgcTp
                     predFull[...,sFi_tr] = predTp
 
-                    pred = np.mean(predFull,axis=3)
-                    pred_Lgc = np.sum(predFull_Lgc,axis=3) > int(len(subFolders_TrainedModels)/2)
+                pred = np.mean(predFull,axis=3)
+                pred_Lgc = np.sum(predFull_Lgc,axis=3) > int(len(subFolders_TrainedModels)/2)
 
             else:
                 subFolder_trainModel = 'vimp2_ANON724_03272013'

@@ -363,8 +363,8 @@ for ind in UserEntries['IxNuclei']:
                     Params['restorePath'] = Params['restorePath_full'] + '/' + Params['modelName']
                     copyPreviousModel( Params['restorePath'], Params['Dir_NucleiModelOut'] )
                     predTp , pred_LgcTp = testFunc(Params)
-                    predFull_Lgc[...,sFi_tr] = pred_Lgc
-                    predFull[...,sFi_tr] = pred
+                    predFull_Lgc[...,sFi_tr] = pred_LgcTp
+                    predFull[...,sFi_tr] = predTp
 
                     pred = np.mean(predTp,axis=3)
                     pred_Lgc = np.sum(pred_LgcTp,axis=3) > int(len(subFolders_TrainedModels)/2)

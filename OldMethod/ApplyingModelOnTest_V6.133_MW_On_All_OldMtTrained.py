@@ -342,7 +342,7 @@ for ind in UserEntries['IxNuclei']:
 
             # path = trainFunc(Params)
             if UserEntries['testmode'] == 'combo':
-                
+
                 Params['restorePath_full'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + 'Test_AllTrainings' + '/Train'
                 Params['restorePath'] = Params['restorePath_full'] + '/' + Params['modelName']
                 copyPreviousModel( Params['restorePath'], Params['Dir_NucleiModelOut'] )
@@ -352,8 +352,8 @@ for ind in UserEntries['IxNuclei']:
             elif UserEntries['testmode'] == 'MW':
 
                 cp = Params['CropDim']
-                predFull_Lgc = np.zeros((cp[0,0]:cp[0,1] , cp[1,0]:cp[1,1] , Params['SliceNumbers'],len(subFolders_TrainedModels)))
-                predFull = np.zeros((cp[0,0]:cp[0,1] , cp[1,0]:cp[1,1] , Params['SliceNumbers'],len(subFolders_TrainedModels)))
+                predFull_Lgc = np.zeros((cp[0,1]-cp[0,0] , cp[1,1]-cp[1,0] , len(Params['SliceNumbers']),len(subFolders_TrainedModels)))
+                predFull = np.zeros((cp[0,1]-cp[0,0] , cp[1,1]-cp[1,0] , len(Params['SliceNumbers']),len(subFolders_TrainedModels)))
 
                 for sFi_tr in range(len(subFolders_TrainedModels)):
 

@@ -196,7 +196,7 @@ for ind in UserEntries['IxNuclei']: # [1,2,8,9,10,13]:
         sz = Label.shape
 
         for sFi in range(len(subFolders)):
-            print(str(sFi) + ': ' + str(subFolders[sFi]))
+
             Directory_Nuclei_Label = Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz'
             Label = nib.load(Directory_Nuclei_Label)
             Label = Label.get_data()
@@ -220,11 +220,11 @@ for ind in UserEntries['IxNuclei']: # [1,2,8,9,10,13]:
                 PredictionF = nib.load( Directory_Nuclei_Test + subFolders[sFi] + '_' + Params['NucleusName'] + '.nii.gz' )
                 Prediction = PredictionF.get_data()
 
+                Thresh = 0.2
                 try:
-                    Thresh = max( filters.threshold_otsu(Prediction) ,0.2)
+                    Thresh = max( filters.threshold_otsu(Prediction) ,Thresh)
                 except:
                     print('---------------------------error Thresholding------------------')
-                    Thresh = 0.2
 
                 Prediction = Prediction > Thresh
 
@@ -241,7 +241,7 @@ for ind in UserEntries['IxNuclei']: # [1,2,8,9,10,13]:
             predictionMV[:,:,:] = Prediction2 > 2-Er
             Dice[sFi,len(A)] = DiceCoefficientCalculator(Label > 0.5 ,predictionMV)
             np.savetxt(Dir_SaveMWFld + Params['NeucleusFolder'] + '/' + 'DiceCoefsAll_' + reslt + '.txt',100*Dice, fmt='%2.1f')
-            print('Majority Voting' , Dice[sFi,len(A)])
+            print(str(sFi) + ': ' + str(subFolders[sFi]).split('vimp2_')[1] , 'MW Dice: ' , Dice[sFi,len(A)])
             # np.savetxt(Dir_SaveMWFld + Params['NeucleusFolder'] + '/' + 'DiceCoefsAll_' + reslt + '.txt',100*Dice, fmt='%2.1f')
 
 

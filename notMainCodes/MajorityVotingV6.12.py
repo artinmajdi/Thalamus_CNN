@@ -216,8 +216,8 @@ for ind in UserEntries['IxNuclei']: # [1,2,8,9,10,13]:
                 Directory_Nuclei_Test  = Dir_AllTests_nucleiFld_Ehd + subFolders[sFi] + '/Test/' + reslt + '/'
 
                 # try:
-                # PredictionF = nib.load( Directory_Nuclei_Test + subFolders[sFi] + '_' + Params['NucleusName'] + '_Logical.nii.gz' )
-                PredictionF = nib.load( Directory_Nuclei_Test + subFolders[sFi] + '_' + Params['NucleusName'] + '.nii.gz' )
+                PredictionF = nib.load( Directory_Nuclei_Test + subFolders[sFi] + '_' + Params['NucleusName'] + '_Logical.nii.gz' )
+                # PredictionF = nib.load( Directory_Nuclei_Test + subFolders[sFi] + '_' + Params['NucleusName'] + '.nii.gz' )
                 Prediction = PredictionF.get_data()
 
                 Thresh = 0.2
@@ -226,7 +226,7 @@ for ind in UserEntries['IxNuclei']: # [1,2,8,9,10,13]:
                 except:
                     print('---------------------------error Thresholding------------------')
 
-                Prediction = Prediction > Thresh
+                # Prediction = Prediction > Thresh
 
 
                 Dice[sFi,ii] = DiceCoefficientCalculator(Label > 0.5 ,Prediction > 0.5)

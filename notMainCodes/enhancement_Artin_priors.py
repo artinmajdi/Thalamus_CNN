@@ -45,7 +45,7 @@ def initialDirectories(mode = 'local', dataset = 'new12'):
 
     return Dir_Prior
 
-Directory = initialDirectories(mode = 'localPC', dataset = 'ET')
+Directory = initialDirectories(mode = 'server', dataset = 'ET')
 
 # EnhMethod = 'Sharpness' #'Contrast' # Sharpness   +'_int16DivideMultipliedBy7'  # Contrast
 def enhancing(im , scaleEnhance):

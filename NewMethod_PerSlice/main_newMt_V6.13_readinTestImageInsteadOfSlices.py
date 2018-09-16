@@ -142,7 +142,7 @@ def input_GPU_Ix():
     UserEntries['epochs'] = 'nan'
     UserEntries['mode'] = 'server'
     UserEntries['Flag_cross_entropy'] = 0
-
+    UserEntries['epochs'] = 'nan'
 
     for input in sys.argv:
 
@@ -156,7 +156,8 @@ def input_GPU_Ix():
             UserEntries['method'] = input.split('=')[1]
         elif input.split('=')[0] == 'mode':
             UserEntries['mode'] = input.split('=')[1]
-            
+        elif input.split('=')[0] == 'epoch':
+            UserEntries['epochs'] = input.split('=')[1]
         elif input.split('=')[0] == 'nuclei':
             if 'all' in input.split('=')[1]:
                 a = range(4,14)
@@ -411,6 +412,8 @@ for ind in UserEntries['IxNuclei']:
             for slcIx in range(len(Params['SliceNumbers'])):
 
                 Params = paramIterEpoch(Params , slcIx)
+                if UserEntries['epochs'] != 'nan':
+                    Params['epochs'] = UserEntries['epochs']
                 print('epochs',Params['epochs'],'IxNuclei',Params['IxNuclei'],'iter',Params['training_iters'])
 
                 # ---------------------------  training -----------------------------------

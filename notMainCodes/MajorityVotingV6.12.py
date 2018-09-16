@@ -61,16 +61,29 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
         SliceNumbers = range(116,129)
 
     print('-----------------',dataset)
-    Params['modelFormat'] = 'ckpt' # cpkt
-    if 'local' in mode:
+    Params['modelFormat'] = 'ckpt'
+    if 'localLT' in mode:
 
-        if 'old' in dataset:
+        if '20Priors' in dataset:
             Params['Dir_Prior'] = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
-        elif 'new' in dataset:
+        elif '7T_MS' in dataset:
             Params['Dir_Prior'] = '/media/artin/dataLocal1/dataThalamus/newPriors/7T_MS'
+        elif 'ET' in dataset:
+            Params['Dir_Prior'] = '/media/data1/artin/thomas/NewPriors/ET'
+
 
         Params['Dir_AllTests']  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + dataset + 'Dataset_' + method +'Method'
 
+    elif 'localPC' in mode:
+
+        if '20Priors' in dataset:
+            Di/media/artin/dataLocal1/dataThalamusr_Prior = '/media/data1/artin/thomas/priors'
+        elif '7T_MS' in dataset:
+            Dir_Prior = '/media/data1/artin/thomas/NewPriors/7T_MS'
+        elif 'ET' in dataset:
+            Dir_Prior = '/media/data1/artin/thomas/NewPriors/ET'
+
+        Params['Dir_AllTests']  = '................../AllTests/' + dataset + 'Dataset_' + method +'Method'
 
     elif 'flash' in mode:
 
@@ -82,10 +95,12 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
 
 
         hardDrive = 'ssd'
-        if 'old' in dataset:
+        if '20Priors' in dataset:
             Params['Dir_Prior'] = '/array/' + hardDrive + '/msmajdi/data/priors_forCNN_Ver2'
-        elif 'new' in dataset:
+        elif '7T_MS' in dataset:
             Params['Dir_Prior'] = '/array/' + hardDrive + '/msmajdi/data/newPriors/7T_MS'
+        elif 'ET' in dataset:
+            Params['Dir_Prior'] = '/array/' + hardDrive + '/msmajdi/data/newPriors/ET'
 
         Params['Dir_AllTests']  = '/array/' + hardDrive + '/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method' # 'oldDataset' #
 

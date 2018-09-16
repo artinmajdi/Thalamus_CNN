@@ -297,7 +297,7 @@ def testFunc(Params , slcIx):
 
 def paramIterEpoch(Params , slcIx):
 
-    Params['training_iters'] = 57
+    Params['training_iters'] = 1
 
     if Params['epochs'] == 'nan':
 

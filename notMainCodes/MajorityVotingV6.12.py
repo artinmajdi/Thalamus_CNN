@@ -77,7 +77,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
     elif 'localPC' in mode:
 
         if '20Priors' in dataset:
-            Di/media/artin/dataLocal1/dataThalamusr_Prior = '/media/data1/artin/thomas/priors'
+            Dir_Prior = '/media/data1/artin/thomas/priors'
         elif '7T_MS' in dataset:
             Dir_Prior = '/media/data1/artin/thomas/NewPriors/7T_MS'
         elif 'ET' in dataset:

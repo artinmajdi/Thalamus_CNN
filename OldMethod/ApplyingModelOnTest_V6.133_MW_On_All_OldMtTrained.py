@@ -98,10 +98,13 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
     if 'local' in mode:
 
         Params['modelFormat'] = 'ckpt'
-        if 'old' in dataset:
+        if '20Priors' in dataset:
             Dir_Prior = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
-        elif 'new' in dataset:
+        elif '7T_MS' in dataset:
             Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/7T_MS'
+
+        elif 'ET' in dataset:
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/ET'
 
         Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + dataset + 'Dataset_' + method +'Method'
         Params['Dir_AllTests_restore']  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + 'old' + 'Dataset_' + 'old' +'Method'
@@ -119,10 +122,12 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
 
         Params['modelFormat'] = 'ckpt' # cpkt
         hardDrive = 'ssd'
-        if 'old' in dataset:
+        if '20Priors' in dataset:
             Dir_Prior = '/array/' + hardDrive + '/msmajdi/data/priors_forCNN_Ver2'
-        elif 'new' in dataset:
+        elif '7T_MS' in dataset:
             Dir_Prior = '/array/' + hardDrive + '/msmajdi/data/newPriors/7T_MS'
+        elif 'ET' in dataset:
+            Dir_Prior = '/array/' + hardDrive + '/msmajdi/data/newPriors/ET'
 
         Dir_AllTests  = '/array/' + hardDrive + '/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method' # 'oldDataset' #
         Params['Dir_AllTests_restore']  ='/array/' + hardDrive + '/msmajdi/Tests/Thalamus_CNN/' + 'old' + 'Dataset_' + 'old' +'Method'

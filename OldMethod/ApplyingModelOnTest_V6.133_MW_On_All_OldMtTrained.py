@@ -95,42 +95,50 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
         NucleusName = '13-Hb'
         SliceNumbers = range(116,129)
 
-    if 'local' in mode:
+    Params['modelFormat'] = 'ckpt'
+    if 'Labtop' in mode:
 
-        Params['modelFormat'] = 'ckpt'
-        if '20Priors' in dataset:
+        if 'old' in dataset:
             Dir_Prior = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
-        elif '7T_MS' in dataset:
-            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/7T_MS'
-
+        elif 'MS' in dataset:
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/7T_MS'
         elif 'ET' in dataset:
-            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/ET'
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/ET'
+        elif 'Unlabeled' in dataset:
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/Unlabeled'
 
         Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + dataset + 'Dataset_' + method +'Method'
         Params['Dir_AllTests_restore']  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + 'old' + 'Dataset_' + 'old' +'Method'
 
+    elif 'PC' in mode:
 
-    elif 'flash' in mode:
+        if 'old' in dataset:
+            Dir_Prior = '/media/data1/artin/thomas/priors3_StThomasPredictions/priors_forCNN_Ver2'
+        elif 'MS' in dataset:
+            Dir_Prior = '/media/data1/artin/thomas/priors3_StThomasPredictions/7T_MS'
+        elif 'ET' in dataset:
+            Dir_Prior = '/media/data1/artin/thomas/priors3_StThomasPredictions/ET'
+        elif 'Unlabeled' in dataset:
+            Dir_Prior = '/media/data1/artin/thomas/priors3_StThomasPredictions/newPriors/Unlabeled'
 
-        machine = 'artin' # groot
-        Params['modelFormat'] = 'ckpt'
-        Dir_Prior = '/media/' + machine + '/aaa/Manual_Delineation_Sanitized_Full'
-        Dir_AllTests  = '/media/' + machine + '/aaa/AllTests/' + dataset + 'Dataset_' + method +'Method'
-        Params['Dir_AllTests_restore']  = '/media/' + machine + '/aaa/AllTests/' + 'old' + 'Dataset_' + 'old' +'Method'
+        Dir_AllTests  = '/media/data1/artin/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method'
+        Params['Dir_AllTests_restore']  = '/media/data1/artin/Tests/Thalamus_CNN/' + 'old' + 'Dataset_' + 'old' +'Method'
 
     elif 'server' in mode:
 
-        Params['modelFormat'] = 'ckpt' # cpkt
         hardDrive = 'ssd'
-        if '20Priors' in dataset:
-            Dir_Prior = '/array/' + hardDrive + '/msmajdi/data/priors_forCNN_Ver2'
-        elif '7T_MS' in dataset:
-            Dir_Prior = '/array/' + hardDrive + '/msmajdi/data/newPriors/7T_MS'
+        if 'old' in dataset:
+            Dir_Prior = '/array/ssd/msmajdi/data/priors_forCNN_Ver2'
+        elif 'MS' in dataset:
+            Dir_Prior = '/array/ssd/msmajdi/data/7T_MS'
         elif 'ET' in dataset:
-            Dir_Prior = '/array/' + hardDrive + '/msmajdi/data/newPriors/ET'
+            Dir_Prior = '/array/ssd/msmajdi/data/ET'
+        elif 'Unlabeled' in dataset:
+            Dir_Prior = '/array/ssd/msmajdi/data/Unlabeled'
 
-        Dir_AllTests  = '/array/' + hardDrive + '/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method' # 'oldDataset' #
-        Params['Dir_AllTests_restore']  ='/array/' + hardDrive + '/msmajdi/Tests/Thalamus_CNN/' + 'old' + 'Dataset_' + 'old' +'Method'
+        Dir_AllTests  = '/array/ssd/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method'
+        Params['Dir_AllTests_restore']  = '/array/ssd/msmajdi/Tests/Thalamus_CNN/' + 'old' + 'Dataset_' + 'old' +'Method'
+
 
     Params['A'] = A
     Params['Flag_cross_entropy'] = 0

@@ -79,36 +79,45 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
         NucleusName = '13-Hb'
         SliceNumbers = range(116,129)
 
+    Params['modelFormat'] = 'ckpt'
+    if 'Labtop' in mode:
 
-    if 'local' in mode:
+        if 'old' in dataset:
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
+        elif 'MS' in dataset:
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/7T_MS'
+        elif 'ET' in dataset:
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/ET'
+        elif 'Unlabeled' in dataset:
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/Unlabeled'
 
-        Params['modelFormat'] = 'model.ckpt'
+        Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + dataset + 'Dataset_' + method +'Method'
 
-        if 'oldDGX' not in dataset:
-            if 'old' in dataset:
-                Dir_Prior = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
-            elif 'new' in dataset:
-                Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/7T_MS'
-            elif 'unlabled' in dataset:
-                Dir_Prior = '/media/artin/dataLocal1/dataThalamus/UnlabledData_priros'
+    elif 'PC' in mode:
 
-            Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + dataset + 'Dataset_' + method +'Method'
-        else:
-            Dir_Prior = '/media/groot/aaa/Manual_Delineation_Sanitized_Full'
-            Dir_AllTests  = '/media/groot/Seagate Backup Plus Drive/code/mine/' + dataset + 'Dataset_' + method +'Method'
+        if 'old' in dataset:
+            Dir_Prior = '/media/data1/artin/thomas/priors/20priros'
+        elif 'MS' in dataset:
+            Dir_Prior = '/media/data1/artin/thomas/priors/7T_MS'
+        elif 'ET' in dataset:
+            Dir_Prior = '/media/data1/artin/thomas/priors/ET'
+        elif 'Unlabeled' in dataset:
+            Dir_Prior = '/media/data1/artin/thomas/priors/Unlabeled'
 
+        Dir_AllTests  = '/media/data1/artin/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method'
 
     elif 'server' in mode:
 
-        Params['modelFormat'] = 'cpkt'
         if 'old' in dataset:
             Dir_Prior = '/array/ssd/msmajdi/data/priors_forCNN_Ver2'
-        elif 'new' in dataset:
-            Dir_Prior = '/array/ssd/msmajdi/data/newPriors/7T_MS'
-        elif 'unlabled' in dataset:
-            Dir_Prior = '/array/ssd/msmajdi/data/UnlabledData_priros'
+        elif 'MS' in dataset:
+            Dir_Prior = '/array/ssd/msmajdi/data/7T_MS'
+        elif 'ET' in dataset:
+            Dir_Prior = '/array/ssd/msmajdi/data/ET'
+        elif 'Unlabeled' in dataset:
+            Dir_Prior = '/array/ssd/msmajdi/data/Unlabeled'
 
-        Dir_AllTests  = '/array/ssd/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method' # 'oldDataset' #
+        Dir_AllTests  = '/array/ssd/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method'
 
 
 
@@ -175,7 +184,8 @@ UserEntries = input_GPU_Ix()
 # gpuNum = 'nan'
 for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
-    Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'] )
+    Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'] )
+    print(Params['Dir_Prior'])
     subFolders = subFoldersFunc(Params['Dir_Prior'])
 
     Name_priors_San_Label = 'Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz'
@@ -191,7 +201,7 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
         inputName = TestName.split('Test_')[1] + '.nii.gz'
 
-        print('---------------------------------------')
+        
         for sFi in range(len(subFolders)):
 
             print('Reading Images:  ',Params['NucleusName'],inputName.split('WMnMPRAGE_bias_corr_')[1].split('nii.gz')[0] , str(sFi) + ' ' + subFolders[sFi])

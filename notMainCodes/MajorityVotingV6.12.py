@@ -21,6 +21,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
 
     if ind == 1:
         NucleusName = '1-THALAMUS'
+
         SliceNumbers = range(103,147)
         # SliceNumbers = range(107,140) # original one
     elif ind == 2:
@@ -64,9 +65,9 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
     Params['modelFormat'] = 'ckpt'
     if 'localLT' in mode:
 
-        if '20Priors' in dataset:
+        if 'old' in dataset:
             Params['Dir_Prior'] = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
-        elif '7T_MS' in dataset:
+        elif 'new' in dataset:
             Params['Dir_Prior'] = '/media/artin/dataLocal1/dataThalamus/newPriors/7T_MS'
         elif 'ET' in dataset:
             Params['Dir_Prior'] = '/media/data1/artin/thomas/NewPriors/ET'
@@ -76,9 +77,9 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
 
     elif 'localPC' in mode:
 
-        if '20Priors' in dataset:
+        if 'old' in dataset:
             Dir_Prior = '/media/data1/artin/thomas/priors'
-        elif '7T_MS' in dataset:
+        elif 'new' in dataset:
             Dir_Prior = '/media/data1/artin/thomas/NewPriors/7T_MS'
         elif 'ET' in dataset:
             Dir_Prior = '/media/data1/artin/thomas/NewPriors/ET'
@@ -93,18 +94,16 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
 
     elif 'server' in mode:
 
-
-        hardDrive = 'ssd'
-        if '20Priors' in dataset:
-            Params['Dir_Prior'] = '/array/' + hardDrive + '/msmajdi/data/priors_forCNN_Ver2'
-        elif '7T_MS' in dataset:
-            Params['Dir_Prior'] = '/array/' + hardDrive + '/msmajdi/data/newPriors/7T_MS'
+        if 'old' in dataset:
+            Params['Dir_Prior'] = '/array/ssd/msmajdi/data/priors_forCNN_Ver2'
+        elif 'new' in dataset:
+            Params['Dir_Prior'] = '/array/ssd/msmajdi/data/newPriors/7T_MS'
         elif 'ET' in dataset:
-            Params['Dir_Prior'] = '/array/' + hardDrive + '/msmajdi/data/newPriors/ET'
+            Params['Dir_Prior'] = '/array/ssd/msmajdi/data/newPriors/ET'
 
-        Params['Dir_AllTests']  = '/array/' + hardDrive + '/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method' # 'oldDataset' #
+        Params['Dir_AllTests']  = '/array/ssd/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method' # 'oldDataset' #
 
-    print(ind)
+    print('Dir_AllTests',Params['Dir_AllTests'])
     Params['NucleusName'] = NucleusName
     Params['NeucleusFolder'] = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
     Params['SliceNumbers'] = SliceNumbers
@@ -122,6 +121,8 @@ def subFolderList(dir):
     return listt
 
 def input_GPU_Ix():
+
+
 
     UserEntries = {}
     UserEntries['gpuNum'] =  '4'  # 'nan'  #
@@ -274,3 +275,4 @@ for ind in UserEntries['IxNuclei']: # [1,2,8,9,10,13]:
         np.savetxt(Dir_SaveMWFld + Params['NeucleusFolder'] + '/DiceCoefsAll_' + reslt + '.txt' , 100*Dice2 , fmt='%2.1f')
         with open(Dir_SaveMWFld + Params['NeucleusFolder'] + "/subFoldersList_MW_" + reslt + ".txt" ,"wb") as fp:
             pickle.dump(subFolders,fp)
+

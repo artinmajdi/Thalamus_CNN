@@ -102,6 +102,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
         Dir_AllTests  = '/array/ssd/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method'
 
     Params['Dir_Prior']    = Dir_Prior
+    Params['Dir_AllTests'] = Dir_AllTests
     Params['NucleusName'] = NucleusName
     Params['NeucleusFolder'] = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
     Params['SliceNumbers'] = SliceNumbers

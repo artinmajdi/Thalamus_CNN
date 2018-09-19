@@ -67,7 +67,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
 
         if 'old' in dataset:
             Params['Dir_Prior'] = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
-        elif 'new' in dataset:
+        elif 'MS' in dataset:
             Params['Dir_Prior'] = '/media/artin/dataLocal1/dataThalamus/newPriors/7T_MS'
         elif 'ET' in dataset:
             Params['Dir_Prior'] = '/media/data1/artin/thomas/NewPriors/ET'
@@ -79,7 +79,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
 
         if 'old' in dataset:
             Dir_Prior = '/media/data1/artin/thomas/priors'
-        elif 'new' in dataset:
+        elif 'MS' in dataset:
             Dir_Prior = '/media/data1/artin/thomas/NewPriors/7T_MS'
         elif 'ET' in dataset:
             Dir_Prior = '/media/data1/artin/thomas/NewPriors/ET'
@@ -96,7 +96,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
 
         if 'old' in dataset:
             Params['Dir_Prior'] = '/array/ssd/msmajdi/data/priors_forCNN_Ver2'
-        elif 'new' in dataset:
+        elif 'MS' in dataset:
             Params['Dir_Prior'] = '/array/ssd/msmajdi/data/newPriors/7T_MS'
         elif 'ET' in dataset:
             Params['Dir_Prior'] = '/array/ssd/msmajdi/data/newPriors/ET'
@@ -275,4 +275,3 @@ for ind in UserEntries['IxNuclei']: # [1,2,8,9,10,13]:
         np.savetxt(Dir_SaveMWFld + Params['NeucleusFolder'] + '/DiceCoefsAll_' + reslt + '.txt' , 100*Dice2 , fmt='%2.1f')
         with open(Dir_SaveMWFld + Params['NeucleusFolder'] + "/subFoldersList_MW_" + reslt + ".txt" ,"wb") as fp:
             pickle.dump(subFolders,fp)
-

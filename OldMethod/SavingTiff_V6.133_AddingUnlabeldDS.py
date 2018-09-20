@@ -187,12 +187,12 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
     Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'] )
     print(Params['Dir_Prior'])
     subFolders = subFoldersFunc(Params['Dir_Prior'])
-
+    print(subFolders[0])
     Name_priors_San_Label = 'Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz'
 
 
     for ii in UserEntries['enhanced_Index']: # len( Params['A'] ):
-
+        
         TestName = testNme(Params['A'],ii)
 
         Dir_EachTraining = Params['Dir_AllTests'] + '/CNN' + Params['NucleusName'].replace('-','_') + '_2D_SanitizedNN/' + TestName
@@ -228,8 +228,8 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
                 imFull = np.append(imFull,imD_padded[...,np.newaxis],axis=3)
                 mskFull = np.append(mskFull,maskD_padded[...,np.newaxis],axis=3)
 
-            mkDir(Dir_EachTraining + '/' + subFolders[sFi] + '/Test')
-            mkDir(Dir_EachTraining + '/' + subFolders[sFi] + '/Train')
+            #mkDir(Dir_EachTraining + '/' + subFolders[sFi] + '/Test')
+            #mkDir(Dir_EachTraining + '/' + subFolders[sFi] + '/Train')
 
 
 
@@ -237,10 +237,13 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
 
         for sFi_parent in range(len(subFolders)):
+            
+            mkDir(Dir_EachTraining + '/' + subFolders[sFi_parent] + '/Test')
+            mkDir(Dir_EachTraining + '/' + subFolders[sFi_parent] + '/Train')
             print('Writing Images:  ',Params['NucleusName'],str(sFi_parent) + ' ' + subFolders[sFi_parent])
-            for sFi_child in range(len(subFolders)):
+            for sFi_child in range(1): # len(subFolders)):
 
-                if sFi_parent == sFi_child:
+                if sFi_parent in [1,5,10,14,20]: # sFi_parent == sFi_child:
                     Dir_Each = Dir_EachTraining + '/' + subFolders[sFi_child] + '/Test'
 
                 else:
@@ -249,8 +252,8 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
                 for slcIx in range(imFull.shape[2]):
 
                     Name_PredictedImage = subFolders[sFi_parent] + '_Sh' + str(Params['A'][ii][0]) + '_Ct' + str(Params['A'][ii][1]) + '_Slice_' + str(Params['SliceNumbers'][slcIx])
-                    # tifffile.imsave( Dir_Each + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx,sFi_parent] )
-                    # tifffile.imsave( Dir_Each + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi_parent] )
+                    tifffile.imsave( Dir_Each + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx,sFi_parent] )
+                    tifffile.imsave( Dir_Each + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi_parent] )
 
-                    tifffile.imsave( Dir_All + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx,sFi_parent] )
-                    tifffile.imsave( Dir_All + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi_parent] )
+                    # tifffile.imsave( Dir_All + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx,sFi_parent] )
+                    # tifffile.imsave( Dir_All + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi_parent] )

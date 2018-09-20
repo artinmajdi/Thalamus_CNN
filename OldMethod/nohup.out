@@ -1,0 +1,32 @@
+Traceback (most recent call last):
+  File "main_V6.133_AddingTheUnlabledDS.py", line 1, in <module>
+    from tf_unet import unet, util, image_util
+  File "/array/hdd/msmajdi/.local/lib/python3.5/site-packages/tf_unet-0.1.1-py3.5.egg/tf_unet/unet.py", line 27, in <module>
+    import tensorflow as tf
+  File "/usr/local/lib/python3.5/dist-packages/tensorflow/__init__.py", line 24, in <module>
+    from tensorflow.python import *
+  File "/usr/local/lib/python3.5/dist-packages/tensorflow/python/__init__.py", line 81, in <module>
+    from tensorflow.python import keras
+  File "/usr/local/lib/python3.5/dist-packages/tensorflow/python/keras/__init__.py", line 26, in <module>
+    from tensorflow.python.keras import activations
+  File "/usr/local/lib/python3.5/dist-packages/tensorflow/python/keras/activations/__init__.py", line 22, in <module>
+    from tensorflow.python.keras._impl.keras.activations import elu
+  File "/usr/local/lib/python3.5/dist-packages/tensorflow/python/keras/_impl/keras/__init__.py", line 21, in <module>
+    from tensorflow.python.keras._impl.keras import activations
+  File "/usr/local/lib/python3.5/dist-packages/tensorflow/python/keras/_impl/keras/activations.py", line 24, in <module>
+    from tensorflow.python.keras._impl.keras.utils.generic_utils import deserialize_keras_object
+  File "/usr/local/lib/python3.5/dist-packages/tensorflow/python/keras/_impl/keras/utils/__init__.py", line 36, in <module>
+    from tensorflow.python.keras._impl.keras.utils.training_utils import multi_gpu_model
+  File "/usr/local/lib/python3.5/dist-packages/tensorflow/python/keras/_impl/keras/utils/training_utils.py", line 22, in <module>
+    from tensorflow.python.keras._impl.keras.engine.training import Model
+  File "/usr/local/lib/python3.5/dist-packages/tensorflow/python/keras/_impl/keras/engine/__init__.py", line 26, in <module>
+    from tensorflow.python.keras._impl.keras.engine.training import Model
+  File "/usr/local/lib/python3.5/dist-packages/tensorflow/python/keras/_impl/keras/engine/training.py", line 28, in <module>
+    from tensorflow.python.keras._impl.keras import callbacks as cbks
+  File "/usr/local/lib/python3.5/dist-packages/tensorflow/python/keras/_impl/keras/callbacks.py", line 41, in <module>
+    import requests
+  File "/array/hdd/msmajdi/.local/lib/python3.5/site-packages/requests/__init__.py", line 113, in <module>
+    from . import packages
+  File "/array/hdd/msmajdi/.local/lib/python3.5/site-packages/requests/packages.py", line 11, in <module>
+    if mod == package or mod.startswith(package + '.'):
+KeyboardInterrupt

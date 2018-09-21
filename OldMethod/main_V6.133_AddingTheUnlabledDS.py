@@ -111,6 +111,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
             Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/Unlabeled'
 
         Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + dataset + 'Dataset_' + method +'Method'
+        Params['Dir_AllTests_restore']  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + 'Unlabeled' + 'Dataset_' + 'old' +'Method'
 
     elif 'PC' in mode:
 
@@ -124,10 +125,10 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
             Dir_Prior = '/media/data1/artin/thomas/priors/Unlabeled'
 
         Dir_AllTests  = '/media/data1/artin/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method'
+        Params['Dir_AllTests_restore']  = '/media/data1/artin/Tests/Thalamus_CNN/' + 'Unlabeled' + 'Dataset_' + 'old' +'Method'
 
     elif 'server' in mode:
 
-        hardDrive = 'ssd'
         if 'old' in dataset:
             Dir_Prior = '/array/ssd/msmajdi/data/priors_forCNN_Ver2'
         elif 'MS' in dataset:
@@ -138,7 +139,8 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
             Dir_Prior = '/array/ssd/msmajdi/data/Unlabeled'
 
         Dir_AllTests  = '/array/ssd/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method'
-
+        # Params['Dir_AllTests_restore']  = '/array/ssd/msmajdi/Tests/Thalamus_CNN/' + 'Unlabeled' + 'Dataset_' + 'old' +'Method'
+        Params['Dir_AllTests_restore']  = '/array/ssd/msmajdi/Tests/Thalamus_CNN/' + 'old' + 'Dataset_' + 'old' +'Method'
 
     Params['A'] = A
     Params['Flag_cross_entropy'] = 0
@@ -236,7 +238,8 @@ for ind in UserEntries['IxNuclei']:
         TestName = 'Test_AllTrainings' if UserEntries['testmode'] == 'combo' else testNme(Params['A'],ii)
 
         Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + TestName + '/'
-        Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + subFolders[sFi] + '/Train/' + 'model/' # Params['modelName']
+        # Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_1519_04212015' + '/Train/' + 'model/' # Params['modelName']
+        Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_901_07052013_AS' + '/Train/' + 'model/' # Params['modelName']
 
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
@@ -280,9 +283,11 @@ for ind in UserEntries['IxNuclei']:
 
 
             trainer = unet.Trainer(Params['net'], optimizer = "adam")
-            if Params['init'] == 1:
-                copyPreviousModel( Params['restorePath'], Dir_NucleiModelOut )
 
+            Params['init'] = 1
+            if Params['init'] == 1:
+
+                copyPreviousModel( Params['restorePath'], Dir_NucleiModelOut )
                 if Params['gpuNum'] != 'nan':
                     # path2 = ''
                     path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=400, epochs=150, display_step=500, GPU_Num=Params['gpuNum'] ,prediction_path=Dir_ResultsOut , restore='True')

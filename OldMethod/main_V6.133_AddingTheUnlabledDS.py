@@ -17,6 +17,14 @@ from skimage import filters
 A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
 
 
+def copyPreviousModel(src, dst, symlinks=False, ignore=None):
+    for item in os.listdir(src):
+        s = os.path.join(src, item)
+        d = os.path.join(dst, item)
+        if os.path.isdir(s):
+            shutil.copytree(s, d, symlinks, ignore)
+        else:
+            shutil.copy2(s, d)
 
 def mkDir(dir):
     try:

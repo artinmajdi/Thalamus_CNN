@@ -238,11 +238,11 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
         for sFi_parent in range(len(subFolders)):
             
-            mkDir(Dir_EachTraining + '/' + subFolders[sFi_parent] + '/Test')
-            mkDir(Dir_EachTraining + '/' + subFolders[sFi_parent] + '/Train')
+
             print('Writing Images:  ',Params['NucleusName'],str(sFi_parent) + ' ' + subFolders[sFi_parent])
             for sFi_child in range(1): # len(subFolders)):
-
+                mkDir(Dir_EachTraining + '/' + subFolders[sFi_child] + '/Test')
+                mkDir(Dir_EachTraining + '/' + subFolders[sFi_child] + '/Train')
                 if sFi_parent in [1,5,10,14,20]: # sFi_parent == sFi_child:
                     Dir_Each = Dir_EachTraining + '/' + subFolders[sFi_child] + '/Test'
 

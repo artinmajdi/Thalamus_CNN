@@ -171,6 +171,7 @@ def input_GPU_Ix():
     UserEntries['testmode'] = 'EnhancedSeperately' # 'combo'
     UserEntries['enhanced_Index'] = range(len(A))
     UserEntries['mode'] = 'server'
+    UserEntries['init'] = 0
 
     for input in sys.argv:
 
@@ -184,6 +185,8 @@ def input_GPU_Ix():
             UserEntries['method'] = input.split('=')[1]
         elif input.split('=')[0] == 'mode':
             UserEntries['mode'] = input.split('=')[1]
+        elif 'init' in input:
+            UserEntries['init'] = 1
 
         elif input.split('=')[0] == 'nuclei':
             if 'all' in input.split('=')[1]:
@@ -233,6 +236,7 @@ for ind in UserEntries['IxNuclei']:
         TestName = 'Test_AllTrainings' if UserEntries['testmode'] == 'combo' else testNme(Params['A'],ii)
 
         Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + TestName + '/'
+        Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + subFolders[sFi] + '/Train/' + 'model/' # Params['modelName']
 
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
@@ -274,12 +278,23 @@ for ind in UserEntries['IxNuclei']:
                 Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
 
 
+
             trainer = unet.Trainer(Params['net'], optimizer = "adam")
-            if Params['gpuNum'] != 'nan':
-                # path2 = ''
-                path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=400, epochs=150, display_step=500, GPU_Num=Params['gpuNum'] ,prediction_path=Dir_ResultsOut) #  restore=True
+            if Params['init'] == 1:
+                copyPreviousModel( Params['restorePath'], Dir_NucleiModelOut )
+
+                if Params['gpuNum'] != 'nan':
+                    # path2 = ''
+                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=400, epochs=150, display_step=500, GPU_Num=Params['gpuNum'] ,prediction_path=Dir_ResultsOut , restore='True')
+                else:
+                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=50, epochs=4, display_step=500 ,prediction_path=Dir_ResultsOut , restore='True')
+
             else:
-                path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=50, epochs=4, display_step=500 ,prediction_path=Dir_ResultsOut) #   restore=True
+                if Params['gpuNum'] != 'nan':
+                    # path2 = ''
+                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=400, epochs=150, display_step=500, GPU_Num=Params['gpuNum'] ,prediction_path=Dir_ResultsOut) #  restore=True
+                else:
+                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=50, epochs=4, display_step=500 ,prediction_path=Dir_ResultsOut) #   restore=True
 
 
             if UserEntries['testmode'] != 'combo':

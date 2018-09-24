@@ -196,6 +196,7 @@ UserEntries = input_GPU_Ix()
 
 for ind in UserEntries['IxNuclei']: # [1,2,8,9,10,13]:
 
+    print('nuclei: ',UserEntries['IxNuclei'])
     Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Dir_SaveMWFld = mkDir( Params['Dir_AllTests'] + '/Folder_MajorityVoting/' )
     subFolders = subFolderList(Params['Dir_AllTests'] + '/' + Params['NeucleusFolder'])

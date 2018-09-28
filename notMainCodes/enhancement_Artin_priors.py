@@ -6,6 +6,10 @@ import numpy as np
 import nifti
 import os
 from glob import glob
+import sys
+
+
+A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
 
 def initialDirectories(mode = 'local', dataset = 'new12'):
 
@@ -151,7 +155,7 @@ scaleEnhance = [[1,2],[1,3],[4,1],[6,1],[4,2],[4,3]]
 
 
 for subDirs in subDirsFull:
-    print(subDirs)
+    
     for Nm in ['WMnMPRAGE_bias_corr_Deformed']: #  'WMnMPRAGE_Deformed' 'WMnMPRAGE_bias_corr' , 'WMnMPRAGEdeformed']:
 
         # a = glob(subDirs + Nm + '.nii.gz')

@@ -56,7 +56,75 @@ def initialDirectories(mode = 'local', dataset = 'new12'):
 
     return Dir_Prior
 
-Directory = initialDirectories(mode = 'server', dataset = 'ET')
+def input_GPU_Ix():
+
+    UserEntries = {}
+    UserEntries['gpuNum'] =  '4'  # 'nan'  #
+    UserEntries['IxNuclei'] = 1
+    UserEntries['dataset'] = 'old' #'oldDGX' #
+    UserEntries['method'] = 'new'
+    UserEntries['testMode'] = 'EnhancedSeperately' # 'AllTrainings'
+    UserEntries['enhanced_Index'] = range(len(A))
+    UserEntries['epochs'] = 'nan'
+    UserEntries['Flag_cross_entropy'] = 0
+
+
+    for input in sys.argv:
+
+        if input.split('=')[0] == 'gpu':
+            UserEntries['gpuNum'] = input.split('=')[1]
+        elif input.split('=')[0] == 'testMode':
+            UserEntries['testMode'] = input.split('=')[1] # 'AllTrainings'
+        elif input.split('=')[0] == 'dataset':
+            UserEntries['dataset'] = input.split('=')[1]
+        elif input.split('=')[0] == 'method':
+            UserEntries['method'] = input.split('=')[1]
+
+        elif input.split('=')[0] == 'nuclei':
+            if 'all' in input.split('=')[1]:
+                a = range(4,14)
+                UserEntries['IxNuclei'] = np.append([1,2,4567],a)
+
+            elif input.split('=')[1][0] == '[':
+                B = input.split('=')[1].split('[')[1].split(']')[0].split(",")
+                UserEntries['IxNuclei'] = [int(k) for k in B]
+
+            else:
+                UserEntries['IxNuclei'] = [int(input.split('=')[1])]
+
+        elif input.split('=')[0] == 'enhance':
+            if 'all' in input.split('=')[1]:
+                UserEntries['enhanced_Index'] = range(len(A))
+
+            elif input.split('=')[1][0] == '[':
+                B = input.split('=')[1].split('[')[1].split(']')[0].split(",")
+                UserEntries['enhanced_Index'] = [int(k) for k in B]
+
+            else:
+                UserEntries['enhanced_Index'] = [int(input.split('=')[1])]
+
+        elif input.split('=')[0] == 'epochs':
+            UserEntries['epochs'] = int(input.split('=')[1])
+
+        elif input.split('=')[0] == 'mode':
+            UserEntries['mode'] = input.split('=')[1]
+
+        elif input.split('=')[0] == '--cross_entropy':
+            UserEntries['Flag_cross_entropy'] = 1
+
+
+    if UserEntries['Flag_cross_entropy'] == 1:
+        UserEntries['cost_kwargs'] = {'class_weights':[0.7,0.3]}
+        UserEntries['modelName'] = 'model_CE/'
+        UserEntries['resultName'] = 'Results_CE/'
+    else:
+        UserEntries['modelName'] = 'model/'
+        UserEntries['resultName'] = 'Results/'
+
+    return UserEntries
+
+UserEntries = input_GPU_Ix()
+Directory = initialDirectories(mode = UserEntries['mode'], dataset = UserEntries['dataset'])
 
 # EnhMethod = 'Sharpness' #'Contrast' # Sharpness   +'_int16DivideMultipliedBy7'  # Contrast
 def enhancing(im , scaleEnhance):

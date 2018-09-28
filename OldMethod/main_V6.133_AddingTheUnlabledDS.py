@@ -307,7 +307,7 @@ for ind in UserEntries['IxNuclei']:
 
             trainer = unet.Trainer(Params['net'], optimizer = "adam")
 
-            Params['init'] = 1
+            Params['init'] = 0
             if Params['init'] == 1:
 
                 copyPreviousModel( Params['restorePath'], Dir_NucleiModelOut )

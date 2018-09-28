@@ -16,18 +16,25 @@ def initialDirectories(mode = 'local', dataset = 'new12'):
             Dir_Prior = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
         elif '7T_MS' in dataset:
             Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/7T_MS'
-        elif 'ET' in dataset:
-            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/ET'
+        elif 'ET_3T' in dataset:
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/ET/3T'
+        elif 'ET_7T' in dataset:
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/ET/7T'
+        elif 'Unlabeled' in dataset:
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/Unlabeled'
 
     elif 'localPC' in mode:
 
         if '20Priors' in dataset:
             Dir_Prior = '/media/data1/artin/thomas/priors'
         elif '7T_MS' in dataset:
-            Dir_Prior = '/media/data1/artin/thomas/NewPriors/7T_MS'
-        elif 'ET' in dataset:
-            Dir_Prior = '/media/data1/artin/thomas/NewPriors/ET'
-
+            Dir_Prior = '/media/data1/artin/thomas/priros/7T_MS'
+        elif 'ET_3T' in dataset:
+            Dir_Prior = '/media/data1/artin/thomas/priros/ET/3T'
+        elif 'ET_7T' in dataset:
+            Dir_Prior = '/media/data1/artin/thomas/priros/ET/7T'
+        elif 'Unlabeled' in dataset:
+            Dir_Prior = '/media/data1/artin/thomas/priors/Unlabeled'
 
     elif 'flash' in mode:
 
@@ -38,9 +45,13 @@ def initialDirectories(mode = 'local', dataset = 'new12'):
         if '20Priors' in dataset:
             Dir_Prior = '/array/ssd/msmajdi/data/priors_forCNN_Ver2'
         elif '7T_MS' in dataset:
-            Dir_Prior = '/array/ssd/msmajdi/data/newPriors/7T_MS'
-        elif 'ET' in dataset:
-            Dir_Prior = '/array/ssd/msmajdi/data/newPriors/ET'
+            Dir_Prior = '/array/ssd/msmajdi/data/priros/7T_MS'
+        elif 'ET_3T' in dataset:
+            Dir_Prior = '/array/ssd/msmajdi/data/priros/ET/3T'
+        elif 'ET_7T' in dataset:
+            Dir_Prior = '/array/ssd/msmajdi/data/priros/ET/7T'
+        elif 'Unlabeled' in dataset:
+            Dir_Prior = '/array/ssd/msmajdi/data/Unlabeled'
 
 
     return Dir_Prior

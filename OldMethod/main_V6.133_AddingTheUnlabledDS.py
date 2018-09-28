@@ -102,19 +102,21 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
     elif ind == 13:
         NucleusName = '13-Hb'
         SliceNumbers = range(116,129)
-    # elif ind == 14:
-    #     NucleusName = '14-MTT'
-    #     SliceNumbers = range(116,129)
+    #elif ind == 14:
+        #NucleusName = '14-MTT'
+        #SliceNumbers = range(116,129)
 
     Params['modelFormat'] = 'ckpt'
-    if 'Labtop' in mode:
+    if 'localLT' in mode:
 
         if 'old' in dataset:
             Dir_Prior = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
         elif 'MS' in dataset:
             Dir_Prior = '/media/artin/dataLocal1/dataThalamus/7T_MS'
-        elif 'ET' in dataset:
-            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/ET'
+        elif 'ET_3T' in dataset:
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/ET/3T'
+        elif 'ET_7T' in dataset:
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/ET/7T'
         elif 'Unlabeled' in dataset:
             Dir_Prior = '/media/artin/dataLocal1/dataThalamus/newPriors/Unlabeled'
 
@@ -125,14 +127,16 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
             Params['Dir_AllTests_restore']  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + 'Unlabeled' + 'Dataset_' + 'old' +'Method'
 
 
-    elif 'PC' in mode:
+    elif 'localPC' in mode:
 
         if 'old' in dataset:
             Dir_Prior = '/media/data1/artin/thomas/priors/20priors'
         elif 'MS' in dataset:
             Dir_Prior = '/media/data1/artin/thomas/priors/7T_MS'
-        elif 'ET' in dataset:
-            Dir_Prior = '/media/data1/artin/thomas/priors/ET'
+        elif 'ET_3T' in dataset:
+            Dir_Prior = '/media/data1/artin/thomas/priros/ET/3T'
+        elif 'ET_7T' in dataset:
+            Dir_Prior = '/media/data1/artin/thomas/priros/ET/7T'
         elif 'Unlabeled' in dataset:
             Dir_Prior = '/media/data1/artin/thomas/priors/Unlabeled'
 
@@ -149,8 +153,10 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
             Dir_Prior = '/array/ssd/msmajdi/data/priors_forCNN_Ver2'
         elif 'MS' in dataset:
             Dir_Prior = '/array/ssd/msmajdi/data/7T_MS'
-        elif 'ET' in dataset:
-            Dir_Prior = '/array/ssd/msmajdi/data/ET'
+        elif 'ET_3T' in dataset:
+            Dir_Prior = '/array/ssd/msmajdi/data/priros/ET/3T'
+        elif 'ET_7T' in dataset:
+            Dir_Prior = '/array/ssd/msmajdi/data/priros/ET/7T'
         elif 'Unlabeled' in dataset:
             Dir_Prior = '/array/ssd/msmajdi/data/Unlabeled'
 
@@ -260,7 +266,7 @@ for ind in UserEntries['IxNuclei']:
         Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + TestName + '/'
 
         if 'Unlabeled' in UserEntries['dataset']:
-            Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_901_07052013_AS' + '/Train/' + 'model/' # Params['modelName']            
+            Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_901_07052013_AS' + '/Train/' + 'model/' # Params['modelName']
         else:
             Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_1519_04212015' + '/Train/' + 'model/' # Params['modelName']
 

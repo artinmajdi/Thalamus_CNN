@@ -328,6 +328,8 @@ for ind in UserEntries['IxNuclei']:
         # subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
         subFolders = subFoldersFunc(Params['Dir_Prior'])
         subFolders_TrainedModels = subFoldersFunc(Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + Params['TestName'] + '/')
+
+
         # subFolders = ['vimp2_ctrl_921_07122013_MP'] # vimp2_ctrl_920_07122013_SW'] #
         L = [0] if UserEntries['testmode'] == 'combo' else range(len(subFolders))
         # L = range(len(subFolders))
@@ -398,7 +400,8 @@ for ind in UserEntries['IxNuclei']:
                 pred_Lgc = np.sum(predFull_Lgc,axis=3) > int(len(subFolders_TrainedModels)/2)
 
             else:
-                subFolder_trainModel = 'vimp2_ANON724_03272013'
+                subFolder_trainModel = 'vimp2_1519_04212015' # 'vimp2_ANON724_03272013'
+
                 Params['restorePath_full'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + Params['TestName'] + '/' + subFolder_trainModel + '/Train'
                 Params['restorePath'] = Params['restorePath_full'] + '/' + Params['modelName']
                 copyPreviousModel( Params['restorePath'], Params['Dir_NucleiModelOut'] )

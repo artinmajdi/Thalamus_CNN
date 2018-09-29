@@ -109,7 +109,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
     Params['modelFormat'] = 'ckpt'
     if 'localLT' in mode:
 
-        if 'old' in dataset:
+        if '20priors' in dataset:
             Dir_Prior = '/media/artin/dataLocal1/dataThalamus/20priors'
         elif 'MS' in dataset:
             Dir_Prior = '/media/artin/dataLocal1/dataThalamus/7T_MS'
@@ -129,7 +129,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
 
     elif 'localPC' in mode:
 
-        if 'old' in dataset:
+        if '20priors' in dataset:
             Dir_Prior = '/media/data1/artin/thomas/priors/20priors'
         elif 'MS' in dataset:
             Dir_Prior = '/media/data1/artin/thomas/priors/7T_MS'
@@ -149,7 +149,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
 
     elif 'server' in mode:
 
-        if 'old' in dataset:
+        if '20priors' in dataset:
             Dir_Prior = '/array/ssd/msmajdi/data/20priors'
         elif 'MS' in dataset:
             Dir_Prior = '/array/ssd/msmajdi/data/7T_MS'

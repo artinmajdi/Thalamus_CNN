@@ -265,14 +265,12 @@ for ind in UserEntries['IxNuclei']:
 
         Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + TestName + '/'
 
-        print('------------------------------------------------------------------')
-        print('----------------------',UserEntries['dataset'],'----------------------')
-        print('------------------------------------------------------------------')
+        if UserEntries['init']:
+            if 'Unlabeled' in UserEntries['dataset']:
+                Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_901_07052013_AS' + '/Train/' + 'model/' # Params['modelName']
+            else:
+                Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_1519_04212015' + '/Train/' + 'model/' # Params['modelName']
 
-        if 'Unlabeled' in UserEntries['dataset']:
-            Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_901_07052013_AS' + '/Train/' + 'model/' # Params['modelName']
-        else:
-            Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_1519_04212015' + '/Train/' + 'model/' # Params['modelName']
 
         subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
 
@@ -335,7 +333,7 @@ for ind in UserEntries['IxNuclei']:
                     path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=50, epochs=4, display_step=500 ,prediction_path=Dir_ResultsOut) #   restore=True
 
 
-            if UserEntries['testmode'] != 'combo':
+            if 0: # UserEntries['testmode'] != 'combo':
 
                 NucleiOrigSeg   = nib.load( Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz' )
                 ThalamusOrigSeg = nib.load( Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Manual_Delineation_Sanitized/' +        '1-THALAMUS'   + '_deformed.nii.gz' )

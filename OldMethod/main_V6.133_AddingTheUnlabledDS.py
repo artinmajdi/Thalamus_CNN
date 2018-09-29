@@ -315,8 +315,7 @@ for ind in UserEntries['IxNuclei']:
 
             trainer = unet.Trainer(Params['net'], optimizer = "adam")
 
-            Params['init'] = 1
-            if Params['init'] == 1:
+            if UserEntries['init']:
 
                 copyPreviousModel( Params['restorePath'], Dir_NucleiModelOut )
                 if Params['gpuNum'] != 'nan':

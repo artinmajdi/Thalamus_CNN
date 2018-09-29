@@ -388,10 +388,6 @@ for ind in UserEntries['IxNuclei']:
 
                     subFolder_trainModel = subFolders_TrainedModels[sFi_tr]
                     Params['restorePath_full'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + Params['TestName'] + '/' + subFolder_trainModel + '/Train'
-                    print('M-----------------------------------------')
-                    print('M-----------------------------------------')
-                    print('M-----------------------------------------')
-                    print('restorePath_full', Params['restorePath_full'])
                     Params['restorePath'] = Params['restorePath_full'] + '/' + Params['modelName']
                     copyPreviousModel( Params['restorePath'], Params['Dir_NucleiModelOut'] )
                     predTp , pred_LgcTp = testFunc(Params)

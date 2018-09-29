@@ -329,8 +329,8 @@ for ind in UserEntries['IxNuclei']:
         subFolders = subFoldersFunc(Params['Dir_Prior'])
         subFolders_TrainedModels = subFoldersFunc(Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + Params['TestName'] + '/')
         # subFolders = ['vimp2_ctrl_921_07122013_MP'] # vimp2_ctrl_920_07122013_SW'] #
-        # L = [0] if UserEntries['testmode'] == 'combo' else range(len(subFolders))
-        L = range(len(subFolders))
+        L = [0] if UserEntries['testmode'] == 'combo' else range(len(subFolders))
+        # L = range(len(subFolders))
         for sFi in L:
 
             # K = 'Test_' if UserEntries['testmode'] == 'combo' else 'Test_WMnMPRAGE_bias_corr_'

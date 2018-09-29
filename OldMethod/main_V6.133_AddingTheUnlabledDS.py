@@ -265,6 +265,10 @@ for ind in UserEntries['IxNuclei']:
 
         Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + TestName + '/'
 
+        print('------------------------------------------------------------------')
+        print('----------------------',UserEntries['dataset'],'----------------------')
+        print('------------------------------------------------------------------')
+
         if 'Unlabeled' in UserEntries['dataset']:
             Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_901_07052013_AS' + '/Train/' + 'model/' # Params['modelName']
         else:

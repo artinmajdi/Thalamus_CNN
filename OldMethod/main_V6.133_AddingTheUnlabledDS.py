@@ -194,8 +194,8 @@ def input_GPU_Ix():
     UserEntries = {}
     UserEntries['gpuNum'] =  '7'  # 'nan'  #
     UserEntries['IxNuclei'] = [1]
-    UserEntries['dataset'] = 'old' #'oldDGX' #
-    UserEntries['method'] = 'old'
+    UserEntries['dataset'] = 'nnnnnnnnnn' #'oldDGX' #
+    UserEntries['method'] = 'nnnnnnnnnn'
     UserEntries['testmode'] = 'EnhancedSeperately' # 'combo'
     UserEntries['enhanced_Index'] = range(len(A))
     UserEntries['mode'] = 'server'

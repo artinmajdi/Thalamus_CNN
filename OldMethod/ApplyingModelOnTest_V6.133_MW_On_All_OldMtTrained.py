@@ -94,6 +94,10 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
     elif ind == 13:
         NucleusName = '13-Hb'
         SliceNumbers = range(116,129)
+    elif ind == 14:
+        NucleusName = '14-MTT'
+        SliceNumbers = range(104,135)
+
 
     Params['modelFormat'] = 'ckpt'
     if 'localLT' in mode:

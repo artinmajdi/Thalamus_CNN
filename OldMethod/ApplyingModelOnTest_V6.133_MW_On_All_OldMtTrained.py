@@ -314,20 +314,20 @@ UserEntries = input_GPU_Ix()
 
 for ind in UserEntries['IxNuclei']:
     print('ind',ind)
-    Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']
 
 
-    # L = [0] if UserEntries['testmode'] == 'combo' else UserEntries['enhanced_Index'] # len(Params['A'])  # [1,4]: #
-    L = UserEntries['enhanced_Index']
+    L = [0] if UserEntries['testmode'] == 'combo' else UserEntries['enhanced_Index'] # len(Params['A'])  # [1,4]: #
+    # L = UserEntries['enhanced_Index']
     for ii in L:
 
         Params['TestName'] = testNme(Params['A'],ii)
 
-        # if UserEntries['testmode'] == 'combo':
-        #     Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + 'Test_AllTrainings' + '/'
-        # else:
-        Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + Params['TestName'] + '/'
+        if UserEntries['testmode'] == 'combo':
+            Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + 'Test_AllTrainings' + '/'
+        else:
+            Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + Params['TestName'] + '/'
 
         # subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
         subFolders = subFoldersFunc(Params['Dir_Prior'])
@@ -346,12 +346,12 @@ for ind in UserEntries['IxNuclei']:
 
             # K = 'Test/' if UserEntries['testmode'] == 'combo' else '/Test/'
 
-            # if UserEntries['testmode'] == 'combo':
-            #     Params['Dir_NucleiTestSamples']  = Dir_AllTests_Nuclei_EnhancedFld + 'Test/'
-            #     Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + 'Train/'
-            # else:
-            Params['Dir_NucleiTestSamples']  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Test/'
-            Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
+            if UserEntries['testmode'] == 'combo':
+                Params['Dir_NucleiTestSamples']  = Dir_AllTests_Nuclei_EnhancedFld + 'Test/'
+                Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + 'Train/'
+            else:
+                Params['Dir_NucleiTestSamples']  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Test/'
+                Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
 
                 # Dir_ThalamusTestSamples = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + Params['TestName'] + '/' + subFolders[sFi] + '/Test/'
                 # Dir_ThalamusModelOut    = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + Params['TestName'] + '/' + subFolders[sFi] + '/Train/model/'

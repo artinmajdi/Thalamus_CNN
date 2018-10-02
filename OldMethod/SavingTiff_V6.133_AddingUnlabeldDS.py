@@ -228,7 +228,7 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
 
         for sFi in range(len(subFolders)):
-            break
+
             print('Reading Images:  ',Params['NucleusName'],inputName.split('WMnMPRAGE_bias_corr_')[1].split('nii.gz')[0] , str(sFi) + ' ' + subFolders[sFi])
             mask   = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + Name_priors_San_Label)
             im     = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName)
@@ -263,18 +263,19 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
         for sFi_parent in range(len(subFolders)):
 
+
             print('Writing Images:  ',Params['NucleusName'],str(sFi_parent) + ' ' + subFolders[sFi_parent])
             for sFi_child in range(len(subFolders)):
                 mkDir(Dir_EachTraining + '/' + subFolders[sFi_child] + '/Test')
                 mkDir(Dir_EachTraining + '/' + subFolders[sFi_child] + '/Train')
-                if sFi_parent == sFi_child: # in [1,5,10,14,20]: # sFi_parent 
+                if sFi_parent == sFi_child: # in [1,5,10,14,20]: #
                     Dir_Each = Dir_EachTraining + '/' + subFolders[sFi_child] + '/Test'
 
                 else:
                     Dir_Each = Dir_EachTraining + '/' + subFolders[sFi_child] + '/Train'
 
                 for slcIx in range(imFull.shape[2]):
-                    break
+
                     Name_PredictedImage = subFolders[sFi_parent] + '_Sh' + str(Params['A'][ii][0]) + '_Ct' + str(Params['A'][ii][1]) + '_Slice_' + str(Params['SliceNumbers'][slcIx])
                     tifffile.imsave( Dir_Each + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx,sFi_parent] )
                     tifffile.imsave( Dir_Each + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi_parent] )

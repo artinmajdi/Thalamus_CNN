@@ -165,18 +165,18 @@ def input_GPU_Ix():
     UserEntries['IxNuclei'] = [1]
     UserEntries['dataset'] = 'old' #'oldDGX' #
     UserEntries['method'] = 'old'
-    UserEntries['testMode'] = 'EnhancedSeperately' # 'combo'
+    UserEntries['testMode'] = 'EnhancedSeperately' # 'combo' 'oneTrain'
     UserEntries['enhanced_Index'] = range(len(A))
     UserEntries['mode'] = 'server'
-    UserEntries['testIx'] = [1,5,10,14,20]
-    UserEntries['testIx_Flag'] = 0
+    UserEntries['oneTrain_testIndexes'] = [1,5,10,14,20]
+    UserEntries['Flag_cross_entropy'] = 0
 
     for input in sys.argv:
 
         if input.split('=')[0] == 'gpu':
             UserEntries['gpuNum'] = input.split('=')[1]
         elif input.split('=')[0] == 'testMode':
-            UserEntries['testMode'] = input.split('=')[1] # 'combo'
+            UserEntries['testMode'] = input.split('=')[1] # 'combo' 'oneTrain'
         elif input.split('=')[0] == 'dataset':
             UserEntries['dataset'] = input.split('=')[1]
         elif input.split('=')[0] == 'method':
@@ -196,13 +196,13 @@ def input_GPU_Ix():
             else:
                 UserEntries['IxNuclei'] = [int(input.split('=')[1])]
 
-        elif 'testIx' in input:
-            UserEntries['testIx_Flag'] = 1
-            # if input.split('=')[1][0] == '[':
-            #     B = input.split('=')[1].split('[')[1].split(']')[0].split(",")
-            #     UserEntries['testIx'] = [int(k) for k in B]
-            # else:
-            #     UserEntries['testIx'] = [int(input.split('=')[1])]
+        elif 'oneTrain_testIndexes' in input:
+            UserEntries['testMode'] = 'oneTrain'
+            if input.split('=')[1][0] == '[':
+                B = input.split('=')[1].split('[')[1].split(']')[0].split(",")
+                UserEntries['oneTrain_testIndexes'] = [int(k) for k in B]
+            else:
+                UserEntries['oneTrain_testIndexes'] = [int(input.split('=')[1])]
 
         elif input.split('=')[0] == 'enhance':
             if 'all' in input.split('=')[1]:
@@ -242,9 +242,9 @@ def normal_Cross_Validation(Params , subFolders , imFull , mskFull):
 def OneTrain_MultipleTest(UserEntries , Params , subFolders,imFull,mskFull):
     print( '------------------' , 'Test' , '------------------' )
 
-    for sFi in UserEntries['testIx']:
+    for sFi in UserEntries['oneTrain_testIndexes']:
 
-        Dir_Each = mkDir(Params['Dir_EachTraining'] + '/OneTrain_MultipleTest' + '/Test' + '/' + subFolders[sFi])
+        Dir_Each = mkDir(Params['Dir_EachTraining'] + '/OneTrain_MultipleTest' + '/TestCases/' + subFolders[sFi]) + '/Test/'
         for slcIx in range(imFull.shape[2]):
             Name_PredictedImage = subFolders[sFi] + '_Sh' + str(Params['A'][ii][0]) + '_Ct' + str(Params['A'][ii][1]) + '_Slice_' + str(Params['SliceNumbers'][slcIx])
             tifffile.imsave( Dir_Each + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx,sFi] )
@@ -254,7 +254,7 @@ def OneTrain_MultipleTest(UserEntries , Params , subFolders,imFull,mskFull):
 
     Dir_Each = mkDir(Params['Dir_EachTraining'] + '/OneTrain_MultipleTest' + '/Train')
     for sFi in range(len(subFolders)):
-        if sFi not in UserEntries['testIx']:
+        if sFi not in UserEntries['oneTrain_testIndexes']:
 
             for slcIx in range(imFull.shape[2]):
                 Name_PredictedImage = subFolders[sFi] + '_Sh' + str(Params['A'][ii][0]) + '_Ct' + str(Params['A'][ii][1]) + '_Slice_' + str(Params['SliceNumbers'][slcIx])
@@ -314,9 +314,8 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
         imFull, mskFull = readingImages(Params , subFolders)
 
-        if UserEntries['testIx_Flag'] == 0:
-            normal_Cross_Validation(Params , subFolders , imFull , mskFull)
-
-
-        elif UserEntries['testIx_Flag'] == 1:
+        elif UserEntries['testMode'] == 'oneTrain':
             OneTrain_MultipleTest(UserEntries,Params,subFolders,imFull,mskFull)
+
+        else:
+            normal_Cross_Validation(Params , subFolders , imFull , mskFull)

@@ -49,9 +49,7 @@ def testNme(A,ii):
 
     return TestName
 
-def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old'):
-
-    Params = {}
+def NucleiSelection(ind):
 
     if ind == 1:
         NucleusName = '1-THALAMUS'
@@ -97,6 +95,14 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
     elif ind == 14:
         NucleusName = '14-MTT'
         SliceNumbers = range(104,135)
+
+    return NucleusName , SliceNumbers
+
+
+def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old'):
+
+    Params = {}
+    NucleusName , SliceNumbers = NucleiSelection(ind)
 
 
     Params['modelFormat'] = 'ckpt'
@@ -188,25 +194,38 @@ def input_GPU_Ix():
     UserEntries = {}
     UserEntries['gpuNum'] =  '4'  # 'nan'  #
     UserEntries['IxNuclei'] = [1]
-    UserEntries['dataset'] = 'old' #'oldDGX' #
+    UserEntries['dataset'] = 'nnnnnnnnnn' #'oldDGX' #
     UserEntries['method'] = 'old'
-    UserEntries['testmode'] = 'EnhancedSeperately' # 'combo'
+    UserEntries['testmode'] = 'normal' # 'combo' 'oneTrain'
     UserEntries['enhanced_Index'] = range(len(A))
     UserEntries['mode'] = 'server'
     UserEntries['Flag_cross_entropy'] = 0
+    UserEntries['oneTrain_testIndexes'] = [1,5,10,14,20]
+
 
     for input in sys.argv:
 
         if input.split('=')[0] == 'gpu':
             UserEntries['gpuNum'] = input.split('=')[1]
         elif input.split('=')[0] == 'testmode':
-            UserEntries['testmode'] = input.split('=')[1] # 'combo'
+            UserEntries['testmode'] = input.split('=')[1] # 'combo' 'oneTrain'
         elif input.split('=')[0] == 'dataset':
             UserEntries['dataset'] = input.split('=')[1]
         elif input.split('=')[0] == 'method':
             UserEntries['method'] = input.split('=')[1]
         elif input.split('=')[0] == 'mode':
             UserEntries['mode'] = input.split('=')[1]
+        elif 'init' in input:
+            UserEntries['init'] = 1
+            
+        elif 'oneTrain_testIndexes' in input:
+            UserEntries['testMode'] = 'oneTrain'
+            if input.split('=')[1][0] == '[':
+                B = input.split('=')[1].split('[')[1].split(']')[0].split(",")
+                UserEntries['oneTrain_testIndexes'] = [int(k) for k in B]
+            else:
+                UserEntries['oneTrain_testIndexes'] = [int(input.split('=')[1])]
+
 
         elif input.split('=')[0] == 'nuclei':
             if 'all' in input.split('=')[1]:
@@ -263,7 +282,6 @@ def testFunc(Params):
 
     net = Params['net']
 
-    # Data = Params['TestImage'][np.newaxis,:,:,:]
     Data = Params['TestImage']
     mn = np.min(Data)
     mx = np.max(Data)
@@ -309,29 +327,62 @@ def copyPreviousModel(src, dst, symlinks=False, ignore=None):
         else:
             shutil.copy2(s, d)
 
+def saveImageDice(label , Params , pred , pred_Lgc , subFolders):
+    output = np.zeros(label.shape)
+    output_Lgc = np.zeros(label.shape)
+
+    output[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ] = pred
+    output_Lgc[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ] = pred_Lgc
+
+    # ---------------------------  showing -----------------------------------
+    Lbl = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
+    dice = [0]
+    dice[0] = DiceCoefficientCalculator(pred_Lgc , Lbl )
+    np.savetxt(Params['Dir_ResultsOut'] + 'DiceCoefficient.txt',dice)
+
+
+    output2 = nib.Nifti1Image(output,label.affine)
+    output2.get_header = label.header
+    nib.save(output2 , Params['Dir_ResultsOut'] + subFolders[sFi] + '_' + Params['NucleusName'] + '.nii.gz')
+
+    output_Lgc2 = nib.Nifti1Image(output_Lgc,label.affine)
+    output_Lgc2.get_header = label.header
+    nib.save(output_Lgc2 , Params['Dir_ResultsOut'] + subFolders[sFi] + '_' + Params['NucleusName'] + '_Logical.nii.gz')
+
+    diceF = [0]
+    diceF[0] = DiceCoefficientCalculator(output_Lgc,label.get_data())
+    np.savetxt(Params['Dir_ResultsOut'] + 'DiceCoefficientF.txt',diceF)
+
+
 UserEntries = input_GPU_Ix()
 
 
 for ind in UserEntries['IxNuclei']:
     print('ind',ind)
-    Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']
 
 
-    # L = [0] if UserEntries['testmode'] == 'combo' else UserEntries['enhanced_Index'] # len(Params['A'])  # [1,4]: #
-    L = UserEntries['enhanced_Index']
+    L = [0] if UserEntries['testmode'] == 'combo' else UserEntries['enhanced_Index'] # len(Params['A'])  # [1,4]: #
+    # L = UserEntries['enhanced_Index']
     for ii in L:
 
         Params['TestName'] = testNme(Params['A'],ii)
 
-        # if UserEntries['testmode'] == 'combo':
-        #     Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + 'Test_AllTrainings' + '/'
-        # else:
-        Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + Params['TestName'] + '/'
+        if UserEntries['testmode'] == 'combo':
+            Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + 'Test_AllTrainings' + '/'
+        else:
+            Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + Params['TestName'] + '/'
 
         # subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
-        subFolders = subFoldersFunc(Params['Dir_Prior'])
-        subFolders_TrainedModels = subFoldersFunc(Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + Params['TestName'] + '/')
+        if UserEntries['testMode'] == 'oneTrain':
+            subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/TestCases/')
+        else:
+            subFolders = subFoldersFunc(Params['Dir_Prior'])
+
+
+        if UserEntries['testmode'] == 'MW':
+            subFolders_TrainedModels = subFoldersFunc(Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + Params['TestName'] + '/')
 
 
         # subFolders = ['vimp2_ctrl_921_07122013_MP'] # vimp2_ctrl_920_07122013_SW'] #
@@ -346,20 +397,22 @@ for ind in UserEntries['IxNuclei']:
 
             # K = 'Test/' if UserEntries['testmode'] == 'combo' else '/Test/'
 
-            # if UserEntries['testmode'] == 'combo':
-            #     Params['Dir_NucleiTestSamples']  = Dir_AllTests_Nuclei_EnhancedFld + 'Test/'
-            #     Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + 'Train/'
-            # else:
-            Params['Dir_NucleiTestSamples']  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Test/'
-            Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
+            if UserEntries['testmode'] == 'combo':
+                Params['Dir_NucleiTestSamples']  = Dir_AllTests_Nuclei_EnhancedFld + 'Test/'
+                Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + 'Train/'
+
+            elif UserEntries['testmode'] == 'oneTrain':
+                Params['Dir_NucleiTrainSamples']  = mkDir(Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/TestCases' + subFolders[sFi] + '/Train/')
+                Params['Dir_NucleiTestSamples']   = Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/TestCases' + subFolders[sFi] + '/Test/'
+
+            elif UserEntries['testmode'] = 'normal':
+                Params['Dir_NucleiTestSamples']  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Test/'
+                Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
 
                 # Dir_ThalamusTestSamples = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + Params['TestName'] + '/' + subFolders[sFi] + '/Test/'
                 # Dir_ThalamusModelOut    = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + Params['TestName'] + '/' + subFolders[sFi] + '/Train/model/'
 
             TestImage, label = ReadingTestImage(Params,subFolders[sFi])
-
-            output = np.zeros(label.shape)
-            output_Lgc = np.zeros(label.shape)
 
             Params['TestImage'] = TestImage
 
@@ -403,7 +456,7 @@ for ind in UserEntries['IxNuclei']:
                 pred = np.mean(predFull,axis=3)
                 pred_Lgc = np.sum(predFull_Lgc,axis=3) > int(len(subFolders_TrainedModels)/2)
 
-            else:
+            elif UserEntries['testmode'] == 'normal':
                 subFolder_trainModel = 'vimp2_1519_04212015' # 'vimp2_ANON724_03272013'
 
                 Params['restorePath_full'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + Params['TestName'] + '/' + subFolder_trainModel + '/Train'
@@ -411,28 +464,13 @@ for ind in UserEntries['IxNuclei']:
                 copyPreviousModel( Params['restorePath'], Params['Dir_NucleiModelOut'] )
                 pred , pred_Lgc = testFunc(Params)
 
+            elif UserEntries['testmode'] == 'oneTrain':
+                Params['restorePath'] = Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/Train/' + Params['modelName']
+                copyPreviousModel( Params['restorePath'], Params['Dir_NucleiModelOut'] )
+                pred , pred_Lgc = testFunc(Params)
 
-            output[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ] = pred
-            output_Lgc[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ] = pred_Lgc
+            saveImageDice(label , Params , pred , pred_Lgc , subFolders)
 
-            # ---------------------------  showing -----------------------------------
-            Lbl = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
-            dice = [0]
-            dice[0] = DiceCoefficientCalculator(pred_Lgc , Lbl )
-            np.savetxt(Params['Dir_ResultsOut'] + 'DiceCoefficient.txt',dice)
-
-
-            output2 = nib.Nifti1Image(output,label.affine)
-            output2.get_header = label.header
-            nib.save(output2 , Params['Dir_ResultsOut'] + subFolders[sFi] + '_' + Params['NucleusName'] + '.nii.gz')
-
-            output_Lgc2 = nib.Nifti1Image(output_Lgc,label.affine)
-            output_Lgc2.get_header = label.header
-            nib.save(output_Lgc2 , Params['Dir_ResultsOut'] + subFolders[sFi] + '_' + Params['NucleusName'] + '_Logical.nii.gz')
-
-            diceF = [0]
-            diceF[0] = DiceCoefficientCalculator(output_Lgc,label.get_data())
-            np.savetxt(Params['Dir_ResultsOut'] + 'DiceCoefficientF.txt',diceF)
 
 
 

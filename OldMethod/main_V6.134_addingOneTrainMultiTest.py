@@ -207,7 +207,7 @@ def input_GPU_Ix():
     UserEntries['mode'] = 'server'
     UserEntries['init'] = 0
     UserEntries['Flag_cross_entropy'] = 0
-    UserEntries['oneTrain_testIndexes'] = [1,5,10,14,20]
+    UserEntries['onetrain_testIndexes'] = [1,5,10,14,20]
 
 
     for input in sys.argv:
@@ -225,13 +225,13 @@ def input_GPU_Ix():
         elif 'init' in input:
             UserEntries['init'] = 1
 
-        elif 'oneTrain_testIndexes' in input:
-            UserEntries['testMode'] = 'oneTrain'
+        elif 'onetrain_testIndexes' in input:
+            UserEntries['testmode'] = 'onetrain'
             if input.split('=')[1][0] == '[':
                 B = input.split('=')[1].split('[')[1].split(']')[0].split(",")
-                UserEntries['oneTrain_testIndexes'] = [int(k) for k in B]
+                UserEntries['onetrain_testIndexes'] = [int(k) for k in B]
             else:
-                UserEntries['oneTrain_testIndexes'] = [int(input.split('=')[1])]
+                UserEntries['onetrain_testIndexes'] = [int(input.split('=')[1])]
 
         elif input.split('=')[0] == 'nuclei':
             if 'all' in input.split('=')[1]:
@@ -307,7 +307,7 @@ for ind in UserEntries['IxNuclei']:
             if UserEntries['testmode'] == 'combo':
                 Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + K
                 Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + 'Train/'
-            if UserEntries['testmode'] == 'oneTrain':
+            if UserEntries['testmode'] == 'onetrain':
                 Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + K
                 Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/Train/'
             else:

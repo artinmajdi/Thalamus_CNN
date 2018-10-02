@@ -196,11 +196,11 @@ def input_GPU_Ix():
     UserEntries['IxNuclei'] = [1]
     UserEntries['dataset'] = 'nnnnnnnnnn' #'oldDGX' #
     UserEntries['method'] = 'old'
-    UserEntries['testmode'] = 'normal' # 'combo' 'oneTrain'
+    UserEntries['testmode'] = 'normal' # 'combo' 'onetrain'
     UserEntries['enhanced_Index'] = range(len(A))
     UserEntries['mode'] = 'server'
     UserEntries['Flag_cross_entropy'] = 0
-    UserEntries['oneTrain_testIndexes'] = [1,5,10,14,20]
+    UserEntries['onetrain_testIndexes'] = [1,5,10,14,20]
 
 
     for input in sys.argv:
@@ -208,7 +208,7 @@ def input_GPU_Ix():
         if input.split('=')[0] == 'gpu':
             UserEntries['gpuNum'] = input.split('=')[1]
         elif input.split('=')[0] == 'testmode':
-            UserEntries['testmode'] = input.split('=')[1] # 'combo' 'oneTrain'
+            UserEntries['testmode'] = input.split('=')[1] # 'combo' 'onetrain'
         elif input.split('=')[0] == 'dataset':
             UserEntries['dataset'] = input.split('=')[1]
         elif input.split('=')[0] == 'method':
@@ -217,14 +217,14 @@ def input_GPU_Ix():
             UserEntries['mode'] = input.split('=')[1]
         elif 'init' in input:
             UserEntries['init'] = 1
-            
-        elif 'oneTrain_testIndexes' in input:
-            UserEntries['testMode'] = 'oneTrain'
+
+        elif 'onetrain_testIndexes' in input:
+            UserEntries['testmode'] = 'onetrain'
             if input.split('=')[1][0] == '[':
                 B = input.split('=')[1].split('[')[1].split(']')[0].split(",")
-                UserEntries['oneTrain_testIndexes'] = [int(k) for k in B]
+                UserEntries['onetrain_testIndexes'] = [int(k) for k in B]
             else:
-                UserEntries['oneTrain_testIndexes'] = [int(input.split('=')[1])]
+                UserEntries['onetrain_testIndexes'] = [int(input.split('=')[1])]
 
 
         elif input.split('=')[0] == 'nuclei':
@@ -375,7 +375,7 @@ for ind in UserEntries['IxNuclei']:
             Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + Params['TestName'] + '/'
 
         # subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
-        if UserEntries['testMode'] == 'oneTrain':
+        if UserEntries['testmode'] == 'onetrain':
             subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/TestCases/')
         else:
             subFolders = subFoldersFunc(Params['Dir_Prior'])
@@ -401,7 +401,7 @@ for ind in UserEntries['IxNuclei']:
                 Params['Dir_NucleiTestSamples']  = Dir_AllTests_Nuclei_EnhancedFld + 'Test/'
                 Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + 'Train/'
 
-            elif UserEntries['testmode'] == 'oneTrain':
+            elif UserEntries['testmode'] == 'onetrain':
                 Params['Dir_NucleiTrainSamples']  = mkDir(Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/TestCases' + subFolders[sFi] + '/Train/')
                 Params['Dir_NucleiTestSamples']   = Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/TestCases' + subFolders[sFi] + '/Test/'
 
@@ -464,7 +464,7 @@ for ind in UserEntries['IxNuclei']:
                 copyPreviousModel( Params['restorePath'], Params['Dir_NucleiModelOut'] )
                 pred , pred_Lgc = testFunc(Params)
 
-            elif UserEntries['testmode'] == 'oneTrain':
+            elif UserEntries['testmode'] == 'onetrain':
                 Params['restorePath'] = Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/Train/' + Params['modelName']
                 copyPreviousModel( Params['restorePath'], Params['Dir_NucleiModelOut'] )
                 pred , pred_Lgc = testFunc(Params)

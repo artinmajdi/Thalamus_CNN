@@ -314,7 +314,7 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
         imFull, mskFull = readingImages(Params , subFolders)
 
-        elif UserEntries['testMode'] == 'oneTrain':
+        if UserEntries['testMode'] == 'oneTrain':
             OneTrain_MultipleTest(UserEntries,Params,subFolders,imFull,mskFull)
 
         else:

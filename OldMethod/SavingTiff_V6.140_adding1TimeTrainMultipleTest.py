@@ -264,7 +264,7 @@ def OneTrain_MultipleTest(UserEntries , Params , subFolders,imFull,mskFull):
 def readingImages(Params , subFolders):
 
     for sFi in range(len(subFolders)):
-
+        break
         inputName = Params['TestName'].split('Test_')[1] + '.nii.gz'
 
         print('Reading Images:  ',Params['NucleusName'],inputName.split('WMnMPRAGE_bias_corr_')[1].split('nii.gz')[0] , str(sFi) + ' ' + subFolders[sFi])
@@ -291,7 +291,8 @@ def readingImages(Params , subFolders):
 
         #mkDir(Params['Dir_EachTraining'] + '/' + subFolders[sFi] + '/Test')
         #mkDir(Params['Dir_EachTraining'] + '/' + subFolders[sFi] + '/Train')
-
+    imFull=[]
+    mskFull = []
     return imFull, mskFull
 
 UserEntries = input_GPU_Ix()
@@ -315,7 +316,9 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
         imFull, mskFull = readingImages(Params , subFolders)
 
         if UserEntries['testmode'] == 'onetrain':
+            print(UserEntries['testmode'])
             OneTrain_MultipleTest(UserEntries,Params,subFolders,imFull,mskFull)
 
         else:
+            print('----',UserEntries['testmode'])
             normal_Cross_Validation(Params , subFolders , imFull , mskFull)

@@ -231,7 +231,7 @@ def normal_Cross_Validation(Params , subFolders , imFull , mskFull):
                 Dir_Each = Params['Dir_EachTraining'] + '/' + subFolders[sFi_child] + '/Train'
 
             for slcIx in range(imFull.shape[2]):
-                break
+
                 Name_PredictedImage = subFolders[sFi_parent] + '_Sh' + str(Params['A'][ii][0]) + '_Ct' + str(Params['A'][ii][1]) + '_Slice_' + str(Params['SliceNumbers'][slcIx])
                 tifffile.imsave( Dir_Each + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx,sFi_parent] )
                 tifffile.imsave( Dir_Each + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi_parent] )
@@ -264,7 +264,7 @@ def OneTrain_MultipleTest(UserEntries , Params , subFolders,imFull,mskFull):
 def readingImages(Params , subFolders):
 
     for sFi in range(len(subFolders)):
-        break
+        
         inputName = Params['TestName'].split('Test_')[1] + '.nii.gz'
 
         print('Reading Images:  ',Params['NucleusName'],inputName.split('WMnMPRAGE_bias_corr_')[1].split('nii.gz')[0] , str(sFi) + ' ' + subFolders[sFi])
@@ -291,8 +291,8 @@ def readingImages(Params , subFolders):
 
         #mkDir(Params['Dir_EachTraining'] + '/' + subFolders[sFi] + '/Test')
         #mkDir(Params['Dir_EachTraining'] + '/' + subFolders[sFi] + '/Train')
-    imFull=[]
-    mskFull = []
+    # imFull=[]
+    # mskFull = []
     return imFull, mskFull
 
 UserEntries = input_GPU_Ix()

@@ -135,10 +135,10 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
 
         Dir_AllTests  = '/media/data1/artin/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method'
 
-        if 'Unlabeled' in dataset:
-            Params['Dir_AllTests_restore']  = '/media/data1/artin/Tests/Thalamus_CNN/' + 'old' + 'Dataset_' + 'old' +'Method'
-        else:
-            Params['Dir_AllTests_restore']  = '/media/data1/artin/Tests/Thalamus_CNN/' + 'Unlabeled' + 'Dataset_' + 'old' +'Method'
+        # if 'Unlabeled' in dataset:
+        Params['Dir_AllTests_restore']  = '/media/data1/artin/Tests/Thalamus_CNN/' + 'old' + 'Dataset_' + 'old' +'Method'
+        #else:
+            #Params['Dir_AllTests_restore']  = '/media/data1/artin/Tests/Thalamus_CNN/' + 'Unlabeled' + 'Dataset_' + 'old' +'Method'
 
     elif 'server' in mode:
 

@@ -1,4 +1,5 @@
-from tf_unet import unet, util, image_util
+print('--------------------')
+# from tf_unet import unet, util, image_util
 import matplotlib.pylab as plt
 import numpy as np
 import os
@@ -7,10 +8,10 @@ import nibabel as nib
 import shutil
 from collections import OrderedDict
 import logging
-from TestData_V6_1 import TestData3_cleanedup
-from tf_unet import unet, util, image_util
-import multiprocessing
-import tensorflow as tf
+# from TestData_V6_1 import TestData3_cleanedup
+# from tf_unet import unet, util, image_util
+# import multiprocessing
+# import tensorflow as tf
 import sys
 from skimage import filters
 
@@ -271,7 +272,7 @@ UserEntries = input_GPU_Ix()
 
 for ind in UserEntries['IxNuclei']:
     print('ind',ind)
-    Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']
 
 
@@ -288,14 +289,15 @@ for ind in UserEntries['IxNuclei']:
             else:
                 Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_1519_04212015' + '/Train/' + 'model/' # Params['modelName']
 
+        if UserEntries['testmode'] not in 'onetrain':
+            subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
+            # subFolders = ['vimp2_ctrl_921_07122013_MP'] # vimp2_ctrl_920_07122013_SW'] #
+            L2 = [0] if UserEntries['testmode'] == 'combo' else range(len(subFolders))
+        else:
+            subFolders = ['OneTrain_MultipleTest']
+            L2 = [0]
 
-        subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
-
-        # subFolders = ['vimp2_ctrl_921_07122013_MP'] # vimp2_ctrl_920_07122013_SW'] #
-        # aaa = range(14,len(subFolders))
-        # aaa = np.append([0,1],aaa)
-        L = [0] if UserEntries['testmode'] == 'combo' else range(len(subFolders))
-        for sFi in L:
+        for sFi in L2:
 
             K = 'Test_' if UserEntries['testmode'] == 'combo' else 'Test_WMnMPRAGE_bias_corr_'
 
@@ -308,8 +310,8 @@ for ind in UserEntries['IxNuclei']:
                 Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + K
                 Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + 'Train/'
             if UserEntries['testmode'] == 'onetrain':
-                Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + K
-                Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/Train/'
+                Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/TestCases/'
+                Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
             else:
                 Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + K
                 Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
@@ -319,7 +321,11 @@ for ind in UserEntries['IxNuclei']:
 
 
             Dir_NucleiModelOut = mkDir(Dir_NucleiTrainSamples + Params['modelName'])
-            Dir_ResultsOut = mkDir(Dir_NucleiTestSamples  + Params['resultName'])
+
+            if UserEntries['testmode'] not in 'onetrain':
+                Dir_ResultsOut = mkDir(Dir_NucleiTestSamples  + Params['resultName'])
+            else:
+                Dir_ResultsOut = ''
 
             TrainData = image_util.ImageDataProvider(Dir_NucleiTrainSamples + "*.tif")
             logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')

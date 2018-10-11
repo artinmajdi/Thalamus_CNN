@@ -205,7 +205,7 @@ def input_GPU_Ix():
     return UserEntries
 
 def funcNormalize(im):
-    return = (im-im.mean())/im.std()
+    return (im-im.mean())/im.std()
 
 
 UserEntries = input_GPU_Ix()

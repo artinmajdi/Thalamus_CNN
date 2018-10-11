@@ -1,3 +1,5 @@
+print('--------------------')
+# from tf_unet import unet, util, image_util
 import matplotlib.pylab as plt
 import numpy as np
 import os
@@ -6,10 +8,10 @@ import nibabel as nib
 import shutil
 from collections import OrderedDict
 import logging
-from TestData_V6_1 import TestData3_cleanedup
-from tf_unet import unet, util, image_util
-import multiprocessing
-import tensorflow as tf
+# from TestData_V6_1 import TestData3_cleanedup
+# from tf_unet import unet, util, image_util
+# import multiprocessing
+# import tensorflow as tf
 import sys
 from skimage import filters
 
@@ -287,6 +289,7 @@ for ind in UserEntries['IxNuclei']:
             else:
                 Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_1519_04212015' + '/Train/' + 'model/' # Params['modelName']
 
+
         if UserEntries['testmode'] not in 'onetrain':
             subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
             # subFolders = ['vimp2_ctrl_921_07122013_MP'] # vimp2_ctrl_920_07122013_SW'] #
@@ -323,7 +326,7 @@ for ind in UserEntries['IxNuclei']:
             if UserEntries['testmode'] not in 'onetrain':
                 Dir_ResultsOut = mkDir(Dir_NucleiTestSamples  + Params['resultName'])
             else:
-                Dir_ResultsOut = ''
+                Dir_ResultsOut = mkDir(Dir_NucleiTestSamples  + Params['resultName'])
 
             TrainData = image_util.ImageDataProvider(Dir_NucleiTrainSamples + "*.tif")
             logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')

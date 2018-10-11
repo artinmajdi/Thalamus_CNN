@@ -1,4 +1,3 @@
-from tf_unet import unet, util, image_util
 import matplotlib.pylab as plt
 import numpy as np
 import os
@@ -7,11 +6,13 @@ import nibabel as nib
 import shutil
 from collections import OrderedDict
 import logging
-from TestData_V6_1 import TestData3
 from tf_unet import unet, util, image_util
 import multiprocessing
-import tensorflow as tf
 import matplotlib.pyplot as plt
+import tifffile
+
+
+
 def DiceCoefficientCalculator(msk1,msk2):
     intersection = msk1*msk2  # np.logical_and(msk1,msk2)
     DiceCoef = intersection.sum()*2/(msk1.sum()+msk2.sum() + np.finfo(float).eps)
@@ -31,202 +32,146 @@ def testNme(A,ii):
         TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
         return TestName
 
-def initialDirectories(ind = 1, mode = 'oldDataset'):
+def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old'):
 
-    # 10-MGN_deformed.nii.gz	  13-Hb_deformed.nii.gz       4567-VL_deformed.nii.gz  6-VLP_deformed.nii.gz  9-LGN_deformed.nii.gz
-    # 11-CM_deformed.nii.gz	  1-THALAMUS_deformed.nii.gz  4-VA_deformed.nii.gz     7-VPL_deformed.nii.gz
-    # 12-MD-Pf_deformed.nii.gz  2-AV_deformed.nii.gz	      5-VLa_deformed.nii.gz    8-Pul_deformed.nii.gz
+    Params = {}
 
     if ind == 1:
         NucleusName = '1-THALAMUS'
+        # SliceNumbers = range(106,143)
+        SliceNumbers = range(103,147)
+        # SliceNumbers = range(107,140) # original one
     elif ind == 2:
         NucleusName = '2-AV'
+        SliceNumbers = range(126,143)
     elif ind == 4567:
         NucleusName = '4567-VL'
+        SliceNumbers = range(114,143)
     elif ind == 4:
         NucleusName = '4-VA'
+        SliceNumbers = range(116,140)
     elif ind == 5:
         NucleusName = '5-VLa'
+        SliceNumbers = range(115,133)
     elif ind == 6:
         NucleusName = '6-VLP'
+        SliceNumbers = range(115,145)
     elif ind == 7:
         NucleusName = '7-VPL'
+        SliceNumbers = range(114,141)
     elif ind == 8:
         NucleusName = '8-Pul'
+        SliceNumbers = range(112,141)
     elif ind == 9:
         NucleusName = '9-LGN'
+        SliceNumbers = range(105,119)
     elif ind == 10:
         NucleusName = '10-MGN'
+        SliceNumbers = range(107,121)
     elif ind == 11:
         NucleusName = '11-CM'
+        SliceNumbers = range(115,131)
     elif ind == 12:
         NucleusName = '12-MD-Pf'
+        SliceNumbers = range(115,140)
     elif ind == 13:
         NucleusName = '13-Hb'
+        SliceNumbers = range(116,129)
+    elif ind == 14:
+        NucleusName = '14-MTT'
+        SliceNumbers = range(104,135)
 
 
-    if mode == 'oldDatasetV2':
-        NeucleusFolder = 'oldDatasetV2/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
-        ThalamusFolder = 'oldDatasetV2/CNN1_THALAMUS_2D_SanitizedNN'
-    elif mode == 'oldDataset':
-        NeucleusFolder = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
-        ThalamusFolder = 'CNN1_THALAMUS_2D_SanitizedNN'
-    elif mode == 'newDataset':
-        NeucleusFolder = 'newDataset/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
-        ThalamusFolder = 'newDataset/CNN1_THALAMUS_2D_SanitizedNN'
+    Params['modelFormat'] = 'ckpt'
+    if 'localLT' in mode:
+
+        if '20priors' in dataset:
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/20priors'
+        elif 'MS' in dataset:
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/7T_MS'
+        elif 'ET_3T' in dataset:
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/ET/3T'
+        elif 'ET_7T' in dataset:
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/ET/7T'
+        elif 'Unlabeled' in dataset:
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/Unlabeled'
+
+        Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + dataset + 'Dataset_' + method +'Method'
+        if 'Unlabeled' in dataset:
+            Params['Dir_AllTests_restore']  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + '20priors' + 'Dataset_' + 'old' +'Method'
+        else:
+            Params['Dir_AllTests_restore']  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + 'Unlabeled' + 'Dataset_' + 'old' +'Method'
 
 
-    if mode == 'localMachine':
-        Dir_AllTests = '/media/artin-laptop/D0E2340CE233F5761/Thalamus_Segmentation/Data/'
-        Dir_Prior = ''
-    elif (mode == 'oldDataset') | (mode == 'oldDatasetV2'):
-        Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/'
-        Dir_Prior =  '/array/hdd/msmajdi/data/priors_forCNN_Ver2/'
-    elif mode == 'newDataset':
-        Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/'
-        Dir_Prior = '/array/hdd/msmajdi/data/newPriors/7T_MS/'
+    elif 'localPC' in mode:
 
-    return NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior
+        if '20priors' in dataset:
+            Dir_Prior = '/media/data1/artin/thomas/priors/20priors'
+        elif 'MS' in dataset:
+            Dir_Prior = '/media/data1/artin/thomas/priors/7T_MS'
+        elif 'ET_3T' in dataset:
+            Dir_Prior = '/media/data1/artin/thomas/priors/ET/3T'
+        elif 'ET_7T' in dataset:
+            Dir_Prior = '/media/data1/artin/thomas/priors/ET/7T'
+        elif 'Unlabeled' in dataset:
+            Dir_Prior = '/media/data1/artin/thomas/priors/Unlabeled'
+
+        Dir_AllTests  = '/media/data1/artin/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method'
+
+        if 'Unlabeled' in dataset:
+            Params['Dir_AllTests_restore']  = '/media/data1/artin/Tests/Thalamus_CNN/' + '20priors' + 'Dataset_' + 'old' +'Method'
+        else:
+            Params['Dir_AllTests_restore']  = '/media/data1/artin/Tests/Thalamus_CNN/' + 'Unlabeled' + 'Dataset_' + 'old' +'Method'
+
+    elif 'server' in mode:
+
+        if '20priors' in dataset:
+            Dir_Prior = '/array/ssd/msmajdi/data/20priors'
+        elif 'MS' in dataset:
+            Dir_Prior = '/array/ssd/msmajdi/data/7T_MS'
+        elif 'ET_3T' in dataset:
+            Dir_Prior = '/array/ssd/msmajdi/data/ET/3T'
+        elif 'ET_7T' in dataset:
+            Dir_Prior = '/array/ssd/msmajdi/data/ET/7T'
+        elif 'Unlabeled' in dataset:
+            Dir_Prior = '/array/ssd/msmajdi/data/Unlabeled'
+
+        Dir_AllTests  = '/array/ssd/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method'
+
+        if 'Unlabeled' in dataset:
+            Params['Dir_AllTests_restore']  = '/array/ssd/msmajdi/Tests/Thalamus_CNN/' + '20priors' + 'Dataset_' + 'old' +'Method'
+        else:
+            Params['Dir_AllTests_restore']  = '/array/ssd/msmajdi/Tests/Thalamus_CNN/' + 'Unlabeled' + 'Dataset_' + 'old' +'Method'
 
 
-Init = {'init':1}
+
+    Params = {}
+    Params['A'] = [[0,0],[6,1],[1,2],[1,3],[4,1]]
+    Params['Dir_Prior']    = Dir_Prior
+    Params['Dir_AllTests'] = Dir_AllTests
+    Params['SliceNumbers'] = SliceNumbers
+    Params['NucleusName']  = NucleusName
+
+    return Params
+
 ind = 1
 mode = 'oldDatasetV2'
-NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior = initialDirectories(ind , mode)
+NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior = initialDirectories(ind = 1, mode = 'localPC' , dataset = '20priors' , method = 'old')
 
-# dir = '/media/artin/D0E2340CE233F576/Thalamus_Segmentation/Data/Manual_Delineation_Sanitized_Full/vimp2_ctrl_920_07122013_SW/Manual_Delineation_Sanitized/'
-# msk = nib.load(dir + NucleusName + '_deformed.nii.gz')
-#
-# msk = msk.get_data()
-# msk.shape
-# a = msk.sum(axis=0)
-# a = a.sum(axis=0)
-# a.shape
-# np.where(a>0)
+dir = '/media/data1/artin/thomas/priors/20priors/vimp2_869_06142013_BL/'
+im = nib.load(dir + 'WMnMPRAGE_bias_corr_Deformed.nii.gz')
+im = im.get_data()
 
-A = [[0,0],[6,1],[1,2],[1,3],[4,1]] # [4,3],
+plt.imshow(im[...,100],cmap='gray')
+plt.show()
 
-Init['SliceNumbers'] = range(107,140)
-Init['Dice_Flag'] = 1
-Init['MultThlms_Flag'] = 0
-Init['optimizer'] = "momentum" # "adam"
-Init['CropDim'] = np.array([ [50,198] , [130,278] , [ Init['SliceNumbers'][0] , Init['SliceNumbers'][ len(Init['SliceNumbers'])-1 ] ] ])
-# Init['gpuNum'] = '2'
-Init['padSize'] = int(90/2)
-Init['NucleusName'] = NucleusName
+im2 = (im-im.mean())/im.std()
 
-dir = '/media/groot/Seagate Backup Plus Drive/code/mine/test/'
-Nuclei_Image = nib.load(dir + 'WMnMPRAGE_bias_corr_Deformed.nii.gz')
-Init['Dir_NucleiModelOut'] = dir + 'model_Backup/'
-Init['Nuclei_Label'] = nib.load(dir + '1-THALAMUS_deformed.nii.gz')
-Init['Dir_NucleiTestSamples'] = dir
-Init['gpuNum'] = 'nan'
-net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
+im.max()
+tifffile.imsave( '/media/data1/artin/thomas/priors/20priors/vimp2_869_06142013_BL/ttt' , im2[...,100] )
+K = tifffile.imread( '/media/data1/artin/thomas/priors/20priors/vimp2_869_06142013_BL/ttt')
 
-# -------------------------------------------------------------------------------------------------------
-# def TestData4(net , Init , Nuclei_Image):
-
-ResultFldName = 'Results_momentum'
-
-
-CropDim      = Init['CropDim']
-padSize      = Init['padSize']
-SliceNumbers = Init['SliceNumbers']
-
-Dir_NucleiModelOut_cptk = Init['Dir_NucleiModelOut'] + 'model.cpkt'
-
-dir_ResultOut = mkDir(Init['Dir_NucleiTestSamples'] + 'Results_' + Init['optimizer'] + '/')
-
-if Init['MultThlms_Flag'] != 0:
-    dir_ResultOut_Mlt = mkDir(Init['Dir_NucleiTestSamples'] + 'Results_' + Init['optimizer'] + '_MultByThlms/')
-
-Nuclei_ImageD = Nuclei_Image.get_data()
-Header  = Nuclei_Image.header
-Affine  = Nuclei_Image.affine
-sz_Orig = Nuclei_ImageD.shape
-
-
-
-
-# ........>>>>>>>>>>>>>>>>>> Prediction >>>>>>>>>>>>>>>>>>>>>>>>>.........
-
-Nuclei_ImageD  = Nuclei_ImageD[CropDim[0,0]:CropDim[0,1],CropDim[1,0]:CropDim[1,1],SliceNumbers]
-
-Nuclei_ImageD = np.pad(Nuclei_ImageD,((padSize,padSize),(padSize,padSize),(0,0)),'constant' )
-Nuclei_ImageD = np.transpose(Nuclei_ImageD,[2,0,1])
-
-if Init['gpuNum'] != 'nan':
-    prediction = net.predict( Dir_NucleiModelOut_cptk, Nuclei_ImageD[...,np.newaxis], GPU_Num=Init['gpuNum'])
-else:
-    prediction = net.predict( Dir_NucleiModelOut_cptk, Nuclei_ImageD[...,np.newaxis])
-b = Nuclei_ImageD[...,np.newaxis]
-a = Nuclei_ImageD[10,:,:,np.newaxis]
-a = a[np.newaxis,...]
-a.shape
-prediction = net.predict( Dir_NucleiModelOut_cptk, b)
-prediction.shape
-
-
-prediction = np.transpose(prediction,[1,2,0,3])
-prediction = prediction[...,1]
-
-prediction_Logical = np.zeros(prediction.shape)
-
-for i in range(len(SliceNumbers)):
-    try:
-        Thresh_Mult = max(filters.threshold_otsu(prediction[...,i]),0.2)
-    except:
-        Thresh_Mult = 0.2
-
-    prediction_Logical[...,i]  = prediction[...,i] > Thresh_Mult
-
-prediction_3D = np.zeros(sz_Orig)
-prediction_3D_Logical = np.zeros(sz_Orig)
-prediction_3D[ CropDim[0,0]:CropDim[0,1] , CropDim[1,0]:CropDim[1,1] , SliceNumbers ] = prediction
-prediction_3D_Logical[ CropDim[0,0]:CropDim[0,1] , CropDim[1,0]:CropDim[1,1] , SliceNumbers ] = prediction_Logical
-
-
-
-
-# >>>>>>>>>>>>>>>>>> if mult by thalamus >>>>>>>>>>>>>>>>>>>>>>>>>.........
-
-if Init['MultThlms_Flag'] != 0:
-    Thalamus_PredSegD = Init['Thalamus_PredSeg'].get_data()
-    prediction_3D_Mult_Logical = Thalamus_PredSegD * prediction_3D_Logical
-
-
-
-
-
-# >>>>>>>>>>>>>>>>>> Dice >>>>>>>>>>>>>>>>>>>>>>>>>.........
-
-Dice = [0,0]
-if Init['Dice_Flag'] == 1:
-    Dice[0] = DiceCoefficientCalculator(prediction_3D_Logical, Init['Nuclei_Label'].get_data())
-
-    if Init['MultThlms_Flag'] != 0:
-        Dice[1] = DiceCoefficientCalculator(prediction_3D_Mult_Logical,Nuclei_LabelD)
-        # DiceCoefficient = np.append(DiceCoefficient,DiceM)
-
-    print(Dice)
-    np.savetxt(dir_ResultOut + 'DiceCoefficient.txt',Dice )
-
-    dir_ResultOut
-
-
-
-
-    # >>>>>>>>>>>>>>>>>> saving >>>>>>>>>>>>>>>>>>>>>>>>>.........
-
-    Prediction3D_nifti = nib.Nifti1Image(prediction_3D,Affine)
-    Prediction3D_nifti.get_header = Header
-    nib.save(Prediction3D_nifti , dir_ResultOut + Init['subFolders'] + '_' + Init['NucleusName'] + '.nii.gz')
-
-    Prediction3D_logical_nifti = nib.Nifti1Image(prediction_3D_Logical,Affine)
-    Prediction3D_logical_nifti.get_header = Header
-    nib.save(Prediction3D_logical_nifti , dir_ResultOut + Init['subFolders'] + '_' + Init['NucleusName'] + '_Logical.nii.gz')
-
-    if Init['MultThlms_Flag'] != 0:
-        Prediction3D_logical_nifti = nib.Nifti1Image(prediction_3D_Mult_Logical,Affine)
-        Prediction3D_logical_nifti.get_header = Header
-        nib.save(Prediction3D_logical_nifti , dir_ResultOut_Mlt + Init['subFolders'] + '_' + Init['NucleusName'] + '_Logical.nii.gz')
+K.min()
+im2[...,100].min()
+plt.imshow(K,cmap='gray')
+plt.show()

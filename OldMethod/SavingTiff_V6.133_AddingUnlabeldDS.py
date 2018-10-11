@@ -204,6 +204,9 @@ def input_GPU_Ix():
 
     return UserEntries
 
+def funcNormalize(im):
+    return = (im-im.mean())/im.std()
+
 
 UserEntries = input_GPU_Ix()
 # gpuNum = 'nan'
@@ -233,7 +236,7 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
             mask   = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + Name_priors_San_Label)
             im     = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName)
 
-            imD    = im.get_data()
+            imD = funcNormalize( im.get_data() )
             maskD  = mask.get_data()
             Header = im.header
             Affine = im.affine

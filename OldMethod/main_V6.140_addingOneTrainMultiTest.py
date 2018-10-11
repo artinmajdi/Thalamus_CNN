@@ -282,35 +282,30 @@ for ind in UserEntries['IxNuclei']:
 
         if UserEntries['init']:
             if 'Unlabeled' in UserEntries['dataset']:
+                Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_901_07052013_AS' + '/Train/' + 'model/' # Params['modelName']
+            else:
                 if 'onetrain' in UserEntries['testmode']:
                     Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'OneTrain_MultipleTest' + '/Train/' + 'model/' # Params['modelName']
                 else:
-                    Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_901_07052013_AS' + '/Train/' + 'model/' # Params['modelName']
-            else:
-                Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_1519_04212015' + '/Train/' + 'model/' # Params['modelName']
+                    Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_1519_04212015' + '/Train/' + 'model/' # Params['modelName']
 
 
-        if UserEntries['testmode'] not in 'onetrain':
+        if 'onetrain' in UserEntries['testmode'] and 'Unlabeled' in UserEntries['dataset']:
+            subFolders = ['OneTrain_MultipleTest']
+            L2 = [0]
+        else:
             subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
             # subFolders = ['vimp2_ctrl_921_07122013_MP'] # vimp2_ctrl_920_07122013_SW'] #
             L2 = [0] if UserEntries['testmode'] == 'combo' else range(len(subFolders))
-        else:
-            subFolders = ['OneTrain_MultipleTest']
-            L2 = [0]
 
         for sFi in L2:
 
-            K = 'Test_' if UserEntries['testmode'] == 'combo' else 'Test_WMnMPRAGE_bias_corr_'
-
-            if UserEntries['testmode'] != 'combo':
-                print(Params['NucleusName'],TestName.split(K)[1],subFolders[sFi])
-
             K = 'Test/' if UserEntries['testmode'] == 'combo' else '/Test/'
 
-            if UserEntries['testmode'] == 'combo':
+            if 'combo' in UserEntries['testmode']:
                 Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + K
                 Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + 'Train/'
-            if UserEntries['testmode'] == 'onetrain':
+            elif 'onetrain' in UserEntries['testmode'] and 'Unlabeled' in UserEntries['dataset']:
                 Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/TestCases/'
                 Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
             else:
@@ -323,10 +318,10 @@ for ind in UserEntries['IxNuclei']:
 
             Dir_NucleiModelOut = mkDir(Dir_NucleiTrainSamples + Params['modelName'])
 
-            if UserEntries['testmode'] not in 'onetrain':
-                Dir_ResultsOut = mkDir(Dir_NucleiTestSamples  + Params['resultName'])
+            if 'onetrain' in UserEntries['testmode']:
+                Dir_ResultsOut = mkDir(Dir_NucleiTestSamples + Params['resultName'])
             else:
-                Dir_ResultsOut = mkDir(Dir_NucleiTestSamples  + Params['resultName'])
+                Dir_ResultsOut = mkDir(Dir_NucleiTestSamples + Params['resultName'])
 
             TrainData = image_util.ImageDataProvider(Dir_NucleiTrainSamples + "*.tif")
             logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')

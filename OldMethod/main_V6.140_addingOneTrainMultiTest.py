@@ -105,7 +105,6 @@ def NucleiSelection(ind):
 
     return NucleusName , SliceNumbers
 
-
 def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old'):
 
     Params = {}
@@ -204,7 +203,7 @@ def input_GPU_Ix():
     UserEntries['testmode'] = 'normal' # 'combo'
     UserEntries['enhanced_Index'] = range(len(A))
     UserEntries['mode'] = 'server'
-    UserEntries['init'] = 0
+    UserEntries['init'] = 1
     UserEntries['Flag_cross_entropy'] = 0
     UserEntries['onetrain_testIndexes'] = [1,5,10,14,20]
 
@@ -283,7 +282,10 @@ for ind in UserEntries['IxNuclei']:
 
         if UserEntries['init']:
             if 'Unlabeled' in UserEntries['dataset']:
-                Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_901_07052013_AS' + '/Train/' + 'model/' # Params['modelName']
+                if 'onetrain' in UserEntries['testmode']:
+                    Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'OneTrain_MultipleTest' + '/Train/' + 'model/' # Params['modelName']
+                else:
+                    Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_901_07052013_AS' + '/Train/' + 'model/' # Params['modelName']
             else:
                 Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_1519_04212015' + '/Train/' + 'model/' # Params['modelName']
 

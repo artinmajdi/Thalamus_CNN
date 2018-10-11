@@ -1,4 +1,3 @@
-from tf_unet import unet, util, image_util
 import matplotlib.pylab as plt
 import numpy as np
 import os
@@ -278,7 +277,7 @@ for ind in UserEntries['IxNuclei']:
         # aaa = range(14,len(subFolders))
         # aaa = np.append([0,1],aaa)
         L = [0] if UserEntries['testmode'] == 'combo' else range(len(subFolders))
-        
+
         for sFi in L:
 
             K = 'Test_' if UserEntries['testmode'] == 'combo' else 'Test_WMnMPRAGE_bias_corr_'

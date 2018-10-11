@@ -264,14 +264,14 @@ def OneTrain_MultipleTest(UserEntries , Params , subFolders,imFull,mskFull):
 def readingImages(Params , subFolders):
 
     for sFi in range(len(subFolders)):
-        
+
         inputName = Params['TestName'].split('Test_')[1] + '.nii.gz'
 
         print('Reading Images:  ',Params['NucleusName'],inputName.split('WMnMPRAGE_bias_corr_')[1].split('nii.gz')[0] , str(sFi) + ' ' + subFolders[sFi])
         mask   = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + Params['Name_priors_San_Label'])
         im     = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName )
 
-        imD    = im.get_data()
+        imD    = funcNormalize( im.get_data() )
         maskD  = mask.get_data()
 
         imD2 = imD[50:198,130:278,Params['SliceNumbers']]
@@ -294,6 +294,10 @@ def readingImages(Params , subFolders):
     # imFull=[]
     # mskFull = []
     return imFull, mskFull
+
+def funcNormalize(im):
+    return (im-im.mean())/im.std()
+
 
 UserEntries = input_GPU_Ix()
 

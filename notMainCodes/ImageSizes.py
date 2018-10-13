@@ -166,7 +166,7 @@ def upsampleImage(im):
 
 # for DT in range(1,2):
 # for nuclei in [1]:
-
+nuclei = 1
 # dataset = WhichDataset(DT)
 Params = initialDirectories(ind = nuclei, mode = 'localPC' , dataset = 'Unlabeled' , method = 'old' )
 sub = subFoldersFunc(Params['Dir_Prior'])
@@ -175,41 +175,43 @@ Results = np.zeros((len(sub),3,4))
 for i in range(len(sub)):
 
     im = nib.load(Params['Dir_Prior'] + '/' + sub[i] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '.nii.gz').get_data()
+    # im = nib.load(Params['Dir_Prior'] + '/' + sub[i] + '/WMnMPRAGE_bias_corr.nii.gz').get_data()
+    print(im.shape)
     # print('sub ',i , im.shape , sub[i])
 
-    flag = 0
-    if im.shape[1] == 200:
-        im = upsampleImage(im)
-        flag = 1
-
-    a = np.where(im != 0)
-    for dd in range(3):
-        Results[i,dd,:] = [flag , a[dd].min() , a[dd].max() , im.shape[dd]]
-    print('sub ',i , im.shape , sub[i])
-
-
-im.shape
-Results[:,1,:]
-
-BoundingBox = np.zeros((3,2))
-Shape = np.zeros((3,2))
-for i in range(3):
-
-    Min = np.min(Results[:,i,1],axis=0)
-    # Mean1 = np.mean(Results[:,i,1],axis=0)
-    # Std1 = np.std(Results[:,i,1],axis=0)
-
-    Max = np.max(Results[:,i,2],axis=0)
-    # Mean2 = np.mean(Results[:,i,2],axis=0)
-    # Std2 = np.std(Results[:,i,2],axis=0)
+    # flag = 0
+    # if im.shape[1] == 200:
+    #     im = upsampleImage(im)
+    #     flag = 1
+    #
+    # a = np.where(im != 0)
+    # for dd in range(3):
+    #     Results[i,dd,:] = [flag , a[dd].min() , a[dd].max() , im.shape[dd]]
+    # print('sub ',i , im.shape , sub[i])
 
 
-    BoundingBox[i,:] = [Min , Max]
-    Shape[i,:] = [np.min(Results[:,i,3],axis=0) , np.max(Results[:,i,3],axis=0)]
-
-BoundingBox
-Shape
+# im.shape
 # Results[:,1,:]
+#
+# BoundingBox = np.zeros((3,2))
+# Shape = np.zeros((3,2))
+# for i in range(3):
+#
+#     Min = np.min(Results[:,i,1],axis=0)
+#     # Mean1 = np.mean(Results[:,i,1],axis=0)
+#     # Std1 = np.std(Results[:,i,1],axis=0)
+#
+#     Max = np.max(Results[:,i,2],axis=0)
+#     # Mean2 = np.mean(Results[:,i,2],axis=0)
+#     # Std2 = np.std(Results[:,i,2],axis=0)
+#
+#
+#     BoundingBox[i,:] = [Min , Max]
+#     Shape[i,:] = [np.min(Results[:,i,3],axis=0) , np.max(Results[:,i,3],axis=0)]
+#
+# BoundingBox
+# Shape
+# # Results[:,1,:]
 
 
 

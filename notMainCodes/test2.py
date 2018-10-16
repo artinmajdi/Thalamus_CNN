@@ -7,6 +7,7 @@ import shutil
 from collections import OrderedDict
 import logging
 from tf_unet import unet, util, image_util
+import os
 import multiprocessing
 import matplotlib.pyplot as plt
 import tifffile
@@ -158,7 +159,11 @@ ind = 1
 mode = 'oldDatasetV2'
 NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior = initialDirectories(ind = 1, mode = 'localPC' , dataset = '20priors' , method = 'old')
 
-dir = '/media/data1/artin/thomas/priors/20priors/vimp2_869_06142013_BL/'
+dir = '/media/data1/artin/Test/'
+sub = os.listdir(dir)
+im = tifffile.imread(dir + sub[10])
+im.max()
+
 im = nib.load(dir + 'WMnMPRAGE_bias_corr_Deformed.nii.gz')
 im = im.get_data()
 

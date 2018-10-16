@@ -404,7 +404,7 @@ for ind in UserEntries['IxNuclei']:
                 pred_Lgc = np.sum(predFull_Lgc,axis=3) > int(len(subFolders_TrainedModels)/2)
 
             else:
-                subFolder_trainModel = 'vimp2_1519_04212015' # 'vimp2_ANON724_03272013'
+                subFolder_trainModel = 'vimp2_ANON724_03272013' # k'vimp2_1519_04212015' #
 
                 Params['restorePath_full'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + Params['TestName'] + '/' + subFolder_trainModel + '/Train'
                 Params['restorePath'] = Params['restorePath_full'] + '/' + Params['modelName']

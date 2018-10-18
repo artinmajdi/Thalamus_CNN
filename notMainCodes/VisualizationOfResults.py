@@ -215,7 +215,7 @@ plt.imshow(RGB_im)
 # RGB_im = colorImageMaker(edge_pred, seg_Orig)
 
 FinalImage = concantenateImageMask(256*im_Orig, RGB_im)
-im_Orig.max()
+RGB_im.max()
 plt.imshow(FinalImage)
 
 imwrite(dir + '/im.jpg',FinalImage)

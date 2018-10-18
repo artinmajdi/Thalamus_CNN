@@ -114,10 +114,10 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
             Dir_Prior = '/media/artin/dataLocal1/dataThalamus/Unlabeled'
 
         Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + dataset + 'Dataset_' + method +'Method'
-        if 'Unlabeled' in dataset:
-            Params['Dir_AllTests_restore']  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + 'old' + 'Dataset_' + 'old' +'Method'
-        else:
-            Params['Dir_AllTests_restore']  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + 'Unlabeled' + 'Dataset_' + 'old' +'Method'
+        # if 'Unlabeled' in dataset:
+        Params['Dir_AllTests_restore']  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + '20priors' + 'Dataset_' + 'old' +'Method'
+        # else:
+        #     Params['Dir_AllTests_restore']  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + 'Unlabeled' + 'Dataset_' + 'old' +'Method'
 
 
     elif 'localPC' in mode:
@@ -135,10 +135,10 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
 
         Dir_AllTests  = '/media/data1/artin/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method'
 
-        if 'Unlabeled' in dataset:
-            Params['Dir_AllTests_restore']  = '/media/data1/artin/Tests/Thalamus_CNN/' + 'old' + 'Dataset_' + 'old' +'Method'
-        else:
-            Params['Dir_AllTests_restore']  = '/media/data1/artin/Tests/Thalamus_CNN/' + 'Unlabeled' + 'Dataset_' + 'old' +'Method'
+        # if 'Unlabeled' in dataset:
+        Params['Dir_AllTests_restore']  = '/media/data1/artin/Tests/Thalamus_CNN/' + '20priors' + 'Dataset_' + 'old' +'Method'
+        #else:
+            #Params['Dir_AllTests_restore']  = '/media/data1/artin/Tests/Thalamus_CNN/' + 'Unlabeled' + 'Dataset_' + 'old' +'Method'
 
     elif 'server' in mode:
 
@@ -155,10 +155,10 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
 
         Dir_AllTests  = '/array/ssd/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method'
 
-        if 'Unlabeled' in dataset:
-            Params['Dir_AllTests_restore']  = '/array/ssd/msmajdi/Tests/Thalamus_CNN/' + 'old' + 'Dataset_' + 'old' +'Method'
-        else:
-            Params['Dir_AllTests_restore']  = '/array/ssd/msmajdi/Tests/Thalamus_CNN/' + 'Unlabeled' + 'Dataset_' + 'old' +'Method'
+        # if 'Unlabeled' in dataset:
+        Params['Dir_AllTests_restore']  = '/array/ssd/msmajdi/Tests/Thalamus_CNN/' + '20priors' + 'Dataset_' + 'old' +'Method'
+        # else:
+            # Params['Dir_AllTests_restore']  = '/array/ssd/msmajdi/Tests/Thalamus_CNN/' + 'Unlabeled' + 'Dataset_' + 'old' +'Method'
 
 
     Params['A'] = A
@@ -404,7 +404,7 @@ for ind in UserEntries['IxNuclei']:
                 pred_Lgc = np.sum(predFull_Lgc,axis=3) > int(len(subFolders_TrainedModels)/2)
 
             else:
-                subFolder_trainModel = 'vimp2_1519_04212015' # 'vimp2_ANON724_03272013'
+                subFolder_trainModel = 'vimp2_ANON724_03272013' # k'vimp2_1519_04212015' #
 
                 Params['restorePath_full'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + Params['TestName'] + '/' + subFolder_trainModel + '/Train'
                 Params['restorePath'] = Params['restorePath_full'] + '/' + Params['modelName']

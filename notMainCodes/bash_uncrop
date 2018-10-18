@@ -1,0 +1,22 @@
+#!/bin/csh
+
+set input = '/array/ssd/msmajdi/data/Unlabeled'
+set Thomas_Directory = '/media/data1/artin/thomas'
+
+foreach vimp ($input/vimp2*)
+echo $vimp
+foreach Label ('1-THALAMUS' '2-AV' '4-VA' '5-VLa' '6-VLP' '7-VPL' '8-Pul' '9-LGN' '10-MGN' '11-CM' '12-MD-Pf' '13-Hb' '14-MTT')
+
+echo $Label
+python uncrop.py $vimp/Manual_Delineation_Sanitized/{$Label}.nii.gz $vimp/Manual_Delineation_Sanitized/{$Label}_UnCropped.nii.gz $vimp/Manual_Delineation_Sanitized/mask_inp.nii.gz
+
+# WarpImageMultiTransform 3 $vimp/{$Label}_UnCropped.nii.gz $vimp/{$Label}_UnCropped_deformed.nii.gz -R $Thomas_Directory/origtemplate.nii.gz $input/$vimp/temp/WMnMPRAGEWarp.nii.gz $input/$vimp/temp/WMnMPRAGEAffine.txt --use-NN
+
+#echo '-------------------' >> $vimp/Dice
+#echo $Label >> $vimp/Dice
+#c3d $vimp/{$Label}_UnCropped_deformed.nii.gz $input/$vimp/Manual_Delineation_Sanitized/{$Label}_deformed.nii.gz -overlap 1 >> $vimp/Dice
+
+end
+
+
+end

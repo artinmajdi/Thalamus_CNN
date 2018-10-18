@@ -60,74 +60,50 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
     elif ind == 13:
         NucleusName = '13-Hb'
         SliceNumbers = range(116,129)
-    elif ind == 14:
-        NucleusName = '14-MTT'
-        SliceNumbers = range(104,135)
-        
+
+    print('-----------------',dataset)
     Params['modelFormat'] = 'ckpt'
     if 'localLT' in mode:
 
-        if '20priors' in dataset:
-            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/20priors'
+        if 'old' in dataset:
+            Params['Dir_Prior'] = '/media/artin/dataLocal1/dataThalamus/priors_forCNN_Ver2'
         elif 'MS' in dataset:
-            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/7T_MS'
-        elif 'ET_3T' in dataset:
-            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/ET/3T'
-        elif 'ET_7T' in dataset:
-            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/ET/7T'
-        elif 'Unlabeled' in dataset:
-            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/Unlabeled'
+            Params['Dir_Prior'] = '/media/artin/dataLocal1/dataThalamus/newPriors/7T_MS'
+        elif 'ET' in dataset:
+            Params['Dir_Prior'] = '/media/data1/artin/thomas/NewPriors/ET'
 
-        Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + dataset + 'Dataset_' + method +'Method'
-        if 'Unlabeled' in dataset:
-            Params['Dir_AllTests_restore']  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + '20priors' + 'Dataset_' + 'old' +'Method'
-        else:
-            Params['Dir_AllTests_restore']  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + 'Unlabeled' + 'Dataset_' + 'old' +'Method'
 
+        Params['Dir_AllTests']  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + dataset + 'Dataset_' + method +'Method'
 
     elif 'localPC' in mode:
 
-        if '20priors' in dataset:
-            Dir_Prior = '/media/data1/artin/thomas/priors/20priors'
+        if 'old' in dataset:
+            Dir_Prior = '/media/data1/artin/thomas/priors'
         elif 'MS' in dataset:
-            Dir_Prior = '/media/data1/artin/thomas/priors/7T_MS'
-        elif 'ET_3T' in dataset:
-            Dir_Prior = '/media/data1/artin/thomas/priors/ET/3T'
-        elif 'ET_7T' in dataset:
-            Dir_Prior = '/media/data1/artin/thomas/priors/ET/7T'
-        elif 'Unlabeled' in dataset:
-            Dir_Prior = '/media/data1/artin/thomas/priors/Unlabeled'
+            Dir_Prior = '/media/data1/artin/thomas/NewPriors/7T_MS'
+        elif 'ET' in dataset:
+            Dir_Prior = '/media/data1/artin/thomas/NewPriors/ET'
 
-        Dir_AllTests  = '/media/data1/artin/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method'
+        Params['Dir_AllTests']  = '................../AllTests/' + dataset + 'Dataset_' + method +'Method'
 
-        if 'Unlabeled' in dataset:
-            Params['Dir_AllTests_restore']  = '/media/data1/artin/Tests/Thalamus_CNN/' + '20priors' + 'Dataset_' + 'old' +'Method'
-        else:
-            Params['Dir_AllTests_restore']  = '/media/data1/artin/Tests/Thalamus_CNN/' + 'Unlabeled' + 'Dataset_' + 'old' +'Method'
+    elif 'flash' in mode:
+
+        machine = 'artin' # groot
+        Params['Dir_Prior'] = '/media/' + machine + '/aaa/Manual_Delineation_Sanitized_Full'
+        Params['Dir_AllTests']  = '/media/' + machine + '/aaa/AllTests/' + dataset + 'Dataset_' + method +'Method'
 
     elif 'server' in mode:
 
-        if '20priors' in dataset:
-            Dir_Prior = '/array/ssd/msmajdi/data/20priors'
+        if 'old' in dataset:
+            Params['Dir_Prior'] = '/array/ssd/msmajdi/data/priors_forCNN_Ver2'
         elif 'MS' in dataset:
-            Dir_Prior = '/array/ssd/msmajdi/data/7T_MS'
-        elif 'ET_3T' in dataset:
-            Dir_Prior = '/array/ssd/msmajdi/data/ET/3T'
-        elif 'ET_7T' in dataset:
-            Dir_Prior = '/array/ssd/msmajdi/data/ET/7T'
-        elif 'Unlabeled' in dataset:
-            Dir_Prior = '/array/ssd/msmajdi/data/Unlabeled'
+            Params['Dir_Prior'] = '/array/ssd/msmajdi/data/newPriors/7T_MS'
+        elif 'ET' in dataset:
+            Params['Dir_Prior'] = '/array/ssd/msmajdi/data/newPriors/ET'
 
-        Dir_AllTests  = '/array/ssd/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method'
+        Params['Dir_AllTests']  = '/array/ssd/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method' # 'oldDataset' #
 
-        if 'Unlabeled' in dataset:
-            Params['Dir_AllTests_restore']  = '/array/ssd/msmajdi/Tests/Thalamus_CNN/' + '20priors' + 'Dataset_' + 'old' +'Method'
-        else:
-            Params['Dir_AllTests_restore']  = '/array/ssd/msmajdi/Tests/Thalamus_CNN/' + 'Unlabeled' + 'Dataset_' + 'old' +'Method'
-
-
-    Params['Dir_Prior']    = Dir_Prior
-    Params['Dir_AllTests'] = Dir_AllTests
+    print('Dir_AllTests',Params['Dir_AllTests'])
     Params['NucleusName'] = NucleusName
     Params['NeucleusFolder'] = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
     Params['SliceNumbers'] = SliceNumbers
@@ -221,7 +197,6 @@ UserEntries = input_GPU_Ix()
 
 for ind in UserEntries['IxNuclei']: # [1,2,8,9,10,13]:
 
-    print('nuclei: ',ind)
     Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Dir_SaveMWFld = mkDir( Params['Dir_AllTests'] + '/Folder_MajorityVoting/' )
     subFolders = subFolderList(Params['Dir_AllTests'] + '/' + Params['NeucleusFolder'])

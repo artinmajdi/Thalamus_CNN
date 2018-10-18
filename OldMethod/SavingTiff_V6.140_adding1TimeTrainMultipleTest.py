@@ -231,7 +231,7 @@ def normal_Cross_Validation(Params , subFolders , imFull , mskFull):
                 Dir_Each = Params['Dir_EachTraining'] + '/' + subFolders[sFi_child] + '/Train'
 
             for slcIx in range(imFull.shape[2]):
-                break
+
                 Name_PredictedImage = subFolders[sFi_parent] + '_Sh' + str(Params['A'][ii][0]) + '_Ct' + str(Params['A'][ii][1]) + '_Slice_' + str(Params['SliceNumbers'][slcIx])
                 tifffile.imsave( Dir_Each + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx,sFi_parent] )
                 tifffile.imsave( Dir_Each + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi_parent] )
@@ -271,7 +271,7 @@ def readingImages(Params , subFolders):
         mask   = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + Params['Name_priors_San_Label'])
         im     = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName )
 
-        imD    = im.get_data()
+        imD    = funcNormalize( im.get_data() )
         maskD  = mask.get_data()
 
         imD2 = imD[50:198,130:278,Params['SliceNumbers']]
@@ -291,8 +291,13 @@ def readingImages(Params , subFolders):
 
         #mkDir(Params['Dir_EachTraining'] + '/' + subFolders[sFi] + '/Test')
         #mkDir(Params['Dir_EachTraining'] + '/' + subFolders[sFi] + '/Train')
-
+    # imFull=[]
+    # mskFull = []
     return imFull, mskFull
+
+def funcNormalize(im):
+    return (im-im.mean())/im.std()
+
 
 UserEntries = input_GPU_Ix()
 
@@ -315,7 +320,9 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
         imFull, mskFull = readingImages(Params , subFolders)
 
         if UserEntries['testmode'] == 'onetrain':
+            print(UserEntries['testmode'])
             OneTrain_MultipleTest(UserEntries,Params,subFolders,imFull,mskFull)
 
         else:
+            print('----',UserEntries['testmode'])
             normal_Cross_Validation(Params , subFolders , imFull , mskFull)

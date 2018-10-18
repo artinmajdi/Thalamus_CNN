@@ -1,4 +1,3 @@
-from tf_unet import unet, util, image_util
 import matplotlib.pylab as plt
 import numpy as np
 import os
@@ -278,7 +277,7 @@ for ind in UserEntries['IxNuclei']:
         # aaa = range(14,len(subFolders))
         # aaa = np.append([0,1],aaa)
         L = [0] if UserEntries['testmode'] == 'combo' else range(len(subFolders))
-        
+
         for sFi in L:
 
             K = 'Test_' if UserEntries['testmode'] == 'combo' else 'Test_WMnMPRAGE_bias_corr_'
@@ -321,19 +320,19 @@ for ind in UserEntries['IxNuclei']:
                 copyPreviousModel( Params['restorePath'], Dir_NucleiModelOut )
                 if Params['gpuNum'] != 'nan':
                     # path2 = ''
-                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=400, epochs=150, display_step=500, GPU_Num=Params['gpuNum'] ,prediction_path=Dir_ResultsOut , restore='True')
+                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500, GPU_Num=Params['gpuNum'] ,prediction_path=Dir_ResultsOut , restore='True')
                 else:
-                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=50, epochs=4, display_step=500 ,prediction_path=Dir_ResultsOut , restore='True')
+                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500 ,prediction_path=Dir_ResultsOut , restore='True')
 
             else:
                 if Params['gpuNum'] != 'nan':
                     # path2 = ''
-                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=400, epochs=150, display_step=500, GPU_Num=Params['gpuNum'] ,prediction_path=Dir_ResultsOut) #  restore=True
+                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500, GPU_Num=Params['gpuNum'] ,prediction_path=Dir_ResultsOut) #  restore=True
                 else:
-                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=50, epochs=4, display_step=500 ,prediction_path=Dir_ResultsOut) #   restore=True
+                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500 ,prediction_path=Dir_ResultsOut) #   restore=True
 
 
-            if 0: # UserEntries['testmode'] != 'combo':
+            if UserEntries['testmode'] != 'combo':
 
                 NucleiOrigSeg   = nib.load( Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz' )
                 ThalamusOrigSeg = nib.load( Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Manual_Delineation_Sanitized/' +        '1-THALAMUS'   + '_deformed.nii.gz' )

@@ -1,41 +1,10 @@
-import matplotlib.pylab as plt
-import numpy as np
 import os
-import pickle
 import nibabel as nib
-import shutil
-from collections import OrderedDict
-import logging
-from tf_unet import unet, util, image_util
-import os
-import multiprocessing
+import numpy as np
 import matplotlib.pyplot as plt
-import tifffile
 
-
-
-def DiceCoefficientCalculator(msk1,msk2):
-    intersection = msk1*msk2  # np.logical_and(msk1,msk2)
-    DiceCoef = intersection.sum()*2/(msk1.sum()+msk2.sum() + np.finfo(float).eps)
-    return DiceCoef
-
-def mkDir(dir):
-    try:
-        os.stat(dir)
-    except:
-        os.makedirs(dir)
-    return dir
-
-def testNme(A,ii):
-    if ii == 0:
-        TestName = 'Test_WMnMPRAGE_bias_corr_Deformed'
-    else:
-        TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
-        return TestName
-
-def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old'):
-
-    Params = {}
+dir2 = '/media/data1/artin/thomas/priors/ET/7T'
+def NucleiSelection(ind):
 
     if ind == 1:
         NucleusName = '1-THALAMUS'
@@ -82,6 +51,37 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
         NucleusName = '14-MTT'
         SliceNumbers = range(104,135)
 
+    return NucleusName , SliceNumbers
+
+def WhichDataset(d):
+    if d == 1:
+        return '20priors'
+    elif d == 2:
+        return 'MS'
+    else:
+        return 'ET_7T'
+
+def WhichDimension(d):
+    if d == 0:
+        return [0,2,1]
+    elif d == 1:
+        return [1,0,1]
+    else:
+        return [2,1,0]
+
+def subFoldersFunc(Dir_Prior):
+    subFolders = []
+    subFlds = os.listdir(Dir_Prior)
+    for i in range(len(subFlds)):
+        if subFlds[i][:5] == 'vimp2':
+            subFolders.append(subFlds[i])
+
+    return subFolders
+
+def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old'):
+
+    Params = {}
+    NucleusName , SliceNumbers = NucleiSelection(ind)
 
     Params['modelFormat'] = 'ckpt'
     if 'localLT' in mode:
@@ -102,7 +102,6 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
             Params['Dir_AllTests_restore']  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + '20priors' + 'Dataset_' + 'old' +'Method'
         else:
             Params['Dir_AllTests_restore']  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + 'Unlabeled' + 'Dataset_' + 'old' +'Method'
-
 
     elif 'localPC' in mode:
 
@@ -155,28 +154,48 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
 
     return Params
 
-ind = 1
-mode = 'oldDatasetV2'
-NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior = initialDirectories(ind = 1, mode = 'localPC' , dataset = '20priors' , method = 'old')
+Results = np.zeros(15)
 
-dir = '/media/data1/artin/Test/'
-sub = os.listdir(dir)
-im = tifffile.imread(dir + sub[10])
-im.max()
+for DT in range(1,2): # ,4):
+    for nuclei in [1,2,4,5,6,7,8,9,10,11,12,13,14]:
+        # for dimension in range(3):
 
-im = nib.load(dir + 'WMnMPRAGE_bias_corr_Deformed.nii.gz')
-im = im.get_data()
+        dataset = WhichDataset(DT)
 
-plt.imshow(im[...,100],cmap='gray')
-plt.show()
+        Params = initialDirectories(ind = nuclei, mode = 'localPC' , dataset = dataset , method = 'old' )
+        sub = subFoldersFunc(Params['Dir_Prior'])
+        # im = nib.load(Params['Dir_Prior'] + '/' + sub[0] + '/Manual_Delineation_Sanitized/' + '5-VLa.nii.gz').get_data()
+        # sz = im.shape
+        # A = WhichDimension(dimension)
+        #
+        #
+        # BB = np.zeros((sz[A[0]],len(sub)))
 
-im2 = (im-im.mean())/im.std()
+        Volume = []
+        for i in range(len(sub)):
+            print('nuclei: ',nuclei , 'sub ',i)
+            im = nib.load(Params['Dir_Prior'] + '/' + sub[i] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '.nii.gz').get_data()
+            sz = im.shape
+            # print('nuclei: ',nuclei , 'dataset: ',dataset , 'dimension: ',dimension,'priors' + str(i),im.shape)
+            # Results[dataset,sub[i]] = im.shape  # ,'dim: ' + str(dimension)
 
-im.max()
-tifffile.imsave( '/media/data1/artin/thomas/priors/20priors/vimp2_869_06142013_BL/ttt' , im2[...,100] )
-K = tifffile.imread( '/media/data1/artin/thomas/priors/20priors/vimp2_869_06142013_BL/ttt')
+            if sz[1] > 250:
+                Volume.append(np.sum(np.sum(np.sum(im))))
 
-K.min()
-im2[...,100].min()
-plt.imshow(K,cmap='gray')
-plt.show()
+        print(Volume)
+        Results[nuclei] = np.mean(Volume)
+
+        # #     b = np.sum(im,axis=A[1])
+        # #     b = np.sum(b,axis=A[2])
+        # #     BB[:,i] = b
+        # #
+        # # mn = np.where(b>0)[0].min()
+        # # mx = np.where(b>0)[0].max()
+        # #
+        # # Results[Params['NucleusName'],dataset,'dim: ' + str(dimension)] = [mn,mx]
+
+Th = Results[1]
+for nuclei in [1,2,4,5,6,7,8,9,10,11,12,13,14]:
+    Results[nuclei] = Results[nuclei] / Th
+
+Results*100

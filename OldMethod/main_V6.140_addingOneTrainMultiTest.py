@@ -1,4 +1,3 @@
-from tf_unet import unet, util, image_util
 import matplotlib.pylab as plt
 import numpy as np
 import os
@@ -106,7 +105,6 @@ def NucleiSelection(ind):
 
     return NucleusName , SliceNumbers
 
-
 def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old'):
 
     Params = {}
@@ -205,7 +203,7 @@ def input_GPU_Ix():
     UserEntries['testmode'] = 'normal' # 'combo'
     UserEntries['enhanced_Index'] = range(len(A))
     UserEntries['mode'] = 'server'
-    UserEntries['init'] = 0
+    UserEntries['init'] = 1
     UserEntries['Flag_cross_entropy'] = 0
     UserEntries['onetrain_testIndexes'] = [1,5,10,14,20]
 
@@ -271,7 +269,7 @@ UserEntries = input_GPU_Ix()
 
 for ind in UserEntries['IxNuclei']:
     print('ind',ind)
-    Params = initialDirectories(ind = ind, mode = 'server' , dataset = UserEntries['dataset'] , method = UserEntries['method'])
+    Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']
 
 
@@ -286,30 +284,30 @@ for ind in UserEntries['IxNuclei']:
             if 'Unlabeled' in UserEntries['dataset']:
                 Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_901_07052013_AS' + '/Train/' + 'model/' # Params['modelName']
             else:
-                Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_1519_04212015' + '/Train/' + 'model/' # Params['modelName']
+                if 'onetrain' in UserEntries['testmode']:
+                    Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'OneTrain_MultipleTest' + '/Train/' + 'model/' # Params['modelName']
+                else:
+                    Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_1519_04212015' + '/Train/' + 'model/' # Params['modelName']
 
 
-        subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
+        if 'onetrain' in UserEntries['testmode'] and 'Unlabeled' in UserEntries['dataset']:
+            subFolders = ['OneTrain_MultipleTest']
+            L2 = [0]
+        else:
+            subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
+            # subFolders = ['vimp2_ctrl_921_07122013_MP'] # vimp2_ctrl_920_07122013_SW'] #
+            L2 = [0] if UserEntries['testmode'] == 'combo' else range(len(subFolders))
 
-        # subFolders = ['vimp2_ctrl_921_07122013_MP'] # vimp2_ctrl_920_07122013_SW'] #
-        # aaa = range(14,len(subFolders))
-        # aaa = np.append([0,1],aaa)
-        L = [0] if UserEntries['testmode'] == 'combo' else range(len(subFolders))
-        for sFi in L:
-
-            K = 'Test_' if UserEntries['testmode'] == 'combo' else 'Test_WMnMPRAGE_bias_corr_'
-
-            if UserEntries['testmode'] != 'combo':
-                print(Params['NucleusName'],TestName.split(K)[1],subFolders[sFi])
+        for sFi in L2:
 
             K = 'Test/' if UserEntries['testmode'] == 'combo' else '/Test/'
 
-            if UserEntries['testmode'] == 'combo':
+            if 'combo' in UserEntries['testmode']:
                 Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + K
                 Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + 'Train/'
-            if UserEntries['testmode'] == 'onetrain':
-                Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + K
-                Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/Train/'
+            elif 'onetrain' in UserEntries['testmode'] and 'Unlabeled' in UserEntries['dataset']:
+                Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/TestCases/'
+                Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
             else:
                 Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + K
                 Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
@@ -319,7 +317,11 @@ for ind in UserEntries['IxNuclei']:
 
 
             Dir_NucleiModelOut = mkDir(Dir_NucleiTrainSamples + Params['modelName'])
-            Dir_ResultsOut = mkDir(Dir_NucleiTestSamples  + Params['resultName'])
+
+            if 'onetrain' in UserEntries['testmode']:
+                Dir_ResultsOut = mkDir(Dir_NucleiTestSamples + Params['resultName'])
+            else:
+                Dir_ResultsOut = mkDir(Dir_NucleiTestSamples + Params['resultName'])
 
             TrainData = image_util.ImageDataProvider(Dir_NucleiTrainSamples + "*.tif")
             logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
@@ -335,24 +337,24 @@ for ind in UserEntries['IxNuclei']:
 
             trainer = unet.Trainer(Params['net'], optimizer = "adam")
 
-            if UserEntries['init']:
+            # if UserEntries['init']:
+            #
+            #     copyPreviousModel( Params['restorePath'], Dir_NucleiModelOut )
+            #     if Params['gpuNum'] != 'nan':
+            #         # path2 = ''
+            #         path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=400, epochs=150, display_step=500, GPU_Num=Params['gpuNum'] ,prediction_path=Dir_ResultsOut , restore='True')
+            #     else:
+            #         path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=10, epochs=3, display_step=500 ,prediction_path=Dir_ResultsOut , restore='True')
+            #
+            # else:
+            #     if Params['gpuNum'] != 'nan':
+            #         # path2 = ''
+            #         path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=400, epochs=150, display_step=500, GPU_Num=Params['gpuNum'] ,prediction_path=Dir_ResultsOut) #  restore=True
+            #     else:
+            #         path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=50, epochs=4, display_step=500 ,prediction_path=Dir_ResultsOut) #   restore=True
 
-                copyPreviousModel( Params['restorePath'], Dir_NucleiModelOut )
-                if Params['gpuNum'] != 'nan':
-                    # path2 = ''
-                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=400, epochs=150, display_step=500, GPU_Num=Params['gpuNum'] ,prediction_path=Dir_ResultsOut , restore='True')
-                else:
-                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=10, epochs=3, display_step=500 ,prediction_path=Dir_ResultsOut , restore='True')
 
-            else:
-                if Params['gpuNum'] != 'nan':
-                    # path2 = ''
-                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=400, epochs=150, display_step=500, GPU_Num=Params['gpuNum'] ,prediction_path=Dir_ResultsOut) #  restore=True
-                else:
-                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=50, epochs=4, display_step=500 ,prediction_path=Dir_ResultsOut) #   restore=True
-
-
-            if UserEntries['testmode'] == 'normal':
+            if 'Unlabeled' not in UserEntries['dataset']:
 
                 NucleiOrigSeg   = nib.load( Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz' )
                 ThalamusOrigSeg = nib.load( Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Manual_Delineation_Sanitized/' +        '1-THALAMUS'   + '_deformed.nii.gz' )

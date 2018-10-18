@@ -98,7 +98,6 @@ def NucleiSelection(ind):
 
     return NucleusName , SliceNumbers
 
-
 def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old'):
 
     Params = {}
@@ -355,7 +354,6 @@ def saveImageDice(label , Params , pred , pred_Lgc , subFolders):
 
 
 UserEntries = input_GPU_Ix()
-
 
 for ind in UserEntries['IxNuclei']:
     print('ind',ind)

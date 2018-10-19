@@ -7,9 +7,7 @@ import cv2
 import skimage
 from skimage import feature
 from imageio import imwrite
-
-Tests = ['CNN1_THALAMUS_2D_SanitizedNN', 'CNN4567_VL_2D_SanitizedNN', 'CNN6_VLP_2D_SanitizedNN', 'CNN8_Pul_2D_SanitizedNN',  'CNN10_MGN_2D_SanitizedNN', 'CNN12_MD_Pf_2D_SanitizedNN']
-vimp = ['vimp2_668_02282013_CD', 'vimp2_845_05312013_VZ', 'vimp2_964_08092013_TG', 'vimp2_ANON724_03272013']
+from matplotlib import colors, cm
 
 def nonZeroIndex(mask):
     a = np.zeros(mask.shape[2])
@@ -67,29 +65,23 @@ def colorImageMaker(edge_pred, seg_Orig):
 
     return RGB_im
 
-def concantenateImageMask(im_Orig, edge_pred, RGB_im):
+def concantenateImageMask(im, RGB_im):
 
-    sz = im_Orig.shape
-    im2 = np.zeros((sz[0],sz[1],3,sz[2]))
-    for d in range(sz[2]):
+    sz = im.shape
+    im2 = np.zeros((sz[0],sz[1],3))
 
-        rgbIm = RGB_im[80:144,160:270,:,d]
-        sz = rgbIm.shape
-        rgbIm = skimage.transform.resize(rgbIm,(sz[0]*4,sz[1]*4,3))
+    rgbIm = RGB_im[80:144,160:270,:]
+    sz = rgbIm.shape
+    rgbIm = skimage.transform.resize(rgbIm,(sz[0]*4,sz[1]*4,3))
 
-        im = im_Orig[...,d]
-        im = np.concatenate((im[...,np.newaxis],im[...,np.newaxis],im[...,np.newaxis]),axis=2)
-        im[...,2] = im[...,2] + edge_pred[...,d]
-        im2[...,d] = im
-        RGB_im[...,d] = rgbIm
 
-    FinalImage = np.concatenate((im2,RGB_im),axis=1)
+    FinalImage = np.concatenate((RGB_im,rgbIm),axis=1)
     FinalImage = FinalImage*255/FinalImage.max()
     FinalImage = np.array(FinalImage,dtype=np.uint8)
 
     return FinalImage
 
-def saveImages(dirr,FinalImage,indexes):
+def saveImages(dirr,FinalImage):
 
     try:
         os.makedirs(dirr)
@@ -99,24 +91,131 @@ def saveImages(dirr,FinalImage,indexes):
     for d in range(len(indexes)):
         imwrite(dirr + 'Slice' + str(indexes[d]) + '.jpg',FinalImage[...,d])
 
+def initialDirectories(ind = 1):
 
-for t in range(len(Tests)):
-    for v in tqdm(range(len(vimp)),desc='vimp'):
+    Params = {}
 
-        directory = '/media/artin/D0E2340CE233F576/Results_Temp' + '/' + Tests[t] + '/Test_WMnMPRAGE_bias_corr_Deformed/' + vimp[v]
-        seg_Pred, seg_Orig, im_Orig = readingImages(directory)
+    if ind == 1:
+        NucleusName = '1-THALAMUS'
 
-        indexes = nonZeroIndex(seg_Orig)
+        SliceNumbers = range(103,147)
+        # SliceNumbers = range(107,140) # original one
+    elif ind == 2:
+        NucleusName = '2-AV'
+        SliceNumbers = range(126,143)
+    elif ind == 4567:
+        NucleusName = '4567-VL'
+        SliceNumbers = range(114,143)
+    elif ind == 4:
+        NucleusName = '4-VA'
+        SliceNumbers = range(116,140)
+    elif ind == 5:
+        NucleusName = '5-VLa'
+        SliceNumbers = range(115,133)
+    elif ind == 6:
+        NucleusName = '6-VLP'
+        SliceNumbers = range(115,145)
+    elif ind == 7:
+        NucleusName = '7-VPL'
+        SliceNumbers = range(114,141)
+    elif ind == 8:
+        NucleusName = '8-Pul'
+        SliceNumbers = range(112,141)
+    elif ind == 9:
+        NucleusName = '9-LGN'
+        SliceNumbers = range(105,119)
+    elif ind == 10:
+        NucleusName = '10-MGN'
+        SliceNumbers = range(107,121)
+    elif ind == 11:
+        NucleusName = '11-CM'
+        SliceNumbers = range(115,131)
+    elif ind == 12:
+        NucleusName = '12-MD-Pf'
+        SliceNumbers = range(115,140)
+    elif ind == 13:
+        NucleusName = '13-Hb'
+        SliceNumbers = range(116,129)
+    elif ind == 14:
+        NucleusName = '14-MTT'
+        SliceNumbers = range(104,135)
 
-        seg_Pred = seg_Pred[...,indexes]
-        seg_Orig = seg_Orig[...,indexes]
-        im_Orig  = im_Orig[...,indexes]
+    Params['NucleusName'] = NucleusName
+    Params['NeucleusFolder'] = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
+    Params['SliceNumbers'] = SliceNumbers
 
-        edge_pred = edgeDetection(seg_Pred)
+    return Params
 
-        RGB_im = colorImageMaker(edge_pred, seg_Orig)
+def subFolderList(dir):
+    subFolders = os.listdir(dir + '/Test_WMnMPRAGE_bias_corr_Deformed/')
 
-        FinalImage = concantenateImageMask(im_Orig, edge_pred, RGB_im)
+    listt = []
+    for i in range(len(subFolders)):
+        if subFolders[i][:4] == 'vimp':
+            listt.append(subFolders[i])
 
-        directory = '/media/artin/D0E2340CE233F576/Results_Temp2/' + Tests[t] + '/Test_WMnMPRAGE_bias_corr_Deformed/' + vimp[v] + '/'
-        saveImages(directory,FinalImage,indexes)
+    return listt
+
+def mkDir(dir):
+    try:
+        os.stat(dir)
+    except:
+        os.makedirs(dir)
+    return dir
+
+def testNme(A,ii):
+    if ii == 0:
+        TestName = 'Test_WMnMPRAGE_bias_corr_Deformed'
+    else:
+        TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
+
+    return TestName
+
+dir = '/media/artin/D0E2340CE233F576/Folder_MajorityVoting'
+
+slc = 125
+im = nib.load(dir + '/origtemplate.nii.gz' ).get_data()
+im_Orig2 = im[...,slc]
+im_Orig = (im_Orig2 - im_Orig2.min())/ ( im_Orig2.max() - im_Orig2.min() )
+
+sz = im_Orig.shape
+RGB_im = np.zeros((sz[0],sz[1],3))
+RGB_im[...,0] = im_Orig
+RGB_im[...,1] = im_Orig
+RGB_im[...,2] = im_Orig
+
+
+def random_color():
+    levels = range(32,256,32)
+    return tuple(np.random.choice(levels) for _ in range(3))
+
+for ind in [1,2,4,5,6,7,8,9,10,11,12,13]:
+    print('ind',ind)
+    Params = initialDirectories(ind = ind)
+    pred = nib.load(dir + '/vimp2_ctrl_925_07152013_LS_' + Params['NucleusName'] + '_Logical.nii.gz').get_data()
+    Label = nib.load(dir + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz').get_data()
+
+    seg_Pred = pred[...,slc]
+    seg_Orig = Label[...,slc]
+    edge_orig = feature.canny(seg_Orig)
+
+    A = random_color()
+    scale = 100
+    edge_origColor = np.concatenate( ( (A[0]/scale)*edge_orig[...,np.newaxis], (A[1]/scale)*edge_orig[...,np.newaxis], (A[2]/scale)*edge_orig[...,np.newaxis]),axis=2)
+    RGB_im = RGB_im + edge_origColor
+
+plt.imshow(RGB_im)
+
+
+# indexes = nonZeroIndex(seg_Orig)
+# seg_Pred = seg_Pred[...,indexes]
+# seg_Orig = seg_Orig[...,indexes]
+# im_Orig  = im_Orig[...,indexes]
+# edge_pred = edgeDetection(seg_Pred)
+# RGB_im = colorImageMaker(edge_pred, seg_Orig)
+
+FinalImage = concantenateImageMask(256*im_Orig, RGB_im)
+RGB_im.max()
+plt.imshow(FinalImage)
+
+imwrite(dir + '/im.jpg',FinalImage)

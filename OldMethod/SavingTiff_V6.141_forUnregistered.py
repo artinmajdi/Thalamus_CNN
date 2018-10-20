@@ -288,8 +288,10 @@ def readingImages(Params , subFolders):
 
         print('Reading Images:  ',Params['NucleusName'],inputName.split('nii.gz')[0] , str(sFi) + ' ' + subFolders[sFi])
 
-        mask   = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + Params['Name_priors_San_Label']).get_data()
-        im     = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName ).get_data()
+        maskF = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + Params['Name_priors_San_Label'])
+        mask  = maskF.get_data()
+        imF   = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName )
+        im    = imF.get_data()
 
         if 0:
             im = funcNormalize( im.get_data() )
@@ -314,8 +316,14 @@ def readingImages(Params , subFolders):
                     mask = ndimage.zoom(mask,(1,1,2),order=3) > 0.1
 
 
-            nib.save(mask,Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + Params['Name_priors_San_Label'].split('.nii.gz')[0] + '_US.nii.gz' )
-            nib.save(im,Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName.split('.nii.gz')[0] + '_US.nii.gz' )
+            maskF2 = nib.Nifti1Image(mask,maskF.affine)
+            maskF2.get_header = maskF.header
+
+            imF2 = nib.Nifti1Image(im,imF.affine)
+            imF2.get_header = imF.header
+
+            nib.save(maskF2,Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + Params['Name_priors_San_Label'].split('.nii.gz')[0] + '_US.nii.gz' )
+            nib.save(imF2,Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName.split('.nii.gz')[0] + '_US.nii.gz' )
 
             dim1 = [105,192]
             dim2 = [67,184]

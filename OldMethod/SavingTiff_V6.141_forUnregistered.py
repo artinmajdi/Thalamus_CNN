@@ -310,13 +310,20 @@ def readingImages(Params , subFolders):
                     mask = ndimage.zoom(mask,(1,1,2),order=3) > 0.1
 
 
+            nib.save(mask,Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + Params['Name_priors_San_Label'].split('.nii.gz')[0] + '_US.nii.gz' )
+            nib.save(im,Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName.split('.nii.gz')[0] + '_US.nii.gz' )
 
+            dim1 = [105,192]
+            dim2 = [67,184]
+            SliceNumbers = [129,251]
 
-            imD2 = im[63:192,67:184,Params['SliceNumbers']]
-            maskD2 = mask[63:192,67:184,Params['SliceNumbers']]
+            imD2 = im[ d1[0]:d1[1],d2[0]:d2[1],SliceNumbers] # Params['SliceNumbers']]
+            maskD2 = mask[ d1[0]:d1[1],d2[0]:d2[1],SliceNumbers] # Params['SliceNumbers']]
 
-            imD_padded = np.pad(imD2,( (54,55),(60,61),(0,0) ),'constant' )
-            maskD_padded = np.pad(maskD2,( (54,55),(60,61),(0,0) ),'constant' )
+            p1 = [75,76]
+            p2 = [60,61]
+            imD_padded = np.pad(imD2,( (p1[0],p1[1]),(p2[0],p2[1]),(0,0) ),'constant' )
+            maskD_padded = np.pad(maskD2,( (p1[0],p1[1]),(p2[0],p2[1]),(0,0) ),'constant' )
 
         else:  # Registered images
             imD2 = im[50:198,130:278,Params['SliceNumbers']]

@@ -224,6 +224,10 @@ def input_GPU_Ix():
             else:
                 UserEntries['enhanced_Index'] = [int(input.split('=')[1])]
 
+        if 'Unlabeled' in UserEntries['dataset']:
+            UserEntries['testmode'] = 'onetrain'
+            UserEntries['onetrain_testIndexes'] = [1,5,10,14,20]
+
     return UserEntries
 
 def normal_Cross_Validation(Params , subFolders , imFull , mskFull, ii):

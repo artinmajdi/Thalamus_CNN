@@ -298,6 +298,7 @@ for ind in UserEntries['IxNuclei']:
             # subFolders = ['vimp2_ctrl_921_07122013_MP'] # vimp2_ctrl_920_07122013_SW'] #
             L2 = [0] if UserEntries['testmode'] == 'combo' else range(len(subFolders))
 
+        print('----',subFolders,'L2',L2)
         for sFi in L2:
 
             K = 'Test/' if UserEntries['testmode'] == 'combo' else '/Test/'
@@ -315,6 +316,8 @@ for ind in UserEntries['IxNuclei']:
                 # Dir_ThalamusTestSamples = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + TestName + '/' + subFolders[sFi] + '/Test/'
                 # Dir_ThalamusModelOut    = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + TestName + '/' + subFolders[sFi] + '/Train/model/'
 
+
+            print('Dir_NucleiTrainSamples' , Dir_NucleiTrainSamples)
 
             Dir_NucleiModelOut = mkDir(Dir_NucleiTrainSamples + Params['modelName'])
 

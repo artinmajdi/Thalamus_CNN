@@ -226,7 +226,7 @@ def input_GPU_Ix():
 
         if 'Unlabeled' in UserEntries['dataset']:
             UserEntries['testmode'] = 'onetrain'
-            UserEntries['onetrain_testIndexes'] = [0] # [1,5,10,14,20]
+            UserEntries['onetrain_testIndexes'] = [1,5,10,14,20]
 
     return UserEntries
 
@@ -260,7 +260,6 @@ def OneTrain_MultipleTest(UserEntries , Params , subFolders,imFull,mskFull, ii):
     for sFi in UserEntries['onetrain_testIndexes']:
 
         Dir_Each = mkDir(Params['Dir_EachTraining'] + '/OneTrain_MultipleTest' + '/TestCases/' + subFolders[sFi] + '/Test/')
-
 
         for slcIx in range(imFull.shape[2]):
             Name_PredictedImage = subFolders[sFi] + '_Sh' + str(Params['A'][ii][0]) + '_Ct' + str(Params['A'][ii][1]) + '_Slice_' + str(Params['SliceNumbers'][slcIx])
@@ -374,7 +373,7 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
     Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'] )
     subFolders = subFoldersFunc(Params['Dir_Prior'])
-    subFolders = subFolders[:2]
+    # subFolders = subFolders[:2]
 
     if Params['registrationFlag'] == 1:
         Params['Name_priors_San_Label'] = 'Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz'

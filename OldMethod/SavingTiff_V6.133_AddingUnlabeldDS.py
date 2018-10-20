@@ -215,6 +215,7 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
     Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'] )
     print(Params['Dir_Prior'])
     subFolders = subFoldersFunc(Params['Dir_Prior'])
+    subFolders = subFolders[:5]
     print(subFolders[0])
     Name_priors_San_Label = 'Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz'
 

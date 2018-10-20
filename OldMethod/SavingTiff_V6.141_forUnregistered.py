@@ -6,7 +6,7 @@ import tifffile
 import pickle
 from PIL import ImageEnhance , Image , ImageFilter
 import sys
-import scipy
+from scipy import ndimage
 
 A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
 
@@ -154,9 +154,16 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
     Params['A'] = [[0,0],[6,1],[1,2],[1,3],[4,1]]
     Params['Dir_Prior']    = Dir_Prior
     Params['Dir_AllTests'] = Dir_AllTests
-    Params['SliceNumbers'] = SliceNumbers
-    Params['NucleusName']  = NucleusName
     Params['registrationFlag'] = 0
+
+
+    if Params['registrationFlag'] == 1:
+        Params['SliceNumbers'] = SliceNumbers
+    else:
+        Params['SliceNumbers'] = range(129,251)
+
+    Params['NucleusName']  = NucleusName
+
 
     return Params
 
@@ -219,7 +226,7 @@ def input_GPU_Ix():
 
     return UserEntries
 
-def normal_Cross_Validation(Params , subFolders , imFull , mskFull):
+def normal_Cross_Validation(Params , subFolders , imFull , mskFull, ii):
     for sFi_parent in range(len(subFolders)):
 
         print('Writing Images:  ',Params['NucleusName'],str(sFi_parent) + ' ' + subFolders[sFi_parent])
@@ -233,6 +240,8 @@ def normal_Cross_Validation(Params , subFolders , imFull , mskFull):
                 Dir_Each = Params['Dir_EachTraining'] + '/' + subFolders[sFi_child] + '/Train'
 
             for slcIx in range(imFull.shape[2]):
+                # print( '------' , 'slcIx' , slcIx , 'ii' , ii , 'len(subFolders)' , len(subFolders) , 'sFi_parent' , sFi_parent , 'imSh' , imFull.shape , Params['A'][ii],len(Params['SliceNumbers']) )
+                # print(Params['SliceNumbers'])
 
                 Name_PredictedImage = subFolders[sFi_parent] + '_Sh' + str(Params['A'][ii][0]) + '_Ct' + str(Params['A'][ii][1]) + '_Slice_' + str(Params['SliceNumbers'][slcIx])
                 tifffile.imsave( Dir_Each + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx,sFi_parent] )
@@ -241,7 +250,7 @@ def normal_Cross_Validation(Params , subFolders , imFull , mskFull):
                 tifffile.imsave( Params['Dir_All'] + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx,sFi_parent] )
                 tifffile.imsave( Params['Dir_All'] + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi_parent] )
 
-def OneTrain_MultipleTest(UserEntries , Params , subFolders,imFull,mskFull):
+def OneTrain_MultipleTest(UserEntries , Params , subFolders,imFull,mskFull, ii):
     print( '------------------' , 'Test' , '------------------' )
 
     for sFi in UserEntries['onetrain_testIndexes']:
@@ -290,19 +299,19 @@ def readingImages(Params , subFolders):
                     im[...,i]   = np.fliplr(im[...,i])
                     mask[...,i] = np.fliplr(mask[...,i])
 
-                im = scipy.ndimage.zoom(im,(1,1,2),order=3)
-                mask = scipy.ndimage.zoom(mask,(1,1,2),order=3)
+                im = ndimage.zoom(im,(1,1,2),order=3)
+                mask = ndimage.zoom(mask,(1,1,2),order=3)
             else:
                 im   = np.transpose(im,[0,2,1])
                 mask = np.transpose(mask,[0,2,1])
 
                 if im.shape[2] == 200:
-                    im = scipy.ndimage.zoom(im,(1,1,2),order=3)
-                    mask = scipy.ndimage.zoom(mask,(1,1,2),order=3) > 0.1
+                    im = ndimage.zoom(im,(1,1,2),order=3)
+                    mask = ndimage.zoom(mask,(1,1,2),order=3) > 0.1
 
 
 
-            Params['SliceNumbers'] = range(129,251)
+
             imD2 = im[63:192,67:184,Params['SliceNumbers']]
             maskD2 = mask[63:192,67:184,Params['SliceNumbers']]
 
@@ -344,28 +353,42 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
     Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'] )
     subFolders = subFoldersFunc(Params['Dir_Prior'])
+    subFolders = subFolders[:4]
 
     if Params['registrationFlag'] == 1:
         Params['Name_priors_San_Label'] = 'Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz'
     else:
         Params['Name_priors_San_Label'] = 'Manual_Delineation_Sanitized/' + Params['NucleusName'] + '.nii.gz'
 
-
     for ii in UserEntries['enhanced_Index']: # len( Params['A'] ):
 
         Params['TestName'] = testNme(Params['A'],ii)
 
-        Params['Dir_EachTraining'] = Params['Dir_AllTests'] + '/CNN' + Params['NucleusName'].replace('-','_') + '_2D_SanitizedNN/' + Params['TestName']
+        Params['Dir_EachTraining'] = mkDir(Params['Dir_AllTests'] + '/CNN' + Params['NucleusName'].replace('-','_') + '_2D_SanitizedNN/' + Params['TestName'])
         Params['Dir_All']  = mkDir(Params['Dir_AllTests'] + '/CNN' + Params['NucleusName'].replace('-','_') + '_2D_SanitizedNN/' + 'Test_AllTrainings' + '/Train')
 
-
         Params['dataset'] = UserEntries['dataset']
-        imFull, mskFull = readingImages(Params , subFolders)
+
+        if 1:
+            imFull, mskFull = readingImages(Params , subFolders)
+
+            outfile = open( Params['Dir_Prior'] + '/' + Params['TestName'] + '.pkl','wb')
+            Data = {'images':imFull , 'masks': mskFull}
+            pickle.dump(Data,outfile)
+            outfile.close()
+
+        else:
+            infile = open( Params['Dir_Prior'] + '/' + Params['TestName'] + '.pkl','rb')
+            Data = pickle.load(infile)
+            imFull = Data['images']
+            mskFull = Data['masks']
+            infile.close()
+
 
         if UserEntries['testmode'] == 'onetrain':
-            print(UserEntries['testmode'])
-            OneTrain_MultipleTest(UserEntries,Params,subFolders,imFull,mskFull)
+            print('----',UserEntries['testmode'])
+            OneTrain_MultipleTest(UserEntries,Params,subFolders,imFull,mskFull, ii)
 
         else:
             print('----',UserEntries['testmode'])
-            normal_Cross_Validation(Params , subFolders , imFull , mskFull)
+            normal_Cross_Validation(Params , subFolders , imFull , mskFull, ii)

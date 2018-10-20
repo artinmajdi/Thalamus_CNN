@@ -314,10 +314,12 @@ def readingImages(Params , subFolders):
 
                 if im.shape[2] == 200:
                     im = ndimage.zoom(im,(1,1,2),order=3)
-                    mask = ndimage.zoom(mask,(1,1,2),order=3) > 0.1
+                    mask = ndimage.zoom(mask,(1,1,2),order=3)
 
 
-            mask = mask > 0.2
+            mask = (mask > 0.2).astype(int)
+            # mask(np.where(mask > 0.2)) = 1
+            # mask(np.where(mask <= 0.2)) = 0
             maskF2 = nib.Nifti1Image(mask,maskF.affine)
             maskF2.get_header = maskF.header
 
@@ -374,7 +376,7 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
     Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'] )
     subFolders = subFoldersFunc(Params['Dir_Prior'])
-    subFolders = subFolders[:10]
+    # subFolders = subFolders[:2]
 
     if Params['registrationFlag'] == 1:
         Params['Name_priors_San_Label'] = 'Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz'
@@ -392,6 +394,8 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
         if 0:
             imFull, mskFull = readingImages(Params , subFolders)
+            print('-----------',mskFull.max())
+            print('-----------',mskFull.min())
 
             outfile = open( Params['Dir_Prior'] + '/' + Params['TestName'] + '.pkl','wb')
             Data = {'images':imFull , 'masks': mskFull}
@@ -401,8 +405,11 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
         else:
             infile = open( Params['Dir_Prior'] + '/' + Params['TestName'] + '.pkl','rb')
             Data = pickle.load(infile)
-            imFull = Data['images'] > 0.2
-            mskFull = Data['masks'] > 0.2
+            imFull = Data['images']
+            mskFull = Data['masks']
+            mskFull = (mskFull > 0.2).astype(int)
+            print('-----------',mskFull.max())
+            print('-----------',mskFull.min())
             infile.close()
 
 

@@ -226,7 +226,7 @@ def input_GPU_Ix():
 
         if 'Unlabeled' in UserEntries['dataset']:
             UserEntries['testmode'] = 'onetrain'
-            UserEntries['onetrain_testIndexes'] = [1,5,10,14,20]
+            UserEntries['onetrain_testIndexes'] = [0] # [1,5,10,14,20]
 
     return UserEntries
 
@@ -317,6 +317,7 @@ def readingImages(Params , subFolders):
                     mask = ndimage.zoom(mask,(1,1,2),order=3) > 0.1
 
 
+            mask = mask > 0.2
             maskF2 = nib.Nifti1Image(mask,maskF.affine)
             maskF2.get_header = maskF.header
 
@@ -373,7 +374,7 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
     Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'] )
     subFolders = subFoldersFunc(Params['Dir_Prior'])
-    # subFolders = subFolders[:2]
+    subFolders = subFolders[:10]
 
     if Params['registrationFlag'] == 1:
         Params['Name_priors_San_Label'] = 'Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz'

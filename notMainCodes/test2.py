@@ -155,6 +155,17 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
 
     return Params
 
+
+dir = '/media/data1/artin/Tests/Thalamus_CNN/UnlabeledDataset_oldMethod/CNN1_THALAMUS_2D_SanitizedNN/Test_WMnMPRAGE_bias_corr/OneTrain_MultipleTest/Train'
+
+mask = tifffile.imread(dir + '/vimp2_2039_03182016_Sh0_Ct0_Slice_200_mask.tif')
+im = tifffile.imread(dir + '/vimp2_2039_03182016_Sh0_Ct0_Slice_200.tif')
+
+
+mask.shape
+plt.imshow(mask>0.1,cmap='gray')
+plt.show()
+
 ind = 1
 mode = 'oldDatasetV2'
 NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior = initialDirectories(ind = 1, mode = 'localPC' , dataset = '20priors' , method = 'old')

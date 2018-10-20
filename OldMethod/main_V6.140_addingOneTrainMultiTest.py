@@ -181,6 +181,9 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
     Params['SliceNumbers'] = SliceNumbers
     Params['NucleusName']  = NucleusName
     Params['optimizer'] = 'adam'
+    Params['registrationFlag'] = 0
+
+    
     Params['CropDim'] = np.array([ [50,198] , [130,278] , [Params['SliceNumbers'][0] , Params['SliceNumbers'][len(Params['SliceNumbers'])-1]] ])
 
 
@@ -277,6 +280,9 @@ for ind in UserEntries['IxNuclei']:
     for ii in L:
 
         TestName = 'Test_AllTrainings' if UserEntries['testmode'] == 'combo' else testNme(Params['A'],ii)
+
+        if Params['registrationFlag'] == 0:
+            TestName = TestName.split('_Deformed')[0]
 
         Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + TestName + '/'
 

@@ -226,7 +226,7 @@ def input_GPU_Ix():
 
         if 'Unlabeled' in UserEntries['dataset']:
             UserEntries['testmode'] = 'onetrain'
-            UserEntries['onetrain_testIndexes'] = [1,5,10,14,20]
+            UserEntries['onetrain_testIndexes'] = [0] # [1,5,10,14,20]
 
     return UserEntries
 
@@ -260,6 +260,8 @@ def OneTrain_MultipleTest(UserEntries , Params , subFolders,imFull,mskFull, ii):
     for sFi in UserEntries['onetrain_testIndexes']:
 
         Dir_Each = mkDir(Params['Dir_EachTraining'] + '/OneTrain_MultipleTest' + '/TestCases/' + subFolders[sFi] + '/Test/')
+
+
         for slcIx in range(imFull.shape[2]):
             Name_PredictedImage = subFolders[sFi] + '_Sh' + str(Params['A'][ii][0]) + '_Ct' + str(Params['A'][ii][1]) + '_Slice_' + str(Params['SliceNumbers'][slcIx])
             tifffile.imsave( Dir_Each + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx,sFi] )
@@ -325,10 +327,10 @@ def readingImages(Params , subFolders):
             nib.save(maskF2,Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + Params['Name_priors_San_Label'].split('.nii.gz')[0] + '_US.nii.gz' )
             nib.save(imF2,Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName.split('.nii.gz')[0] + '_US.nii.gz' )
 
-            dim1 = [105,192]
-            dim2 = [67,184]
-            SliceNumbers = [129,251]
-
+            d1 = [105,192]
+            d2 = [67,184]
+            SN = [129,251]
+            SliceNumbers = range(SN[0],SN[1])
             imD2 = im[ d1[0]:d1[1],d2[0]:d2[1],SliceNumbers] # Params['SliceNumbers']]
             maskD2 = mask[ d1[0]:d1[1],d2[0]:d2[1],SliceNumbers] # Params['SliceNumbers']]
 
@@ -372,7 +374,7 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
     Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'] )
     subFolders = subFoldersFunc(Params['Dir_Prior'])
-    subFolders = subFolders[:4]
+    subFolders = subFolders[:2]
 
     if Params['registrationFlag'] == 1:
         Params['Name_priors_San_Label'] = 'Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz'

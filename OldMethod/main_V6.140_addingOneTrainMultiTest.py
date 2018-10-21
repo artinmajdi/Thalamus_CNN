@@ -351,7 +351,7 @@ for ind in UserEntries['IxNuclei']:
                 copyPreviousModel( Params['restorePath'], Dir_NucleiModelOut )
                 if Params['gpuNum'] != 'nan':
                     # path2 = ''
-                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=400, epochs=150, display_step=500, GPU_Num=Params['gpuNum'] ,prediction_path=Dir_ResultsOut , restore='True')
+                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=400, epochs=5, display_step=500, GPU_Num=Params['gpuNum'] ,prediction_path=Dir_ResultsOut , restore='True')
                 else:
                     path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=10, epochs=3, display_step=500 ,prediction_path=Dir_ResultsOut , restore='True')
 

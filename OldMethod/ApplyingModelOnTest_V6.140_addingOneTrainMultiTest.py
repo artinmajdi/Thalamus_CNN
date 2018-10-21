@@ -299,7 +299,7 @@ def ReadingTestImage(Params,subFolders):
     if Params['registrationFlag'] == 1:
         label = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz')
     else:
-        label = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '.nii.gz')
+        label = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_US.nii.gz')
 
     return TestImage, label
 

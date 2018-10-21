@@ -183,7 +183,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
     Params['optimizer'] = 'adam'
     Params['registrationFlag'] = 0
 
-    
+
     Params['CropDim'] = np.array([ [50,198] , [130,278] , [Params['SliceNumbers'][0] , Params['SliceNumbers'][len(Params['SliceNumbers'])-1]] ])
 
 
@@ -295,10 +295,14 @@ for ind in UserEntries['IxNuclei']:
                 else:
                     Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_1519_04212015' + '/Train/' + 'model/' # Params['modelName']
 
+            if 'onetrain' in UserEntries['testmode'] and 'Unlabeled' in UserEntries['dataset']:
+                Params['restorePath'] = Params['Dir_AllTests_restore'] + '/CNN1_THALAMUS_2D_SanitizedNN + '/' + TestName + '/' + 'OneTrain_MultipleTest' + '/Train/' + 'model/' # Params['modelName']
+
 
         if 'onetrain' in UserEntries['testmode'] and 'Unlabeled' in UserEntries['dataset']:
             subFolders = ['OneTrain_MultipleTest']
             L2 = [0]
+
         else:
             subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
             # subFolders = ['vimp2_ctrl_921_07122013_MP'] # vimp2_ctrl_920_07122013_SW'] #

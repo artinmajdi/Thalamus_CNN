@@ -226,7 +226,7 @@ def input_GPU_Ix():
 
         if 'Unlabeled' in UserEntries['dataset']:
             UserEntries['testmode'] = 'onetrain'
-            UserEntries['onetrain_testIndexes'] = [0] # [1,5,10,14,20]
+            UserEntries['onetrain_testIndexes'] = [1,5,10,14,20]
 
     return UserEntries
 
@@ -376,7 +376,7 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
     Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'] )
     subFolders = subFoldersFunc(Params['Dir_Prior'])
-    subFolders = subFolders[:2]
+    # subFolders = subFolders[:2]
 
     if Params['registrationFlag'] == 1:
         Params['Name_priors_San_Label'] = 'Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz'
@@ -392,27 +392,20 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
         Params['dataset'] = UserEntries['dataset']
 
-        if 1:
+        if 0:
             imFull, mskFull = readingImages(Params , subFolders)
-            print('-----------',mskFull.max())
-            print('-----------',mskFull.min())
 
             outfile = open( Params['Dir_Prior'] + '/' + Params['TestName'] + '.pkl','wb')
             Data = {'images':imFull , 'masks': mskFull}
             pickle.dump(Data,outfile)
             outfile.close()
 
-            print('-----------',mskFull.max())
-            print('-----------',mskFull.min())
-
         else:
             infile = open( Params['Dir_Prior'] + '/' + Params['TestName'] + '.pkl','rb')
             Data = pickle.load(infile)
             imFull = Data['images']
             mskFull = Data['masks']
-            mskFull = (mskFull > 0.2).astype(int)
-            print('-----------',mskFull.max())
-            print('-----------',mskFull.min())
+            # mskFull = (mskFull > 0.2).astype(int)
             infile.close()
 
 

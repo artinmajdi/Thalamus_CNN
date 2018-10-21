@@ -274,6 +274,9 @@ def input_GPU_Ix():
 
 def ReadingTestImage(Params,subFolders):
     TestImage = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + Params['TestName'].split('Test_')[1] + '.nii.gz').get_data()
+
+    print(' ----------------------- TestName' , TestImage.shape)
+    print(' ----------------------- TestName' , Params['SliceNumbers'] )
     TestImage = TestImage[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
 
     if Params['registrationFlag'] == 1:
@@ -393,8 +396,6 @@ for ind in UserEntries['IxNuclei']:
             Params['TestName'] = testNme(Params['A'],ii)
         else:
             Params['TestName'] = testNme(Params['A'],ii).split('_Deformed')[0]
-
-        print(' ----------------------- TestName' , Params['TestName'])
 
         if UserEntries['testmode'] == 'combo':
             Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + 'Test_AllTrainings' + '/'

@@ -430,7 +430,7 @@ for ind in UserEntries['IxNuclei']:
                 Params['Dir_NucleiTrainSamples']  = mkDir(Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/TestCases/' + subFolders[sFi] + '/Train/')
                 Params['Dir_NucleiTestSamples']   = Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/TestCases/' + subFolders[sFi] + '/Test/'
 
-            elif UserEntries['testmode'] = 'normal':
+            elif UserEntries['testmode'] == 'normal':
                 Params['Dir_NucleiTestSamples']  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Test/'
                 Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
 

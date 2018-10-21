@@ -392,7 +392,7 @@ for ind in UserEntries['IxNuclei']:
         if Params['registrationFlag'] == 1:
             Params['TestName'] = testNme(Params['A'],ii)
         else:
-            Params['TestName'] = testNme(Params['A'],ii).split('_Deformed.nii.gz')[0] + '.nii.gz'
+            Params['TestName'] = testNme(Params['A'],ii).split('_Deformed.nii.gz')[0] 
 
         if UserEntries['testmode'] == 'combo':
             Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + 'Test_AllTrainings' + '/'

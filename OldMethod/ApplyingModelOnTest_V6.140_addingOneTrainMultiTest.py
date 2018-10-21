@@ -273,7 +273,11 @@ def input_GPU_Ix():
     return UserEntries
 
 def ReadingTestImage(Params,subFolders):
-    TestImage = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + Params['TestName'].split('Test_')[1] + '.nii.gz').get_data()
+
+    if Params['registrationFlag'] == 1:
+        TestImage = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + Params['TestName'].split('Test_')[1] + '.nii.gz').get_data()
+    else:
+        TestImage = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + Params['TestName'].split('Test_')[1] + '_US.nii.gz').get_data()
 
     print(' ----------------------- TestName' , TestImage.shape)
     print(' ----------------------- TestName' , Params['SliceNumbers'] )

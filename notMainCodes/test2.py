@@ -163,7 +163,7 @@ im = tifffile.imread(dir + '/vimp2_2039_03182016_Sh0_Ct0_Slice_200.tif')
 
 
 mask.shape
-plt.imshow(mask>0.1,cmap='gray')
+plt.imshow(mask>0.2,cmap='gray')
 plt.show()
 
 ind = 1

@@ -172,10 +172,22 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
     Params['ThalamusFolder'] = '/CNN1_THALAMUS_2D_SanitizedNN'
     Params['Dir_Prior']    = Dir_Prior
     Params['Dir_AllTests'] = Dir_AllTests
-    Params['SliceNumbers'] = SliceNumbers
+
     Params['NucleusName']  = NucleusName
     Params['optimizer'] = 'adam'
-    Params['CropDim'] = np.array([ [50,198] , [130,278] , [Params['SliceNumbers'][0] , Params['SliceNumbers'][len(Params['SliceNumbers'])-1]] ])
+    Params['registrationFlag'] = 0
+
+    if Params['registrationFlag'] == 1:
+        Params['SliceNumbers'] = SliceNumbers
+        Params['CropDim'] = np.array([ [50,198] , [130,278] , [Params['SliceNumbers'][0] , Params['SliceNumbers'][len(Params['SliceNumbers'])-1]] ])
+    else:
+
+        d1 = [105,192]
+        d2 = [67,184]
+        SN = [129,251]
+        Params['SliceNumbers'] = range(SN[0],SN[1])
+        Params['CropDim'] = np.array([ d1 , d2 , [Params['SliceNumbers'][0] , Params['SliceNumbers'][len(Params['SliceNumbers'])-1]] ])
+
     padSizeFull = 90
     Params['padSize'] = int(padSizeFull/2)
 
@@ -263,12 +275,24 @@ def input_GPU_Ix():
 def ReadingTestImage(Params,subFolders):
     TestImage = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + Params['TestName'].split('Test_')[1] + '.nii.gz').get_data()
     TestImage = TestImage[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
-    TestImage = np.pad(TestImage,((Params['padSize'],Params['padSize']),(Params['padSize'],Params['padSize']),(0,0)),'constant' )
+
+    if Params['registrationFlag'] == 1:
+        TestImage = np.pad(TestImage,((Params['padSize'],Params['padSize']),(Params['padSize'],Params['padSize']),(0,0)),'constant' )
+    else:
+        p1 = [75,76]
+        p2 = [60,61]
+        # imD_padded = np.pad(imD2,( (p1[0],p1[1]),(p2[0],p2[1]),(0,0) ),'constant' )
+        # maskD_padded = np.pad(maskD2,( (p1[0],p1[1]),(p2[0],p2[1]),(0,0) ),'constant' )
+        TestImage = np.pad(TestImage,(  (p1[0],p1[1]),(p2[0],p2[1]),(0,0)  ),'constant' )
+        # TestImage = np.pad(TestImage,(  (Params['padSize'],Params['padSize']),(Params['padSize'],Params['padSize']),(0,0)  ),'constant' )
 
     TestImage = np.transpose(TestImage,[2,0,1])
     TestImage = TestImage[...,np.newaxis]
 
-    label = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz')
+    if Params['registrationFlag'] == 1:
+        label = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz')
+    else:
+        label = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '.nii.gz')
 
     return TestImage, label
 
@@ -365,7 +389,10 @@ for ind in UserEntries['IxNuclei']:
     # L = UserEntries['enhanced_Index']
     for ii in L:
 
-        Params['TestName'] = testNme(Params['A'],ii)
+        if Params['registrationFlag'] == 1:
+            Params['TestName'] = testNme(Params['A'],ii)
+        else:
+            Params['TestName'] = testNme(Params['A'],ii).split('_Deformed.nii.gz')[0] + '.nii.gz'
 
         if UserEntries['testmode'] == 'combo':
             Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + 'Test_AllTrainings' + '/'
@@ -400,8 +427,8 @@ for ind in UserEntries['IxNuclei']:
                 Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + 'Train/'
 
             elif UserEntries['testmode'] == 'onetrain':
-                Params['Dir_NucleiTrainSamples']  = mkDir(Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/TestCases' + subFolders[sFi] + '/Train/')
-                Params['Dir_NucleiTestSamples']   = Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/TestCases' + subFolders[sFi] + '/Test/'
+                Params['Dir_NucleiTrainSamples']  = mkDir(Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/TestCases/' + subFolders[sFi] + '/Train/')
+                Params['Dir_NucleiTestSamples']   = Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/TestCases/' + subFolders[sFi] + '/Test/'
 
             elif UserEntries['testmode'] = 'normal':
                 Params['Dir_NucleiTestSamples']  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Test/'

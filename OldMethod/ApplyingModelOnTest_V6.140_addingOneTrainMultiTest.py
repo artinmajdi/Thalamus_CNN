@@ -392,7 +392,7 @@ for ind in UserEntries['IxNuclei']:
         if Params['registrationFlag'] == 1:
             Params['TestName'] = testNme(Params['A'],ii)
         else:
-            Params['TestName'] = testNme(Params['A'],ii).split('_Deformed.nii.gz')[0]
+            Params['TestName'] = testNme(Params['A'],ii).split('_Deformed')[0]
 
         print(' ----------------------- TestName' , Params['TestName'])
 

@@ -361,8 +361,9 @@ def saveImageDice(label , Params , pred , pred_Lgc , subFolders):
     output = np.zeros(label.shape)
     output_Lgc = np.zeros(label.shape)
 
-    print('-------',pred.shape)
-    print('-------',len(Params['SliceNumbers']))
+    print('-------output.shape---------',output.shape)
+    print('-------len(SliceNumbers)----------',len(Params['SliceNumbers']))
+    print('-------len(SliceNumbers)----------',Params['SliceNumbers'])
     output[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ] = pred
     output_Lgc[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ] = pred_Lgc
 

@@ -280,7 +280,6 @@ def ReadingTestImage(Params,subFolders):
         TestImage = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + Params['TestName'].split('Test_')[1] + '_US.nii.gz').get_data()
 
     print(' ----------------------- TestName' , TestImage.shape)
-    print(' ----------------------- TestName' , Params['SliceNumbers'] )
     TestImage = TestImage[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
 
     if Params['registrationFlag'] == 1:
@@ -292,6 +291,7 @@ def ReadingTestImage(Params,subFolders):
         # maskD_padded = np.pad(maskD2,( (p1[0],p1[1]),(p2[0],p2[1]),(0,0) ),'constant' )
         TestImage = np.pad(TestImage,(  (p1[0],p1[1]),(p2[0],p2[1]),(0,0)  ),'constant' )
         # TestImage = np.pad(TestImage,(  (Params['padSize'],Params['padSize']),(Params['padSize'],Params['padSize']),(0,0)  ),'constant' )
+        print(' ----------------------- TestName' , TestImage.shape)
 
     TestImage = np.transpose(TestImage,[2,0,1])
     TestImage = TestImage[...,np.newaxis]

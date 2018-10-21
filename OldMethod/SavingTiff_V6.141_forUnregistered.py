@@ -307,17 +307,17 @@ def readingImages(Params , subFolders):
                     mask[...,i] = np.fliplr(mask[...,i])
 
                 im = ndimage.zoom(im,(1,1,2),order=3)
-                mask = ndimage.zoom(mask,(1,1,2),order=3)
+                mask = ndimage.zoom(mask,(1,1,2),order=0)
             else:
                 im   = np.transpose(im,[0,2,1])
                 mask = np.transpose(mask,[0,2,1])
 
                 if im.shape[2] == 200:
                     im = ndimage.zoom(im,(1,1,2),order=3)
-                    mask = ndimage.zoom(mask,(1,1,2),order=3)
+                    mask = ndimage.zoom(mask,(1,1,2),order=0)
 
 
-            mask = (mask > 0.2).astype(int)
+            # mask = (mask > 0.2).astype(int)
             # mask(np.where(mask > 0.2)) = 1
             # mask(np.where(mask <= 0.2)) = 0
             maskF2 = nib.Nifti1Image(mask,maskF.affine)
@@ -376,7 +376,7 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
     Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'] )
     subFolders = subFoldersFunc(Params['Dir_Prior'])
-    # subFolders = subFolders[:2]
+    subFolders = subFolders[:2]
 
     if Params['registrationFlag'] == 1:
         Params['Name_priors_San_Label'] = 'Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz'
@@ -392,7 +392,7 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
         Params['dataset'] = UserEntries['dataset']
 
-        if 0:
+        if 1:
             imFull, mskFull = readingImages(Params , subFolders)
             print('-----------',mskFull.max())
             print('-----------',mskFull.min())
@@ -401,6 +401,9 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
             Data = {'images':imFull , 'masks': mskFull}
             pickle.dump(Data,outfile)
             outfile.close()
+
+            print('-----------',mskFull.max())
+            print('-----------',mskFull.min())
 
         else:
             infile = open( Params['Dir_Prior'] + '/' + Params['TestName'] + '.pkl','rb')

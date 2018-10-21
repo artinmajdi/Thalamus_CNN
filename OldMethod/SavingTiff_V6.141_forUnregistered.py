@@ -291,6 +291,7 @@ def readingImages(Params , subFolders):
 
         maskF = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + Params['Name_priors_San_Label'])
         mask  = maskF.get_data()
+        
         imF   = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName )
         im    = imF.get_data()
 
@@ -395,7 +396,7 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
         if 1:
             imFull, mskFull = readingImages(Params , subFolders)
 
-            outfile = open( Params['Dir_Prior'] + '/' + Params['TestName'] + '.pkl','wb')
+            outfile = open( Params['Dir_Prior'] + '/' + Params['NucleusName'] + '_' + Params['TestName'] + '.pkl','wb')
             Data = {'images':imFull , 'masks': mskFull}
             pickle.dump(Data,outfile)
             outfile.close()

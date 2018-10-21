@@ -392,7 +392,7 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
         Params['dataset'] = UserEntries['dataset']
 
-        if 0:
+        if 1:
             imFull, mskFull = readingImages(Params , subFolders)
 
             outfile = open( Params['Dir_Prior'] + '/' + Params['TestName'] + '.pkl','wb')

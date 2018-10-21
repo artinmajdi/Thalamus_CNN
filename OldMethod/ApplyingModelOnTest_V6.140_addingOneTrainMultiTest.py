@@ -505,8 +505,10 @@ for ind in UserEntries['IxNuclei']:
 
                 # TestImage = np.pad(TestImage,(  (45,45),(45,45),(0,0)  ),'constant' )
                 # TestImage = TestImage
-                # p1 = [75,76]
-                # p2 = [60,61]
+                p1 = [75,76]
+                p2 = [60,61]
+                pred     =     pred[  p1[0]-45:148-(p1[1]-45) , p2[0]-45:148-(p2[1]-45) , :  ]
+                pred_Lgc = pred_Lgc[  p1[0]-45:148-(p1[1]-45) , p2[0]-45:148-(p2[1]-45) , :  ]
                 # imD_padded = np.pad(imD2,( (p1[0],p1[1]),(p2[0],p2[1]),(0,0) ),'constant' )
                 # maskD_padded = np.pad(maskD2,( (p1[0],p1[1]),(p2[0],p2[1]),(0,0) ),'constant' )
 

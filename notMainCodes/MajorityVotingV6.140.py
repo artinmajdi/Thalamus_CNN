@@ -231,6 +231,8 @@ for ind in UserEntries['IxNuclei']: # [1,2,8,9,10,13]:
     Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Dir_SaveMWFld = mkDir( Params['Dir_AllTests'] + '/Folder_MajorityVoting/' )
 
+    TestName = testNme(A,0)
+
     if Params['registrationFlag'] == 1:
         subFolders = subFolderList( Params['Dir_AllTests'] + '/' + Params['NeucleusFolder'] + '/' + TestName + '/' )
     else:

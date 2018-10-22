@@ -239,7 +239,7 @@ for ind in UserEntries['IxNuclei']: # [1,2,8,9,10,13]:
     if Params['registrationFlag'] == 1:
         subFolders = subFolderList( Params['Dir_AllTests'] + '/' + Params['NeucleusFolder'] + '/Test_WMnMPRAGE_bias_corr_Deformed/' )
     else:
-        subFolders = subFolderList( Params['Dir_AllTests'] + '/' + Params['NeucleusFolder'] + '/Test_WMnMPRAGE_bias_corr_Deformed/OneTrain_MultipleTest/TestCases/' )
+        subFolders = subFolderList( Params['Dir_AllTests'] + '/' + Params['NeucleusFolder'] + '/Test_WMnMPRAGE_bias_corr/OneTrain_MultipleTest/TestCases/' )
 
     for reslt in ['Results']:
 

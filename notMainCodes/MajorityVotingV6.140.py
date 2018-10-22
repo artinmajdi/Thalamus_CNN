@@ -141,7 +141,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
     return Params
 
 def subFolderList(dir):
-    subFolders = os.listdir(dir + '/Test_WMnMPRAGE_bias_corr_Deformed/')
+    subFolders = os.listdir(dir)
 
     listt = []
     for i in range(len(subFolders)):
@@ -231,12 +231,11 @@ for ind in UserEntries['IxNuclei']: # [1,2,8,9,10,13]:
     Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Dir_SaveMWFld = mkDir( Params['Dir_AllTests'] + '/Folder_MajorityVoting/' )
 
-    TestName = testNme(A,0)
 
     if Params['registrationFlag'] == 1:
-        subFolders = subFolderList( Params['Dir_AllTests'] + '/' + Params['NeucleusFolder'] + '/' + TestName + '/' )
+        subFolders = subFolderList( Params['Dir_AllTests'] + '/' + Params['NeucleusFolder'] + '/Test_WMnMPRAGE_bias_corr_Deformed/' )
     else:
-        subFolders = subFolderList( Params['Dir_AllTests'] + '/' + Params['NeucleusFolder'] + '/' + TestName + '/OneTrain_MultipleTest/TestCases/' )
+        subFolders = subFolderList( Params['Dir_AllTests'] + '/' + Params['NeucleusFolder'] + '/Test_WMnMPRAGE_bias_corr_Deformed/OneTrain_MultipleTest/TestCases/' )
 
     for reslt in ['Results']:
 

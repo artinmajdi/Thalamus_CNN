@@ -259,7 +259,7 @@ for ind in UserEntries['IxNuclei']: # [1,2,8,9,10,13]:
             if Params['registrationFlag'] == 1:
                 Directory_Nuclei_Label = Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz'
             else:
-                Directory_Nuclei_Label = Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '.nii.gz'
+                Directory_Nuclei_Label = Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_US.nii.gz'
 
 
             Label = nib.load(Directory_Nuclei_Label)

@@ -130,7 +130,13 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
     Params['Dir_AllTests'] = Dir_AllTests
     Params['NucleusName'] = NucleusName
     Params['NeucleusFolder'] = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
-    Params['SliceNumbers'] = SliceNumbers
+    Params['registrationFlag'] = 0
+
+
+    if Params['registrationFlag'] == 1:
+        Params['SliceNumbers'] = SliceNumbers
+    else:
+        Params['SliceNumbers'] = range(129,251)
 
     return Params
 
@@ -224,26 +230,38 @@ for ind in UserEntries['IxNuclei']: # [1,2,8,9,10,13]:
     print('nuclei: ',ind)
     Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Dir_SaveMWFld = mkDir( Params['Dir_AllTests'] + '/Folder_MajorityVoting/' )
-    subFolders = subFolderList(Params['Dir_AllTests'] + '/' + Params['NeucleusFolder'])
+
+    if Params['registrationFlag'] == 1:
+        subFolders = subFolderList( Params['Dir_AllTests'] + '/' + Params['NeucleusFolder'] + '/' + TestName + '/' )
+    else:
+        subFolders = subFolderList( Params['Dir_AllTests'] + '/' + Params['NeucleusFolder'] + '/' + TestName + '/OneTrain_MultipleTest/TestCases/' )
 
     for reslt in ['Results']:
 
-        print(reslt + '--------------->>>>>---------------')
         Dice = np.zeros((len(subFolders), len(A)+1))
 
-        Directory_Nuclei_Label = Params['Dir_Prior'] + '/' + subFolders[0] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz'
-        Label = nib.load(Directory_Nuclei_Label)
-        Label = Label.get_data()
-        sz = Label.shape
+        # if Params['registrationFlag'] == 1:
+        #     Directory_Nuclei_Label = Params['Dir_Prior'] + '/' + subFolders[0] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz'
+        # else:
+        #     Directory_Nuclei_Label = Params['Dir_Prior'] + '/' + subFolders[0] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '.nii.gz'
+
+        # Label = nib.load(Directory_Nuclei_Label)
+        # Label = Label.get_data()
+
 
         for sFi in range(len(subFolders)):
 
-            Directory_Nuclei_Label = Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz'
+            if Params['registrationFlag'] == 1:
+                Directory_Nuclei_Label = Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz'
+            else:
+                Directory_Nuclei_Label = Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '.nii.gz'
+
+
             Label = nib.load(Directory_Nuclei_Label)
             Label = Label.get_data()
+            sz = Label.shape
 
             Dir_save = mkDir( Dir_SaveMWFld + Params['NeucleusFolder'] + '/' + subFolders[sFi] + '/' )
-
 
             Prediction_full = np.zeros((sz[0],sz[1],sz[2],len(A)))
             Er = 0
@@ -252,8 +270,13 @@ for ind in UserEntries['IxNuclei']: # [1,2,8,9,10,13]:
             for ii in L:
                 TestName = testNme(A,ii)
 
-                Dir_AllTests_nucleiFld_Ehd   = Params['Dir_AllTests'] + '/' + Params['NeucleusFolder'] + '/' + TestName + '/'
-                Dir_AllTests_ThalamusFld_Ehd = Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN/' + TestName + '/'
+                if Params['registrationFlag'] == 1:
+                    Dir_AllTests_nucleiFld_Ehd   = Params['Dir_AllTests'] + '/' + Params['NeucleusFolder'] + '/' + TestName + '/'
+                    Dir_AllTests_ThalamusFld_Ehd = Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN/' + TestName + '/'
+                else:
+                    Dir_AllTests_nucleiFld_Ehd   = Params['Dir_AllTests'] + '/' + Params['NeucleusFolder'] + '/' + TestName + '/OneTrain_MultipleTest/TestCases/'
+                    Dir_AllTests_ThalamusFld_Ehd = Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN/' + TestName + '/OneTrain_MultipleTest/TestCases/'
+
                 Directory_Nuclei_Test  = Dir_AllTests_nucleiFld_Ehd + subFolders[sFi] + '/Test/' + reslt + '/'
 
                 # try:

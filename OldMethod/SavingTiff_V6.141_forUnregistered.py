@@ -11,7 +11,7 @@ from scipy import ndimage
 A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
 
 def testNme(Params,ii):
-    
+
     if ii == 0:
         TestName = 'Test_WMnMPRAGE_bias_corr'
     else:
@@ -390,7 +390,7 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
     for ii in UserEntries['enhanced_Index']: # len( Params['A'] ):
 
-        Params['TestName'] = testNme(Params['A'],ii)
+        Params['TestName'] = testNme(Params,ii)
 
         Params['Dir_EachTraining'] = mkDir(Params['Dir_AllTests'] + '/CNN' + Params['NucleusName'].replace('-','_') + '_2D_SanitizedNN/' + Params['TestName'])
         Params['Dir_All']  = mkDir(Params['Dir_AllTests'] + '/CNN' + Params['NucleusName'].replace('-','_') + '_2D_SanitizedNN/' + 'Test_AllTrainings' + '/Train')

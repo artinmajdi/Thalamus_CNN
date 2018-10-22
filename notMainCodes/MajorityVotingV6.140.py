@@ -273,7 +273,7 @@ for ind in UserEntries['IxNuclei']: # [1,2,8,9,10,13]:
 
             L = [0] if UserEntries['testMode'] == 'AllTrainings' else UserEntries['enhanced_Index'] # len(Params['A'])  # [1,4]: #
             for ii in L:
-                TestName = testNme(A,ii)
+                TestName = testNme(Params,ii)
 
                 if Params['registrationFlag'] == 1:
                     Dir_AllTests_nucleiFld_Ehd   = Params['Dir_AllTests'] + '/' + Params['NeucleusFolder'] + '/' + TestName + '/'

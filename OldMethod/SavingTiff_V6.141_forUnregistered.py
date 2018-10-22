@@ -10,11 +10,15 @@ from scipy import ndimage
 
 A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
 
-def testNme(A,ii):
+def testNme(Params,ii):
+    
     if ii == 0:
         TestName = 'Test_WMnMPRAGE_bias_corr'
     else:
-        TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1])
+        TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(Params['A'][ii][0]) + '_Contrast_' + str(Params['A'][ii][1])
+
+    if Params['registrationFlag'] == 1:
+        TestName = TestName + '_Deformed'
 
     return TestName
 
@@ -291,7 +295,7 @@ def readingImages(Params , subFolders):
 
         maskF = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + Params['Name_priors_San_Label'])
         mask  = maskF.get_data()
-        
+
         imF   = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName )
         im    = imF.get_data()
 

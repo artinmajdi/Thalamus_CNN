@@ -216,11 +216,15 @@ def mkDir(dir):
     return dir
 
 def testNme(A,ii):
-    if ii == 0:
-        TestName = 'Test_WMnMPRAGE_bias_corr_Deformed'
-    else:
-        TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
 
+    if ii == 0:
+        TestName = 'Test_WMnMPRAGE_bias_corr'
+    else:
+        TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(Params['A'][ii][0]) + '_Contrast_' + str(Params['A'][ii][1])
+
+    if Params['registrationFlag'] == 1:
+        TestName = TestName + '_Deformed'
+        
     return TestName
 
 UserEntries = input_GPU_Ix()

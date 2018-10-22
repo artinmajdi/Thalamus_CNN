@@ -215,7 +215,7 @@ def mkDir(dir):
         os.makedirs(dir)
     return dir
 
-def testNme(A,ii):
+def testNme(Params,ii):
 
     if ii == 0:
         TestName = 'Test_WMnMPRAGE_bias_corr'
@@ -224,7 +224,7 @@ def testNme(A,ii):
 
     if Params['registrationFlag'] == 1:
         TestName = TestName + '_Deformed'
-        
+
     return TestName
 
 UserEntries = input_GPU_Ix()

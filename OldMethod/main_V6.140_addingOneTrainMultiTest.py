@@ -285,7 +285,7 @@ for ind in UserEntries['IxNuclei']:
 
         if UserEntries['init']:
             if 'Unlabeled' in UserEntries['dataset']:
-                if 'onetrain' in UserEntries['testmode']
+                if 'onetrain' in UserEntries['testmode']:
                     Params['restorePath'] = Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN' + '/' + TestName + '/' + 'OneTrain_MultipleTest' + '/Train/' + 'model/' # Params['modelName']
                 else:
                     Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_901_07052013_AS' + '/Train/' + 'model/' # Params['modelName']

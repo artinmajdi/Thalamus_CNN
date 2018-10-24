@@ -206,7 +206,7 @@ def input_GPU_Ix():
     UserEntries['testmode'] = 'normal' # 'combo'
     UserEntries['enhanced_Index'] = range(len(A))
     UserEntries['mode'] = 'server'
-    UserEntries['init'] = 0
+    UserEntries['init'] = 1
     UserEntries['Flag_cross_entropy'] = 0
     UserEntries['onetrain_testIndexes'] = [1,5,10,14,20]
 
@@ -257,12 +257,9 @@ def input_GPU_Ix():
             else:
                 UserEntries['enhanced_Index'] = [int(input.split('=')[1])]
 
-        # elif input.split('=')[0] == 'training_iters':
-        #     UserEntries['training_iters'] = input.split('=')[1] # 'combo'
-        # elif input.split('=')[0] == 'epochs':
-        #     UserEntries['epochs'] = input.split('=')[1] # 'combo'
-        # elif input.split('=')[0] == 'temp_Slice':
-        #     UserEntries['temp_Slice'] = input.split('=')[1] # 'combo'
+        if 'Unlabeled' in UserEntries['dataset']:
+            UserEntries['testmode'] = 'onetrain'
+            UserEntries['onetrain_testIndexes'] = [1,5,10,14,20]
 
     return UserEntries
 
@@ -288,15 +285,18 @@ for ind in UserEntries['IxNuclei']:
 
         if UserEntries['init']:
             if 'Unlabeled' in UserEntries['dataset']:
-                Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_901_07052013_AS' + '/Train/' + 'model/' # Params['modelName']
+                if 'onetrain' in UserEntries['testmode']
+                    Params['restorePath'] = Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN' + '/' + TestName + '/' + 'OneTrain_MultipleTest' + '/Train/' + 'model/' # Params['modelName']
+                else:
+                    Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_901_07052013_AS' + '/Train/' + 'model/' # Params['modelName']
             else:
                 if 'onetrain' in UserEntries['testmode']:
                     Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'OneTrain_MultipleTest' + '/Train/' + 'model/' # Params['modelName']
                 else:
                     Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_1519_04212015' + '/Train/' + 'model/' # Params['modelName']
 
-            if 'onetrain' in UserEntries['testmode'] and 'Unlabeled' in UserEntries['dataset']:
-                Params['restorePath'] = Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN' + '/' + TestName + '/' + 'OneTrain_MultipleTest' + '/Train/' + 'model/' # Params['modelName']
+            # if 'onetrain' in UserEntries['testmode'] and 'Unlabeled' in UserEntries['dataset']:
+            #     Params['restorePath'] = Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN' + '/' + TestName + '/' + 'OneTrain_MultipleTest' + '/Train/' + 'model/' # Params['modelName']
 
 
         if 'onetrain' in UserEntries['testmode'] and 'Unlabeled' in UserEntries['dataset']:

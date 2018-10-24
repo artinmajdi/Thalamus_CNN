@@ -281,6 +281,8 @@ def OneTrain_MultipleTest(UserEntries , Params , subFolders,imFull,mskFull, ii):
                 tifffile.imsave( Dir_Each + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx,sFi] )
                 tifffile.imsave( Dir_Each + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi] )
 
+upsampleImage = 0
+
 def readingImages(Params , subFolders):
 
     for sFi in range(len(subFolders)):
@@ -296,8 +298,14 @@ def readingImages(Params , subFolders):
         maskF = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + Params['Name_priors_San_Label'])
         mask  = maskF.get_data()
 
-        imF   = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName )
-        im    = imF.get_data()
+
+        if upsampleImage == 1:
+            imF   = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName )
+            im    = imF.get_data()
+        else:
+            imF  = nib.load( Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName.split('.nii.gz')[0] + '_US.nii.gz' )
+            im   = imF.get_data()
+
 
         if 0:
             im = funcNormalize( im.get_data() )
@@ -305,14 +313,15 @@ def readingImages(Params , subFolders):
         if Params['registrationFlag'] == 0: # Unregistered images
 
             if 'Unlabeled' in Params['dataset']:
-                print('im',im.shape)
-                print('mask',mask.shape)
-                for i in range(im.shape[2]):
-                    im[...,i]   = np.fliplr(im[...,i])
-                    mask[...,i] = np.fliplr(mask[...,i])
 
-                im = ndimage.zoom(im,(1,1,2),order=3)
+                for i in range(mask.shape[2]):
+                    mask[...,i] = np.fliplr(mask[...,i])
+                    if upsampleImage == 1:
+                        im[...,i] = np.fliplr(im[...,i])
+
                 mask = ndimage.zoom(mask,(1,1,2),order=0)
+                if upsampleImage == 1:
+                    im = ndimage.zoom(im,(1,1,2),order=3)
             else:
                 im   = np.transpose(im,[0,2,1])
                 mask = np.transpose(mask,[0,2,1])
@@ -328,11 +337,11 @@ def readingImages(Params , subFolders):
             maskF2 = nib.Nifti1Image(mask,maskF.affine)
             maskF2.get_header = maskF.header
 
-            imF2 = nib.Nifti1Image(im,imF.affine)
-            imF2.get_header = imF.header
-
             nib.save(maskF2,Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + Params['Name_priors_San_Label'].split('.nii.gz')[0] + '_US.nii.gz' )
-            nib.save(imF2,Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName.split('.nii.gz')[0] + '_US.nii.gz' )
+            if upsampleImage == 1:
+                imF2 = nib.Nifti1Image(im,imF.affine)
+                imF2.get_header = imF.header
+                nib.save(imF2,Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName.split('.nii.gz')[0] + '_US.nii.gz' )
 
             d1 = [105,192]
             d2 = [67,184]
@@ -397,21 +406,21 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
         Params['dataset'] = UserEntries['dataset']
 
-        if 1:
-            imFull, mskFull = readingImages(Params , subFolders)
+        # if 1:
+        imFull, mskFull = readingImages(Params , subFolders)
 
-            outfile = open( Params['Dir_Prior'] + '/' + Params['NucleusName'] + '_' + Params['TestName'] + '.pkl','wb')
-            Data = {'images':imFull , 'masks': mskFull}
-            pickle.dump(Data,outfile)
-            outfile.close()
+        # outfile = open( Params['Dir_Prior'] + '/' + Params['NucleusName'] + '_' + Params['TestName'] + '.pkl','wb')
+        # Data = {'images':imFull , 'masks': mskFull}
+        # pickle.dump(Data,outfile)
+        # outfile.close()
 
-        else:
-            infile = open( Params['Dir_Prior'] + '/' + Params['TestName'] + '.pkl','rb')
-            Data = pickle.load(infile)
-            imFull = Data['images']
-            mskFull = Data['masks']
-            # mskFull = (mskFull > 0.2).astype(int)
-            infile.close()
+        # else:
+        #     infile = open( Params['Dir_Prior'] + '/' + Params['TestName'] + '.pkl','rb')
+        #     Data = pickle.load(infile)
+        #     imFull = Data['images']
+        #     mskFull = Data['masks']
+        #     # mskFull = (mskFull > 0.2).astype(int)
+        #     infile.close()
 
 
         if UserEntries['testmode'] == 'onetrain':

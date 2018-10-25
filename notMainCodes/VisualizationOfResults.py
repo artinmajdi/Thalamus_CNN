@@ -8,6 +8,9 @@ import skimage
 from skimage import feature
 from imageio import imwrite
 from matplotlib import colors, cm
+from scipy.misc import imrotate
+from PIL import ImageEnhance , Image , ImageFilter
+
 
 def nonZeroIndex(mask):
     a = np.zeros(mask.shape[2])
@@ -70,12 +73,18 @@ def concantenateImageMask(im, RGB_im):
     sz = im.shape
     im2 = np.zeros((sz[0],sz[1],3))
 
-    rgbIm = RGB_im[80:144,160:270,:]
+    # rgbIm = RGB_im[80:144 , 160:270 , :]
+    # imCropped = im[80:144 , 160:270 , :]
+
+
+    rgbIm = RGB_im[140:250 , 80:144,:]
+    imCropped = im[140:250 , 80:144,:]
     sz = rgbIm.shape
     rgbIm = skimage.transform.resize(rgbIm,(sz[0]*4,sz[1]*4,3))
+    imCropped = skimage.transform.resize(imCropped,(sz[0]*4,sz[1]*4,3))
 
 
-    FinalImage = np.concatenate((RGB_im,rgbIm),axis=1)
+    FinalImage = np.concatenate((im,imCropped,rgbIm),axis=1) #
     FinalImage = FinalImage*255/FinalImage.max()
     FinalImage = np.array(FinalImage,dtype=np.uint8)
 
@@ -171,12 +180,39 @@ def testNme(A,ii):
 
     return TestName
 
-dir = '/media/artin/D0E2340CE233F576/Folder_MajorityVoting'
+def enhancing(im , scaleEnhance):
+    # im = im.astype(dtype=np.int16)
+    im = Image.fromarray(im)
+    im = im.convert('L')
+
+    if scaleEnhance[0] != 1:
+        im2 = ImageEnhance.Sharpness(im)
+        im = im2.enhance(scaleEnhance[0])
+
+    if scaleEnhance[1] != 1:
+        im2 = ImageEnhance.Contrast(im)
+        im = im2.enhance(scaleEnhance[1])
+
+    return im
+
+# dir = '/media/artin/D0E2340CE233F576/Folder_MajorityVoting'
+dir = '/media/data1/artin/Tests/Folder_Visualization'
 
 slc = 125
 im = nib.load(dir + '/origtemplate.nii.gz' ).get_data()
 im_Orig2 = im[...,slc]
 im_Orig = (im_Orig2 - im_Orig2.min())/ ( im_Orig2.max() - im_Orig2.min() )
+
+im_OrigE = im_Orig.copy()
+im = Image.fromarray(im_Orig)
+im = im.convert('L')
+A = ImageEnhance.Contrast(im)
+im_OrigE[:,:] = A.enhance(1.4)
+im_OrigE = im_OrigE/2
+
+plt.imshow(im_OrigE,cmap='gray')
+plt.show()
+
 
 sz = im_Orig.shape
 RGB_im = np.zeros((sz[0],sz[1],3))
@@ -184,12 +220,13 @@ RGB_im[...,0] = im_Orig
 RGB_im[...,1] = im_Orig
 RGB_im[...,2] = im_Orig
 
+im_Orig_RGB = RGB_im.copy()
 
 def random_color():
     levels = range(32,256,32)
     return tuple(np.random.choice(levels) for _ in range(3))
 
-for ind in [1,2,4,5,6,7,8,9,10,11,12,13]:
+for ind in [1,2,4,5,6,7]: # ,8,9,10,11,12,13]:
     print('ind',ind)
     Params = initialDirectories(ind = ind)
     pred = nib.load(dir + '/vimp2_ctrl_925_07152013_LS_' + Params['NucleusName'] + '_Logical.nii.gz').get_data()
@@ -205,17 +242,17 @@ for ind in [1,2,4,5,6,7,8,9,10,11,12,13]:
     RGB_im = RGB_im + edge_origColor
 
 plt.imshow(RGB_im)
+plt.show()
 
+# im_Orig2 = np.transpose(im_Orig,[1,0])
+RGB_im2 = np.transpose(RGB_im,[1,0,2])
+im_Orig_RGB2 = np.transpose(im_Orig_RGB,[1,0,2])
 
-# indexes = nonZeroIndex(seg_Orig)
-# seg_Pred = seg_Pred[...,indexes]
-# seg_Orig = seg_Orig[...,indexes]
-# im_Orig  = im_Orig[...,indexes]
-# edge_pred = edgeDetection(seg_Pred)
-# RGB_im = colorImageMaker(edge_pred, seg_Orig)
-
-FinalImage = concantenateImageMask(256*im_Orig, RGB_im)
+im_Orig_RGB2.shape
+RGB_im2.shape
+# FinalImage = concantenateImageMask(im_Orig_RGB, RGB_im)
+FinalImage = concantenateImageMask(im_Orig_RGB2, RGB_im2)
 RGB_im.max()
 plt.imshow(FinalImage)
-
+plt.show()
 imwrite(dir + '/im.jpg',FinalImage)

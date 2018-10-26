@@ -1,0 +1,15 @@
+#!/bin/tcsh
+
+
+set Dir = '/array/ssd/msmajdi/data/vimp2_1139_12192014'
+set Dir_Template = '/array/ssd/msmajdi/code/Thalamus_StThomas'
+cd $Dir
+
+#foreach x (WMnMPRAGE_bias_corr.nii.gz)
+#echo $x
+antsRegistration -d 3 --float 0 --output \[rigid,rigid.nii.gz\] -t Rigid\[0.1\] --metric MI\[$Dir/WMnMPRAGE_bias_corr.nii.gz, $Dir_Template/origtemplate.nii.gz,1,32,Regular,0.25\] --convergence \[1000x500x250x100,1e-6,10\] -v -f 8x4x2x1 -s 3x2x1x0vox
+
+# antsApplyTransforms -d 3 -i ~tyson/thomas/mask_templ_93x187x68.nii.gz -r $x -o maskwmn.nii.gz -t rigid0GenericAffine.mat
+
+#end
+

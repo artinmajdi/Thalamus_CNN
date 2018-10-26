@@ -417,7 +417,7 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
             Params['SliceNumbers'] = SliceNumbers
 
             if UserEntries['testmode'] == 'onetrain':
-                print('----',UserEntries['testmode'])
+                # print('----',UserEntries['testmode'])
                 OneTrain_MultipleTest(UserEntries,Params,subFolders,imD_padded, maskD_padded, ii, sFi)
 
             # else:

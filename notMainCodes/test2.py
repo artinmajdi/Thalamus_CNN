@@ -20,11 +20,11 @@ mask[cp[0][0]:cp[0][1] , cp[1][0]:cp[1][1] , cp[2][0]:cp[2][1] ] = 1
 
 output = nib.Nifti1Image(mask,im.affine)
 output.get_header = im.header
-nib.save(output , '/media/data1/artin/mask.nii.gz')
+nib.save(output , '/media/data1/artin/MyMask_Template.nii.gz')
 
 
 fig , ax = plt.subplots(1,2)
-ax[0].imshow(im[:,200,:],cmap='gray')
+ax[0].imshow(im.get_data()[:,200,:],cmap='gray')
 ax[1].imshow(mask[:,200,:],cmap='gray')
 plt.show()
 

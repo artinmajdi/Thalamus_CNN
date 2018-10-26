@@ -390,6 +390,9 @@ def readingImages(Params , subFolders):
             imFull = imD_padded[...,np.newaxis]
             mskFull = maskD_padded[...,np.newaxis]
         else:
+            print('--------------------------------------------')
+            print('imD_padded.shape', imD_padded.shape)
+            print('imFull.shape', imFull.shape)
             imFull = np.append(imFull,imD_padded[...,np.newaxis],axis=3)
             mskFull = np.append(mskFull,maskD_padded[...,np.newaxis],axis=3)
 

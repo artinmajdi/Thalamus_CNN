@@ -281,7 +281,44 @@ def OneTrain_MultipleTest(UserEntries , Params , subFolders,imFull,mskFull, ii):
                 tifffile.imsave( Dir_Each + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx,sFi] )
                 tifffile.imsave( Dir_Each + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi] )
 
-upsampleImage = 0
+do_I_want_Upsampling = 0
+
+def funcNormalize(im):
+    # return (im-im.mean())/im.std()
+    im = np.float32(im)
+    return ( im-im.min() )/( im.max() - im.min() )
+
+def funcCropping(im , mask , CropMask):
+    ss = np.sum(CropMask,axis=2)
+    c1 = np.where(np.sum(ss,axis=1) > 10)[0]
+    c2 = np.where(np.sum(ss,axis=0) > 10)[0]
+    ss = np.sum(CropMask,axis=1)
+    c3 = np.where(np.sum(ss,axis=0) > 10)[0]
+
+    sz = a[0].shape[0]
+    d1 = [  c1[0] , c1[ c1.shape[0]-1 ]  ]
+    d2 = [  c2[0] , c2[ c2.shape[0]-1 ]  ]
+    SN = [  c3[0] , c3[ c3.shape[0]-1 ]  ]
+    SliceNumbers = range(SN[0],SN[1])
+
+
+    im = im[ d1[0]:d1[1],d2[0]:d2[1],SliceNumbers ] # Params['SliceNumbers']]
+    mask = mask[ d1[0]:d1[1],d2[0]:d2[1],SliceNumbers ] # Params['SliceNumbers']]
+
+    return im , mask , SliceNumbers
+
+def funcPadding(im, mask):
+    sz = mask.shape
+    df = 238 - sz[0]
+    p1 = [int(df/2) , df - int(df/2)]
+
+    df = 238 - sz[1]
+    p2 = [int(df/2) , df - int(df/2)]
+
+    im = np.pad(im,( (p1[0],p1[1]),(p2[0],p2[1]),(0,0) ),'constant' )
+    mask = np.pad(mask,( (p1[0],p1[1]),(p2[0],p2[1]),(0,0) ),'constant' )
+
+    return im , mask
 
 def readingImages(Params , subFolders):
 
@@ -291,36 +328,33 @@ def readingImages(Params , subFolders):
 
         if Params['registrationFlag'] == 1:
             inputName = inputName + '_Deformed'
-        print('inputName' , inputName)
 
         print('Reading Images:  ',Params['NucleusName'],inputName.split('nii.gz')[0] , str(sFi) + ' ' + subFolders[sFi])
 
         maskF = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + Params['Name_priors_San_Label'])
         mask  = maskF.get_data()
+        CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + 'MyCrop.nii.gz').get_data()
+        imF   = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName )
+        im    = imF.get_data()
+
+        if 1:
+            im = funcNormalize( im )
 
 
-        if upsampleImage == 1:
-            imF   = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName )
-            im    = imF.get_data()
-        else:
-            imF  = nib.load( Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName.split('.nii.gz')[0] + '_US.nii.gz' )
-            im   = imF.get_data()
-
-
-        if 0:
-            im = funcNormalize( im.get_data() )
+        im , mask , SliceNumbers = funcCropping(im , mask , CropMask)
+        Params['SliceNumbers'] = SliceNumbers
 
         if Params['registrationFlag'] == 0: # Unregistered images
 
             if 'Unlabeled' in Params['dataset']:
 
                 for i in range(mask.shape[2]):
+                    im[...,i] = np.fliplr(im[...,i])
                     mask[...,i] = np.fliplr(mask[...,i])
-                    if upsampleImage == 1:
-                        im[...,i] = np.fliplr(im[...,i])
 
-                mask = ndimage.zoom(mask,(1,1,2),order=0)
-                if upsampleImage == 1:
+
+                if do_I_want_Upsampling == 1:
+                    mask = ndimage.zoom(mask,(1,1,2),order=0)
                     im = ndimage.zoom(im,(1,1,2),order=3)
             else:
                 im   = np.transpose(im,[0,2,1])
@@ -330,30 +364,16 @@ def readingImages(Params , subFolders):
                     im = ndimage.zoom(im,(1,1,2),order=3)
                     mask = ndimage.zoom(mask,(1,1,2),order=0)
 
+            if do_I_want_Upsampling == 1:
+                maskF2 = nib.Nifti1Image(mask,maskF.affine)
+                maskF2.get_header = maskF.header
+                nib.save(maskF2,Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + Params['Name_priors_San_Label'].split('.nii.gz')[0] + '_US.nii.gz' )
 
-            # mask = (mask > 0.2).astype(int)
-            # mask(np.where(mask > 0.2)) = 1
-            # mask(np.where(mask <= 0.2)) = 0
-            maskF2 = nib.Nifti1Image(mask,maskF.affine)
-            maskF2.get_header = maskF.header
-
-            nib.save(maskF2,Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + Params['Name_priors_San_Label'].split('.nii.gz')[0] + '_US.nii.gz' )
-            if upsampleImage == 1:
                 imF2 = nib.Nifti1Image(im,imF.affine)
                 imF2.get_header = imF.header
                 nib.save(imF2,Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName.split('.nii.gz')[0] + '_US.nii.gz' )
 
-            d1 = [105,192]
-            d2 = [67,184]
-            SN = [129,251]
-            SliceNumbers = range(SN[0],SN[1])
-            imD2 = im[ d1[0]:d1[1],d2[0]:d2[1],SliceNumbers] # Params['SliceNumbers']]
-            maskD2 = mask[ d1[0]:d1[1],d2[0]:d2[1],SliceNumbers] # Params['SliceNumbers']]
-
-            p1 = [75,76]
-            p2 = [60,61]
-            imD_padded = np.pad(imD2,( (p1[0],p1[1]),(p2[0],p2[1]),(0,0) ),'constant' )
-            maskD_padded = np.pad(maskD2,( (p1[0],p1[1]),(p2[0],p2[1]),(0,0) ),'constant' )
+            im, mask = funcPadding(im, mask)
 
         else:  # Registered images
             imD2 = im[50:198,130:278,Params['SliceNumbers']]
@@ -379,10 +399,6 @@ def readingImages(Params , subFolders):
     # imFull=[]
     # mskFull = []
     return imFull, mskFull
-
-def funcNormalize(im):
-    return (im-im.mean())/im.std()
-
 
 UserEntries = input_GPU_Ix()
 

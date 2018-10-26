@@ -3,32 +3,59 @@ import numpy as np
 import nibabel as nib
 import tifffile
 
-im = nib.load('/media/data1/artin/thomas/origtemplate.nii.gz')
-# mask = nib.load('/media/data1/artin/code/Thalamus_CNN/notMainCodes/RigidRegistration/1-THALAMUS.nii.gz').get_data()
+def funcNormalize(im):
+    # return (im-im.mean())/im.std()
+    im = np.float32(im)
+    return ( im-im.min() )/( im.max() - im.min() )
+
+def cropDimensions(im , mask , CropMask):
+    ss = np.sum(CropMask,axis=2)
+    c1 = np.where(np.sum(ss,axis=1) > 10)[0]
+    c2 = np.where(np.sum(ss,axis=0) > 10)[0]
+    ss = np.sum(CropMask,axis=1)
+    c3 = np.where(np.sum(ss,axis=0) > 10)[0]
+
+    sz = a[0].shape[0]
+    d1 = [  c1[0] , c1[ c1.shape[0]-1 ]  ]
+    d2 = [  c2[0] , c2[ c2.shape[0]-1 ]  ]
+    SN = [  c3[0] , c3[ c3.shape[0]-1 ]  ]
+    SliceNumbers = range(SN[0],SN[1])
+
+    im = im[ d1[0]:d1[1],d2[0]:d2[1],SliceNumbers] # Params['SliceNumbers']]
+    mask = mask[ d1[0]:d1[1],d2[0]:d2[1],SliceNumbers] # Params['SliceNumbers']]
+
+    return im , mask
+
+dir = '/media/data1/artin/vimp2_0699_04302014'
+
+mask    = nib.load(dir + '/' + 'Manual_Delineation_Sanitized/' + '1-THALAMUS' + '.nii.gz').get_data()
+imF       = nib.load(dir + '/' + 'WMnMPRAGE_bias_corr.nii.gz' )
+CropMask = nib.load(dir + '/' + 'MyCrop.nii.gz').get_data()
+im      = funcNormalize( imF.get_data() )
+
+im , mask = cropDimensions(im , mask , CropMask)
 
 
-im.shape
-# mask.shape
+for i in range(mask.shape[2]):
+    mask[...,i] = np.fliplr(mask[...,i])
+    im[...,i] = np.fliplr(im[...,i])
 
 
-mask = np.zeros(im.shape)
-mask.shape
+sz = mask.shape
+df = 238 - sz[0]
+p1 = [int(df/2) , df - int(df/2)]
 
-cp = [[72,146],[154,236],[85,162]]
+df = 238 - sz[1]
+p2 = [int(df/2) , df - int(df/2)]
 
-mask[cp[0][0]:cp[0][1] , cp[1][0]:cp[1][1] , cp[2][0]:cp[2][1] ] = 1
+imD_padded = np.pad(im,( (p1[0],p1[1]),(p2[0],p2[1]),(0,0) ),'constant' )
+maskD_padded = np.pad(mask,( (p1[0],p1[1]),(p2[0],p2[1]),(0,0) ),'constant' )
 
-output = nib.Nifti1Image(mask,im.affine)
-output.get_header = im.header
-nib.save(output , '/media/data1/artin/MyMask_Template.nii.gz')
+maskD_padded.shape
 
-
-fig , ax = plt.subplots(1,2)
-ax[0].imshow(im.get_data()[:,200,:],cmap='gray')
-ax[1].imshow(mask[:,200,:],cmap='gray')
+slc = 80
+fig , ax = plt.subplots(1,3)
+ax[0].imshow(imD[...,slc],cmap='gray')
+ax[1].imshow(maskD[...,slc],cmap='gray')
+ax[2].imshow(CropMask[...,slc],cmap='gray')
 plt.show()
-
-
-# 3rd: 105 , 142
-# 2nd:  164 , 226
-# 1st 92 , 126

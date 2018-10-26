@@ -372,7 +372,7 @@ def readingImages(Params , subFolders):
                 imF2.get_header = imF.header
                 nib.save(imF2,Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName.split('.nii.gz')[0] + '_US.nii.gz' )
 
-            im, mask = funcPadding(im, mask)
+            imD_padded, maskD_padded = funcPadding(im, mask)
 
         else:  # Registered images
             imD2 = im[50:198,130:278,Params['SliceNumbers']]

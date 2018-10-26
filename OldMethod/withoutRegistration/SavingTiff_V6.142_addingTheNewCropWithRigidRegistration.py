@@ -295,7 +295,6 @@ def funcCropping(im , mask , CropMask):
     ss = np.sum(CropMask,axis=1)
     c3 = np.where(np.sum(ss,axis=0) > 10)[0]
 
-    sz = a[0].shape[0]
     d1 = [  c1[0] , c1[ c1.shape[0]-1 ]  ]
     d2 = [  c2[0] , c2[ c2.shape[0]-1 ]  ]
     SN = [  c3[0] , c3[ c3.shape[0]-1 ]  ]

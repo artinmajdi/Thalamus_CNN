@@ -258,28 +258,44 @@ def normal_Cross_Validation(Params , subFolders , imFull , mskFull, ii):
                 tifffile.imsave( Params['Dir_All'] + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx,sFi_parent] )
                 tifffile.imsave( Params['Dir_All'] + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi_parent] )
 
-def OneTrain_MultipleTest(UserEntries , Params , subFolders,imFull,mskFull, ii):
-    print( '------------------' , 'Test' , '------------------' )
+# def old_OneTrain_MultipleTest(UserEntries , Params , subFolders,imFull,mskFull, ii):
+#     print( '------------------' , 'Test' , '------------------' )
+#
+#     for sFi in UserEntries['onetrain_testIndexes']:
+#
+#         Dir_Each = mkDir(Params['Dir_EachTraining'] + '/OneTrain_MultipleTest' + '/TestCases/' + subFolders[sFi] + '/Test/')
+#
+#         for slcIx in range(imFull.shape[2]):
+#             Name_PredictedImage = subFolders[sFi] + '_Sh' + str(Params['A'][ii][0]) + '_Ct' + str(Params['A'][ii][1]) + '_Slice_' + str(Params['SliceNumbers'][slcIx])
+#             tifffile.imsave( Dir_Each + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx,sFi] )
+#             tifffile.imsave( Dir_Each + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi] )
+#
+#     print( '------------------' , 'Train' , '------------------' )
+#
+#     Dir_Each = mkDir(Params['Dir_EachTraining'] + '/OneTrain_MultipleTest' + '/Train')
+#     for sFi in range(len(subFolders)):
+#         if sFi not in UserEntries['onetrain_testIndexes']:
+#
+#             for slcIx in range(imFull.shape[2]):
+#                 Name_PredictedImage = subFolders[sFi] + '_Sh' + str(Params['A'][ii][0]) + '_Ct' + str(Params['A'][ii][1]) + '_Slice_' + str(Params['SliceNumbers'][slcIx])
+#                 tifffile.imsave( Dir_Each + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx,sFi] )
+#                 tifffile.imsave( Dir_Each + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi] )
 
-    for sFi in UserEntries['onetrain_testIndexes']:
+def OneTrain_MultipleTest(UserEntries , Params , subFolders,imD_padded,maskD_padded, ii, sFi):
 
+    if sFi in UserEntries['onetrain_testIndexes']:
         Dir_Each = mkDir(Params['Dir_EachTraining'] + '/OneTrain_MultipleTest' + '/TestCases/' + subFolders[sFi] + '/Test/')
-
-        for slcIx in range(imFull.shape[2]):
+        for slcIx in range(imD_padded.shape[2]):
             Name_PredictedImage = subFolders[sFi] + '_Sh' + str(Params['A'][ii][0]) + '_Ct' + str(Params['A'][ii][1]) + '_Slice_' + str(Params['SliceNumbers'][slcIx])
-            tifffile.imsave( Dir_Each + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx,sFi] )
-            tifffile.imsave( Dir_Each + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi] )
+            tifffile.imsave( Dir_Each + '/' + Name_PredictedImage +      '.tif' , imD_padded[:,: ,slcIx] )
+            tifffile.imsave( Dir_Each + '/' + Name_PredictedImage + '_mask.tif' , maskD_padded[:,:,slcIx] )
 
-    print( '------------------' , 'Train' , '------------------' )
-
-    Dir_Each = mkDir(Params['Dir_EachTraining'] + '/OneTrain_MultipleTest' + '/Train')
-    for sFi in range(len(subFolders)):
-        if sFi not in UserEntries['onetrain_testIndexes']:
-
-            for slcIx in range(imFull.shape[2]):
-                Name_PredictedImage = subFolders[sFi] + '_Sh' + str(Params['A'][ii][0]) + '_Ct' + str(Params['A'][ii][1]) + '_Slice_' + str(Params['SliceNumbers'][slcIx])
-                tifffile.imsave( Dir_Each + '/' + Name_PredictedImage +      '.tif' , imFull[:,: ,slcIx,sFi] )
-                tifffile.imsave( Dir_Each + '/' + Name_PredictedImage + '_mask.tif' , mskFull[:,:,slcIx,sFi] )
+    else:
+        Dir_Each = mkDir(Params['Dir_EachTraining'] + '/OneTrain_MultipleTest' + '/Train')
+        for slcIx in range(imD_padded.shape[2]):
+            Name_PredictedImage = subFolders[sFi] + '_Sh' + str(Params['A'][ii][0]) + '_Ct' + str(Params['A'][ii][1]) + '_Slice_' + str(Params['SliceNumbers'][slcIx])
+            tifffile.imsave( Dir_Each + '/' + Name_PredictedImage +      '.tif' , imD_padded[:,: ,slcIx] )
+            tifffile.imsave( Dir_Each + '/' + Name_PredictedImage + '_mask.tif' , maskD_padded[:,:,slcIx] )
 
 do_I_want_Upsampling = 0
 
@@ -319,88 +335,60 @@ def funcPadding(im, mask):
 
     return im , mask
 
-def readingImages(Params , subFolders):
+def readingImages(Params , subFolders,sFi):
 
-    for sFi in range(len(subFolders)):
+    # for sFi in range(len(subFolders)):
 
-        inputName = Params['TestName'].split('Test_')[1] + '.nii.gz'
+    inputName = Params['TestName'].split('Test_')[1] + '.nii.gz'
 
-        if Params['registrationFlag'] == 1:
-            inputName = inputName + '_Deformed'
+    if Params['registrationFlag'] == 1:
+        inputName = inputName + '_Deformed'
 
-        print('Reading Images:  ',Params['NucleusName'],inputName.split('nii.gz')[0] , str(sFi) + ' ' + subFolders[sFi])
+    print('Reading Images:  ',Params['NucleusName'],inputName.split('nii.gz')[0] , str(sFi) + ' ' + subFolders[sFi])
 
-        maskF = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + Params['Name_priors_San_Label'])
-        mask  = maskF.get_data()
-        CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + 'MyCrop.nii.gz').get_data()
-        imF   = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName )
-        im    = imF.get_data()
+    maskF = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + Params['Name_priors_San_Label'])
+    mask  = maskF.get_data()
+    CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + 'MyCrop.nii.gz').get_data()
+    imF   = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName )
+    im    = imF.get_data()
 
-        if 1:
-            im = funcNormalize( im )
-
-
-        im , mask , SliceNumbers = funcCropping(im , mask , CropMask)
-        Params['SliceNumbers'] = SliceNumbers
-
-        if Params['registrationFlag'] == 0: # Unregistered images
-
-            if 'Unlabeled' in Params['dataset']:
-
-                for i in range(mask.shape[2]):
-                    im[...,i] = np.fliplr(im[...,i])
-                    mask[...,i] = np.fliplr(mask[...,i])
+    if 1:
+        im = funcNormalize( im )
 
 
-                if do_I_want_Upsampling == 1:
-                    mask = ndimage.zoom(mask,(1,1,2),order=0)
-                    im = ndimage.zoom(im,(1,1,2),order=3)
-            else:
-                im   = np.transpose(im,[0,2,1])
-                mask = np.transpose(mask,[0,2,1])
+    im , mask , SliceNumbers = funcCropping(im , mask , CropMask)
 
-                if im.shape[2] == 200:
-                    im = ndimage.zoom(im,(1,1,2),order=3)
-                    mask = ndimage.zoom(mask,(1,1,2),order=0)
+    if 'Unlabeled' in Params['dataset']:
 
-            if do_I_want_Upsampling == 1:
-                maskF2 = nib.Nifti1Image(mask,maskF.affine)
-                maskF2.get_header = maskF.header
-                nib.save(maskF2,Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + Params['Name_priors_San_Label'].split('.nii.gz')[0] + '_US.nii.gz' )
-
-                imF2 = nib.Nifti1Image(im,imF.affine)
-                imF2.get_header = imF.header
-                nib.save(imF2,Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName.split('.nii.gz')[0] + '_US.nii.gz' )
-
-            imD_padded, maskD_padded = funcPadding(im, mask)
-
-        else:  # Registered images
-            imD2 = im[50:198,130:278,Params['SliceNumbers']]
-            maskD2 = mask[50:198,130:278,Params['SliceNumbers']]
-
-            padSizeFull = 90
-            padSize = int(padSizeFull/2)
-            imD_padded = np.pad(imD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' )
-            maskD_padded = np.pad(maskD2,((padSize,padSize),(padSize,padSize),(0,0)),'constant' )
+        for i in range(mask.shape[2]):
+            im[...,i] = np.fliplr(im[...,i])
+            mask[...,i] = np.fliplr(mask[...,i])
 
 
+        if do_I_want_Upsampling == 1:
+            mask = ndimage.zoom(mask,(1,1,2),order=0)
+            im = ndimage.zoom(im,(1,1,2),order=3)
+    else:
+        im   = np.transpose(im,[0,2,1])
+        mask = np.transpose(mask,[0,2,1])
+
+        if im.shape[2] == 200:
+            im = ndimage.zoom(im,(1,1,2),order=3)
+            mask = ndimage.zoom(mask,(1,1,2),order=0)
+
+    if do_I_want_Upsampling == 1:
+        maskF2 = nib.Nifti1Image(mask,maskF.affine)
+        maskF2.get_header = maskF.header
+        nib.save(maskF2,Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + Params['Name_priors_San_Label'].split('.nii.gz')[0] + '_US.nii.gz' )
+
+        imF2 = nib.Nifti1Image(im,imF.affine)
+        imF2.get_header = imF.header
+        nib.save(imF2,Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName.split('.nii.gz')[0] + '_US.nii.gz' )
+
+    imD_padded, maskD_padded = funcPadding(im, mask)
 
 
-        if sFi == 0:
-            imFull = imD_padded[...,np.newaxis]
-            mskFull = maskD_padded[...,np.newaxis]
-        else:
-            print('--------------------------------------------')
-            print('imD_padded.shape', imD_padded.shape)
-            print('imFull.shape', imFull.shape)
-            imFull = np.append(imFull,imD_padded[...,np.newaxis],axis=3)
-            mskFull = np.append(mskFull,maskD_padded[...,np.newaxis],axis=3)
-
-        #mkDir(Params['Dir_EachTraining'] + '/' + subFolders[sFi] + '/Test')
-        #mkDir(Params['Dir_EachTraining'] + '/' + subFolders[sFi] + '/Train')
-    # imFull=[]
-    # mskFull = []
-    return imFull, mskFull
+    return imD_padded, maskD_padded, SliceNumbers
 
 UserEntries = input_GPU_Ix()
 
@@ -424,27 +412,14 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
         Params['dataset'] = UserEntries['dataset']
 
-        # if 1:
-        imFull, mskFull = readingImages(Params , subFolders)
+        for sFi in range(len(subFolders)):
+            imD_padded, maskD_padded, SliceNumbers = readingImages(Params , subFolders,sFi)
+            Params['SliceNumbers'] = SliceNumbers
 
-        # outfile = open( Params['Dir_Prior'] + '/' + Params['NucleusName'] + '_' + Params['TestName'] + '.pkl','wb')
-        # Data = {'images':imFull , 'masks': mskFull}
-        # pickle.dump(Data,outfile)
-        # outfile.close()
+            if UserEntries['testmode'] == 'onetrain':
+                print('----',UserEntries['testmode'])
+                OneTrain_MultipleTest(UserEntries,Params,subFolders,imD_padded, maskD_padded, ii)
 
-        # else:
-        #     infile = open( Params['Dir_Prior'] + '/' + Params['TestName'] + '.pkl','rb')
-        #     Data = pickle.load(infile)
-        #     imFull = Data['images']
-        #     mskFull = Data['masks']
-        #     # mskFull = (mskFull > 0.2).astype(int)
-        #     infile.close()
-
-
-        if UserEntries['testmode'] == 'onetrain':
-            print('----',UserEntries['testmode'])
-            OneTrain_MultipleTest(UserEntries,Params,subFolders,imFull,mskFull, ii)
-
-        else:
-            print('----',UserEntries['testmode'])
-            normal_Cross_Validation(Params , subFolders , imFull , mskFull, ii)
+            # else:
+            #     print('----',UserEntries['testmode'])
+            #     normal_Cross_Validation(Params , subFolders , imFull , mskFull, ii)

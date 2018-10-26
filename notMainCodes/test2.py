@@ -59,3 +59,11 @@ ax[0].imshow(imD[...,slc],cmap='gray')
 ax[1].imshow(maskD[...,slc],cmap='gray')
 ax[2].imshow(CropMask[...,slc],cmap='gray')
 plt.show()
+
+
+
+
+a = np.zeros((238,238,46))
+b = np.zeros((238,238,49))
+
+np.concatenate((a,b),axis=2).shape

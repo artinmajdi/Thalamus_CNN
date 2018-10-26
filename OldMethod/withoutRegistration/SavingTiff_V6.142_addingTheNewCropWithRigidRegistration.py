@@ -418,7 +418,7 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
             if UserEntries['testmode'] == 'onetrain':
                 print('----',UserEntries['testmode'])
-                OneTrain_MultipleTest(UserEntries,Params,subFolders,imD_padded, maskD_padded, ii)
+                OneTrain_MultipleTest(UserEntries,Params,subFolders,imD_padded, maskD_padded, ii, sFi)
 
             # else:
             #     print('----',UserEntries['testmode'])

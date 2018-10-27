@@ -77,8 +77,8 @@ def concantenateImageMask(im, RGB_im):
     # imCropped = im[80:144 , 160:270 , :]
 
 
-    rgbIm = RGB_im[140:250 , 80:144,:]
-    imCropped = im[140:250 , 80:144,:]
+    rgbIm = RGB_im[440-250:440-140 , 80:144,:]
+    imCropped = im[440-250:440-140 , 80:144,:]
     sz = rgbIm.shape
     rgbIm = skimage.transform.resize(rgbIm,(sz[0]*4,sz[1]*4,3))
     imCropped = skimage.transform.resize(imCropped,(sz[0]*4,sz[1]*4,3))
@@ -202,16 +202,18 @@ slc = 125
 im = nib.load(dir + '/origtemplate.nii.gz' ).get_data()
 im_Orig2 = im[...,slc]
 im_Orig = (im_Orig2 - im_Orig2.min())/ ( im_Orig2.max() - im_Orig2.min() )
+im_Orig = np.fliplr(im_Orig)
 
-im_OrigE = im_Orig.copy()
-im = Image.fromarray(im_Orig)
-im = im.convert('L')
-A = ImageEnhance.Contrast(im)
-im_OrigE[:,:] = A.enhance(1.4)
-im_OrigE = im_OrigE/2
+# im_OrigE = im_Orig.copy()
+# im = Image.fromarray(im_Orig)
+# im = im.convert('L')
+# A = ImageEnhance.Sharpness(im)
+# im_OrigE[:,:] = A.enhance(1.4)
+# im_OrigE = im_OrigE/2
 
-plt.imshow(im_OrigE,cmap='gray')
-plt.show()
+
+# plt.imshow(im_OrigE,cmap='gray')
+# plt.show()
 
 
 sz = im_Orig.shape
@@ -226,7 +228,7 @@ def random_color():
     levels = range(32,256,32)
     return tuple(np.random.choice(levels) for _ in range(3))
 
-for ind in [1,2,4,5,6,7]: # ,8,9,10,11,12,13]:
+for ind in [1,2,4,5,6,7,8,9,10,11,12,13]:
     print('ind',ind)
     Params = initialDirectories(ind = ind)
     pred = nib.load(dir + '/vimp2_ctrl_925_07152013_LS_' + Params['NucleusName'] + '_Logical.nii.gz').get_data()
@@ -234,6 +236,11 @@ for ind in [1,2,4,5,6,7]: # ,8,9,10,11,12,13]:
 
     seg_Pred = pred[...,slc]
     seg_Orig = Label[...,slc]
+
+    seg_Pred = np.fliplr(seg_Pred)
+    seg_Orig = np.fliplr(seg_Orig)
+
+
     edge_orig = feature.canny(seg_Orig)
 
     A = random_color()
@@ -241,18 +248,25 @@ for ind in [1,2,4,5,6,7]: # ,8,9,10,11,12,13]:
     edge_origColor = np.concatenate( ( (A[0]/scale)*edge_orig[...,np.newaxis], (A[1]/scale)*edge_orig[...,np.newaxis], (A[2]/scale)*edge_orig[...,np.newaxis]),axis=2)
     RGB_im = RGB_im + edge_origColor
 
-plt.imshow(RGB_im)
-plt.show()
 
 # im_Orig2 = np.transpose(im_Orig,[1,0])
+
+
 RGB_im2 = np.transpose(RGB_im,[1,0,2])
 im_Orig_RGB2 = np.transpose(im_Orig_RGB,[1,0,2])
 
-im_Orig_RGB2.shape
-RGB_im2.shape
+
 # FinalImage = concantenateImageMask(im_Orig_RGB, RGB_im)
+
+plt.imshow(seg_Pred,cmap='gray')
+plt.show()
+
+plt.imshow(RGB_im/RGB_im.max())
+plt.show()
+
 FinalImage = concantenateImageMask(im_Orig_RGB2, RGB_im2)
-RGB_im.max()
 plt.imshow(FinalImage)
 plt.show()
+
+
 imwrite(dir + '/im.jpg',FinalImage)

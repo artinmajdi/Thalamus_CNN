@@ -308,27 +308,23 @@ def funcPadding(im,Params):
 
     return im,Params
 
-def funcFlipLR_Upsampling(Params, im , mask):
+def funcFlipLR_Upsampling(Params, im):
     if 'Unlabeled' in Params['dataset']:
-
-        for i in range(mask.shape[2]):
-            mask[...,i] = np.fliplr(mask[...,i])
 
         for i in range(im.shape[2]):
             im[...,i] = np.fliplr(im[...,i])
 
-        if do_I_want_Upsampling == 1:
-            mask = ndimage.zoom(mask,(1,1,2),order=0)
-            im = ndimage.zoom(im,(1,1,2),order=3)
+        # if do_I_want_Upsampling == 1:
+        #     mask = ndimage.zoom(mask,(1,1,2),order=0)
+        #     im = ndimage.zoom(im,(1,1,2),order=3)
     else:
         im   = np.transpose(im,[0,2,1])
-        mask = np.transpose(mask,[0,2,1])
 
-        if im.shape[2] == 200:
-            im = ndimage.zoom(im,(1,1,2),order=3)
-            mask = ndimage.zoom(mask,(1,1,2),order=0)
+        # if im.shape[2] == 200:
+        #     im = ndimage.zoom(im,(1,1,2),order=3)
+        #     mask = ndimage.zoom(mask,(1,1,2),order=0)
 
-    return im , mask
+    return im
 
 def ReadingTestImage(Params,subFolders):
 
@@ -340,7 +336,7 @@ def ReadingTestImage(Params,subFolders):
     TestImage = funcNormalize( TestImage )
     TestImage , Params = funcCropping(TestImage , CropMask , Params)
 
-    TestImage , label = funcFlipLR_Upsampling(Params, TestImage , label)
+    TestImage = funcFlipLR_Upsampling(Params, TestImage)
 
     TestImage,Params = funcPadding(TestImage,Params)
 
@@ -413,8 +409,9 @@ def saveImageDice(label , Params , pred , pred_Lgc , subFolders):
     output[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ] = pred
     output_Lgc[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ] = pred_Lgc
 
+    labelF = funcFlipLR_Upsampling(Params, label.get_data())
     # ---------------------------  showing -----------------------------------
-    Lbl = label.get_data()[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
+    Lbl = labelF[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
     dice = [0]
     dice[0] = DiceCoefficientCalculator(pred_Lgc , Lbl )
     np.savetxt(Params['Dir_ResultsOut'] + 'DiceCoefficient.txt',dice)
@@ -429,7 +426,7 @@ def saveImageDice(label , Params , pred , pred_Lgc , subFolders):
     nib.save(output_Lgc2 , Params['Dir_ResultsOut'] + subFolders[sFi] + '_' + Params['NucleusName'] + '_Logical.nii.gz')
 
     diceF = [0]
-    diceF[0] = DiceCoefficientCalculator(output_Lgc,label.get_data())
+    diceF[0] = DiceCoefficientCalculator(output_Lgc,labelF)
     np.savetxt(Params['Dir_ResultsOut'] + 'DiceCoefficientF.txt',diceF)
 
 

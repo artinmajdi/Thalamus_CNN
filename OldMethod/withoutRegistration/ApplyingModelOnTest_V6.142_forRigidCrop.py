@@ -332,14 +332,14 @@ def funcFlipLR_Upsampling(Params, im , mask):
 def ReadingTestImage(Params,subFolders):
 
     TestImage = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + Params['TestName'].split('Test_')[1] + '.nii.gz').get_data()
-    mask = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '.nii.gz').get_data()
+    label = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '.nii.gz').get_data()
 
     CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + 'MyCrop.nii.gz').get_data()
 
     TestImage = funcNormalize( TestImage )
     TestImage , SliceNumbers , Params = funcCropping(TestImage , CropMask , Params)
 
-    TestImage , mask = funcFlipLR_Upsampling(Params, TestImage , mask)
+    TestImage , label = funcFlipLR_Upsampling(Params, TestImage , label)
 
     TestImage = funcPadding(TestImage)
 

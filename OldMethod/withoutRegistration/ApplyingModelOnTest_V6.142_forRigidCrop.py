@@ -337,7 +337,6 @@ def ReadingTestImage(Params,subFolders):
     TestImage = funcNormalize( TestImage )
     TestImage , SliceNumbers , Params = funcCropping(TestImage , CropMask , Params)
 
-    print(Params)
     TestImage , mask = funcFlipLR_Upsampling(Params, TestImage , mask)
 
     TestImage = funcPadding(TestImage)

@@ -67,3 +67,8 @@ a = np.zeros((238,238,46))
 b = np.zeros((238,238,49))
 
 np.concatenate((a,b),axis=2).shape
+
+
+
+
+a = [5,4,1,-2]

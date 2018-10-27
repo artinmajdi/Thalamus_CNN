@@ -329,7 +329,6 @@ def funcFlipLR_Upsampling(Params, im):
 def ReadingTestImage(Params,subFolders):
 
     TestImage = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + Params['TestName'].split('Test_')[1] + '.nii.gz').get_data()
-    label = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '.nii.gz')
 
     CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + 'MyCrop.nii.gz').get_data()
 
@@ -343,7 +342,7 @@ def ReadingTestImage(Params,subFolders):
     TestImage = np.transpose(TestImage,[2,0,1])
     TestImage = TestImage[...,np.newaxis]
 
-    return TestImage, label , Params
+    return TestImage , Params
 
 def testFunc(Params):
 
@@ -403,8 +402,8 @@ def saveImageDice(label , Params , pred , pred_Lgc , subFolders):
     output = np.zeros(label.shape)
     output_Lgc = np.zeros(label.shape)
 
-    print('----Params[CropDim]-----',Params['CropDim'])
-    print('predshape',pred.shape)
+    # print('----Params[CropDim]-----',Params['CropDim'])
+    # print('predshape',pred.shape)
 
     labelF = label.get_data()
     pred = funcFlipLR_Upsampling(Params, pred)
@@ -494,7 +493,8 @@ for ind in UserEntries['IxNuclei']:
                 # Dir_ThalamusTestSamples = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + Params['TestName'] + '/' + subFolders[sFi] + '/Test/'
                 # Dir_ThalamusModelOut    = Params['Dir_AllTests'] + Params['ThalamusFolder'] + '/' + Params['TestName'] + '/' + subFolders[sFi] + '/Train/model/'
 
-            TestImage, label , Params = ReadingTestImage(Params,subFolders[sFi])
+            TestImage, Params = ReadingTestImage(Params,subFolders[sFi])
+            label = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '.nii.gz')
 
             Params['TestImage'] = TestImage
 
@@ -556,14 +556,14 @@ for ind in UserEntries['IxNuclei']:
 
                 p1 = Params['padding'][0] # [75,76]
                 p2 = Params['padding'][1] # [60,61]
-                print('----pred.shape---',pred.shape)
-                print('p1',p1,'p2',p2)
+                # print('----pred.shape---',pred.shape)
+                # print('p1',p1,'p2',p2)
                 # Params['padding'] = np.array([p1 , p2])
                 # im = np.pad(im,( (p1[0],p1[1]),(p2[0],p2[1]),(0,0) ),'constant' )
 
                 pred     =     pred[  p1[0]-45:148-(p1[1]-45) , p2[0]-45:148-(p2[1]-45) , :  ]
                 pred_Lgc = pred_Lgc[  p1[0]-45:148-(p1[1]-45) , p2[0]-45:148-(p2[1]-45) , :  ]
-                print('----pred.shape---',pred.shape)
+                # print('----pred.shape---',pred.shape)
                 # imD_padded = np.pad(imD2,( (p1[0],p1[1]),(p2[0],p2[1]),(0,0) ),'constant' )
                 # maskD_padded = np.pad(maskD2,( (p1[0],p1[1]),(p2[0],p2[1]),(0,0) ),'constant' )
 

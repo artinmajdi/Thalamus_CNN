@@ -434,7 +434,7 @@ for ind in UserEntries['IxNuclei']:
     print('ind',ind)
     Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'])
     Params['gpuNum'] = UserEntries['gpuNum']
-
+    Params['dataset'] = UserEntries['dataset']
 
     L = [0] if UserEntries['testmode'] == 'combo' else UserEntries['enhanced_Index'] # len(Params['A'])  # [1,4]: #
     # L = UserEntries['enhanced_Index']

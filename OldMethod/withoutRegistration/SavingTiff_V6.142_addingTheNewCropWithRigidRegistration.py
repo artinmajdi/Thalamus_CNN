@@ -335,6 +335,28 @@ def funcPadding(im, mask):
 
     return im , mask
 
+def funcFlipLR_Upsampling(Params, im , mask):
+    if 'Unlabeled' in Params['dataset']:
+
+        for i in range(mask.shape[2]):
+            im[...,i] = np.fliplr(im[...,i])
+            mask[...,i] = np.fliplr(mask[...,i])
+
+        if do_I_want_Upsampling == 1:
+            mask = ndimage.zoom(mask,(1,1,2),order=0)
+            im = ndimage.zoom(im,(1,1,2),order=3)
+    else:
+        im   = np.transpose(im,[0,2,1])
+        mask = np.transpose(mask,[0,2,1])
+
+        if im.shape[2] == 200:
+            im = ndimage.zoom(im,(1,1,2),order=3)
+            mask = ndimage.zoom(mask,(1,1,2),order=0)
+
+    return im , mask
+
+
+
 def readingImages(Params , subFolders,sFi):
 
     # for sFi in range(len(subFolders)):
@@ -358,23 +380,24 @@ def readingImages(Params , subFolders,sFi):
 
     im , mask , SliceNumbers = funcCropping(im , mask , CropMask)
 
-    if 'Unlabeled' in Params['dataset']:
-
-        for i in range(mask.shape[2]):
-            im[...,i] = np.fliplr(im[...,i])
-            mask[...,i] = np.fliplr(mask[...,i])
-
-
-        if do_I_want_Upsampling == 1:
-            mask = ndimage.zoom(mask,(1,1,2),order=0)
-            im = ndimage.zoom(im,(1,1,2),order=3)
-    else:
-        im   = np.transpose(im,[0,2,1])
-        mask = np.transpose(mask,[0,2,1])
-
-        if im.shape[2] == 200:
-            im = ndimage.zoom(im,(1,1,2),order=3)
-            mask = ndimage.zoom(mask,(1,1,2),order=0)
+    im , mask = funcFlipLR_Upsampling(Params, im , mask)
+    # if 'Unlabeled' in Params['dataset']:
+    #
+    #     for i in range(mask.shape[2]):
+    #         im[...,i] = np.fliplr(im[...,i])
+    #         mask[...,i] = np.fliplr(mask[...,i])
+    #
+    #
+    #     if do_I_want_Upsampling == 1:
+    #         mask = ndimage.zoom(mask,(1,1,2),order=0)
+    #         im = ndimage.zoom(im,(1,1,2),order=3)
+    # else:
+    #     im   = np.transpose(im,[0,2,1])
+    #     mask = np.transpose(mask,[0,2,1])
+    # 
+    #     if im.shape[2] == 200:
+    #         im = ndimage.zoom(im,(1,1,2),order=3)
+    #         mask = ndimage.zoom(mask,(1,1,2),order=0)
 
     if do_I_want_Upsampling == 1:
         maskF2 = nib.Nifti1Image(mask,maskF.affine)

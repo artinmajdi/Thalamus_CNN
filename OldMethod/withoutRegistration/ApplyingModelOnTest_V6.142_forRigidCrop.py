@@ -408,7 +408,7 @@ def saveImageDice(label , Params , pred , pred_Lgc , subFolders):
 
     print('----Params[CropDim]-----',Params['CropDim'])
     print('predshape',pred.shape)
-    
+
     output[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ] = pred
     output_Lgc[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ] = pred_Lgc
 
@@ -556,6 +556,7 @@ for ind in UserEntries['IxNuclei']:
                 p2 = Params['RigidCrop'][1] # [60,61]
                 Params['SliceNumbers'] = Params['RigidCrop'][2]
                 print('----pred.shape---',pred.shape)
+                print('p1',p1,'p2',p2)
                 pred     =     pred[  p1[0]-45:148-(p1[1]-45) , p2[0]-45:148-(p2[1]-45) , :  ]
                 pred_Lgc = pred_Lgc[  p1[0]-45:148-(p1[1]-45) , p2[0]-45:148-(p2[1]-45) , :  ]
                 print('----pred.shape---',pred.shape)

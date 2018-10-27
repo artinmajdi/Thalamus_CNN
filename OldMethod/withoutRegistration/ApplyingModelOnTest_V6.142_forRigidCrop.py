@@ -287,13 +287,13 @@ def funcCropping(im , CropMask, Params):
     d1 = [  c1[0] , c1[ c1.shape[0]-1 ]  ]
     d2 = [  c2[0] , c2[ c2.shape[0]-1 ]  ]
     SN = [  c3[0] , c3[ c3.shape[0]-1 ]  ]
-    SliceNumbers = range(SN[0],SN[1])
+    Params['SliceNumbers'] = range(SN[0],SN[1])
 
     # Params['RigidCrop'] = [d1 , d2 , SliceNumbers]
-    Params['CropDim'] = [d1 , d2 , [SN[0],SN[1]] ]
-    im = im[ d1[0]:d1[1],d2[0]:d2[1],SliceNumbers ] # Params['SliceNumbers']]
+    Params['CropDim'] = np.array([d1 , d2 , [SN[0],SN[1]] ])
+    im = im[ d1[0]:d1[1],d2[0]:d2[1], Params['SliceNumbers'] ] # Params['SliceNumbers']]
 
-    return im , SliceNumbers , Params
+    return im , Params
 
 def funcPadding(im):
     sz = im.shape
@@ -337,7 +337,7 @@ def ReadingTestImage(Params,subFolders):
     CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + 'MyCrop.nii.gz').get_data()
 
     TestImage = funcNormalize( TestImage )
-    TestImage , SliceNumbers , Params = funcCropping(TestImage , CropMask , Params)
+    TestImage , Params = funcCropping(TestImage , CropMask , Params)
 
     TestImage , label = funcFlipLR_Upsampling(Params, TestImage , label)
 

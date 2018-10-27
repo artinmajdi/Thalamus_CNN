@@ -180,13 +180,13 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
     if Params['registrationFlag'] == 1:
         Params['SliceNumbers'] = SliceNumbers
         Params['CropDim'] = np.array([ [50,198] , [130,278] , [Params['SliceNumbers'][0] , Params['SliceNumbers'][len(Params['SliceNumbers'])-1]] ])
-    else:
+    # else:
 
-        d1 = [105,192]
-        d2 = [67,184]
-        SN = [129,251]
-        Params['SliceNumbers'] = range(SN[0],SN[1])
-        Params['CropDim'] = np.array([ d1 , d2 , [Params['SliceNumbers'][0] , Params['SliceNumbers'][len(Params['SliceNumbers'])-1]] ])
+        # d1 = [105,192]
+        # d2 = [67,184]
+        # SN = [129,251]
+        # Params['SliceNumbers'] = range(SN[0],SN[1])
+        # Params['CropDim'] = np.array([ d1 , d2 , [Params['SliceNumbers'][0] , Params['SliceNumbers'][len(Params['SliceNumbers'])-1]] ])
 
     padSizeFull = 90
     Params['padSize'] = int(padSizeFull/2)
@@ -289,8 +289,8 @@ def funcCropping(im , CropMask, Params):
     SN = [  c3[0] , c3[ c3.shape[0]-1 ]  ]
     SliceNumbers = range(SN[0],SN[1])
 
-    Params['RigidCrop'] = [d1 , d2 , SliceNumbers]
-
+    # Params['RigidCrop'] = [d1 , d2 , SliceNumbers]
+    Params['CropDim'] = [d1 , d2 , [SN[0],SN[1]] ]
     im = im[ d1[0]:d1[1],d2[0]:d2[1],SliceNumbers ] # Params['SliceNumbers']]
 
     return im , SliceNumbers , Params
@@ -549,12 +549,11 @@ for ind in UserEntries['IxNuclei']:
                 copyPreviousModel( Params['restorePath'], Params['Dir_NucleiModelOut'] )
                 pred , pred_Lgc = testFunc(Params)
 
-                # Params['RigidCrop'] = [d1 , d2 , SliceNumbers]
+                # Params['CropDim'] = [d1 , d2 , SliceNumbers]
                 # im = im[ d1[0]:d1[1],d2[0]:d2[1],SliceNumbers ] # Params['SliceNumbers']]
 
-                p1 = Params['RigidCrop'][0] # [75,76]
-                p2 = Params['RigidCrop'][1] # [60,61]
-                Params['SliceNumbers'] = Params['RigidCrop'][2]
+                p1 = Params['CropDim'][0] # [75,76]
+                p2 = Params['CropDim'][1] # [60,61]
                 print('----pred.shape---',pred.shape)
                 print('p1',p1,'p2',p2)
                 pred     =     pred[  p1[0]-45:148-(p1[1]-45) , p2[0]-45:148-(p2[1]-45) , :  ]

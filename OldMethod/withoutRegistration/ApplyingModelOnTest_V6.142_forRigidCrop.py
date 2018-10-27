@@ -406,10 +406,14 @@ def saveImageDice(label , Params , pred , pred_Lgc , subFolders):
     print('----Params[CropDim]-----',Params['CropDim'])
     print('predshape',pred.shape)
 
+    labelF = label.get_data()
+    pred = funcFlipLR_Upsampling(Params, pred)
+    pred_Lgc = funcFlipLR_Upsampling(Params, pred_Lgc)
+
     output[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ] = pred
     output_Lgc[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ] = pred_Lgc
 
-    labelF = funcFlipLR_Upsampling(Params, label.get_data())
+
     # ---------------------------  showing -----------------------------------
     Lbl = labelF[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
     dice = [0]

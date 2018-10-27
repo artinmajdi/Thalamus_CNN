@@ -311,8 +311,10 @@ def funcFlipLR_Upsampling(Params, im , mask):
     if 'Unlabeled' in Params['dataset']:
 
         for i in range(mask.shape[2]):
-            im[...,i] = np.fliplr(im[...,i])
             mask[...,i] = np.fliplr(mask[...,i])
+
+        for i in range(im.shape[2]):
+            im[...,i] = np.fliplr(im[...,i])
 
         if do_I_want_Upsampling == 1:
             mask = ndimage.zoom(mask,(1,1,2),order=0)

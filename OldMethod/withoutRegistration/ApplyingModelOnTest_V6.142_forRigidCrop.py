@@ -295,7 +295,7 @@ def funcCropping(im , CropMask, Params):
 
     return im , Params
 
-def funcPadding(im):
+def funcPadding(im,Params):
     sz = im.shape
     df = 238 - sz[0]
     p1 = [int(df/2) , df - int(df/2)]
@@ -303,9 +303,10 @@ def funcPadding(im):
     df = 238 - sz[1]
     p2 = [int(df/2) , df - int(df/2)]
 
+    Params['padding'] = np.array([p1 , p2])
     im = np.pad(im,( (p1[0],p1[1]),(p2[0],p2[1]),(0,0) ),'constant' )
 
-    return im
+    return im,Params
 
 def funcFlipLR_Upsampling(Params, im , mask):
     if 'Unlabeled' in Params['dataset']:
@@ -341,7 +342,7 @@ def ReadingTestImage(Params,subFolders):
 
     TestImage , label = funcFlipLR_Upsampling(Params, TestImage , label)
 
-    TestImage = funcPadding(TestImage)
+    TestImage,Params = funcPadding(TestImage,Params)
 
     TestImage = np.transpose(TestImage,[2,0,1])
     TestImage = TestImage[...,np.newaxis]
@@ -552,10 +553,13 @@ for ind in UserEntries['IxNuclei']:
                 # Params['CropDim'] = [d1 , d2 , SliceNumbers]
                 # im = im[ d1[0]:d1[1],d2[0]:d2[1],SliceNumbers ] # Params['SliceNumbers']]
 
-                p1 = Params['CropDim'][0] # [75,76]
-                p2 = Params['CropDim'][1] # [60,61]
+                p1 = Params['padding'][0] # [75,76]
+                p2 = Params['padding'][1] # [60,61]
                 print('----pred.shape---',pred.shape)
                 print('p1',p1,'p2',p2)
+                # Params['padding'] = np.array([p1 , p2])
+                # im = np.pad(im,( (p1[0],p1[1]),(p2[0],p2[1]),(0,0) ),'constant' )
+
                 pred     =     pred[  p1[0]-45:148-(p1[1]-45) , p2[0]-45:148-(p2[1]-45) , :  ]
                 pred_Lgc = pred_Lgc[  p1[0]-45:148-(p1[1]-45) , p2[0]-45:148-(p2[1]-45) , :  ]
                 print('----pred.shape---',pred.shape)

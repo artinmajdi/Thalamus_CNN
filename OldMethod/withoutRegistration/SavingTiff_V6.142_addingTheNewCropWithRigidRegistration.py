@@ -374,8 +374,7 @@ def readingImages(Params , subFolders,sFi):
     imF   = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName )
     im    = imF.get_data()
 
-    if 1:
-        im = funcNormalize( im )
+    im = funcNormalize( im )
 
 
     im , mask , SliceNumbers = funcCropping(im , mask , CropMask)
@@ -394,7 +393,7 @@ def readingImages(Params , subFolders,sFi):
     # else:
     #     im   = np.transpose(im,[0,2,1])
     #     mask = np.transpose(mask,[0,2,1])
-    # 
+    #
     #     if im.shape[2] == 200:
     #         im = ndimage.zoom(im,(1,1,2),order=3)
     #         mask = ndimage.zoom(mask,(1,1,2),order=0)

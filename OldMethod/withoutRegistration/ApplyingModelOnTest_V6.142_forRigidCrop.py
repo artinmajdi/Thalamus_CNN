@@ -354,9 +354,9 @@ def testFunc(Params):
     net = Params['net']
 
     Data = Params['TestImage']
-    # mn = np.min(Data)
-    # mx = np.max(Data)
-    # Data = (Data - mn) / (mx - mn)
+    mn = np.min(Data)
+    mx = np.max(Data)
+    Data = (Data - mn) / (mx - mn)
 
     if Params['gpuNum'] != 'nan':
         prediction2 = net.predict( Params['Dir_NucleiTrainSamples'] + '/' + Params['modelName'] + 'model.' + Params['modelFormat'], np.asarray(Data,dtype=np.float32), GPU_Num=Params['gpuNum'])

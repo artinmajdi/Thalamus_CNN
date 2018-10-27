@@ -355,8 +355,6 @@ def funcFlipLR_Upsampling(Params, im , mask):
 
     return im , mask
 
-
-
 def readingImages(Params , subFolders,sFi):
 
     # for sFi in range(len(subFolders)):

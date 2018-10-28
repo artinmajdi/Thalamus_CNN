@@ -360,6 +360,7 @@ def ReadingTestImage(Params,subFolders):
         # TestImage , Params = funcCropping_FromThalamus(TestImage , mskTh , Params)
 
         try:
+            print('-------subFolders',subFolders)
             mskTh = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/Test/Results/' + subFolders[sFi] +'_1-THALAMUS_Logical.nii.gz').get_data()
             im , mask , SliceNumbers = funcCropping_FromThalamus(im , mask , mskTh)
         except:

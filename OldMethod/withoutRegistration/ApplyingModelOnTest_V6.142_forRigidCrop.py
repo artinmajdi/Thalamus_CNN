@@ -464,7 +464,7 @@ def saveImageDice(label , Params , pred , pred_Lgc , subFolders):
     diceF[0] = DiceCoefficientCalculator(output_Lgc,labelF)
     np.savetxt(Params['Dir_ResultsOut'] + 'DiceCoefficientF.txt',diceF)
 
-savingThalamusPredOnTrainData = 1
+savingThalamusPredOnTrainData = 0
 UserEntries = input_GPU_Ix()
 
 for ind in UserEntries['IxNuclei']:
@@ -525,14 +525,6 @@ for ind in UserEntries['IxNuclei']:
                     Params['Dir_NucleiTrainSamples']  = mkDir( Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Train/')
                     Params['Dir_NucleiTestSamples']   = Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Test/'
                 else:
-                    print('^%$%&%^$#%^$^%&^%&#$^$&%^%&%^&%^&%$&%^')
-                    print('^%$%&%^$#%^$^%&^%&#$^$&%^%&%^&%^&%$&%^')
-                    print('^%$%&%^$#%^$^%&^%&#$^$&%^%&%^&%^&%$&%^')
-                    print('^%$%&%^$#%^$^%&^%&#$^$&%^%&%^&%^&%$&%^')
-                    print('^%$%&%^$#%^$^%&^%&#$^$&%^%&%^&%^&%$&%^')
-                    print('^%$%&%^$#%^$^%&^%&#$^$&%^%&%^&%^&%$&%^')
-                    print('^%$%&%^$#%^$^%&^%&#$^$&%^%&%^&%^&%$&%^')
-
                     Params['Dir_NucleiTrainSamples']  = mkDir(Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/TestCases/' + subFolders[sFi] + '/Train/')
                     Params['Dir_NucleiTestSamples']   = Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/TestCases/' + subFolders[sFi] + '/Test/'
 

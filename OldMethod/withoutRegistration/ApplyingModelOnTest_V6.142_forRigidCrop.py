@@ -490,7 +490,7 @@ for ind in UserEntries['IxNuclei']:
         # subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
         if UserEntries['testmode'] == 'onetrain':
 
-            if savingThalamusPredOnTrainData == 1:
+            if (savingThalamusPredOnTrainData == 1) && ('1-THALAMUS' in Params['NucleusName']):
                 subFolders = subFoldersFunc( Params['Dir_Prior'] )
             else:
                 subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/TestCases/')
@@ -520,11 +520,19 @@ for ind in UserEntries['IxNuclei']:
                 Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + 'Train/'
 
             elif UserEntries['testmode'] == 'onetrain':
-                if savingThalamusPredOnTrainData == 1:
+                if (savingThalamusPredOnTrainData == 1) && ('1-THALAMUS' in Params['NucleusName']):
                     subFolders = subFoldersFunc( Params['Dir_Prior'] )
                     Params['Dir_NucleiTrainSamples']  = mkDir( Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Train/')
                     Params['Dir_NucleiTestSamples']   = Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Test/'
                 else:
+                    print('^%$%&%^$#%^$^%&^%&#$^$&%^%&%^&%^&%$&%^')
+                    print('^%$%&%^$#%^$^%&^%&#$^$&%^%&%^&%^&%$&%^')
+                    print('^%$%&%^$#%^$^%&^%&#$^$&%^%&%^&%^&%$&%^')
+                    print('^%$%&%^$#%^$^%&^%&#$^$&%^%&%^&%^&%$&%^')
+                    print('^%$%&%^$#%^$^%&^%&#$^$&%^%&%^&%^&%$&%^')
+                    print('^%$%&%^$#%^$^%&^%&#$^$&%^%&%^&%^&%$&%^')
+                    print('^%$%&%^$#%^$^%&^%&#$^$&%^%&%^&%^&%$&%^')
+
                     Params['Dir_NucleiTrainSamples']  = mkDir(Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/TestCases/' + subFolders[sFi] + '/Train/')
                     Params['Dir_NucleiTestSamples']   = Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/TestCases/' + subFolders[sFi] + '/Test/'
 

@@ -310,7 +310,7 @@ for ind in UserEntries['IxNuclei']: # [1,2,8,9,10,13]:
             predictionMV[:,:,:] = Prediction2 > 2-Er
             Dice[sFi,len(A)] = DiceCoefficientCalculator(Label > 0.5 ,predictionMV)
             np.savetxt(Dir_SaveMWFld + Params['NeucleusFolder'] + '/' + 'DiceCoefsAll_' + reslt + '.txt',100*Dice, fmt='%2.1f')
-            print(str(sFi) + ': ' + str(subFolders[sFi]).split('vimp2_')[1] , 'MW Dice: ' , Dice[sFi,len(A)])
+            print(str(sFi) + ': ' + str(subFolders[sFi]).split('vimp2_')[1] , 'MW Dice: ' , Dice[sFi,:])
             # np.savetxt(Dir_SaveMWFld + Params['NeucleusFolder'] + '/' + 'DiceCoefsAll_' + reslt + '.txt',100*Dice, fmt='%2.1f')
 
 

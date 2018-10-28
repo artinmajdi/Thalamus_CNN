@@ -358,7 +358,7 @@ def ReadingTestImage(Params,subFolders):
     else:
         # try:
         mskTh = nib.load(Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN/' + Params['TestName'] + '/OneTrain_MultipleTest' + '/TestCases/' + subFolders[sFi] + '/Test/Results/' + subFolders[sFi] + '_1-THALAMUS' + '_Logical.nii.gz').get_data()
-        TestImage , Params = funcCropping_FromThalamus(TestImage , mskTh , Params))
+        TestImage , Params = funcCropping_FromThalamus(TestImage , mskTh , Params)
         # except:
         #     print('************************************************************')
         #     print(' -------------- unable to read full thalamus -------------- ')

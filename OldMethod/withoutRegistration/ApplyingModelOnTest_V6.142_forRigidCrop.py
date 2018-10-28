@@ -292,7 +292,7 @@ def funcCropping_FromThalamus(im , CropMask, Params):
     Params['SliceNumbers'] = range(SN[0],SN[1])
 
     Params['CropDim'] = np.array([d1 , d2 , [SN[0],SN[1]] ])
-    im = im[ d1[0]:d1[1],d2[0]:d2[1],SliceNumbers ] # Params['SliceNumbers']]
+    im = im[ d1[0]:d1[1],d2[0]:d2[1],Params['SliceNumbers'] ] # Params['SliceNumbers']]
 
     return im , Params
 

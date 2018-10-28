@@ -361,7 +361,7 @@ def ReadingTestImage(Params,subFolders):
 
         try:
             print('-------subFolders',subFolders)
-            mskTh = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/Test/Results/' + subFolders +'_1-THALAMUS_Logical.nii.gz').get_data()
+            mskTh = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/Test/Results/' + subFolders +'_1-THALAMUS_Logical.nii.gz').get_data()
             im , mask , SliceNumbers = funcCropping_FromThalamus(im , mask , mskTh)
         except:
             print('*************** unable to read full thalamus ***************')

@@ -358,14 +358,13 @@ def ReadingTestImage(Params,subFolders):
         # mskTh = nib.load(Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN/' + Params['TestName'] + '/OneTrain_MultipleTest' + '/TestCases/' + subFolders + '/Test/Results/' + subFolders[sFi] + '_1-THALAMUS' + '_Logical.nii.gz').get_data()
         # TestImage , Params = funcCropping_FromThalamus(TestImage , mskTh , Params)
 
-        try:
-            print('-------subFolders',subFolders)
-            mskTh = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/Test/Results/' + subFolders +'_1-THALAMUS_Logical.nii.gz').get_data()
-            TestImage , Params = funcCropping_FromThalamus(TestImage , mskTh, Params)
-        except:
-            print('*************** unable to read full thalamus ***************')
-            CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + 'MyCrop.nii.gz').get_data()
-            TestImage , Params = funcCropping(TestImage , CropMask, Params)
+        # try:
+        mskTh = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/Test/Results/' + subFolders +'_1-THALAMUS_Logical.nii.gz').get_data()
+        TestImage , Params = funcCropping_FromThalamus(TestImage , mskTh, Params)
+        # except:
+        #     print('*************** unable to read full thalamus ***************')
+        #     CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + 'MyCrop.nii.gz').get_data()
+        #     TestImage , Params = funcCropping(TestImage , CropMask, Params)
 
 
 

@@ -296,7 +296,6 @@ def funcCropping_FromThalamus(im , CropMask, Params):
 
     return im , Params
 
-
 def funcCropping(im , CropMask, Params):
     ss = np.sum(CropMask,axis=2)
     c1 = np.where(np.sum(ss,axis=1) > 10)[0]
@@ -362,11 +361,11 @@ def ReadingTestImage(Params,subFolders):
         try:
             print('-------subFolders',subFolders)
             mskTh = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/Test/Results/' + subFolders +'_1-THALAMUS_Logical.nii.gz').get_data()
-            im , mask , SliceNumbers = funcCropping_FromThalamus(im , mask , mskTh)
+            TestImage , Params = funcCropping_FromThalamus(TestImage , mskTh, Params)
         except:
             print('*************** unable to read full thalamus ***************')
             CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + 'MyCrop.nii.gz').get_data()
-            im , mask , SliceNumbers = funcCropping(im , mask , CropMask)
+            TestImage , Params = funcCropping(TestImage , CropMask, Params)
 
 
 

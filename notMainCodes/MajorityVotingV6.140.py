@@ -133,10 +133,10 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'new
     Params['registrationFlag'] = 0
 
 
-    if Params['registrationFlag'] == 1:
-        Params['SliceNumbers'] = SliceNumbers
-    else:
-        Params['SliceNumbers'] = range(129,251)
+    # if Params['registrationFlag'] == 1:
+    #     Params['SliceNumbers'] = SliceNumbers
+    # else:
+    #     Params['SliceNumbers'] = range(129,251)
 
     return Params
 
@@ -259,7 +259,7 @@ for ind in UserEntries['IxNuclei']: # [1,2,8,9,10,13]:
             if Params['registrationFlag'] == 1:
                 Directory_Nuclei_Label = Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz'
             else:
-                Directory_Nuclei_Label = Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_US.nii.gz'
+                Directory_Nuclei_Label = Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '.nii.gz'
 
 
             Label = nib.load(Directory_Nuclei_Label)

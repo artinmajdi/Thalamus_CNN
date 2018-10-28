@@ -356,16 +356,16 @@ def ReadingTestImage(Params,subFolders):
         CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + 'MyCrop.nii.gz').get_data()
         TestImage , Params = funcCropping(TestImage , CropMask , Params)
     else:
-        # mskTh = nib.load(Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN/' + Params['TestName'] + '/OneTrain_MultipleTest' + '/TestCases/' + subFolders[sFi] + '/Test/Results/' + subFolders[sFi] + '_1-THALAMUS' + '_Logical.nii.gz').get_data()
+        # mskTh = nib.load(Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN/' + Params['TestName'] + '/OneTrain_MultipleTest' + '/TestCases/' + subFolders + '/Test/Results/' + subFolders[sFi] + '_1-THALAMUS' + '_Logical.nii.gz').get_data()
         # TestImage , Params = funcCropping_FromThalamus(TestImage , mskTh , Params)
 
         try:
             print('-------subFolders',subFolders)
-            mskTh = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/Test/Results/' + subFolders[sFi] +'_1-THALAMUS_Logical.nii.gz').get_data()
+            mskTh = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/Test/Results/' + subFolders +'_1-THALAMUS_Logical.nii.gz').get_data()
             im , mask , SliceNumbers = funcCropping_FromThalamus(im , mask , mskTh)
         except:
             print('*************** unable to read full thalamus ***************')
-            CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + 'MyCrop.nii.gz').get_data()
+            CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + 'MyCrop.nii.gz').get_data()
             im , mask , SliceNumbers = funcCropping(im , mask , CropMask)
 
 

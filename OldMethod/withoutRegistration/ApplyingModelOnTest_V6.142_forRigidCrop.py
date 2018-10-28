@@ -542,11 +542,11 @@ for ind in UserEntries['IxNuclei']:
 
 
             Params['Dir_NucleiModelOut'] = mkDir(Params['Dir_NucleiTrainSamples'] + Params['modelName'])
-            print('-------------------------------------------------------')
-            print('-------------------------------------------------------')
-            print('Dir_NucleiTrainSamples',Params['Dir_NucleiTrainSamples'])
-            print('Dir_NucleiModelOut',Params['Dir_NucleiModelOut'])
-            print('modelName',Params['modelName'])
+            # print('-------------------------------------------------------')
+            # print('-------------------------------------------------------')
+            # print('Dir_NucleiTrainSamples',Params['Dir_NucleiTrainSamples'])
+            # print('Dir_NucleiModelOut',Params['Dir_NucleiModelOut'])
+            # print('modelName',Params['modelName'])
 
 
             Params['Dir_ResultsOut'] = mkDir(Params['Dir_NucleiTestSamples']  + Params['resultName'])

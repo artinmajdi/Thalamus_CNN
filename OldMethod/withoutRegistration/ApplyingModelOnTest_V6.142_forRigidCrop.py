@@ -464,7 +464,7 @@ def saveImageDice(label , Params , pred , pred_Lgc , subFolders):
     diceF[0] = DiceCoefficientCalculator(output_Lgc,labelF)
     np.savetxt(Params['Dir_ResultsOut'] + 'DiceCoefficientF.txt',diceF)
 
-
+savingThalamusPredOnTrainData = 1
 UserEntries = input_GPU_Ix()
 
 for ind in UserEntries['IxNuclei']:
@@ -489,7 +489,12 @@ for ind in UserEntries['IxNuclei']:
 
         # subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld)
         if UserEntries['testmode'] == 'onetrain':
-            subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/TestCases/')
+
+            if savingThalamusPredOnTrainData == 1:
+                subFolders = subFoldersFunc( Params['Dir_Prior'] )
+            else:
+                subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/TestCases/')
+
         else:
             subFolders = subFoldersFunc(Params['Dir_Prior'])
 
@@ -515,8 +520,13 @@ for ind in UserEntries['IxNuclei']:
                 Params['Dir_NucleiTrainSamples'] = Dir_AllTests_Nuclei_EnhancedFld + 'Train/'
 
             elif UserEntries['testmode'] == 'onetrain':
-                Params['Dir_NucleiTrainSamples']  = mkDir(Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/TestCases/' + subFolders[sFi] + '/Train/')
-                Params['Dir_NucleiTestSamples']   = Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/TestCases/' + subFolders[sFi] + '/Test/'
+                if savingThalamusPredOnTrainData == 1:
+                    subFolders = subFoldersFunc( Params['Dir_Prior'] )
+                    Params['Dir_NucleiTrainSamples']  = mkDir( Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Train/')
+                    Params['Dir_NucleiTestSamples']   = Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Test/'
+                else:
+                    Params['Dir_NucleiTrainSamples']  = mkDir(Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/TestCases/' + subFolders[sFi] + '/Train/')
+                    Params['Dir_NucleiTestSamples']   = Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/TestCases/' + subFolders[sFi] + '/Test/'
 
             elif UserEntries['testmode'] == 'normal':
                 Params['Dir_NucleiTestSamples']  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Test/'
@@ -583,21 +593,12 @@ for ind in UserEntries['IxNuclei']:
                 copyPreviousModel( Params['restorePath'], Params['Dir_NucleiModelOut'] )
                 pred , pred_Lgc = testFunc(Params)
 
-                # Params['CropDim'] = [d1 , d2 , SliceNumbers]
-                # im = im[ d1[0]:d1[1],d2[0]:d2[1],SliceNumbers ] # Params['SliceNumbers']]
-
-                p1 = Params['padding'][0] # [75,76]
-                p2 = Params['padding'][1] # [60,61]
-                # print('----pred.shape---',pred.shape)
-                # print('p1',p1,'p2',p2)
-                # Params['padding'] = np.array([p1 , p2])
-                # im = np.pad(im,( (p1[0],p1[1]),(p2[0],p2[1]),(0,0) ),'constant' )
+                p1 = Params['padding'][0]
+                p2 = Params['padding'][1]
 
                 pred     =     pred[  p1[0]-45:148-(p1[1]-45) , p2[0]-45:148-(p2[1]-45) , :  ]
                 pred_Lgc = pred_Lgc[  p1[0]-45:148-(p1[1]-45) , p2[0]-45:148-(p2[1]-45) , :  ]
-                # print('----pred.shape---',pred.shape)
-                # imD_padded = np.pad(imD2,( (p1[0],p1[1]),(p2[0],p2[1]),(0,0) ),'constant' )
-                # maskD_padded = np.pad(maskD2,( (p1[0],p1[1]),(p2[0],p2[1]),(0,0) ),'constant' )
+
 
 
 

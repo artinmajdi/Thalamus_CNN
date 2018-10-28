@@ -398,7 +398,7 @@ def readingImages(Params , subFolders,sFi):
         im , mask , SliceNumbers = funcCropping(im , mask , CropMask)
     else:
         # try:
-        mskTh = nib.load(Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN/' + Params['TestName'] + '/OneTrain_MultipleTest' + '/TestCases/' + subFolders[sFi] + '/Test/Results/' + subFolders[sFi] + '_1-THALAMUS' + '_Logical.nii.gz').get_data()
+        mskTh = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/Test/Results/' + subFolders[sFi] +'_1-THALAMUS_Logical.nii.gz').get_data()
         im , mask , SliceNumbers = funcCropping_FromThalamus(im , mask , mskTh)
         # except:
         #     print('************************************************************')

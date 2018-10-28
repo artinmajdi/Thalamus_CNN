@@ -304,6 +304,26 @@ def funcNormalize(im):
     im = np.float32(im)
     return ( im-im.min() )/( im.max() - im.min() )
 
+def funcCropping_FromThalamus(im , mask , CropMask):
+    ss = np.sum(CropMask,axis=2)
+    c1 = np.where(np.sum(ss,axis=1) > 1)[0]
+    c2 = np.where(np.sum(ss,axis=0) > 1)[0]
+    ss = np.sum(CropMask,axis=1)
+    c3 = np.where(np.sum(ss,axis=0) > 1)[0]
+
+    gap = 5
+    gap2 = 2
+    d1 = [  c1[0]-gap  , c1[ c1.shape[0]-1 ]+gap   ]
+    d2 = [  c2[0]-gap  , c2[ c2.shape[0]-1 ]+gap   ]
+    SN = [  c3[0]-gap2 , c3[ c3.shape[0]-1 ]+gap2  ]
+    SliceNumbers = range(SN[0],SN[1])
+
+
+    im = im[ d1[0]:d1[1],d2[0]:d2[1],SliceNumbers ] # Params['SliceNumbers']]
+    mask = mask[ d1[0]:d1[1],d2[0]:d2[1],SliceNumbers ] # Params['SliceNumbers']]
+
+    return im , mask , SliceNumbers
+
 def funcCropping(im , mask , CropMask):
     ss = np.sum(CropMask,axis=2)
     c1 = np.where(np.sum(ss,axis=1) > 10)[0]
@@ -368,14 +388,26 @@ def readingImages(Params , subFolders,sFi):
 
     maskF = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + Params['Name_priors_San_Label'])
     mask  = maskF.get_data()
-    CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + 'MyCrop.nii.gz').get_data()
     imF   = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName )
     im    = imF.get_data()
 
     im = funcNormalize( im )
 
+    if '1-THALAMUS' in Params['NucleusName']:
+        CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + 'MyCrop.nii.gz').get_data()
+        im , mask , SliceNumbers = funcCropping(im , mask , CropMask)
+    else:
+        # try:
+        mskTh = nib.load(Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN/' + Params['TestName'] + '/OneTrain_MultipleTest' + '/TestCases/' + subFolders[sFi] + '/Test/Results/' + subFolders[sFi] + '_1-THALAMUS' + '_Logical.nii.gz').get_data()
+        im , mask , SliceNumbers = funcCropping_FromThalamus(im , mask , mskTh)
+        # except:
+        #     print('************************************************************')
+        #     print(' -------------- unable to read full thalamus -------------- ')
+        #     CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + 'MyCrop.nii.gz').get_data()
+        #     im , mask , SliceNumbers = funcCropping(im , mask , CropMask)
 
-    im , mask , SliceNumbers = funcCropping(im , mask , CropMask)
+
+
 
     im , mask = funcFlipLR_Upsampling(Params, im , mask)
     # if 'Unlabeled' in Params['dataset']:

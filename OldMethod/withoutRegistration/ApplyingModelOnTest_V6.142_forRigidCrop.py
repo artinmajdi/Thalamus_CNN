@@ -492,7 +492,7 @@ for ind in UserEntries['IxNuclei']:
 
             if (savingThalamusPredOnTrainData == 1) & ('1-THALAMUS' in Params['NucleusName']):
                 subFolders = subFoldersFunc( Params['Dir_Prior'] )
-                subFolders = subFolders[:5]
+                # subFolders = subFolders[:5]
             else:
                 subFolders = subFoldersFunc(Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/TestCases/')
 

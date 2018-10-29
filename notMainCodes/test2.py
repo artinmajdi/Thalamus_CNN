@@ -3,6 +3,22 @@ import numpy as np
 import nibabel as nib
 import tifffile
 
+
+
+dir = '/media/data1/artin/thomas/origtemplate.nii.gz'
+im = nib.load(dir)
+
+mask = np.zeros(im.shape)
+
+gap = 15
+gap2 = 2
+mask[92-gap:126+gap,164-gap2:226+gap2, 105-gap:142+gap] = 1
+
+maskF2 = nib.Nifti1Image(mask,im.affine)
+maskF2.get_header = im.header
+nib.save(maskF2,'/media/data1/artin/code/Thalamus_CNN/notMainCodes/RigidRegistration/MyCrop_Template2_Gap15.nii.gz' )
+
+
 def funcNormalize(im):
     # return (im-im.mean())/im.std()
     im = np.float32(im)

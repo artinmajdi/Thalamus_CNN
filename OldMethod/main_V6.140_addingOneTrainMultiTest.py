@@ -264,7 +264,7 @@ def input_GPU_Ix():
             if 1 in UserEntries['IxNuclei']:
                 UserEntries['init'] = 0
             else:
-                UserEntries['init'] = 0
+                UserEntries['init'] = 1
 
 
     return UserEntries

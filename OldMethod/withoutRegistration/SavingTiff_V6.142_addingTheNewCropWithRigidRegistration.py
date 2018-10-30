@@ -394,7 +394,6 @@ def readingImages(Params , subFolders,sFi):
     im = funcNormalize( im )
 
     if '1-THALAMUS' in Params['NucleusName']:
-        print('--------------MyCrop2_Gap20')
         CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + 'MyCrop2_Gap20.nii.gz').get_data()
         im , mask , SliceNumbers = funcCropping(im , mask , CropMask)
     else:

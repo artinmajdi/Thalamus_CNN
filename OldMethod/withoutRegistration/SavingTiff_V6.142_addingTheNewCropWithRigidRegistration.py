@@ -304,15 +304,17 @@ def funcNormalize(im):
     im = np.float32(im)
     return ( im-im.min() )/( im.max() - im.min() )
 
-def funcCropping_FromThalamus(im , mask , CropMask):
+def funcCropping_FromThalamus(im , mask , CropMaskTh , CropMask):
+
     ss = np.sum(CropMask,axis=2)
     c1 = np.where(np.sum(ss,axis=1) > 1)[0]
     c2 = np.where(np.sum(ss,axis=0) > 1)[0]
-    ss = np.sum(CropMask,axis=1)
+
+    ss = np.sum(CropMaskTh,axis=1)
     c3 = np.where(np.sum(ss,axis=0) > 1)[0]
 
-    gap = 20
-    gap2 = 2
+    gap = 0
+    gap2 = 1
     d1 = [  c1[0]-gap  , c1[ c1.shape[0]-1 ]+gap   ]
     d2 = [  c2[0]-gap  , c2[ c2.shape[0]-1 ]+gap   ]
     SN = [  c3[0]-gap2 , c3[ c3.shape[0]-1 ]+gap2  ]
@@ -390,19 +392,18 @@ def readingImages(Params , subFolders,sFi):
     mask  = maskF.get_data()
     imF   = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName )
     im    = imF.get_data()
-
+    CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + 'MyCrop2_Gap20.nii.gz').get_data()
     im = funcNormalize( im )
 
     if '1-THALAMUS' in Params['NucleusName']:
-        CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + 'MyCrop2_Gap20.nii.gz').get_data()
+
         im , mask , SliceNumbers = funcCropping(im , mask , CropMask)
     else:
         try:
             mskTh = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/Test/Results/' + subFolders[sFi] +'_1-THALAMUS_Logical.nii.gz').get_data()
-            im , mask , SliceNumbers = funcCropping_FromThalamus(im , mask , mskTh)
+            im , mask , SliceNumbers = funcCropping_FromThalamus(im , mask , mskTh , CropMask)
         except:
             print('*************** unable to read full thalamus ***************')
-            CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + 'MyCrop2_Gap20.nii.gz').get_data()
             im , mask , SliceNumbers = funcCropping(im , mask , CropMask)
 
 

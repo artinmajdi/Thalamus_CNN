@@ -277,15 +277,16 @@ def funcNormalize(im):
     im = np.float32(im)
     return ( im-im.min() )/( im.max() - im.min() )
 
-def funcCropping_FromThalamus(im , CropMask, Params):
+def funcCropping_FromThalamus(im ,  CropMaskTh , CropMask, Params):
     ss = np.sum(CropMask,axis=2)
     c1 = np.where(np.sum(ss,axis=1) > 1)[0]
     c2 = np.where(np.sum(ss,axis=0) > 1)[0]
-    ss = np.sum(CropMask,axis=1)
+
+    ss = np.sum(CropMaskTh,axis=1)
     c3 = np.where(np.sum(ss,axis=0) > 1)[0]
 
-    gap = 10
-    gap2 = 2
+    gap = 0
+    gap2 = 1
     d1 = [  c1[0]-gap  , c1[ c1.shape[0]-1 ]+gap   ]
     d2 = [  c2[0]-gap  , c2[ c2.shape[0]-1 ]+gap   ]
     SN = [  c3[0]-gap2 , c3[ c3.shape[0]-1 ]+gap2  ]
@@ -349,10 +350,9 @@ def ReadingTestImage(Params,subFolders):
 
     TestImage = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + Params['TestName'].split('Test_')[1] + '.nii.gz').get_data()
     TestImage = funcNormalize( TestImage )
-
+    CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + 'MyCrop2_Gap20.nii.gz').get_data()
 
     if '1-THALAMUS' in Params['NucleusName']:
-        CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + 'MyCrop2_Gap20.nii.gz').get_data()
         TestImage , Params = funcCropping(TestImage , CropMask , Params)
     else:
         # mskTh = nib.load(Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN/' + Params['TestName'] + '/OneTrain_MultipleTest' + '/TestCases/' + subFolders + '/Test/Results/' + subFolders[sFi] + '_1-THALAMUS' + '_Logical.nii.gz').get_data()
@@ -360,10 +360,10 @@ def ReadingTestImage(Params,subFolders):
 
         try:
             mskTh = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/Test/Results/' + subFolders +'_1-THALAMUS_Logical.nii.gz').get_data()
-            TestImage , Params = funcCropping_FromThalamus(TestImage , mskTh, Params)
+            TestImage , Params = funcCropping_FromThalamus(TestImage , mskTh , CropMask , Params)
         except:
             print('*************** unable to read full thalamus ***************')
-            CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + 'MyCrop2_Gap20.nii.gz').get_data()
+
             TestImage , Params = funcCropping(TestImage , CropMask, Params)
 
 

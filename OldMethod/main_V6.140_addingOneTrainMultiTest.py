@@ -224,7 +224,7 @@ def input_GPU_Ix():
         elif input.split('=')[0] == 'mode':
             UserEntries['mode'] = input.split('=')[1]
         elif 'init' in input:
-            UserEntries['init'] = 1
+            UserEntries['init'] = 0
 
         elif 'onetrain_testIndexes' in input:
             UserEntries['testmode'] = 'onetrain'
@@ -264,7 +264,7 @@ def input_GPU_Ix():
             if 1 in UserEntries['IxNuclei']:
                 UserEntries['init'] = 0
             else:
-                UserEntries['init'] = 1
+                UserEntries['init'] = 0
 
 
     return UserEntries

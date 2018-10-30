@@ -312,7 +312,7 @@ def funcCropping_FromThalamus(im , mask , CropMask):
     c3 = np.where(np.sum(ss,axis=0) > 1)[0]
 
     gap = 20
-    gap2 = 3
+    gap2 = 2
     d1 = [  c1[0]-gap  , c1[ c1.shape[0]-1 ]+gap   ]
     d2 = [  c2[0]-gap  , c2[ c2.shape[0]-1 ]+gap   ]
     SN = [  c3[0]-gap2 , c3[ c3.shape[0]-1 ]+gap2  ]

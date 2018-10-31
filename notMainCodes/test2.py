@@ -10,13 +10,13 @@ im = nib.load(dir)
 
 mask = np.zeros(im.shape)
 
-gap = 15
+gap = 20
 gap2 = 2
 mask[92-gap:126+gap,164-gap2:226+gap2, 105-gap:142+gap] = 1
 
 maskF2 = nib.Nifti1Image(mask,im.affine)
 maskF2.get_header = im.header
-nib.save(maskF2,'/media/data1/artin/code/Thalamus_CNN/notMainCodes/RigidRegistration/MyCrop_Template2_Gap15.nii.gz' )
+nib.save(maskF2,'/media/data1/artin/code/Thalamus_CNN/notMainCodes/RigidRegistration/MyCrop_Template2_Gap20.nii.gz' )
 
 
 def funcNormalize(im):
@@ -67,51 +67,3 @@ mask[ d1[0]-gap:d1[1]+gap,d2[0]-gap:d2[1]+gap,SliceNumbers] = 1
 maskF2 = nib.Nifti1Image(mask,Thalamus.affine)
 maskF2.get_header = Thalamus.header
 nib.save(maskF2,'/media/data1/artin/Results/mask_from_Thalamus.nii.gz' )
-
-
-
-
-
-
-
-im      = funcNormalize( imF.get_data() )
-
-im , mask = cropDimensions(im , mask , CropMask)
-
-
-for i in range(mask.shape[2]):
-    mask[...,i] = np.fliplr(mask[...,i])
-    im[...,i] = np.fliplr(im[...,i])
-
-
-sz = mask.shape
-df = 238 - sz[0]
-p1 = [int(df/2) , df - int(df/2)]
-
-df = 238 - sz[1]
-p2 = [int(df/2) , df - int(df/2)]
-
-imD_padded = np.pad(im,( (p1[0],p1[1]),(p2[0],p2[1]),(0,0) ),'constant' )
-maskD_padded = np.pad(mask,( (p1[0],p1[1]),(p2[0],p2[1]),(0,0) ),'constant' )
-
-maskD_padded.shape
-
-slc = 80
-fig , ax = plt.subplots(1,3)
-ax[0].imshow(imD[...,slc],cmap='gray')
-ax[1].imshow(maskD[...,slc],cmap='gray')
-ax[2].imshow(CropMask[...,slc],cmap='gray')
-plt.show()
-
-
-
-
-a = np.zeros((238,238,46))
-b = np.zeros((238,238,49))
-
-np.concatenate((a,b),axis=2).shape
-
-
-
-
-a = [5,4,1,-2]

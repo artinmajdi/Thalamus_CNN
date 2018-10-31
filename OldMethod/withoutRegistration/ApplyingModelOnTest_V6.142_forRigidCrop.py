@@ -466,7 +466,7 @@ def saveImageDice(label , Params , pred , pred_Lgc , subFolders):
     diceF[0] = DiceCoefficientCalculator(output_Lgc,labelF)
     np.savetxt(Params['Dir_ResultsOut'] + 'DiceCoefficientF.txt',diceF)
 
-savingThalamusPredOnTrainData = 1
+savingThalamusPredOnTrainData = 0
 UserEntries = input_GPU_Ix()
 
 for ind in UserEntries['IxNuclei']:

@@ -443,7 +443,7 @@ def readingImages(Params , subFolders,sFi):
     im = funcNormalize( im )
 
 
-    if 0 not in Params['AugmentingIndex']:
+    if Params['AugmentingIndex'] != 0:
         im, mask, CropMask = funcRotating(im, mask, CropMask)
 
     im , mask , SliceNumbers  = funcCroppingMain(Params, im , mask , CropMask, subFolders, sFi)
@@ -458,7 +458,7 @@ def readingImages(Params , subFolders,sFi):
     #     nib.save(imF2,Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + inputName.split('.nii.gz')[0] + '_US.nii.gz' )
     imD_padded, maskD_padded = funcPadding(im, mask)
 
-    if 0 not in Params['AugmentingIndex']:
+    if Params['AugmentingIndex'] != 0::
         imD_padded, maskD_padded = funcShifting(imD_padded, maskD_padded)
 
     return imD_padded, maskD_padded, SliceNumbers

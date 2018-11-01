@@ -7,6 +7,7 @@ import pickle
 from PIL import ImageEnhance , Image , ImageFilter
 import sys
 from scipy import ndimage
+from scipy.misc import imrotate
 
 A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
 
@@ -494,6 +495,7 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
                 L = AugmentingNum+1
 
             for Ag in range(L):
+                print('AugmentingIndex', str(Params['Augmentation'])+'/'+str(L))
                 Params['AugmentingIndex'] = Ag
                 imD_padded, maskD_padded, SliceNumbers = readingImages(Params , subFolders,sFi)
                 Params['SliceNumbers'] = SliceNumbers

@@ -351,7 +351,7 @@ for ind in UserEntries['IxNuclei']:
                 Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=cost_kwargs) # , cost="dice_coefficient"
             else:
                 cost_kwargs = {'learning_rate':1e-3}
-                Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=cost_kwargs) # , cost="dice_coefficient"
+                Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , optimizer= "adam", cost_kwargs=cost_kwargs) # , cost="dice_coefficient"
 
 
 

@@ -283,7 +283,7 @@ def normal_Cross_Validation(Params , subFolders , imFull , mskFull, ii):
 
 def OneTrain_MultipleTest(UserEntries , Params , subFolders,imD_padded,maskD_padded, ii, sFi):
 
-    if 0 in Params['AugmentingIndex']:
+    if Params['AugmentingIndex'] == 0:
         Nm = '.tif'
         MsNm = '_mask.tif'
     else:

@@ -10,7 +10,7 @@ range(1,10,2)
 def MyTranspose(dir,order):
     im = nib.load(dir)
     im2   = np.transpose(im.get_data(),[0,2,1])
-    im2 = ndimage.zoom(im2,(1,1,0.5),order=order)
+    # im2 = ndimage.zoom(im2,(1,1,0.5),order=order)
     # im2 = im2[...,range(0,im.shape[2],2)]
 
     im2 = nib.Nifti1Image(im2,im.affine)
@@ -21,13 +21,14 @@ def MyTranspose(dir,order):
     return im2
 
 
-im = MyTranspose('/media/data1/artin/vimp2_Test_964_08092013_TG/WMnMPRAGE_bias_corr.nii.gz',3)
-crop = MyTranspose('/media/data1/artin/vimp2_Test_964_08092013_TG/MyCrop2_Gap20.nii.gz',0)
-mask = MyTranspose('/media/data1/artin/vimp2_Test_964_08092013_TG/Manual_Delineation_Sanitized/1-THALAMUS.nii.gz',0)
+im = MyTranspose('/media/data1/artin/vimp2_Test_ANON724_03272013/WMnMPRAGE_bias_corr.nii.gz',3)
+crop = MyTranspose('/media/data1/artin/vimp2_Test_ANON724_03272013/MyCrop2_Gap20.nii.gz',0)
+mask = MyTranspose('/media/data1/artin/vimp2_Test_ANON724_03272013/Manual_Delineation_Sanitized/1-THALAMUS.nii.gz',0)
 
 
 im = nib.load('/media/data1/artin/vimp2_Test_964_08092013_TG/WMnMPRAGE_bias_corr.nii.gz')
-im2 = nib.load('/media/data1/artin/thomas/priors/Unlabeled/vimp2_804_06042014/WMnMPRAGE_bias_corr.nii.gz')
+im2 = nib.load('/media/data1/artin/thomas/priors/Unlabeled/vimp2_804_06042014
+               /WMnMPRAGE_bias_corr.nii.gz')
 im2.shape
 fig,axs = plt.subplots(1,2)
 axs[0].imshow(im.get_data()[...,200],cmap='gray')

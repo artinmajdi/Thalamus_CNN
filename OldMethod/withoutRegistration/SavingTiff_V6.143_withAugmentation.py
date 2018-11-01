@@ -434,7 +434,7 @@ def readingImages(Params , subFolders,sFi):
     if Params['registrationFlag'] == 1:
         inputName = inputName + '_Deformed'
 
-    print('Reading Images:  ',Params['NucleusName'],inputName.split('nii.gz')[0] , str(sFi) + ' ' + subFolders[sFi])
+    print('Reading Images:  ',Params['NucleusName'],inputName.split('nii.gz')[0] , str(sFi) + ' ' + subFolders[sFi] , str(Params['AugmentingIndex'])+'/'+str(L))
 
     maskF = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + Params['Name_priors_San_Label'])
     mask  = maskF.get_data()
@@ -496,7 +496,6 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
             for Ag in range(L):
                 Params['AugmentingIndex'] = Ag
-                print('         Augmentation', str(Params['AugmentingIndex'])+'/'+str(L))
                 imD_padded, maskD_padded, SliceNumbers = readingImages(Params , subFolders,sFi)
                 Params['SliceNumbers'] = SliceNumbers
 

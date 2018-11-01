@@ -289,7 +289,7 @@ def OneTrain_MultipleTest(UserEntries , Params , subFolders,imD_padded,maskD_pad
         MsNm = '_mask.tif'
     else:
         Nm = '_' + str(Params['AugmentingIndex']) + '.tif'
-        MsNm = '_mask_' + str(Params['AugmentingIndex']) + '.tif'
+        MsNm = '_' + str(Params['AugmentingIndex']) + '_mask.tif'
 
 
     if sFi in UserEntries['onetrain_testIndexes']:

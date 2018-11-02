@@ -292,17 +292,17 @@ for ind in UserEntries['IxNuclei']:
         if UserEntries['init']:
             if 'Unlabeled' in UserEntries['dataset']:
                 if 'onetrain' in UserEntries['testmode']:
-                    Params['restorePath'] = Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN' + '/' + TestName + '/' + 'OneTrain_MultipleTest' + '/Train/' + 'model/' # Params['modelName']
+                    Params['restorePath'] = Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN' + '/' + TestName + '/' + 'OneTrain_MultipleTest' + '/Train/' + Params['modelName'] #  'model/' #
                 else:
-                    Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_901_07052013_AS' + '/Train/' + 'model/' # Params['modelName']
+                    Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_901_07052013_AS' + '/Train/' + Params['modelName'] #  'model/' #
             else:
                 if 'onetrain' in UserEntries['testmode']:
-                    Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'OneTrain_MultipleTest' + '/Train/' + 'model/' # Params['modelName']
+                    Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'OneTrain_MultipleTest' + '/Train/' + Params['modelName'] #  'model/' #
                 else:
-                    Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_1519_04212015' + '/Train/' + 'model/' # Params['modelName']
+                    Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_1519_04212015' + '/Train/' + Params['modelName'] #  'model/' #
 
             # if 'onetrain' in UserEntries['testmode'] and 'Unlabeled' in UserEntries['dataset']:
-            #     Params['restorePath'] = Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN' + '/' + TestName + '/' + 'OneTrain_MultipleTest' + '/Train/' + 'model/' # Params['modelName']
+            #     Params['restorePath'] = Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN' + '/' + TestName + '/' + 'OneTrain_MultipleTest' + '/Train/' + Params['modelName'] #  'model/' # 
 
 
         if 'onetrain' in UserEntries['testmode'] and 'Unlabeled' in UserEntries['dataset']:

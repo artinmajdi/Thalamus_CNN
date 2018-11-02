@@ -241,7 +241,7 @@ for ind in UserEntries['IxNuclei']: # [1,2,8,9,10,13]:
     else:
         subFolders = subFolderList( Params['Dir_AllTests'] + '/' + Params['NeucleusFolder'] + '/Test_WMnMPRAGE_bias_corr/OneTrain_MultipleTest/TestCases/' )
 
-    for reslt in ['Results_LR1m4']:
+    for reslt in ['Results_LR1m2']:
 
         Dice = np.zeros((len(subFolders), len(A)+1))
 

@@ -195,8 +195,8 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
         Params['modelName'] = 'model_CE/'
         Params['resultName'] = 'Results_CE/'
     else:
-        Params['modelName'] = 'model_LR1m4/'
-        Params['resultName'] = 'Results_LR1m4/'
+        Params['modelName'] = 'model_LR1m1/'
+        Params['resultName'] = 'Results_LR1m1/'
 
     return Params
 
@@ -267,8 +267,8 @@ def input_GPU_Ix():
         UserEntries['modelName'] = 'model_CE/'
         UserEntries['resultName'] = 'Results_CE/'
     else:
-        UserEntries['modelName'] = 'model/'
-        UserEntries['resultName'] = 'Results/'
+        UserEntries['modelName'] = 'model_LR1m1/'
+        UserEntries['resultName'] = 'Results_LR1m1/'
 
     return UserEntries
 

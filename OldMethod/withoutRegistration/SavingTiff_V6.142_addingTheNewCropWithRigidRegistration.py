@@ -395,16 +395,16 @@ def readingImages(Params , subFolders,sFi):
     CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + 'MyCrop2_Gap20.nii.gz').get_data()
     im = funcNormalize( im )
 
-    if '1-THALAMUS' in Params['NucleusName']:
+    # if '1-THALAMUS' in Params['NucleusName']:
 
-        im , mask , SliceNumbers = funcCropping(im , mask , CropMask)
-    else:
-        try:
-            mskTh = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/Test/Results/' + subFolders[sFi] +'_1-THALAMUS_Logical.nii.gz').get_data()
-            im , mask , SliceNumbers = funcCropping_FromThalamus(im , mask , mskTh , CropMask)
-        except:
-            print('*************** unable to read full thalamus ***************')
-            im , mask , SliceNumbers = funcCropping(im , mask , CropMask)
+    im , mask , SliceNumbers = funcCropping(im , mask , CropMask)
+    # else:
+    #     try:
+    #         mskTh = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/Test/Results/' + subFolders[sFi] +'_1-THALAMUS_Logical.nii.gz').get_data()
+    #         im , mask , SliceNumbers = funcCropping_FromThalamus(im , mask , mskTh , CropMask)
+    #     except:
+    #         print('*************** unable to read full thalamus ***************')
+    #         im , mask , SliceNumbers = funcCropping(im , mask , CropMask)
 
 
 

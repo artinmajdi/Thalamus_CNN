@@ -146,6 +146,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
             Dir_Prior = '/array/ssd/msmajdi/data/Unlabeled'
 
         Dir_AllTests  = '/array/ssd/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method'
+        print('Dir_AllTests' , Dir_AllTests)
 
         if 'Unlabeled' in dataset:
             Params['Dir_AllTests_restore']  = '/array/ssd/msmajdi/Tests/Thalamus_CNN/' + '20priors' + 'Dataset_' + 'old' +'Method'

@@ -192,6 +192,7 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
     Params['padSize'] = int(padSizeFull/2)
 
     if Params['Flag_cross_entropy'] == 1:
+        Params['cost_kwargs'] = {'class_weights':[0.7,0.3]}
         Params['modelName'] = 'model_CE/'
         Params['resultName'] = 'Results_CE/'
     else:
@@ -261,14 +262,6 @@ def input_GPU_Ix():
             else:
                 UserEntries['enhanced_Index'] = [int(input.split('=')[1])]
 
-
-    if UserEntries['Flag_cross_entropy'] == 1:
-        UserEntries['cost_kwargs'] = {'class_weights':[0.7,0.3]}
-        UserEntries['modelName'] = 'model_CE/'
-        UserEntries['resultName'] = 'Results_CE/'
-    else:
-        UserEntries['modelName'] = 'model_LR1m1/'
-        UserEntries['resultName'] = 'Results_LR1m1/'
 
     return UserEntries
 
@@ -381,7 +374,7 @@ def ReadingTestImage(Params,subFolders):
 def testFunc(Params):
 
     if Params['Flag_cross_entropy'] == 1:
-        Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=UserEntries['cost_kwargs']) # , cost="dice_coefficient"
+        Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=Params['cost_kwargs']) # , cost="dice_coefficient"
     else:
         Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) # , cost="dice_coefficient"
 

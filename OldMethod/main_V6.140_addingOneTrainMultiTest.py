@@ -314,7 +314,6 @@ for ind in UserEntries['IxNuclei']:
             # subFolders = ['vimp2_ctrl_921_07122013_MP'] # vimp2_ctrl_920_07122013_SW'] #
             L2 = [0] if UserEntries['testmode'] == 'combo' else range(len(subFolders))
 
-        print('----',subFolders,'L2',L2)
         for sFi in L2:
 
             K = 'Test/' if UserEntries['testmode'] == 'combo' else '/Test/'

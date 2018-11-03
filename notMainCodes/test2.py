@@ -4,26 +4,7 @@ import nibabel as nib
 import tifffile
 from scipy.misc import imrotate
 from scipy import ndimage
-
-range(1,10,2)
-
-def MyTranspose(dir,order):
-    im = nib.load(dir)
-    im2   = np.transpose(im.get_data(),[0,2,1])
-    # im2 = ndimage.zoom(im2,(1,1,0.5),order=order)
-    # im2 = im2[...,range(0,im.shape[2],2)]
-
-    im2 = nib.Nifti1Image(im2,im.affine)
-    im2.get_header = im.header
-    dir2 = dir.split('.nii.gz')[0] + '_2.nii.gz'
-    nib.save(im2,dir2)
-
-    return im2
-
-
-im = MyTranspose('/media/data1/artin/vimp2_Test_ANON724_03272013/WMnMPRAGE_bias_corr.nii.gz',3)
-crop = MyTranspose('/media/data1/artin/vimp2_Test_ANON724_03272013/MyCrop2_Gap20.nii.gz',0)
-mask = MyTranspose('/media/data1/artin/vimp2_Test_ANON724_03272013/Manual_Delineation_Sanitized/1-THALAMUS.nii.gz',0)
+import os
 
 
 im = nib.load('/media/data1/artin/vimp2_Test_964_08092013_TG/WMnMPRAGE_bias_corr.nii.gz')

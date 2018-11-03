@@ -191,8 +191,8 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
         Params['modelName'] = 'model_CE/'
         Params['resultName'] = 'Results_CE/'
     else:
-        Params['modelName'] = 'model_LR1m4/'
-        Params['resultName'] = 'Results_LR1m4/'
+        Params['modelName'] = 'model_LR1m3/'
+        Params['resultName'] = 'Results_LR1m3/'
 
     return Params
 
@@ -302,7 +302,7 @@ for ind in UserEntries['IxNuclei']:
                     Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_1519_04212015' + '/Train/' + Params['modelName'] #  'model/' #
 
             # if 'onetrain' in UserEntries['testmode'] and 'Unlabeled' in UserEntries['dataset']:
-            #     Params['restorePath'] = Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN' + '/' + TestName + '/' + 'OneTrain_MultipleTest' + '/Train/' + Params['modelName'] #  'model/' # 
+            #     Params['restorePath'] = Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN' + '/' + TestName + '/' + 'OneTrain_MultipleTest' + '/Train/' + Params['modelName'] #  'model/' #
 
 
         if 'onetrain' in UserEntries['testmode'] and 'Unlabeled' in UserEntries['dataset']:

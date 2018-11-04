@@ -196,8 +196,8 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
         Params['modelName'] = 'model_CE/'
         Params['resultName'] = 'Results_CE/'
     else:
-        Params['modelName'] = 'model_LR1m4/'
-        Params['resultName'] = 'Results_LR1m4/'
+        Params['modelName'] = 'model_LR1m3/'
+        Params['resultName'] = 'Results_LR1m3/'
 
     return Params
 

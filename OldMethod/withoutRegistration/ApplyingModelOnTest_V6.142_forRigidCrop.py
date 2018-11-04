@@ -345,19 +345,19 @@ def ReadingTestImage(Params,subFolders):
     TestImage = funcNormalize( TestImage )
     CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + 'MyCrop2_Gap20.nii.gz').get_data()
 
-    # if '1-THALAMUS' in Params['NucleusName']:
-    TestImage , Params = funcCropping(TestImage , CropMask , Params)
-    # else:
-    #     # mskTh = nib.load(Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN/' + Params['TestName'] + '/OneTrain_MultipleTest' + '/TestCases/' + subFolders + '/Test/Results/' + subFolders[sFi] + '_1-THALAMUS' + '_Logical.nii.gz').get_data()
-    #     # TestImage , Params = funcCropping_FromThalamus(TestImage , mskTh , Params)
-    #
-    #     try:
-    #         mskTh = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/Test/Results/' + subFolders +'_1-THALAMUS_Logical.nii.gz').get_data()
-    #         TestImage , Params = funcCropping_FromThalamus(TestImage , mskTh , CropMask , Params)
-    #     except:
-    #         print('*************** unable to read full thalamus ***************')
-    #
-    #         TestImage , Params = funcCropping(TestImage , CropMask, Params)
+    if '1-THALAMUS' in Params['NucleusName']:
+        TestImage , Params = funcCropping(TestImage , CropMask , Params)
+    else:
+        # mskTh = nib.load(Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN/' + Params['TestName'] + '/OneTrain_MultipleTest' + '/TestCases/' + subFolders + '/Test/Results/' + subFolders[sFi] + '_1-THALAMUS' + '_Logical.nii.gz').get_data()
+        # TestImage , Params = funcCropping_FromThalamus(TestImage , mskTh , Params)
+
+        try:
+            mskTh = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/Test/Results/' + subFolders +'_1-THALAMUS_Logical.nii.gz').get_data()
+            TestImage , Params = funcCropping_FromThalamus(TestImage , mskTh , CropMask , Params)
+        except:
+            print('*************** unable to read full thalamus ***************')
+
+            TestImage , Params = funcCropping(TestImage , CropMask, Params)
 
 
 

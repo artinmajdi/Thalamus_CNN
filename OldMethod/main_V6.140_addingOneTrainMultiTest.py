@@ -191,8 +191,8 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
         Params['modelName'] = 'model_CE/'
         Params['resultName'] = 'Results_CE/'
     else:
-        Params['modelName'] = 'model_LR1m3/'
-        Params['resultName'] = 'Results_LR1m3/'
+        Params['modelName'] = 'model_LR1m2/'
+        Params['resultName'] = 'Results_LR1m2/'
 
     return Params
 
@@ -349,7 +349,7 @@ for ind in UserEntries['IxNuclei']:
                 cost_kwargs = {'class_weights':[0.7,0.3]}
                 Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=cost_kwargs) # , cost="dice_coefficient"
             else:
-                cost_kwargs = {'learning_rate':1e-3}
+                cost_kwargs = {'learning_rate':1e-2}
                 Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=cost_kwargs) # , cost="dice_coefficient"
 
 

@@ -106,6 +106,9 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
             Dir_Prior = '/media/artin/dataLocal1/dataThalamus/ET/7T'
         elif 'Unlabeled' in dataset:
             Dir_Prior = '/media/artin/dataLocal1/dataThalamus/Unlabeled'
+        elif 'All7T' in dataset:
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/All7T'
+
 
         Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + dataset + 'Dataset_' + method +'Method'
         if 'Unlabeled' in dataset:
@@ -125,6 +128,9 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
             Dir_Prior = '/media/data1/artin/thomas/priors/ET/7T'
         elif 'Unlabeled' in dataset:
             Dir_Prior = '/media/data1/artin/thomas/priors/Unlabeled'
+        elif 'All7T' in dataset:
+            Dir_Prior = '/media/data1/artin/thomas/priors/All7T'
+
 
         Dir_AllTests  = '/media/data1/artin/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method'
 
@@ -145,6 +151,8 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
             Dir_Prior = '/array/ssd/msmajdi/data/ET/7T'
         elif 'Unlabeled' in dataset:
             Dir_Prior = '/array/ssd/msmajdi/data/Unlabeled'
+        elif 'All7T' in dataset:
+            Dir_Prior = '/array/ssd/msmajdi/data/All7T'
 
         Dir_AllTests  = '/array/ssd/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method'
 
@@ -182,7 +190,7 @@ def input_GPU_Ix():
     UserEntries['testmode'] = 'EnhancedSeperately' # 'combo' 'onetrain'
     UserEntries['enhanced_Index'] = range(len(A))
     UserEntries['mode'] = 'server'
-    UserEntries['onetrain_testIndexes'] = [1,5,10,14,20]
+    UserEntries['onetrain_testIndexes'] = [1]
     UserEntries['Flag_cross_entropy'] = 0
 
     for input in sys.argv:
@@ -232,6 +240,9 @@ def input_GPU_Ix():
         if 'Unlabeled' in UserEntries['dataset']:
             UserEntries['testmode'] = 'onetrain'
             UserEntries['onetrain_testIndexes'] = [1,5,10,14,20]
+        else if '7TAll' in UserEntries['dataset']:
+            UserEntries['testmode'] = 'onetrain'
+            UserEntries['onetrain_testIndexes'] = [1,5,10,14,20 , 23]
 
     return UserEntries
 
@@ -383,7 +394,7 @@ def funcPadding(im, mask):
 
 def funcRotating(im, mask, CropMask):
 
-    angle = np.random.random_integers(45)
+    angle = np.random.random_integers(10)
 
     for i in range(im.shape[2]):
         im[...,i] = imrotate(im[...,i],angle)
@@ -394,8 +405,8 @@ def funcRotating(im, mask, CropMask):
 
 def funcShifting(im, mask):
 
-    shftX = np.random.random_integers(15)
-    shftY = np.random.random_integers(15)
+    shftX = np.random.random_integers(10)
+    shftY = np.random.random_integers(10)
 
     im = np.roll(im,shftX,axis=0)
     im = np.roll(im,shftY,axis=1)

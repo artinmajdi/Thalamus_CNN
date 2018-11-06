@@ -517,7 +517,7 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
             else:
                 L = AugmentingNum+1
 
-            for Ag in range(2,L):
+            for Ag in range(L):
                 Params['AugmentingIndex'] = Ag
                 imD_padded, maskD_padded, SliceNumbers = readingImages(Params , subFolders,sFi)
                 Params['SliceNumbers'] = SliceNumbers

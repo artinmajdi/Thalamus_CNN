@@ -240,9 +240,9 @@ def input_GPU_Ix():
         if 'Unlabeled' in UserEntries['dataset']:
             UserEntries['testmode'] = 'onetrain'
             UserEntries['onetrain_testIndexes'] = [1,5,10,14,20]
-        else if '7TAll' in UserEntries['dataset']:
+        else if 'All7T' in UserEntries['dataset']:
             UserEntries['testmode'] = 'onetrain'
-            UserEntries['onetrain_testIndexes'] = [1,5,10,14,20 , 23]
+            UserEntries['onetrain_testIndexes'] = [1]
 
     return UserEntries
 

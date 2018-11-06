@@ -322,7 +322,7 @@ for ind in UserEntries['IxNuclei']:
             #     Params['restorePath'] = Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN' + '/' + TestName + '/' + 'OneTrain_MultipleTest' + '/Train/' + Params['modelName'] #  'model/' #
 
 
-        if 'onetrain' in UserEntries['testmode'] and 'Unlabeled' in UserEntries['dataset']:
+        if 'onetrain' in UserEntries['testmode'] and ( 'Unlabeled' in UserEntries['dataset'] or 'All7T' in UserEntries['dataset'] ):
             subFolders = ['OneTrain_MultipleTest']
             L2 = [0]
 
@@ -338,7 +338,7 @@ for ind in UserEntries['IxNuclei']:
             if 'combo' in UserEntries['testmode']:
                 Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + K
                 Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + 'Train/'
-            elif 'onetrain' in UserEntries['testmode'] and 'Unlabeled' in UserEntries['dataset']:
+            elif 'onetrain' in UserEntries['testmode'] and ( 'Unlabeled' in UserEntries['dataset'] or 'All7T' in UserEntries['dataset'] ):
                 Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/TestCases/'
                 Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
             else:
@@ -390,7 +390,7 @@ for ind in UserEntries['IxNuclei']:
                     path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500 ,prediction_path=Dir_ResultsOut) #   restore=True
 
 
-            if 'Unlabeled' not in UserEntries['dataset']:
+            if ( 'Unlabeled' not in UserEntries['dataset'] and 'All7T' not in UserEntries['dataset'] ):
 
                 NucleiOrigSeg   = nib.load( Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Manual_Delineation_Sanitized/' + Params['NucleusName'] + '_deformed.nii.gz' )
                 ThalamusOrigSeg = nib.load( Params['Dir_Prior'] + '/' + subFolders[sFi] + '/Manual_Delineation_Sanitized/' +        '1-THALAMUS'   + '_deformed.nii.gz' )

@@ -416,25 +416,30 @@ def funcShifting(im, mask):
 
     return im, mask
 
-def funcFlipLR_Upsampling(Params, im , mask):
-    if 'Unlabeled' in Params['dataset']:
+def funcFlipLR_Upsampling(im , mask):
 
-        for i in range(mask.shape[2]):
-            im[...,i] = np.fliplr(im[...,i])
-            mask[...,i] = np.fliplr(mask[...,i])
+    for i in range(mask.shape[2]):
+        im[...,i] = np.fliplr(im[...,i])
+        mask[...,i] = np.fliplr(mask[...,i])
 
-        if do_I_want_Upsampling == 1:
-            mask = ndimage.zoom(mask,(1,1,2),order=0)
-            im = ndimage.zoom(im,(1,1,2),order=3)
-    else:
-        im   = np.transpose(im,[0,2,1])
-        mask = np.transpose(mask,[0,2,1])
-
-        if im.shape[2] == 200:
-            im = ndimage.zoom(im,(1,1,2),order=3)
-            mask = ndimage.zoom(mask,(1,1,2),order=0)
+    if do_I_want_Upsampling == 1:
+        mask = ndimage.zoom(mask,(1,1,2),order=0)
+        im = ndimage.zoom(im,(1,1,2),order=3)
 
     return im , mask
+
+def funcTranspose(im , mask, CropMask):
+
+    im   = np.transpose(im,[0,2,1])
+    mask = np.transpose(mask,[0,2,1])
+    CropMask = np.transpose(CropMask,[0,2,1])
+
+    if im.shape[2] == 200:
+        im = ndimage.zoom(im,(1,1,2),order=3)
+        mask = ndimage.zoom(mask,(1,1,2),order=0)
+        CropMask = ndimage.zoom(CropMask,(1,1,2),order=0)
+
+    return im , mask , CropMask
 
 def readingImages(Params , subFolders,sFi):
 
@@ -455,7 +460,7 @@ def readingImages(Params , subFolders,sFi):
     im = funcNormalize( im )
 
     if 'All7T' in Params['dataset']:
-        im , mask = funcFlipLR_Upsampling(Params, im , mask)
+        im , mask, CropMask = funcTranspose(im , mask, CropMask)
 
     if Params['AugmentingIndex'] != 0:
         print('----im',im.shape,'mask',mask.shape,'crop',CropMask.shape)
@@ -464,7 +469,8 @@ def readingImages(Params , subFolders,sFi):
     im , mask , SliceNumbers  = funcCroppingMain(Params, im , mask , CropMask, subFolders, sFi)
 
     if 'Unlabeled' in Params['dataset']:
-        im , mask = funcFlipLR_Upsampling(Params, im , mask)
+        im , mask = funcFlipLR_Upsampling(im , mask)
+        
     # if do_I_want_Upsampling == 1:
     #     maskF2 = nib.Nifti1Image(mask,maskF.affine)
     #     maskF2.get_header = maskF.header

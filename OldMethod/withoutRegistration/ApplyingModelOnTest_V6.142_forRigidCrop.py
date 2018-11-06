@@ -331,20 +331,20 @@ def funcPadding(im,Params):
     return im,Params
 
 def funcFlipLR_Upsampling(Params, im):
-    if 'Unlabeled' in Params['dataset']:
+    # if 'Unlabeled' in Params['dataset']:
 
-        for i in range(im.shape[2]):
-            im[...,i] = np.fliplr(im[...,i])
-
-        # if do_I_want_Upsampling == 1:
-        #     mask = ndimage.zoom(mask,(1,1,2),order=0)
-        #     im = ndimage.zoom(im,(1,1,2),order=3)
-    else:
-        im   = np.transpose(im,[0,2,1])
-
-        # if im.shape[2] == 200:
-        #     im = ndimage.zoom(im,(1,1,2),order=3)
-        #     mask = ndimage.zoom(mask,(1,1,2),order=0)
+    for i in range(im.shape[2]):
+        im[...,i] = np.fliplr(im[...,i])
+    #
+    #     # if do_I_want_Upsampling == 1:
+    #     #     mask = ndimage.zoom(mask,(1,1,2),order=0)
+    #     #     im = ndimage.zoom(im,(1,1,2),order=3)
+    # else:
+    #     im   = np.transpose(im,[0,2,1])
+    #
+    #     # if im.shape[2] == 200:
+    #     #     im = ndimage.zoom(im,(1,1,2),order=3)
+    #     #     mask = ndimage.zoom(mask,(1,1,2),order=0)
 
     return im
 

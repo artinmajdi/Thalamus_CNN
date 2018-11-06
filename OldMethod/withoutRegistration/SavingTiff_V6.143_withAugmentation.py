@@ -356,7 +356,7 @@ def funcCropping(im , mask , CropMask):
     d1 = [  c1[0] , c1[ c1.shape[0]-1 ]  ]
     d2 = [  c2[0] , c2[ c2.shape[0]-1 ]  ]
 
-    gap2 = 5
+    gap2 = 4
     SN = [  c3[0]-gap2 , c3[ c3.shape[0]-1 ]+gap2  ]
     SliceNumbers = range(SN[0],SN[1])
 

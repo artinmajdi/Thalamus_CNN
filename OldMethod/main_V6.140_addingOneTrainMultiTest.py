@@ -123,6 +123,9 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
             Dir_Prior = '/media/artin/dataLocal1/dataThalamus/ET/7T'
         elif 'Unlabeled' in dataset:
             Dir_Prior = '/media/artin/dataLocal1/dataThalamus/Unlabeled'
+        elif 'All7T' in dataset:
+            Dir_Prior = '/media/artin/dataLocal1/dataThalamus/All7T'
+
 
         Dir_AllTests  = '/media/artin/dataLocal1/dataThalamus/AllTests/' + dataset + 'Dataset_' + method +'Method'
         if 'Unlabeled' in dataset:
@@ -143,6 +146,9 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
             Dir_Prior = '/media/data1/artin/thomas/priors/ET/7T'
         elif 'Unlabeled' in dataset:
             Dir_Prior = '/media/data1/artin/thomas/priors/Unlabeled'
+        elif 'All7T' in dataset:
+            Dir_Prior = '/media/data1/artin/thomas/priors/All7T'
+
 
         Dir_AllTests  = '/media/data1/artin/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method'
 
@@ -163,6 +169,9 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
             Dir_Prior = '/array/ssd/msmajdi/data/ET/7T'
         elif 'Unlabeled' in dataset:
             Dir_Prior = '/array/ssd/msmajdi/data/Unlabeled'
+        elif 'All7T' in dataset:
+            Dir_Prior = '/array/ssd/msmajdi/data/All7T'
+
 
         Dir_AllTests  = '/array/ssd/msmajdi/Tests/Thalamus_CNN/' + dataset + 'Dataset_' + method +'Method'
 
@@ -191,8 +200,8 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
         Params['modelName'] = 'model_CE/'
         Params['resultName'] = 'Results_CE/'
     else:
-        Params['modelName'] = 'model_LR1m2/'
-        Params['resultName'] = 'Results_LR1m2/'
+        Params['modelName'] = 'model/'
+        Params['resultName'] = 'Results/'
 
     return Params
 
@@ -349,7 +358,7 @@ for ind in UserEntries['IxNuclei']:
                 cost_kwargs = {'class_weights':[0.7,0.3]}
                 Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=cost_kwargs) # , cost="dice_coefficient"
             else:
-                cost_kwargs = {'learning_rate':1e-2}
+                cost_kwargs = {'learning_rate':1e-3}
                 Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=cost_kwargs) # , cost="dice_coefficient"
 
 

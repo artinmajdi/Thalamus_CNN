@@ -458,6 +458,7 @@ def readingImages(Params , subFolders,sFi):
         im , mask = funcFlipLR_Upsampling(Params, im , mask)
 
     if Params['AugmentingIndex'] != 0:
+        print('----im',im.shape,'mask',mask.shape,'crop',CropMask.shape)
         im, mask, CropMask = funcRotating(im, mask, CropMask)
 
     im , mask , SliceNumbers  = funcCroppingMain(Params, im , mask , CropMask, subFolders, sFi)

@@ -463,14 +463,14 @@ def readingImages(Params , subFolders,sFi):
         im , mask, CropMask = funcTranspose(im , mask, CropMask)
 
     if Params['AugmentingIndex'] != 0:
-        print('----im',im.shape,'mask',mask.shape,'crop',CropMask.shape)
+        # print('----im',im.shape,'mask',mask.shape,'crop',CropMask.shape)
         im, mask, CropMask = funcRotating(im, mask, CropMask)
 
     im , mask , SliceNumbers  = funcCroppingMain(Params, im , mask , CropMask, subFolders, sFi)
 
     if 'Unlabeled' in Params['dataset']:
         im , mask = funcFlipLR_Upsampling(im , mask)
-        
+
     # if do_I_want_Upsampling == 1:
     #     maskF2 = nib.Nifti1Image(mask,maskF.affine)
     #     maskF2.get_header = maskF.header

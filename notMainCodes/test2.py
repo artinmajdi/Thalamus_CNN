@@ -5,7 +5,17 @@ import tifffile
 from scipy.misc import imrotate
 from scipy import ndimage
 import os
+from scipy.misc import imrotate
 
+dir = '/media/data1/artin/temp/'
+
+im = tifffile.imread(dir + 'vimp2_823_05202013_AJ_Sh0_Ct0_Slice_195.tif')
+mask = tifffile.imread(dir + 'vimp2_823_05202013_AJ_Sh0_Ct0_Slice_195_mask.tif')
+
+fig , ax = plt.subplots(1,2)
+ax[0].imshow(imrotate(im,90),cmap='gray')
+ax[1].imshow(imrotate(mask,90),cmap='gray')
+plt.show()
 
 im = nib.load('/media/data1/artin/vimp2_Test_964_08092013_TG/WMnMPRAGE_bias_corr.nii.gz')
 im2 = nib.load('/media/data1/artin/thomas/priors/Unlabeled/vimp2_804_06042014

@@ -355,7 +355,9 @@ def funcCropping(im , mask , CropMask):
 
     d1 = [  c1[0] , c1[ c1.shape[0]-1 ]  ]
     d2 = [  c2[0] , c2[ c2.shape[0]-1 ]  ]
-    SN = [  c3[0] , c3[ c3.shape[0]-1 ]  ]
+
+    gap2 = 5
+    SN = [  c3[0]-gap2 , c3[ c3.shape[0]-1 ]+gap2  ]
     SliceNumbers = range(SN[0],SN[1])
 
 
@@ -488,7 +490,7 @@ def readingImages(Params , subFolders,sFi):
 
 UserEntries = input_GPU_Ix()
 
-AugmentingNum = 3
+AugmentingNum = 0
 for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
     Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'] )

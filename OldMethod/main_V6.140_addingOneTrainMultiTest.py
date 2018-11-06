@@ -269,7 +269,14 @@ def input_GPU_Ix():
         if 'Unlabeled' in UserEntries['dataset']:
             UserEntries['testmode'] = 'onetrain'
             UserEntries['onetrain_testIndexes'] = [1,5,10,14,20]
+            if 1 in UserEntries['IxNuclei']:
+                UserEntries['init'] = 0
+            else:
+                UserEntries['init'] = 1
 
+        elif 'All7T' in UserEntries['dataset']:
+            UserEntries['testmode'] = 'onetrain'
+            UserEntries['onetrain_testIndexes'] = [1]
             if 1 in UserEntries['IxNuclei']:
                 UserEntries['init'] = 0
             else:
@@ -289,6 +296,7 @@ for ind in UserEntries['IxNuclei']:
 
 
     L = [0] if UserEntries['testmode'] == 'combo' else UserEntries['enhanced_Index'] # len(Params['A'])  # [1,4]: #
+    print('L',L)
     for ii in L:
 
         TestName = 'Test_AllTrainings' if UserEntries['testmode'] == 'combo' else testNme(Params['A'],ii)

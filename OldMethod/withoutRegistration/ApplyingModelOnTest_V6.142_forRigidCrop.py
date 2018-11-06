@@ -330,21 +330,13 @@ def funcPadding(im,Params):
 
     return im,Params
 
-def funcFlipLR_Upsampling(Params, im):
-    # if 'Unlabeled' in Params['dataset']:
+def funcFlipLR_Upsampling(im):
 
-    for i in range(im.shape[2]):
+    for i in range(mask.shape[2]):
         im[...,i] = np.fliplr(im[...,i])
-    #
-    #     # if do_I_want_Upsampling == 1:
-    #     #     mask = ndimage.zoom(mask,(1,1,2),order=0)
-    #     #     im = ndimage.zoom(im,(1,1,2),order=3)
-    # else:
-    #     im   = np.transpose(im,[0,2,1])
-    #
-    #     # if im.shape[2] == 200:
-    #     #     im = ndimage.zoom(im,(1,1,2),order=3)
-    #     #     mask = ndimage.zoom(mask,(1,1,2),order=0)
+
+    if do_I_want_Upsampling == 1:
+        im = ndimage.zoom(im,(1,1,2),order=3)
 
     return im
 
@@ -370,8 +362,8 @@ def ReadingTestImage(Params,subFolders):
 
 
 
-
-    TestImage = funcFlipLR_Upsampling(Params, TestImage)
+    if 'Unlabeled' in Params['dataset']:
+        TestImage = funcFlipLR_Upsampling(Params, TestImage)
 
     TestImage,Params = funcPadding(TestImage,Params)
 

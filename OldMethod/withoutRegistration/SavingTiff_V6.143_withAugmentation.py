@@ -454,12 +454,16 @@ def readingImages(Params , subFolders,sFi):
     CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/' + 'MyCrop2_Gap20.nii.gz').get_data()
     im = funcNormalize( im )
 
+    if 'All7T' in Params['dataset']:
+        im , mask = funcFlipLR_Upsampling(Params, im , mask)
 
     if Params['AugmentingIndex'] != 0:
         im, mask, CropMask = funcRotating(im, mask, CropMask)
 
     im , mask , SliceNumbers  = funcCroppingMain(Params, im , mask , CropMask, subFolders, sFi)
-    im , mask = funcFlipLR_Upsampling(Params, im , mask)
+
+    if 'Unlabeled' in Params['dataset']:
+        im , mask = funcFlipLR_Upsampling(Params, im , mask)
     # if do_I_want_Upsampling == 1:
     #     maskF2 = nib.Nifti1Image(mask,maskF.affine)
     #     maskF2.get_header = maskF.header
@@ -482,6 +486,7 @@ for ind in UserEntries['IxNuclei']: # 1,2,8,9,10,13]: #
 
     Params = initialDirectories(ind = ind, mode = UserEntries['mode'] , dataset = UserEntries['dataset'] , method = UserEntries['method'] )
     subFolders = subFoldersFunc(Params['Dir_Prior'])
+    Params['dataset'] = UserEntries['dataset']
     # subFolders = subFolders[:2]
 
     if Params['registrationFlag'] == 1:

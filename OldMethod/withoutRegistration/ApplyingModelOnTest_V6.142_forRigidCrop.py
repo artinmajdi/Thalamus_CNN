@@ -474,7 +474,7 @@ def saveImageDice(label , Params , pred , pred_Lgc , subFolders):
 
         if labelF.shape[2] == 200:
             flagDS = 1
-            im = ndimage.zoom(im,(1,1,2),order=3)
+            labelF = ndimage.zoom(labelF,(1,1,2),order=3)
 
         labelF = np.transpose(labelF,[0,2,1])
 
@@ -510,7 +510,7 @@ def saveImageDice(label , Params , pred , pred_Lgc , subFolders):
     nib.save(output_Lgc2 , Params['Dir_ResultsOut'] + subFolders[sFi] + '_' + Params['NucleusName'] + '_Logical.nii.gz')
 
     diceF = [0]
-    diceF[0] = DiceCoefficientCalculator(output_Lgc,labelF)
+    diceF[0] = DiceCoefficientCalculator(output_Lgc,label.get_data())
     np.savetxt(Params['Dir_ResultsOut'] + 'DiceCoefficientF.txt',diceF)
 
 savingThalamusPredOnTrainData = 0

@@ -285,6 +285,7 @@ do_UpSampleImage = 0
 
 def funcNormalize(im):
     # return (im-im.mean())/im.std()
+    im = np.float32(im)
     return ( im-im.min() )/( im.max() - im.min() )
 
 def readingImages(Params , subFolders):

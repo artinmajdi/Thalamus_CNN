@@ -349,8 +349,8 @@ def readingImages(Params , subFolders):
 
             d1 = [105,192]
             d2 = [67,184]
-            SN = [129,251]
-            # SN = [65,126]
+            # SN = [129,251]
+            SN = [65,126]
             SliceNumbers = range(SN[0],SN[1])
             imD2 = im[ d1[0]:d1[1],d2[0]:d2[1],SliceNumbers] # Params['SliceNumbers']]
             maskD2 = mask[ d1[0]:d1[1],d2[0]:d2[1],SliceNumbers] # Params['SliceNumbers']]

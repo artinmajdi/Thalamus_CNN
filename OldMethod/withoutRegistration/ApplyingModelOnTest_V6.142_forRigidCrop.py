@@ -483,11 +483,13 @@ def saveImageDice(label , Params , pred , pred_Lgc , subFolders):
     flagDS = 0
     if 'All7T' in Params['dataset']:
 
+        labelF = np.transpose(labelF,[0,2,1])
+        
         if labelF.shape[2] == 200:
             flagDS = 1
             labelF = ndimage.zoom(labelF,(1,1,2),order=3)
 
-        labelF = np.transpose(labelF,[0,2,1])
+
 
 
 

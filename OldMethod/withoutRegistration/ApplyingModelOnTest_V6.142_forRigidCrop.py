@@ -13,6 +13,7 @@ import multiprocessing
 import tensorflow as tf
 import sys
 from skimage import filters
+from scipy import ndimage
 
 A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
 

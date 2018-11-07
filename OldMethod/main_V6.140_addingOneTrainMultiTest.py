@@ -200,8 +200,8 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
         Params['modelName'] = 'model_CE/'
         Params['resultName'] = 'Results_CE/'
     else:
-        Params['modelName'] = 'model/'
-        Params['resultName'] = 'Results/'
+        Params['modelName'] = 'model_LR1m2/'
+        Params['resultName'] = 'Results_LR1m2/'
 
     return Params
 
@@ -307,9 +307,9 @@ for ind in UserEntries['IxNuclei']:
         Dir_AllTests_Nuclei_EnhancedFld = Params['Dir_AllTests'] + Params['NeucleusFolder'] + '/' + TestName + '/'
 
         if UserEntries['init']:
-            if 'Unlabeled' in UserEntries['dataset']:
+            if 'Unlabeled' in UserEntries['dataset'] or 'All7T' in UserEntries['dataset']:
                 if 'onetrain' in UserEntries['testmode']:
-                    Params['restorePath'] = Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN' + '/' + TestName + '/' + 'OneTrain_MultipleTest' + '/Train/' + 'model/' # Params['modelName'] #
+                    Params['restorePath'] = Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN' + '/' + TestName + '/' + 'OneTrain_MultipleTest' + '/Train/' + 'model_LR1m2/' # Params['modelName'] #
                 else:
                     Params['restorePath'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + TestName + '/' + 'vimp2_901_07052013_AS' + '/Train/' + 'model/' # Params['modelName'] #  'model/' #
             else:
@@ -366,7 +366,7 @@ for ind in UserEntries['IxNuclei']:
                 cost_kwargs = {'class_weights':[0.7,0.3]}
                 Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=cost_kwargs) # , cost="dice_coefficient"
             else:
-                cost_kwargs = {'learning_rate':1e-3}
+                cost_kwargs = {'learning_rate':1e-2}
                 Params['net'] = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True , cost_kwargs=cost_kwargs) # , cost="dice_coefficient"
 
 
@@ -385,7 +385,7 @@ for ind in UserEntries['IxNuclei']:
             else:
                 if Params['gpuNum'] != 'nan':
                     # path2 = ''
-                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500, GPU_Num=Params['gpuNum'] ,prediction_path=Dir_ResultsOut) #  restore=True
+                    path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=100, display_step=500, GPU_Num=Params['gpuNum'] ,prediction_path=Dir_ResultsOut) #  restore=True
                 else:
                     path = trainer.train(TrainData, Dir_NucleiModelOut, training_iters=200, epochs=150, display_step=500 ,prediction_path=Dir_ResultsOut) #   restore=True
 

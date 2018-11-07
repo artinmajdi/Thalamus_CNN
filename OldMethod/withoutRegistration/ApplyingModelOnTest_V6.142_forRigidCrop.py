@@ -14,6 +14,7 @@ import tensorflow as tf
 import sys
 from skimage import filters
 from scipy import ndimage
+from time import time 
 
 A = [[0,0],[6,1],[1,2],[1,3],[4,1]]
 
@@ -27,6 +28,14 @@ def mkDir(dir):
     return dir
 
 eps = np.finfo(float).eps
+
+def funcUS(im , CropMask):
+
+    if im.shape[1] == 200:
+        im = ndimage.zoom(im,(1,2,1),order=3)
+        CropMask = ndimage.zoom(CropMask,(1,2,1),order=0)
+
+    return im , CropMask
 
 def DiceCoefficientCalculator(msk1,msk2):
     intersection = msk1*msk2
@@ -206,8 +215,8 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
         Params['modelName'] = 'model_CE/'
         Params['resultName'] = 'Results_CE/'
     else:
-        Params['modelName'] = 'model/' # _LR1m2/'
-        Params['resultName'] = 'Results/' # _LR1m2/'
+        Params['modelName'] = 'model_LR1m2/' # _LR1m2/'
+        Params['resultName'] = 'Results_LR1m2/' # _LR1m2/'
 
     return Params
 
@@ -307,8 +316,11 @@ def funcCropping(im , CropMask, Params):
     ss = np.sum(CropMask,axis=1)
     c3 = np.where(np.sum(ss,axis=0) > 10)[0]
 
-    d1 = [  c1[0] , c1[ c1.shape[0]-1 ]  ]
-    d2 = [  c2[0] , c2[ c2.shape[0]-1 ]  ]
+
+    gap = 30
+    d1 = [  c1[0]-gap , c1[ c1.shape[0]-1 ]+gap  ]
+    gap1 = 5
+    d2 = [  c2[0]-gap1 , c2[ c2.shape[0]-1 ]+gap1  ]
 
     gap2 = 4
     SN = [  c3[0]-gap2 , c3[ c3.shape[0]-1 ]+gap2  ]
@@ -380,7 +392,9 @@ def ReadingTestImage(Params,subFolders):
 
 
     if 'All7T' in Params['dataset']:
-        TestImage , CropMask = funcTranspose(TestImage , CropMask)
+        # TestImage , CropMask = funcTranspose(TestImage , CropMask)
+        TestImage , CropMask = funcUS(TestImage , CropMask)
+
 
     TestImage , Params = funcCroppingMain(Params, TestImage , CropMask, subFolders)
     # if '1-THALAMUS' in Params['NucleusName']:
@@ -466,17 +480,21 @@ def copyPreviousModel(src, dst, symlinks=False, ignore=None):
 def saveImageDice(label , Params , pred , pred_Lgc , subFolders):
 
     sz = label.shape
+    sz2 = sz
     if 'All7T' in Params['dataset']:
         if sz[1] == 200:
-            output = np.zeros((sz[0],sz[2],2*sz[1]))
-            output_Lgc = np.zeros((sz[0],sz[2],2*sz[1]))
-        else:
-            output = np.zeros((sz[0],sz[2],sz[1]))
-            output_Lgc = np.zeros((sz[0],sz[2],sz[1]))
-    else:
-        output = np.zeros(sz)
-        output_Lgc = np.zeros(sz)
+            sz2 = [sz2[0],2*sz2[1],sz2[2]]
+            #sz2 = [sz2[0] , sz2[2] , 2*sz2[1] ]
+            ## output = np.zeros((sz[0],sz[2],2*sz[1]))
+            ## output_Lgc = np.zeros((sz[0],sz[2],2*sz[1]))
+        # else:
+            # sz2 = [sz2[0] , sz2[2] , sz2[1] ]
+            ##output = np.zeros((sz[0],sz[2],sz[1]))
+            ## output_Lgc = np.zeros((sz[0],sz[2],sz[1]))
 
+
+    output = np.zeros(sz2)
+    output_Lgc = np.zeros(sz2)
     # print('----Params[CropDim]-----',Params['CropDim'])
     # print('predshape',pred.shape)
 
@@ -485,12 +503,15 @@ def saveImageDice(label , Params , pred , pred_Lgc , subFolders):
     flagDS = 0
     if 'All7T' in Params['dataset']:
 
-        labelF = np.transpose(labelF,[0,2,1])
+        #labelF = np.transpose(labelF,[0,2,1])
 
-        if labelF.shape[2] == 200:
+        #if labelF.shape[2] == 200:
+            #flagDS = 1
+            #labelF = ndimage.zoom(labelF,(1,1,2),order=0)
+
+        if labelF.shape[1] == 200:
             flagDS = 1
-            labelF = ndimage.zoom(labelF,(1,1,2),order=3)
-
+            labelF = ndimage.zoom(labelF,(1,2,1),order=0)
 
 
 
@@ -511,12 +532,16 @@ def saveImageDice(label , Params , pred , pred_Lgc , subFolders):
 
 
     if 'All7T' in Params['dataset']:
-        if flagDS == 1:
-            output = ndimage.zoom(output,(1,1,0.5),order=0)
-            output_Lgc = ndimage.zoom(output_Lgc,(1,1,0.5),order=0)
+        #if flagDS == 1:
+            #output = ndimage.zoom(output,(1,1,0.5),order=0)
+            #output_Lgc = ndimage.zoom(output_Lgc,(1,1,0.5),order=0)
 
-        output = np.transpose(output,[0,2,1])
-        output_Lgc = np.transpose(output_Lgc,[0,2,1])
+        if flagDS == 1:
+            output = ndimage.zoom(output,(1,0.5,1),order=0)
+            output_Lgc = ndimage.zoom(output_Lgc,(1,0.5,1),order=0)
+
+        #output = np.transpose(output,[0,2,1])
+        #output_Lgc = np.transpose(output_Lgc,[0,2,1])
 
     output2 = nib.Nifti1Image(output,label.affine)
     output2.get_header = label.header
@@ -574,7 +599,7 @@ for ind in UserEntries['IxNuclei']:
         L = [0] if UserEntries['testmode'] == 'combo' else range(len(subFolders))
         # L = range(len(subFolders))
         for sFi in L:
-
+            at = time()
             # K = 'Test_' if UserEntries['testmode'] == 'combo' else 'Test_WMnMPRAGE_bias_corr_'
 
             # if UserEntries['testmode'] != 'combo':
@@ -672,6 +697,7 @@ for ind in UserEntries['IxNuclei']:
 
                 pred     =     pred[  p1[0]-45:148-(p1[1]-45) , p2[0]-45:148-(p2[1]-45) , :  ]
                 pred_Lgc = pred_Lgc[  p1[0]-45:148-(p1[1]-45) , p2[0]-45:148-(p2[1]-45) , :  ]
+                print('------',subFolders[sFi], 'Time',time()-at)
 
 
 

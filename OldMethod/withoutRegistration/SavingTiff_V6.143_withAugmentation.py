@@ -326,15 +326,15 @@ def funcNormalize(im):
 
 def funcCropping_FromThalamus(im , mask , CropMaskTh , CropMask):
 
-    ss = np.sum(CropMask,axis=2)
+    ss = np.sum(CropMaskTh,axis=2)
     c1 = np.where(np.sum(ss,axis=1) > 1)[0]
     c2 = np.where(np.sum(ss,axis=0) > 1)[0]
 
     ss = np.sum(CropMaskTh,axis=1)
     c3 = np.where(np.sum(ss,axis=0) > 1)[0]
 
-    gap = 0
-    gap2 = 1
+    gap = 20
+    gap2 = 2
     d1 = [  c1[0]-gap  , c1[ c1.shape[0]-1 ]+gap   ]
     d2 = [  c2[0]-gap  , c2[ c2.shape[0]-1 ]+gap   ]
     SN = [  c3[0]-gap2 , c3[ c3.shape[0]-1 ]+gap2  ]
@@ -353,10 +353,12 @@ def funcCropping(im , mask , CropMask):
     ss = np.sum(CropMask,axis=1)
     c3 = np.where(np.sum(ss,axis=0) > 10)[0]
 
-    d1 = [  c1[0] , c1[ c1.shape[0]-1 ]  ]
-    d2 = [  c2[0] , c2[ c2.shape[0]-1 ]  ]
+    gap = 30
+    d1 = [  c1[0]-gap , c1[ c1.shape[0]-1 ]+gap  ]
+    gap1 = 5
+    d2 = [  c2[0]-gap1 , c2[ c2.shape[0]-1 ]+gap1  ]
 
-    gap2 = 4
+    gap2 = 2
     SN = [  c3[0]-gap2 , c3[ c3.shape[0]-1 ]+gap2  ]
     SliceNumbers = range(SN[0],SN[1])
 
@@ -373,7 +375,7 @@ def funcCroppingMain(Params, im , mask , CropMask, subFolders, sFi):
         im , mask , SliceNumbers = funcCropping(im , mask , CropMask)
     else:
         try:
-            mskTh = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/Test/Results/' + subFolders[sFi] +'_1-THALAMUS_Logical.nii.gz').get_data()
+            mskTh = nib.load(Params['Dir_Prior'] + '/'  + subFolders[sFi] + '/Test/Results_LR1m2/' + subFolders[sFi] +'_1-THALAMUS_Logical.nii.gz').get_data()
             im , mask , SliceNumbers = funcCropping_FromThalamus(im , mask , mskTh , CropMask)
         except:
             print('*************** unable to read full thalamus ***************')
@@ -443,6 +445,15 @@ def funcTranspose(im , mask, CropMask):
 
     return im , mask , CropMask
 
+def funcUS(im , mask, CropMask):
+
+    if im.shape[1] == 200:
+        im = ndimage.zoom(im,(1,2,1),order=3)
+        mask = ndimage.zoom(mask,(1,2,1),order=0)
+        CropMask = ndimage.zoom(CropMask,(1,2,1),order=0)
+
+    return im , mask , CropMask
+
 def readingImages(Params , subFolders,sFi):
 
     # for sFi in range(len(subFolders)):
@@ -462,7 +473,9 @@ def readingImages(Params , subFolders,sFi):
     im = funcNormalize( im )
 
     if 'All7T' in Params['dataset']:
-        im , mask, CropMask = funcTranspose(im , mask, CropMask)
+        # im , mask, CropMask = funcTranspose(im , mask, CropMask)
+        im , mask, CropMask = funcUS(im , mask, CropMask)
+
 
     if Params['AugmentingIndex'] != 0:
         # print('----im',im.shape,'mask',mask.shape,'crop',CropMask.shape)

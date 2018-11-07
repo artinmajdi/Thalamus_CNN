@@ -506,7 +506,7 @@ def saveImageDice(label , Params , pred , pred_Lgc , subFolders):
     # ---------------------------  showing -----------------------------------
     Lbl = labelF[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ]
     dice = [0]
-    dice[0] = DiceCoefficientCalculator(pred_Lgc , Lbl )
+    dice[0] = DiceCoefficientCalculator(pred_Lgc > 0.5 , Lbl  > 0.5 )
     np.savetxt(Params['Dir_ResultsOut'] + 'DiceCoefficient.txt',dice)
 
 

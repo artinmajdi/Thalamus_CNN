@@ -498,8 +498,10 @@ def saveImageDice(label , Params , pred , pred_Lgc , subFolders):
     if 'All7T' in Params['dataset']:
         if flagDS == 1:
             output = ndimage.zoom(output,(1,1,0.5),order=0)
+            output_Lgc = ndimage.zoom(output_Lgc,(1,1,0.5),order=0)
 
         output = np.transpose(output,[0,2,1])
+        output_Lgc = np.transpose(output_Lgc,[0,2,1])
 
     output2 = nib.Nifti1Image(output,label.affine)
     output2.get_header = label.header

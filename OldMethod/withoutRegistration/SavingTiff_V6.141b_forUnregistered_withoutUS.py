@@ -312,7 +312,7 @@ def readingImages(Params , subFolders):
         #     im   = imF.get_data()
 
 
-        im = funcNormalize( im.get_data() )
+        im = funcNormalize( im )
 
         if Params['registrationFlag'] == 0: # Unregistered images
 

@@ -188,8 +188,8 @@ def initialDirectories(ind = 1, mode = 'local' , dataset = 'old' , method = 'old
 
         d1 = [105,192]
         d2 = [67,184]
-        SN = [65,126]
-        Params['SliceNumbers'] = range(SN[0],SN[1])
+        SN = [129,251]
+        # SN = [65,126]        Params['SliceNumbers'] = range(SN[0],SN[1])
         Params['CropDim'] = np.array([ d1 , d2 , [Params['SliceNumbers'][0] , Params['SliceNumbers'][len(Params['SliceNumbers'])-1]] ])
 
         p1 = [75,76]

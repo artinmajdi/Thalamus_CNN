@@ -309,7 +309,9 @@ def funcCropping(im , CropMask, Params):
 
     d1 = [  c1[0] , c1[ c1.shape[0]-1 ]  ]
     d2 = [  c2[0] , c2[ c2.shape[0]-1 ]  ]
-    SN = [  c3[0] , c3[ c3.shape[0]-1 ]  ]
+
+    gap2 = 4
+    SN = [  c3[0]-gap2 , c3[ c3.shape[0]-1 ]+gap2  ]
     Params['SliceNumbers'] = range(SN[0],SN[1])
 
     # Params['RigidCrop'] = [d1 , d2 , SliceNumbers]
@@ -484,7 +486,7 @@ def saveImageDice(label , Params , pred , pred_Lgc , subFolders):
     if 'All7T' in Params['dataset']:
 
         labelF = np.transpose(labelF,[0,2,1])
-        
+
         if labelF.shape[2] == 200:
             flagDS = 1
             labelF = ndimage.zoom(labelF,(1,1,2),order=3)

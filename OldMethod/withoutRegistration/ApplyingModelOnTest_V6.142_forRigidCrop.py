@@ -340,11 +340,7 @@ def funcFlipLR_Upsampling(im):
 
     return im
 
-def ReadingTestImage(Params,subFolders):
-
-    TestImage = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + Params['TestName'].split('Test_')[1] + '.nii.gz').get_data()
-    TestImage = funcNormalize( TestImage )
-    CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + 'MyCrop2_Gap20.nii.gz').get_data()
+def funcCroppingMain(Params, TestImage , CropMask, subFolders):
 
     if '1-THALAMUS' in Params['NucleusName']:
         TestImage , Params = funcCropping(TestImage , CropMask , Params)
@@ -359,6 +355,46 @@ def ReadingTestImage(Params,subFolders):
             print('*************** unable to read full thalamus ***************')
 
             TestImage , Params = funcCropping(TestImage , CropMask, Params)
+
+    return TestImage , Params
+
+def funcTranspose(im , mask, CropMask):
+
+    im   = np.transpose(im,[0,2,1])
+    mask = np.transpose(mask,[0,2,1])
+    CropMask = np.transpose(CropMask,[0,2,1])
+
+    if im.shape[2] == 200:
+        im = ndimage.zoom(im,(1,1,2),order=3)
+        mask = ndimage.zoom(mask,(1,1,2),order=0)
+        CropMask = ndimage.zoom(CropMask,(1,1,2),order=0)
+
+    return im , mask , CropMask
+
+def ReadingTestImage(Params,subFolders):
+
+    TestImage = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + Params['TestName'].split('Test_')[1] + '.nii.gz').get_data()
+    TestImage = funcNormalize( TestImage )
+    CropMask = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/' + 'MyCrop2_Gap20.nii.gz').get_data()
+
+
+    if 'All7T' in Params['dataset']:
+        im , mask, CropMask = funcTranspose(im , mask, CropMask)
+
+    TestImage , Params = funcCroppingMain(Params, TestImage , CropMask, subFolders)
+    # if '1-THALAMUS' in Params['NucleusName']:
+    #     TestImage , Params = funcCropping(TestImage , CropMask , Params)
+    # else:
+    #     # mskTh = nib.load(Params['Dir_AllTests'] + '/CNN1_THALAMUS_2D_SanitizedNN/' + Params['TestName'] + '/OneTrain_MultipleTest' + '/TestCases/' + subFolders + '/Test/Results/' + subFolders[sFi] + '_1-THALAMUS' + '_Logical.nii.gz').get_data()
+    #     # TestImage , Params = funcCropping_FromThalamus(TestImage , mskTh , Params)
+    #
+    #     try:
+    #         mskTh = nib.load(Params['Dir_Prior'] + '/'  + subFolders + '/Test/Results/' + subFolders +'_1-THALAMUS_Logical.nii.gz').get_data()
+    #         TestImage , Params = funcCropping_FromThalamus(TestImage , mskTh , CropMask , Params)
+    #     except:
+    #         print('*************** unable to read full thalamus ***************')
+    #
+    #         TestImage , Params = funcCropping(TestImage , CropMask, Params)
 
 
 
@@ -434,6 +470,18 @@ def saveImageDice(label , Params , pred , pred_Lgc , subFolders):
     # print('predshape',pred.shape)
 
     labelF = label.get_data()
+
+    flagDS = 0
+    if 'All7T' in Params['dataset']:
+
+        if labelF.shape[2] == 200:
+            flagDS = 1
+            im = ndimage.zoom(im,(1,1,2),order=3)
+
+        labelF = np.transpose(labelF,[0,2,1])
+
+
+
     if 'Unlabeled' in Params['dataset']:
         pred = funcFlipLR_Upsampling(pred)
         pred_Lgc = funcFlipLR_Upsampling(pred_Lgc)
@@ -448,6 +496,12 @@ def saveImageDice(label , Params , pred , pred_Lgc , subFolders):
     dice[0] = DiceCoefficientCalculator(pred_Lgc , Lbl )
     np.savetxt(Params['Dir_ResultsOut'] + 'DiceCoefficient.txt',dice)
 
+
+    if 'All7T' in Params['dataset']:
+        if flagDS == 1:
+            output = ndimage.zoom(output,(1,1,0.5),order=0)
+
+        output = np.transpose(output,[0,2,1])
 
     output2 = nib.Nifti1Image(output,label.affine)
     output2.get_header = label.header

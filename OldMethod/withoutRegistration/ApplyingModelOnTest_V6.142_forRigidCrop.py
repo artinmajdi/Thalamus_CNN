@@ -465,7 +465,7 @@ def saveImageDice(label , Params , pred , pred_Lgc , subFolders):
     sz = label.shape
     if 'All7T' in Params['dataset']:
         output = np.zeros((sz[0],sz[2],sz[1]))
-        output_Lgc = np.zeros((sz[0],sz[2],sz[1])))
+        output_Lgc = np.zeros((sz[0],sz[2],sz[1]))
     else:
         output = np.zeros(sz)
         output_Lgc = np.zeros(sz)

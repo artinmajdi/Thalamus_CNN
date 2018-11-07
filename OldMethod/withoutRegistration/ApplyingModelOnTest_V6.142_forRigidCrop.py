@@ -358,18 +358,16 @@ def funcCroppingMain(Params, TestImage , CropMask, subFolders):
 
     return TestImage , Params
 
-def funcTranspose(im , mask, CropMask):
+def funcTranspose(im , CropMask):
 
     im   = np.transpose(im,[0,2,1])
-    mask = np.transpose(mask,[0,2,1])
     CropMask = np.transpose(CropMask,[0,2,1])
 
     if im.shape[2] == 200:
         im = ndimage.zoom(im,(1,1,2),order=3)
-        mask = ndimage.zoom(mask,(1,1,2),order=0)
         CropMask = ndimage.zoom(CropMask,(1,1,2),order=0)
 
-    return im , mask , CropMask
+    return im , CropMask
 
 def ReadingTestImage(Params,subFolders):
 
@@ -379,7 +377,7 @@ def ReadingTestImage(Params,subFolders):
 
 
     if 'All7T' in Params['dataset']:
-        im , mask, CropMask = funcTranspose(im , mask, CropMask)
+        TestImage , CropMask = funcTranspose(TestImage , CropMask)
 
     TestImage , Params = funcCroppingMain(Params, TestImage , CropMask, subFolders)
     # if '1-THALAMUS' in Params['NucleusName']:

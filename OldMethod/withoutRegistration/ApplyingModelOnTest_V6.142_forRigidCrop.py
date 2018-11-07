@@ -461,8 +461,14 @@ def copyPreviousModel(src, dst, symlinks=False, ignore=None):
             shutil.copy2(s, d)
 
 def saveImageDice(label , Params , pred , pred_Lgc , subFolders):
-    output = np.zeros(label.shape)
-    output_Lgc = np.zeros(label.shape)
+
+    sz = label.shape
+    if 'All7T' in Params['dataset']:
+        output = np.zeros((sz[0],sz[2],sz[1]))
+        output_Lgc = np.zeros((sz[0],sz[2],sz[1])))
+    else:
+        output = np.zeros(sz)
+        output_Lgc = np.zeros(sz)
 
     # print('----Params[CropDim]-----',Params['CropDim'])
     # print('predshape',pred.shape)

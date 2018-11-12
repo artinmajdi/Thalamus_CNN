@@ -345,6 +345,11 @@ def funcPadding(im,Params):
 
     return im,Params
 
+def funcFlipUD(im):
+
+    for i in range(im.shape[2]):
+        im[...,i] = np.flipud(im[...,i])
+
 def funcFlipLR_Upsampling(im):
 
     for i in range(im.shape[2]):
@@ -415,6 +420,9 @@ def ReadingTestImage(Params,subFolders):
 
     if 'Unlabeled' in Params['dataset']:
         TestImage = funcFlipLR_Upsampling(TestImage)
+    else:
+        TestImage = funcFlipUD(TestImage)
+
 
     TestImage,Params = funcPadding(TestImage,Params)
 
@@ -519,6 +527,9 @@ def saveImageDice(label , Params , pred , pred_Lgc , subFolders):
     if 'Unlabeled' in Params['dataset']:
         pred = funcFlipLR_Upsampling(pred)
         pred_Lgc = funcFlipLR_Upsampling(pred_Lgc)
+    else:
+        pred = funcFlipUD(pred)
+        pred_Lgc = funcFlipUD(pred_Lgc)
 
     output[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ] = pred
     output_Lgc[ Params['CropDim'][0,0]:Params['CropDim'][0,1] , Params['CropDim'][1,0]:Params['CropDim'][1,1] , Params['SliceNumbers'] ] = pred_Lgc

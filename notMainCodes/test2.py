@@ -15,9 +15,9 @@ msk = nib.load(dir + 'Manual_Delineation_Sanitized/1-THALAMUS.nii.gz').get_data(
 
 im3T = nib.load(dir3T + 'WMnMPRAGE_bias_corr.nii.gz').get_data()
 msk3T = nib.load(dir3T + 'Manual_Delineation_Sanitized/1-THALAMUS.nii.gz').get_data()
-im.shape
-# imB = np.transpose(im,[0,2,1])
 
+# imB = np.transpose(im,[0,2,1])
+im.shape
 imB = np.transpose(im,[0,2,1])
 mskB = np.transpose(msk,[0,2,1])
 

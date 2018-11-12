@@ -350,6 +350,8 @@ def funcFlipUD(im):
     for i in range(im.shape[2]):
         im[...,i] = np.flipud(im[...,i])
 
+    return im
+
 def funcFlipLR_Upsampling(im):
 
     for i in range(im.shape[2]):
@@ -417,13 +419,13 @@ def ReadingTestImage(Params,subFolders):
     #         TestImage , Params = funcCropping(TestImage , CropMask, Params)
 
 
-
+    # print('-------',TestImage)
     if 'Unlabeled' in Params['dataset']:
         TestImage = funcFlipLR_Upsampling(TestImage)
     else:
         TestImage = funcFlipUD(TestImage)
 
-
+    print('-------',TestImage.shape)
     TestImage,Params = funcPadding(TestImage,Params)
 
     TestImage = np.transpose(TestImage,[2,0,1])
@@ -699,7 +701,13 @@ for ind in UserEntries['IxNuclei']:
                 pred , pred_Lgc = testFunc(Params)
 
             elif UserEntries['testmode'] == 'onetrain':
-                Params['restorePath'] = Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/Train/' + Params['modelName']
+
+                if 'Unlabeled' not in Params['dataset']:
+                    Params['restorePath_full'] = Params['Dir_AllTests_restore'] + Params['NeucleusFolder'] + '/' + Params['TestName'] + '/OneTrain_MultipleTest' + '/Train'
+                    Params['restorePath'] = Params['restorePath_full'] + '/' + Params['modelName']
+                else:
+                    Params['restorePath'] = Dir_AllTests_Nuclei_EnhancedFld + 'OneTrain_MultipleTest' + '/Train/' + Params['modelName']
+
                 copyPreviousModel( Params['restorePath'], Params['Dir_NucleiModelOut'] )
                 pred , pred_Lgc = testFunc(Params)
 

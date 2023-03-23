@@ -13,18 +13,19 @@ eps = np.finfo(float).eps
 
 def DiceCoefficientCalculator(msk1,msk2):
     intersection = np.logical_and(msk1,msk2)
-    DiceCoef = intersection.sum()*2/(msk1.sum()+msk2.sum() + np.finfo(float).eps)
-    return DiceCoef
+    return intersection.sum()*2/(msk1.sum()+msk2.sum() + np.finfo(float).eps)
 
 def ThalamusExtraction(net , Directory_Nuclei_Test , Directory_Nuclei_Train , subFolders, CropDim , padSize , gpuNum):
 
 
-    Directory_Nuclei_Train_Model_cpkt = Directory_Nuclei_Train + 'model.cpkt'
+    Directory_Nuclei_Train_Model_cpkt = f'{Directory_Nuclei_Train}model.cpkt'
 
 
     trainer = unet.Trainer(net)
 
-    TestData = image_util.ImageDataProvider(  Directory_Nuclei_Test + '*.tif',shuffle_data=False)
+    TestData = image_util.ImageDataProvider(
+        f'{Directory_Nuclei_Test}*.tif', shuffle_data=False
+    )
 
     L = len(TestData.data_files)
     DiceCoefficient  = np.zeros(L)
@@ -78,16 +79,18 @@ Directory_main = '/array/hdd/msmajdi/data/priors_forCNN/'
 Directory_main_Test = '/array/hdd/msmajdi/Tests/Thalamus_CNN/'
 
 Directory_Nuclei_Full = Directory_main_Test + NeucleusFolder
-Directory_Thalamus_Full = Directory_main_Test + 'CNN1_THALAMUS_2D_SanitizedNN'
+Directory_Thalamus_Full = f'{Directory_main_Test}CNN1_THALAMUS_2D_SanitizedNN'
 
+padSize = 90
+MultByThalamusFlag = 1
 for ii in range(len(A)):
     if ii == 0:
         TestName = 'Test_WMnMPRAGE_bias_corr_Deformed' # _Deformed_Cropped
     else:
-        TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
+        TestName = f'Test_WMnMPRAGE_bias_corr_Sharpness_{str(A[ii][0])}_Contrast_{str(A[ii][1])}_Deformed'
 
-    Directory_Nuclei = Directory_Nuclei_Full + '/' + TestName + '/'
-    Directory_Thalamus = Directory_Thalamus_Full + '/' + TestName + '/'
+    Directory_Nuclei = f'{Directory_Nuclei_Full}/{TestName}/'
+    Directory_Thalamus = f'{Directory_Thalamus_Full}/{TestName}/'
 
     # print Directory_Nuclei
     subFolders = os.listdir(Directory_Nuclei)
@@ -95,7 +98,7 @@ for ii in range(len(A)):
     for sFi in range(len(subFolders)):
         # sFi = 0
         print('-----------------------------------------------------------')
-        print('Test: ' + str(A[ii]) + 'Subject: ' + str(subFolders[sFi]))
+        print(f'Test: {str(A[ii])}Subject: {str(subFolders[sFi])}')
         print('-----------------------------------------------------------')
 
         Directory_Nuclei_Label   = Directory_main +  subFolders[sFi] + '/ManualDelineation/' + NucleusName + '_Deformed.nii.gz'
@@ -108,7 +111,7 @@ for ii in range(len(A)):
         Directory_Nuclei_Train = Directory_Nuclei + subFolders[sFi] + '/Train/'
         Directory_Thalamus_TrainedModel = Directory_Thalamus + subFolders[sFi] +  '/Train/model/'
 
-	
+
         OriginalSeg = nib.load(Directory_Thalamus_Label) # ThalamusSegDeformed_Croped PulNeucleusSegDeformed_Croped
         OriginalSegNuclei = nib.load(Directory_Nuclei_Label)
         net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2)
@@ -116,8 +119,6 @@ for ii in range(len(A)):
 
         CropDimensions = np.array([ [50,198] , [130,278] , [SliceNumbers[0] , SliceNumbers[len(SliceNumbers)-1]] ])
 
-        padSize = 90
-        MultByThalamusFlag = 1
         [Prediction3D_Mult, Prediction3D_Mult_logical] = TestData3(net , MultByThalamusFlag , Directory_Nuclei_Test , Directory_Nuclei_Train , OriginalSeg , subFolders[sFi] , CropDimensions , padSize , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , NucleusName , SliceNumbers , gpuNum)
 
 

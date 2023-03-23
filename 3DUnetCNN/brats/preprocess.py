@@ -33,7 +33,10 @@ def get_background_mask(in_folder, out_file, truth_name="GlistrBoost_ManuallyCor
     for name in config["all_modalities"] + [truth_name]:
         image = sitk.ReadImage(get_image(in_folder, name))
         if background_image:
-            if name == truth_name and not (image.GetOrigin() == background_image.GetOrigin()):
+            if (
+                name == truth_name
+                and image.GetOrigin() != background_image.GetOrigin()
+            ):
                 image.SetOrigin(background_image.GetOrigin())
             background_image = sitk.And(image == 0, background_image)
         else:
@@ -87,11 +90,11 @@ def rescale(in_file, out_file, minimum=0, maximum=20000):
 
 
 def get_image(subject_folder, name):
-    file_card = os.path.join(subject_folder, "*" + name + ".nii.gz")
+    file_card = os.path.join(subject_folder, f"*{name}.nii.gz")
     try:
         return glob.glob(file_card)[0]
     except IndexError:
-        raise RuntimeError("Could not find file matching {}".format(file_card))
+        raise RuntimeError(f"Could not find file matching {file_card}")
 
 
 def background_to_zero(in_file, background_file, out_file):
@@ -103,7 +106,7 @@ def background_to_zero(in_file, background_file, out_file):
 def check_origin(in_file, in_file2):
     image = sitk.ReadImage(in_file)
     image2 = sitk.ReadImage(in_file2)
-    if not image.GetOrigin() == image2.GetOrigin():
+    if image.GetOrigin() != image2.GetOrigin():
         image.SetOrigin(image2.GetOrigin())
         sitk.WriteImage(image, in_file)
 
@@ -120,7 +123,7 @@ def convert_brats_folder(in_folder, out_folder, truth_name="GlistrBoost_Manually
                          no_bias_correction_modalities=None):
     for name in config["all_modalities"]:
         image_file = get_image(in_folder, name)
-        out_file = os.path.abspath(os.path.join(out_folder, name + ".nii.gz"))
+        out_file = os.path.abspath(os.path.join(out_folder, f"{name}.nii.gz"))
         perform_bias_correction = no_bias_correction_modalities and name not in no_bias_correction_modalities
         normalize_image(image_file, out_file, bias_correction=perform_bias_correction)
     # copy the truth file

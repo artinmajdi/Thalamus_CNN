@@ -27,8 +27,8 @@ def dice_coefficient(truth, prediction):
 def main():
     header = ("WholeTumor", "TumorCore", "EnhancingTumor")
     masking_functions = (get_whole_tumor_mask, get_tumor_core_mask, get_enhancing_tumor_mask)
-    rows = list()
-    subject_ids = list()
+    rows = []
+    subject_ids = []
     for case_folder in glob.glob("prediction/*"):
         if not os.path.isdir(case_folder):
             continue
@@ -44,7 +44,7 @@ def main():
     df = pd.DataFrame.from_records(rows, columns=header, index=subject_ids)
     df.to_csv("./prediction/brats_scores.csv")
 
-    scores = dict()
+    scores = {}
     for index, score in enumerate(df.columns):
         values = df.values.T[index]
         scores[score] = values[np.isnan(values) == False]

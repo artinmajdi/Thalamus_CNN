@@ -17,21 +17,15 @@ gpuNum = '4' # nan'
 mode = 'oldDataset'
 
 def testNme(A,ii):
-    if ii == 0:
-        TestName = 'Test_WMnMPRAGE_bias_corr_Deformed'
-    else:
-        TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
-
-    return TestName
+    return (
+        'Test_WMnMPRAGE_bias_corr_Deformed'
+        if ii == 0
+        else f'Test_WMnMPRAGE_bias_corr_Sharpness_{str(A[ii][0])}_Contrast_{str(A[ii][1])}_Deformed'
+    )
 
 def subFoldersFunc(Dir_Prior):
-    subFolders = []
     subFlds = os.listdir(Dir_Prior)
-    for i in range(len(subFlds)):
-        if subFlds[i][:5] == 'vimp2':
-            subFolders.append(subFlds[i])
-
-    return subFolders
+    return [subFlds[i] for i in range(len(subFlds)) if subFlds[i][:5] == 'vimp2']
 
 def initialDirectories(ind = 1, mode = 'oldDataset'):
 
@@ -39,16 +33,28 @@ def initialDirectories(ind = 1, mode = 'oldDataset'):
         NucleusName = '1-THALAMUS'
         # SliceNumbers = range(106,143)
         SliceNumbers = range(103,147)
-        # SliceNumbers = range(107,140) # original one
+    elif ind == 10:
+        NucleusName = '10-MGN'
+        SliceNumbers = range(107,121)
+    elif ind == 11:
+        NucleusName = '11-CM'
+        SliceNumbers = range(115,131)
+    elif ind == 12:
+        NucleusName = '12-MD-Pf'
+        SliceNumbers = range(115,140)
+    elif ind == 13:
+        NucleusName = '13-Hb'
+        SliceNumbers = range(116,129)
+
     elif ind == 2:
         NucleusName = '2-AV'
         SliceNumbers = range(126,143)
-    elif ind == 4567:
-        NucleusName = '4567-VL'
-        SliceNumbers = range(114,143)
     elif ind == 4:
         NucleusName = '4-VA'
         SliceNumbers = range(116,140)
+    elif ind == 4567:
+        NucleusName = '4567-VL'
+        SliceNumbers = range(114,143)
     elif ind == 5:
         NucleusName = '5-VLa'
         SliceNumbers = range(115,133)
@@ -64,22 +70,11 @@ def initialDirectories(ind = 1, mode = 'oldDataset'):
     elif ind == 9:
         NucleusName = '9-LGN'
         SliceNumbers = range(105,119)
-    elif ind == 10:
-        NucleusName = '10-MGN'
-        SliceNumbers = range(107,121)
-    elif ind == 11:
-        NucleusName = '11-CM'
-        SliceNumbers = range(115,131)
-    elif ind == 12:
-        NucleusName = '12-MD-Pf'
-        SliceNumbers = range(115,140)
-    elif ind == 13:
-        NucleusName = '13-Hb'
-        SliceNumbers = range(116,129)
-
     # if mode == 'oldDatasetV2':
-    NeucleusFolder  = mode + '/CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
-    ThalamusFolder  = mode + '/CNN1_THALAMUS_2D_SanitizedNN'
+    NeucleusFolder = (
+        f'{mode}/CNN' + NucleusName.replace('-', '_') + '_2D_SanitizedNN'
+    )
+    ThalamusFolder = f'{mode}/CNN1_THALAMUS_2D_SanitizedNN'
     # else if mode == 'oldDataset':
     #     NeucleusFolder  = 'CNN' + NucleusName.replace('-','_') + '_2D_SanitizedNN'
     #     ThalamusFolder  = 'CNN1_THALAMUS_2D_SanitizedNN'
@@ -89,7 +84,7 @@ def initialDirectories(ind = 1, mode = 'oldDataset'):
 
     if mode == 'localMachine':
         Dir_AllTests = '/media/artin-laptop/D0E2340CE233F5761/Thalamus_Segmentation/Data/'
-        Dir_Prior = Dir_AllTests + 'Manual_Delineation_Sanitized_Full/'
+        Dir_Prior = f'{Dir_AllTests}Manual_Delineation_Sanitized_Full/'
 
     elif mode == 'oldDataset':
         Dir_AllTests = '/array/hdd/msmajdi/Tests/Thalamus_CNN/'
@@ -99,12 +94,14 @@ def initialDirectories(ind = 1, mode = 'oldDataset'):
     return NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, SliceNumbers, A
 
 
+ManualDir = '/Manual_Delineation_Sanitized/'
+
+padSize = 90
+MultByThalamusFlag = 0
 for ind in [1]: # [1,4,6,8,10,12]
 
 
     NucleusName, NeucleusFolder, ThalamusFolder, Dir_AllTests, Dir_Prior, SliceNumbers, A = initialDirectories(ind , 'oldDataset')
-
-    ManualDir = '/Manual_Delineation_Sanitized/'
 
     for ii in range(1): # len(A)):
 
@@ -122,14 +119,14 @@ for ind in [1]: # [1,4,6,8,10,12]
 
             Dir_NucleiTestSamples  = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Test/'
             Dir_NucleiTrainSamples = Dir_AllTests_Nuclei_EnhancedFld + subFolders[sFi] + '/Train/'
-            Dir_NucleiModelOut = Dir_NucleiTrainSamples + 'model/'
-            Dir_ResultsOut   = Dir_NucleiTestSamples  + 'Results/'
+            Dir_NucleiModelOut = f'{Dir_NucleiTrainSamples}model/'
+            Dir_ResultsOut = f'{Dir_NucleiTestSamples}Results/'
 
             Dir_ThalamusTestSamples  = Dir_AllTests_Thalamus_EnhancedFld + subFolders[sFi] + '/Test/'
             Dir_ThalamusModelOut = Dir_AllTests_Thalamus_EnhancedFld + subFolders[sFi] + '/Train/model/'
 
 
-            TrainData = image_util.ImageDataProvider(Dir_NucleiTrainSamples + "*.tif")
+            TrainData = image_util.ImageDataProvider(f"{Dir_NucleiTrainSamples}*.tif")
 
             logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
             net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) #  , cost="dice_coefficient"
@@ -139,6 +136,4 @@ for ind in [1]: # [1,4,6,8,10,12]
 
             CropDimensions = np.array([ [50,198] , [130,278] , [SliceNumbers[0] , SliceNumbers[len(SliceNumbers)-1]] ])
 
-            padSize = 90
-            MultByThalamusFlag = 0
             [Prediction3D_PureNuclei, Prediction3D_PureNuclei_logical] = TestData3(net , MultByThalamusFlag, Dir_NucleiTestSamples , Dir_NucleiModelOut     , ThalamusOrigSeg , NucleiOrigSeg , subFolders[sFi], CropDimensions , padSize , Dir_ThalamusTestSamples , Dir_ThalamusModelOut , NucleusName , SliceNumbers , gpuNum)

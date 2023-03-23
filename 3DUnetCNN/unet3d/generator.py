@@ -138,8 +138,8 @@ def data_generator(data_file, index_list, batch_size=1, n_labels=1, labels=None,
                    shuffle_index_list=True, skip_blank=True, permute=False):
     orig_index_list = index_list
     while True:
-        x_list = list()
-        y_list = list()
+        x_list = []
+        y_list = []
         if patch_shape:
             index_list = create_patch_index_list(orig_index_list, data_file.root.data.shape[-3:], patch_shape,
                                                  patch_overlap, patch_start_offset)
@@ -155,29 +155,28 @@ def data_generator(data_file, index_list, batch_size=1, n_labels=1, labels=None,
                      skip_blank=skip_blank, permute=permute)
             if len(x_list) == batch_size or (len(index_list) == 0 and len(x_list) > 0):
                 yield convert_data(x_list, y_list, n_labels=n_labels, labels=labels)
-                x_list = list()
-                y_list = list()
+                x_list = []
+                y_list = []
 
 
 def get_number_of_patches(data_file, index_list, patch_shape=None, patch_overlap=0, patch_start_offset=None,
                           skip_blank=True):
-    if patch_shape:
-        index_list = create_patch_index_list(index_list, data_file.root.data.shape[-3:], patch_shape, patch_overlap,
-                                             patch_start_offset)
-        count = 0
-        for index in index_list:
-            x_list = list()
-            y_list = list()
-            add_data(x_list, y_list, data_file, index, skip_blank=skip_blank, patch_shape=patch_shape)
-            if len(x_list) > 0:
-                count += 1
-        return count
-    else:
+    if not patch_shape:
         return len(index_list)
+    index_list = create_patch_index_list(index_list, data_file.root.data.shape[-3:], patch_shape, patch_overlap,
+                                         patch_start_offset)
+    count = 0
+    for index in index_list:
+        x_list = []
+        y_list = []
+        add_data(x_list, y_list, data_file, index, skip_blank=skip_blank, patch_shape=patch_shape)
+        if x_list:
+            count += 1
+    return count
 
 
 def create_patch_index_list(index_list, image_shape, patch_shape, patch_overlap, patch_start_offset=None):
-    patch_index = list()
+    patch_index = []
     for index in index_list:
         if patch_start_offset is not None:
             random_start_offset = np.negative(get_random_nd_index(patch_start_offset))
@@ -216,10 +215,11 @@ def add_data(x_list, y_list, data_file, index, augment=False, augment_flip=False
         data, truth = augment_data(data, truth, affine, flip=augment_flip, scale_deviation=augment_distortion_factor)
 
     if permute:
-        if data.shape[-3] != data.shape[-2] or data.shape[-2] != data.shape[-1]:
+        if data.shape[-3] == data.shape[-2] == data.shape[-1]:
+            data, truth = random_permutation_x_y(data, truth[np.newaxis])
+        else:
             raise ValueError("To utilize permutations, data array must be in 3D cube shape with all dimensions having "
                              "the same length.")
-        data, truth = random_permutation_x_y(data, truth[np.newaxis])
     else:
         truth = truth[np.newaxis]
 

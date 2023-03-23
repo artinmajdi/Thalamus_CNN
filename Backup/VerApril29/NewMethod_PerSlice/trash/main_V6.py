@@ -15,8 +15,7 @@ import tensorflow as tf
 
 def DiceCoefficientCalculator(msk1,msk2):
     intersection = msk1*msk2  # np.logical_and(msk1,msk2)
-    DiceCoef = intersection.sum()*2/(msk1.sum()+msk2.sum())
-    return DiceCoef
+    return intersection.sum()*2/(msk1.sum()+msk2.sum())
 
 def ReadMasks(DirectoryMask,SliceNumbers):
 
@@ -41,17 +40,17 @@ def SumMasks(DirectorySubFolders):
     maskD = np.zeros(msk.shape)
     maskD[msk == 1] = 10*i
 
-    i = i + 1
+    i += 1
     Directory_Nuclei_Label = '/7_VPL_NeucleusSegDeformed.nii.gz'
     msk , Header , Affine = ReadMasks(DirectorySubFolders+Directory_Nuclei_Label)
     maskD[msk == 1] = 10*i
 
-    i = i + 1
+    i += 1
     Directory_Nuclei_Label = '/8_Pul_NeucleusSegDeformed.nii.gz'
     msk , Header , Affine = ReadMasks(DirectorySubFolders+Directory_Nuclei_Label)
     maskD[msk == 1] = 10*i
 
-    i = i + 1
+    i += 1
     Directory_Nuclei_Label = '/12_MD_Pf_NeucleusSegDeformed.nii.gz'
     msk , Header , Affine = ReadMasks(DirectorySubFolders+Directory_Nuclei_Label)
     maskD[msk == 1] = 10*i
@@ -60,12 +59,12 @@ def SumMasks(DirectorySubFolders):
 
 # define worker function
 def calculate(process_name, tasks, results):
-    print('[%s] evaluation routine starts' % process_name)
+    print(f'[{process_name}] evaluation routine starts')
 
     while True:
         new_value = tasks.get()
         if new_value < 0:
-            print('[%s] evaluation routine quits' % process_name)
+            print(f'[{process_name}] evaluation routine quits')
 
             # Indicate finished
             results.put(-1)
@@ -105,10 +104,10 @@ for ii in range(1): # len(A)):
     if ii == 0:
         TestName = 'Test_WMnMPRAGE_bias_corr_Deformed' # _Deformed_Cropped
     else:
-        TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
+        TestName = f'Test_WMnMPRAGE_bias_corr_Sharpness_{str(A[ii][0])}_Contrast_{str(A[ii][1])}_Deformed'
 
-    Directory_Nuclei   = Directory_Nuclei_Full   + '/' + TestName + '/'
-    Directory_Thalamus = Directory_Thalamus_Full + '/' + TestName + '/'
+    Directory_Nuclei = f'{Directory_Nuclei_Full}/{TestName}/'
+    Directory_Thalamus = f'{Directory_Thalamus_Full}/{TestName}/'
     # print Directory_Nuclei
     # with open(Directory_Nuclei_Full + '/OriginalDeformedPriors/subFolderList.txt' ,"rb") as fp:
     #     subFolders = pickle.load(fp)
@@ -118,12 +117,17 @@ for ii in range(1): # len(A)):
 
     for sFi in range(len(subFolders)):
 
-        Directory_Nuclei_Label   = '/array/hdd/msmajdi/data/priors_forCNN/' +  subFolders[sFi] + '/ManualDelineation/' + NucleusName + '_Deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
-        Directory_Thalamus_Label = '/array/hdd/msmajdi/data/priors_forCNN/' +  subFolders[sFi] + '/ManualDelineation/' +'1-THALAMUS' + '_Deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
+        Directory_Nuclei_Label = f'/array/hdd/msmajdi/data/priors_forCNN/{subFolders[sFi]}/ManualDelineation/{NucleusName}_Deformed.nii.gz'
+        Directory_Thalamus_Label = f'/array/hdd/msmajdi/data/priors_forCNN/{subFolders[sFi]}/ManualDelineation/1-THALAMUS_Deformed.nii.gz'
 
         for sliceInd in range(33):
             print('------------------------------------------------------')
-            print('Test: ' + str(A[ii]) + ' Subject: ' + str(subFolders[sFi]) + ' Slide ' + str(sliceInd) )
+            print(
+                f'Test: {str(A[ii])} Subject: '
+                + str(subFolders[sFi])
+                + ' Slide '
+                + str(sliceInd)
+            )
             print('------------------------------------------------------')
 
             # sliceInd = 25

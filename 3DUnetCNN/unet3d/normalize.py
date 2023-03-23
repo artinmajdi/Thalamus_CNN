@@ -24,17 +24,13 @@ def get_cropping_parameters(in_files):
 
 
 def reslice_image_set(in_files, image_shape, out_files=None, label_indices=None, crop=False):
-    if crop:
-        crop_slices = get_cropping_parameters([in_files])
-    else:
-        crop_slices = None
+    crop_slices = get_cropping_parameters([in_files]) if crop else None
     images = read_image_files(in_files, image_shape=image_shape, crop=crop_slices, label_indices=label_indices)
-    if out_files:
-        for image, out_file in zip(images, out_files):
-            image.to_filename(out_file)
-        return [os.path.abspath(out_file) for out_file in out_files]
-    else:
+    if not out_files:
         return images
+    for image, out_file in zip(images, out_files):
+        image.to_filename(out_file)
+    return [os.path.abspath(out_file) for out_file in out_files]
 
 
 def get_complete_foreground(training_data_files):
@@ -57,10 +53,7 @@ def get_foreground_from_set_of_files(set_of_files, background_value=0, tolerance
             foreground = np.zeros(is_foreground.shape, dtype=np.uint8)
 
         foreground[is_foreground] = 1
-    if return_image:
-        return new_img_like(image, foreground)
-    else:
-        return foreground
+    return new_img_like(image, foreground) if return_image else foreground
 
 
 def normalize_data(data, mean, std):
@@ -70,8 +63,8 @@ def normalize_data(data, mean, std):
 
 
 def normalize_data_storage(data_storage):
-    means = list()
-    stds = list()
+    means = []
+    stds = []
     for index in range(data_storage.shape[0]):
         data = data_storage[index]
         means.append(data.mean(axis=(1, 2, 3)))

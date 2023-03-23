@@ -12,8 +12,7 @@ from TestData import TestData
 
 def DiceCoefficientCalculator(msk1,msk2):
     intersection = np.logical_and(msk1,msk2)
-    DiceCoef = intersection.sum()*2/(msk1.sum()+msk2.sum())
-    return DiceCoef
+    return intersection.sum()*2/(msk1.sum()+msk2.sum())
 
 def ReadMasks(DirectoryMask,SliceNumbers):
 
@@ -38,17 +37,17 @@ def SumMasks(DirectorySubFolders):
     maskD = np.zeros(msk.shape)
     maskD[msk == 1] = 10*i
 
-    i = i + 1
+    i += 1
     SegmentName = '/7_VPL_NeucleusSegDeformed.nii.gz'
     msk , Header , Affine = ReadMasks(DirectorySubFolders+SegmentName)
     maskD[msk == 1] = 10*i
 
-    i = i + 1
+    i += 1
     SegmentName = '/8_Pul_NeucleusSegDeformed.nii.gz'
     msk , Header , Affine = ReadMasks(DirectorySubFolders+SegmentName)
     maskD[msk == 1] = 10*i
 
-    i = i + 1
+    i += 1
     SegmentName = '/12_MD_Pf_NeucleusSegDeformed.nii.gz'
     msk , Header , Affine = ReadMasks(DirectorySubFolders+SegmentName)
     maskD[msk == 1] = 10*i
@@ -59,16 +58,16 @@ def SumMasks(DirectorySubFolders):
 SegmentName = '/PulNeucleusSegDeformed.nii.gz'  # ThalamusSegDeformed   ThalamusSegDeformed_Croped  PulNeucleusSegDeformed PulNeucleusSegDeformed_Croped
 TestName = 'ForUnet_Test16_Enhanced_Pul'
 Directory = '/media/data1/artin/data/Thalamus/'
-Directory_OriginalData = Directory + 'OriginalData/'
-with open(Directory_OriginalData + "subFolderList.txt" ,"rb") as fp:
+Directory_OriginalData = f'{Directory}OriginalData/'
+with open(f"{Directory_OriginalData}subFolderList.txt", "rb") as fp:
     subFolders = pickle.load(fp)
 
 for sFi in range(len(subFolders)):
 # sFi = 1
     Test_Path  = Directory + TestName + '/TestSubject'+str(sFi)+'/test/'
     Train_Path = Directory + TestName + '/TestSubject'+str(sFi)+'/train/'
-    Trained_Model_Path = Train_Path + 'model/'
-    TestResults_Path   = Test_Path  + 'results/'
+    Trained_Model_Path = f'{Train_Path}model/'
+    TestResults_Path = f'{Test_Path}results/'
 
     try:
         os.stat(Trained_Model_Path)
@@ -80,7 +79,7 @@ for sFi in range(len(subFolders)):
     except:
         os.makedirs(TestResults_Path)
 
-    TrainData = image_util.ImageDataProvider(Train_Path + "*.tif")
+    TrainData = image_util.ImageDataProvider(f"{Train_Path}*.tif")
     logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
 
     net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) #  , cost="dice_coefficient"

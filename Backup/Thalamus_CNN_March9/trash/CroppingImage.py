@@ -15,8 +15,7 @@ def CroppingImage(im,mask):
     obj = regionprops(labelImg)
     inds = obj[0].bbox
 
-    imDataCroped = imData[inds[0]:inds[3],inds[1]:inds[4],inds[2]:inds[5]]
-    return imDataCroped
+    return imData[inds[0]:inds[3],inds[1]:inds[4],inds[2]:inds[5]]
 
 Directory = '/media/artin/data/documents/UofA/courses/Research/data/Thalamus/'
 

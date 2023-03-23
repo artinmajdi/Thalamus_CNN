@@ -7,15 +7,14 @@ eps = np.finfo(float).eps
 
 def DiceCoefficientCalculator(msk1,msk2):
     intersection = np.logical_and(msk1,msk2)
-    DiceCoef = intersection.sum()*2/(msk1.sum()+msk2.sum())
-    return DiceCoef
+    return intersection.sum()*2/(msk1.sum()+msk2.sum())
 
 
 def TestData(net , Test_Path , Train_Path , OriginalSeg_Data , Header , Affine , subFolders, CropDim , padSize):
 
 
-    Trained_Model_Path = Train_Path + 'model.cpkt'
-    TestResults_Path   = Test_Path  + 'results/'
+    Trained_Model_Path = f'{Train_Path}model.cpkt'
+    TestResults_Path = f'{Test_Path}results/'
 
     try:
         os.stat(TestResults_Path)
@@ -33,7 +32,9 @@ def TestData(net , Test_Path , Train_Path , OriginalSeg_Data , Header , Affine ,
 
     trainer = unet.Trainer(net)
 
-    TestData = image_util.ImageDataProvider(  Test_Path + '*.tif',shuffle_data=False)
+    TestData = image_util.ImageDataProvider(
+        f'{Test_Path}*.tif', shuffle_data=False
+    )
 
     L = len(TestData.data_files)
     DiceCoefficient  = np.zeros(L)
@@ -79,14 +80,17 @@ def TestData(net , Test_Path , Train_Path , OriginalSeg_Data , Header , Affine ,
         A = (padSize/2)
         imgCombined = util.combine_img_prediction(data, label, prediction)
         DiceCoefficient[sliceNum] = DiceCoefficientCalculator(PredictedSeg,label[0,A:sz[1]-A,A:sz[2]-A,1])  # 20 is for zero padding done for input
-        util.save_image(imgCombined, TestResults_Path+"prediction_slice"+ str(SliceIdx[sliceNum]) + ".jpg")
+        util.save_image(
+            imgCombined,
+            f"{TestResults_Path}prediction_slice{str(SliceIdx[sliceNum])}.jpg",
+        )
 
 
         Loss = unet.error_rate(prediction,label[:,A:sz[1]-A,A:sz[2]-A,:])
         LogLoss[sliceNum] = np.log10(Loss+eps)
 
-    np.savetxt(TestResults_Path+'DiceCoefficient.txt',DiceCoefficient)
-    np.savetxt(TestResults_Path+'LogLoss.txt',LogLoss)
+    np.savetxt(f'{TestResults_Path}DiceCoefficient.txt', DiceCoefficient)
+    np.savetxt(f'{TestResults_Path}LogLoss.txt', LogLoss)
 
     Prediction3D_nifti = nib.Nifti1Image(Prediction3D,Affine)
     Prediction3D_nifti.get_header = Header
@@ -113,12 +117,14 @@ def TestData(net , Test_Path , Train_Path , OriginalSeg_Data , Header , Affine ,
 def ThalamusExtraction(net , Test_Path , Train_Path , subFolders, CropDim , padSize):
 
 
-    Trained_Model_Path = Train_Path + 'model.cpkt'
+    Trained_Model_Path = f'{Train_Path}model.cpkt'
 
 
     trainer = unet.Trainer(net)
 
-    TestData = image_util.ImageDataProvider(  Test_Path + '*.tif',shuffle_data=False)
+    TestData = image_util.ImageDataProvider(
+        f'{Test_Path}*.tif', shuffle_data=False
+    )
 
     L = len(TestData.data_files)
     DiceCoefficient  = np.zeros(L)
@@ -161,8 +167,8 @@ def ThalamusExtraction(net , Test_Path , Train_Path , subFolders, CropDim , padS
 def TestData2_MultipliedByWholeThalamus(net , Test_Path , Train_Path , OriginalSeg , subFolders, CropDim , padSize , Test_Path_Thalamus , Trained_Model_Path_Thalamus):
 
 
-    Trained_Model_Path = Train_Path + 'model.cpkt'
-    TestResults_Path   = Test_Path  + 'results/'
+    Trained_Model_Path = f'{Train_Path}model.cpkt'
+    TestResults_Path = f'{Test_Path}results/'
 
     try:
         os.stat(TestResults_Path)
@@ -180,7 +186,9 @@ def TestData2_MultipliedByWholeThalamus(net , Test_Path , Train_Path , OriginalS
 
     trainer = unet.Trainer(net)
 
-    TestData = image_util.ImageDataProvider(  Test_Path + '*.tif',shuffle_data=False)
+    TestData = image_util.ImageDataProvider(
+        f'{Test_Path}*.tif', shuffle_data=False
+    )
 
     L = len(TestData.data_files)
     DiceCoefficient  = np.zeros(L)
@@ -231,14 +239,17 @@ def TestData2_MultipliedByWholeThalamus(net , Test_Path , Train_Path , OriginalS
         A = (padSize/2)
         imgCombined = util.combine_img_prediction(data, label, prediction)
         DiceCoefficient[sliceNum] = DiceCoefficientCalculator(PredictedSeg,label[0,A:sz[1]-A,A:sz[2]-A,1])  # 20 is for zero padding done for input
-        util.save_image(imgCombined, TestResults_Path+"prediction_slice"+ str(SliceIdx[sliceNum]) + ".jpg")
+        util.save_image(
+            imgCombined,
+            f"{TestResults_Path}prediction_slice{str(SliceIdx[sliceNum])}.jpg",
+        )
 
 
         Loss = unet.error_rate(prediction,label[:,A:sz[1]-A,A:sz[2]-A,:])
         LogLoss[sliceNum] = np.log10(Loss)
 
-    np.savetxt(TestResults_Path+'DiceCoefficient.txt',DiceCoefficient)
-    np.savetxt(TestResults_Path+'LogLoss.txt',LogLoss)
+    np.savetxt(f'{TestResults_Path}DiceCoefficient.txt', DiceCoefficient)
+    np.savetxt(f'{TestResults_Path}LogLoss.txt', LogLoss)
 
     Prediction3D_nifti = nib.Nifti1Image(Prediction3D,Affine)
     Prediction3D_nifti.get_header = Header

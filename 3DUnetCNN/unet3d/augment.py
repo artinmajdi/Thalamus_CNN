@@ -24,11 +24,7 @@ def flip_image(image, axis):
 
 
 def random_flip_dimensions(n_dimensions):
-    axis = list()
-    for dim in range(n_dimensions):
-        if random_boolean():
-            axis.append(dim)
-    return axis
+    return [dim for dim in range(n_dimensions) if random_boolean()]
 
 
 def random_scale_factor(n_dim=3, mean=1, std=0.25):
@@ -53,11 +49,8 @@ def augment_data(data, truth, affine, scale_deviation=None, flip=True):
         scale_factor = random_scale_factor(n_dim, std=scale_deviation)
     else:
         scale_factor = None
-    if flip:
-        flip_axis = random_flip_dimensions(n_dim)
-    else:
-        flip_axis = None
-    data_list = list()
+    flip_axis = random_flip_dimensions(n_dim) if flip else None
+    data_list = []
     for data_index in range(data.shape[0]):
         image = get_image(data[data_index], affine)
         data_list.append(resample_to_img(distort_image(image, flip_axis=flip_axis,
@@ -164,5 +157,5 @@ def reverse_permute_data(data, key):
 
 
 def reverse_permutation_key(key):
-    rotation = tuple([-rotate for rotate in key[0]])
+    rotation = tuple(-rotate for rotate in key[0])
     return rotation, key[1], key[2], key[3], key[4]

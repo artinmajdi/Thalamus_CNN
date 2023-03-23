@@ -9,14 +9,13 @@ eps = np.finfo(float).eps
 
 def DiceCoefficientCalculator(msk1,msk2):
     intersection = np.logical_and(msk1,msk2)
-    DiceCoef = intersection.sum()*2/(msk1.sum()+msk2.sum() + np.finfo(float).eps)
-    return DiceCoef
+    return intersection.sum()*2/(msk1.sum()+msk2.sum() + np.finfo(float).eps)
 
 def TestData(net , Directory_Nuclei_Test , Directory_Nuclei_Train , OriginalSeg , subFolders, CropDim , padSize , gpuNum):
 
 
-    Directory_Nuclei_Train_Model_cpkt = Directory_Nuclei_Train + 'model/model.cpkt'
-    Directory_Nuclei_Test_Results     = Directory_Nuclei_Test  + 'results/'
+    Directory_Nuclei_Train_Model_cpkt = f'{Directory_Nuclei_Train}model/model.cpkt'
+    Directory_Nuclei_Test_Results = f'{Directory_Nuclei_Test}results/'
 
     try:
         os.stat(Directory_Nuclei_Test_Results)
@@ -34,7 +33,9 @@ def TestData(net , Directory_Nuclei_Test , Directory_Nuclei_Train , OriginalSeg 
 
     trainer = unet.Trainer(net)
 
-    TestData = image_util.ImageDataProvider(  Directory_Nuclei_Test + '*.tif',shuffle_data=False)
+    TestData = image_util.ImageDataProvider(
+        f'{Directory_Nuclei_Test}*.tif', shuffle_data=False
+    )
 
     L = len(TestData.data_files)
     DiceCoefficient  = np.zeros(L)
@@ -85,14 +86,19 @@ def TestData(net , Directory_Nuclei_Test , Directory_Nuclei_Train , OriginalSeg 
     A = (padSize/2)
     imgCombined = util.combine_img_prediction(data, label, prediction)
     DiceCoefficient[sliceNum] = DiceCoefficientCalculator(PredictedSeg,label[0,A:sz[1]-A,A:sz[2]-A,1])  # 20 is for zero padding done for input
-    util.save_image(imgCombined, Directory_Nuclei_Test_Results+"prediction_slice"+ str(SliceIdx[sliceNum]) + ".jpg")
+    util.save_image(
+        imgCombined,
+        f"{Directory_Nuclei_Test_Results}prediction_slice{str(SliceIdx[sliceNum])}.jpg",
+    )
 
 
     Loss = unet.error_rate(prediction,label[:,A:sz[1]-A,A:sz[2]-A,:])
     LogLoss[sliceNum] = np.log10(Loss+eps)
 
-    np.savetxt(Directory_Nuclei_Test_Results+'DiceCoefficient.txt',DiceCoefficient)
-    np.savetxt(Directory_Nuclei_Test_Results+'LogLoss.txt',LogLoss)
+    np.savetxt(
+        f'{Directory_Nuclei_Test_Results}DiceCoefficient.txt', DiceCoefficient
+    )
+    np.savetxt(f'{Directory_Nuclei_Test_Results}LogLoss.txt', LogLoss)
 
     # Prediction3D_nifti = nib.Nifti1Image(Prediction3D_Mult,Affine)
     # Prediction3D_nifti.get_header = Header
@@ -119,12 +125,14 @@ def TestData(net , Directory_Nuclei_Test , Directory_Nuclei_Train , OriginalSeg 
 def ThalamusExtraction(net , Directory_Nuclei_Test , Directory_Nuclei_Train , subFolders, CropDim , padSize , gpuNum):
 
 
-    Directory_Nuclei_Train_Model_cpkt = Directory_Nuclei_Train + 'model.cpkt'
+    Directory_Nuclei_Train_Model_cpkt = f'{Directory_Nuclei_Train}model.cpkt'
 
 
     trainer = unet.Trainer(net)
 
-    TestData = image_util.ImageDataProvider(  Directory_Nuclei_Test + '*.tif',shuffle_data=False)
+    TestData = image_util.ImageDataProvider(
+        f'{Directory_Nuclei_Test}*.tif', shuffle_data=False
+    )
 
     L = len(TestData.data_files)
     DiceCoefficient  = np.zeros(L)
@@ -167,8 +175,8 @@ def ThalamusExtraction(net , Directory_Nuclei_Test , Directory_Nuclei_Train , su
 def TestData2_MultThalamus(net , Directory_Nuclei_Test , Directory_Nuclei_Train , OriginalSeg , subFolders, CropDim , padSize , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , NucleusName , gpuNum):
 
 
-    Directory_Nuclei_Train_Model_cpkt = Directory_Nuclei_Train + 'model/model.cpkt'
-    Directory_Nuclei_Test_Results   = Directory_Nuclei_Test  + 'results/'
+    Directory_Nuclei_Train_Model_cpkt = f'{Directory_Nuclei_Train}model/model.cpkt'
+    Directory_Nuclei_Test_Results = f'{Directory_Nuclei_Test}results/'
 
     try:
         os.stat(Directory_Nuclei_Test_Results)
@@ -186,7 +194,9 @@ def TestData2_MultThalamus(net , Directory_Nuclei_Test , Directory_Nuclei_Train 
 
     trainer = unet.Trainer(net)
 
-    TestData = image_util.ImageDataProvider(  Directory_Nuclei_Test + '*.tif',shuffle_data=False)
+    TestData = image_util.ImageDataProvider(
+        f'{Directory_Nuclei_Test}*.tif', shuffle_data=False
+    )
 
     L = len(TestData.data_files)
     DiceCoefficient  = np.zeros(L)
@@ -243,14 +253,19 @@ def TestData2_MultThalamus(net , Directory_Nuclei_Test , Directory_Nuclei_Train 
         A = (padSize/2)
         imgCombined = util.combine_img_prediction(data, label, prediction)
         DiceCoefficient[sliceNum] = DiceCoefficientCalculator(PredictedSeg,label[0,A:sz[1]-A,A:sz[2]-A,1])  # 20 is for zero padding done for input
-        util.save_image(imgCombined, Directory_Nuclei_Test_Results+"prediction_slice"+ str(SliceIdx[sliceNum]) + ".jpg")
+        util.save_image(
+            imgCombined,
+            f"{Directory_Nuclei_Test_Results}prediction_slice{str(SliceIdx[sliceNum])}.jpg",
+        )
 
 
         Loss = unet.error_rate(prediction,label[:,A:sz[1]-A,A:sz[2]-A,:])
         LogLoss[sliceNum] = np.log10(Loss)
 
-    np.savetxt(Directory_Nuclei_Test_Results + 'DiceCoefficient.txt',DiceCoefficient)
-    np.savetxt(Directory_Nuclei_Test_Results + 'LogLoss.txt',LogLoss)
+    np.savetxt(
+        f'{Directory_Nuclei_Test_Results}DiceCoefficient.txt', DiceCoefficient
+    )
+    np.savetxt(f'{Directory_Nuclei_Test_Results}LogLoss.txt', LogLoss)
 
     Prediction3D_nifti = nib.Nifti1Image(Prediction3D_Mult,Affine)
     Prediction3D_nifti.get_header = Header

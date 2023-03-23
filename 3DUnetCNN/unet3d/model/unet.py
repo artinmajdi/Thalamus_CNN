@@ -38,7 +38,7 @@ def unet_model_3d(input_shape, pool_size=(2, 2, 2), n_labels=1, initial_learning
     """
     inputs = Input(input_shape)
     current_layer = inputs
-    levels = list()
+    levels = []
 
     # add levels with max pooling
     for layer_depth in range(depth):
@@ -105,10 +105,7 @@ def create_convolution_block(input_layer, n_filters, batch_normalization=False, 
             raise ImportError("Install keras_contrib in order to use instance normalization."
                               "\nTry: pip install git+https://www.github.com/farizrahman4u/keras-contrib.git")
         layer = InstanceNormalization(axis=1)(layer)
-    if activation is None:
-        return Activation('relu')(layer)
-    else:
-        return activation()(layer)
+    return Activation('relu')(layer) if activation is None else activation()(layer)
 
 
 def compute_level_output_shape(n_filters, depth, pool_size, image_shape):

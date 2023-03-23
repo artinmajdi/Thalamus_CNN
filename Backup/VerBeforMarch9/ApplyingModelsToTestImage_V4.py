@@ -13,18 +13,19 @@ eps = np.finfo(float).eps
 
 def DiceCoefficientCalculator(msk1,msk2):
     intersection = np.logical_and(msk1,msk2)
-    DiceCoef = intersection.sum()*2/(msk1.sum()+msk2.sum() + np.finfo(float).eps)
-    return DiceCoef
+    return intersection.sum()*2/(msk1.sum()+msk2.sum() + np.finfo(float).eps)
 
 def ThalamusExtraction(net , Directory_Nuclei_Test , Directory_Nuclei_Train , subFolders, CropDim , padSize):
 
 
-    Directory_Nuclei_Train_Model_cpkt = Directory_Nuclei_Train + 'model.cpkt'
+    Directory_Nuclei_Train_Model_cpkt = f'{Directory_Nuclei_Train}model.cpkt'
 
 
     trainer = unet.Trainer(net)
 
-    TestData = image_util.ImageDataProvider(  Directory_Nuclei_Test + '*.tif',shuffle_data=False)
+    TestData = image_util.ImageDataProvider(
+        f'{Directory_Nuclei_Test}*.tif', shuffle_data=False
+    )
 
     L = len(TestData.data_files)
     DiceCoefficient  = np.zeros(L)

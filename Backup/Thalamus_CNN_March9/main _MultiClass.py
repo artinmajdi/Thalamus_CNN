@@ -12,8 +12,7 @@ from TestData import TestData
 
 def DiceCoefficientCalculator(msk1,msk2):
     intersection = np.logical_and(msk1,msk2)
-    DiceCoef = intersection.sum()*2/(msk1.sum()+msk2.sum())
-    return DiceCoef
+    return intersection.sum()*2/(msk1.sum()+msk2.sum())
 
 def ReadMasks(DirectoryMask,SliceNumbers):
 
@@ -38,17 +37,17 @@ def SumMasks(DirectorySubFolders):
     maskD = np.zeros(msk.shape)
     maskD[msk == 1] = 10*i
 
-    i = i + 1
+    i += 1
     SegmentName = '/7_VPL_NeucleusSegDeformed.nii.gz'
     msk , Header , Affine = ReadMasks(DirectorySubFolders+SegmentName)
     maskD[msk == 1] = 10*i
 
-    i = i + 1
+    i += 1
     SegmentName = '/8_Pul_NeucleusSegDeformed.nii.gz'
     msk , Header , Affine = ReadMasks(DirectorySubFolders+SegmentName)
     maskD[msk == 1] = 10*i
 
-    i = i + 1
+    i += 1
     SegmentName = '/12_MD_Pf_NeucleusSegDeformed.nii.gz'
     msk , Header , Affine = ReadMasks(DirectorySubFolders+SegmentName)
     maskD[msk == 1] = 10*i

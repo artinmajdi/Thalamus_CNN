@@ -38,7 +38,7 @@ def read_image_files(image_files, image_shape=None, crop=None, label_indices=Non
         label_indices = []
     elif not isinstance(label_indices, collections.Iterable) or isinstance(label_indices, str):
         label_indices = [label_indices]
-    image_list = list()
+    image_list = []
     for index, image_file in enumerate(image_files):
         if (label_indices is None and (index + 1) == len(image_files)) \
                 or (label_indices is not None and index in label_indices):

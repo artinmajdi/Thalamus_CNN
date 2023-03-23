@@ -46,7 +46,4 @@ def crop_img(img, rtol=1e-8, copy=True, return_slices=False):
 
     slices = [slice(s, e) for s, e in zip(start, end)]
 
-    if return_slices:
-        return slices
-
-    return crop_img_to(img, slices, copy=copy)
+    return slices if return_slices else crop_img_to(img, slices, copy=copy)

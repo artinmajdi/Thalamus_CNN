@@ -33,7 +33,7 @@ for o in range(len(subFolders)-1):
         i = i+1;
 
 subFolders = subFolders2
-with open(Directory+"subFolderList.txt" ,"wb") as fp:
+with open(f"{Directory}subFolderList.txt", "wb") as fp:
     pickle.dump(subFolders,fp)
 
 # with open(Directory+"subFolderList" ,"rb") as fp:
@@ -41,6 +41,7 @@ with open(Directory+"subFolderList.txt" ,"wb") as fp:
 
 # SliceNumbers = range(119,139)
 SliceNumbers = range(107,140)
+padSizeFull = 90
 # SliceNumbers = range(21,47)
 
 
@@ -64,7 +65,6 @@ for sFi in range(len(subFolders)):
     imD = imD[50:198,130:278,SliceNumbers]
     maskD = maskD[50:198,130:278,SliceNumbers]
 
-    padSizeFull = 90
     padSize = padSizeFull/2
     imD_padded = np.pad(imD,((padSize,padSize),(padSize,padSize),(0,0)),'constant' ) #
     maskD_padded = np.pad(maskD,((padSize,padSize),(padSize,padSize),(0,0)),'constant' ) # , constant_values=(5)
@@ -76,9 +76,9 @@ for sFi in range(len(subFolders)):
 
         #     os.makedirs(SaveDirectorySegment)
         if sFi == p:
-            SaveDirectoryImage = Directory+'../'+TestName+'/TestSubject'+str(p)+'/test/'
+            SaveDirectoryImage = f'{Directory}../{TestName}/TestSubject{str(p)}/test/'
         else:
-            SaveDirectoryImage = Directory+'../'+TestName+'/TestSubject'+str(p)+'/train/'
+            SaveDirectoryImage = f'{Directory}../{TestName}/TestSubject{str(p)}/train/'
         # SaveDirectorySegment = Directory+'ForUnet/Segments/'+subFolders2[sFi]+'/'
 
         try:

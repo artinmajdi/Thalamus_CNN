@@ -15,8 +15,7 @@ import tensorflow as tf
 
 def DiceCoefficientCalculator(msk1,msk2):
     intersection = np.logical_and(msk1,msk2)
-    DiceCoef = intersection.sum()*2/(msk1.sum()+msk2.sum())
-    return DiceCoef
+    return intersection.sum()*2/(msk1.sum()+msk2.sum())
 
 def ReadMasks(DirectoryMask,SliceNumbers):
 
@@ -41,17 +40,17 @@ def SumMasks(DirectorySubFolders):
     maskD = np.zeros(msk.shape)
     maskD[msk == 1] = 10*i
 
-    i = i + 1
+    i += 1
     Directory_Nuclei_Label = '/7_VPL_NeucleusSegDeformed.nii.gz'
     msk , Header , Affine = ReadMasks(DirectorySubFolders+Directory_Nuclei_Label)
     maskD[msk == 1] = 10*i
 
-    i = i + 1
+    i += 1
     Directory_Nuclei_Label = '/8_Pul_NeucleusSegDeformed.nii.gz'
     msk , Header , Affine = ReadMasks(DirectorySubFolders+Directory_Nuclei_Label)
     maskD[msk == 1] = 10*i
 
-    i = i + 1
+    i += 1
     Directory_Nuclei_Label = '/12_MD_Pf_NeucleusSegDeformed.nii.gz'
     msk , Header , Affine = ReadMasks(DirectorySubFolders+Directory_Nuclei_Label)
     maskD[msk == 1] = 10*i
@@ -60,12 +59,12 @@ def SumMasks(DirectorySubFolders):
 
 # define worker function
 def calculate(process_name, tasks, results):
-    print('[%s] evaluation routine starts' % process_name)
+    print(f'[{process_name}] evaluation routine starts')
 
     while True:
         new_value = tasks.get()
         if new_value < 0:
-            print('[%s] evaluation routine quits' % process_name)
+            print(f'[{process_name}] evaluation routine quits')
 
             # Indicate finished
             results.put(-1)
@@ -101,82 +100,84 @@ Directory_Nuclei_Full = Directory_main + NeucleusFolder
 ii = 1
 # for ii in range(len(A)):
 
-    if ii == 0:
-        TestName = 'Test_WMnMPRAGE_bias_corr_Deformed' # _Deformed_Cropped
-    else:
-        TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
+if ii == 0:
+    TestName = 'Test_WMnMPRAGE_bias_corr_Deformed' # _Deformed_Cropped
+else:
+    TestName = f'Test_WMnMPRAGE_bias_corr_Sharpness_{str(A[ii][0])}_Contrast_{str(A[ii][1])}_Deformed'
 
-    Directory_Nuclei = Directory_Nuclei_Full + '/' + TestName + '/'
-    # print Directory_Nuclei
-    # with open(Directory_Nuclei_Full + '/OriginalDeformedPriors/subFolderList.txt' ,"rb") as fp:
-    #     subFolders = pickle.load(fp)
-    subFolders = os.listdir(Directory_Nuclei)
+Directory_Nuclei = f'{Directory_Nuclei_Full}/{TestName}/'
+# print Directory_Nuclei
+# with open(Directory_Nuclei_Full + '/OriginalDeformedPriors/subFolderList.txt' ,"rb") as fp:
+#     subFolders = pickle.load(fp)
+subFolders = os.listdir(Directory_Nuclei)
     # print len(subFolders)
 
 
-    for sFi in range(5,6): # len(subFolders)):
+for sFi in range(5,6): # len(subFolders)):
 
-        Directory_Nuclei_Label = '/array/hdd/msmajdi/data/priors_forCNN/' +  subFolders[sFi] + '/ManualDelineation/' + NucleusName + '_Deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
+    Directory_Nuclei_Label = f'/array/hdd/msmajdi/data/priors_forCNN/{subFolders[sFi]}/ManualDelineation/{NucleusName}_Deformed.nii.gz'
 
-        for sliceInd in range(15,16): # 33):
-            print('------------------------------------------------------')
-            print('Test: ' + str(A[ii]) + ' Subject: ' + str(subFolders[sFi]) + ' Slide ' + str(sliceInd) )
-            print('------------------------------------------------------')
+    for sliceInd in range(15,16): # 33):
+        print('------------------------------------------------------')
+        print(
+            f'Test: {str(A[ii])} Subject: {str(subFolders[sFi])} Slide {str(sliceInd)}'
+        )
+        print('------------------------------------------------------')
 
-            # sliceInd = 25
-            Directory_Nuclei_Test  = Directory_Nuclei + subFolders[sFi] + '/Test/Slice' + str(sliceInd) + '/'
-            Directory_Nuclei_Train = Directory_Nuclei + subFolders[sFi] + '/Train/Slice' + str(sliceInd) + '/'
-            Directory_Nuclei_Train_Model = Directory_Nuclei_Train + 'model/'
+        # sliceInd = 25
+        Directory_Nuclei_Test  = Directory_Nuclei + subFolders[sFi] + '/Test/Slice' + str(sliceInd) + '/'
+        Directory_Nuclei_Train = Directory_Nuclei + subFolders[sFi] + '/Train/Slice' + str(sliceInd) + '/'
+        Directory_Nuclei_Train_Model = f'{Directory_Nuclei_Train}model/'
 
-            try:
-                os.stat(Directory_Nuclei_Train_Model)
-            except:
-                os.makedirs(Directory_Nuclei_Train_Model)
-            try:
-                os.stat(Directory_Nuclei_Test  + 'results/')
-            except:
-                os.makedirs(Directory_Nuclei_Test  + 'results/')
+        try:
+            os.stat(Directory_Nuclei_Train_Model)
+        except:
+            os.makedirs(Directory_Nuclei_Train_Model)
+        try:
+            os.stat(f'{Directory_Nuclei_Test}results/')
+        except:
+            os.makedirs(f'{Directory_Nuclei_Test}results/')
 
-            if os.path.isfile(Directory_Nuclei_Train_Model + 'checkpoint'):
-                print('*---  Already Done:   ' + Directory_Nuclei_Train_Model + '  ---*')
-                continue
-            else:
-                print('*---  Not Done:   ' + Directory_Nuclei_Train_Model + '  ---*')
-                TrainData = image_util.ImageDataProvider(Directory_Nuclei_Train + "*.tif")
+        if os.path.isfile(f'{Directory_Nuclei_Train_Model}checkpoint'):
+            print('*---  Already Done:   ' + Directory_Nuclei_Train_Model + '  ---*')
+            continue
+        else:
+            print('*---  Not Done:   ' + Directory_Nuclei_Train_Model + '  ---*')
+            TrainData = image_util.ImageDataProvider(Directory_Nuclei_Train + "*.tif")
 
-                # print Directory_Nuclei_Test
-                # TestData = image_util.ImageDataProvider(  Directory_Nuclei_Test + '*.tif',shuffle_data=False)
-                # print len(TrainData.data_files)
-                # data , label = TrainData(len(TrainData.data_files))
+            # print Directory_Nuclei_Test
+            # TestData = image_util.ImageDataProvider(  Directory_Nuclei_Test + '*.tif',shuffle_data=False)
+            # print len(TrainData.data_files)
+            # data , label = TrainData(len(TrainData.data_files))
 
-                # plt.imshow(label[1,:,:,1],cmap='gray')
-                # plt.show()
-
-
-                logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
-
-                config = tf.ConfigProto()
-                config.gpu_options.allow_growth = True
-                # config.gpu_options.per_process_gpu_memory_fraction = 0.4
-
-                # session = tf.Session(config=config, ...)
-                unet.config = config
-
-                net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) #  , cost="dice_coefficient"
-
-                trainer = unet.Trainer(net)
-                path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=100, epochs=100, display_step=500) #, training_iters=100, epochs=100, display_step=10
+            # plt.imshow(label[1,:,:,1],cmap='gray')
+            # plt.show()
 
 
-                OriginalSegFull = nib.load(Directory_Nuclei_Label)
-                # Header = OriginalSegFull.header
-                # Affine = OriginalSegFull.affine
-                # OriginalSeg = OriginalSegFull.get_data()
+            logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
+
+            config = tf.ConfigProto()
+            config.gpu_options.allow_growth = True
+            # config.gpu_options.per_process_gpu_memory_fraction = 0.4
+
+            # session = tf.Session(config=config, ...)
+            unet.config = config
+
+            net = unet.Unet(layers=4, features_root=16, channels=1, n_class=2 , summaries=True) #  , cost="dice_coefficient"
+
+            trainer = unet.Trainer(net)
+            path = trainer.train(TrainData, Directory_Nuclei_Train_Model, training_iters=100, epochs=100, display_step=500) #, training_iters=100, epochs=100, display_step=10
 
 
-                CropDimensions = np.array([ [50,198] , [130,278] , [SliceNumbers[0] , SliceNumbers[len(SliceNumbers)-1]] ])
+            OriginalSegFull = nib.load(Directory_Nuclei_Label)
+            # Header = OriginalSegFull.header
+            # Affine = OriginalSegFull.affine
+            # OriginalSeg = OriginalSegFull.get_data()
 
-                padSize = 90
+
+            CropDimensions = np.array([ [50,198] , [130,278] , [SliceNumbers[0] , SliceNumbers[len(SliceNumbers)-1]] ])
+
+            padSize = 90
                 # [data,label,prediction] = TestData(net , Directory_Nuclei_Test , Directory_Nuclei_Train , OriginalSegFull , subFolders[sFi] , CropDimensions , padSize)
                 #   [data,label,prediction,OriginalSeg] = TestData2_MultipliedByWholeThalamus(net , Directory_Nuclei_Test , Directory_Nuclei_Train , OriginalSeg , subFolders[sFi] , CropDimensions , padSize , Directory_Thalamus_Test , Directory_Thalamus_TrainedModel , NucleusName)
 

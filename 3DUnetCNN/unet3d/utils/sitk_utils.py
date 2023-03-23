@@ -46,8 +46,9 @@ def resample_to_spacing(data, spacing, target_spacing, interpolation="linear", d
     elif interpolation is "nearest":
         interpolator = sitk.sitkNearestNeighbor
     else:
-        raise ValueError("'interpolation' must be either 'linear' or 'nearest'. '{}' is not recognized".format(
-            interpolation))
+        raise ValueError(
+            f"'interpolation' must be either 'linear' or 'nearest'. '{interpolation}' is not recognized"
+        )
     resampled_image = sitk_resample_to_spacing(image, new_spacing=target_spacing, interpolator=interpolator,
                                                default_value=default_value)
     return sitk_image_to_data(resampled_image)

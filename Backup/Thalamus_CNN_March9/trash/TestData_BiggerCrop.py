@@ -6,8 +6,7 @@ from tf_unet import unet, util, image_util
 
 def DiceCoefficientCalculator(msk1,msk2):
     intersection = np.logical_and(msk1,msk2)
-    DiceCoef = intersection.sum()*2/(msk1.sum()+msk2.sum())
-    return DiceCoef
+    return intersection.sum()*2/(msk1.sum()+msk2.sum())
 
 
 def TestData_BiggerCrop(net , Test_Path , Train_Path , OriginalSeg , subFolders):

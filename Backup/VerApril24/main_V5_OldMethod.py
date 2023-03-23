@@ -13,8 +13,7 @@ import tensorflow as tf
 
 def DiceCoefficientCalculator(msk1,msk2):
     intersection = np.logical_and(msk1,msk2)
-    DiceCoef = intersection.sum()*2/(msk1.sum()+msk2.sum())
-    return DiceCoef
+    return intersection.sum()*2/(msk1.sum()+msk2.sum())
 
 def ReadMasks(DirectoryMask,SliceNumbers):
 
@@ -39,17 +38,17 @@ def SumMasks(DirectorySubFolders):
     maskD = np.zeros(msk.shape)
     maskD[msk == 1] = 10*i
 
-    i = i + 1
+    i += 1
     Directory_Nuclei_Label = '/7_VPL_NeucleusSegDeformed.nii.gz'
     msk , Header , Affine = ReadMasks(DirectorySubFolders+Directory_Nuclei_Label)
     maskD[msk == 1] = 10*i
 
-    i = i + 1
+    i += 1
     Directory_Nuclei_Label = '/8_Pul_NeucleusSegDeformed.nii.gz'
     msk , Header , Affine = ReadMasks(DirectorySubFolders+Directory_Nuclei_Label)
     maskD[msk == 1] = 10*i
 
-    i = i + 1
+    i += 1
     Directory_Nuclei_Label = '/12_MD_Pf_NeucleusSegDeformed.nii.gz'
     msk , Header , Affine = ReadMasks(DirectorySubFolders+Directory_Nuclei_Label)
     maskD[msk == 1] = 10*i
@@ -69,9 +68,9 @@ for ii in range(len(A)):
     if ii == 0:
         TestName = 'Test_WMnMPRAGE_bias_corr_Deformed' # _Deformed_Cropped
     else:
-        TestName = 'Test_WMnMPRAGE_bias_corr_Sharpness_' + str(A[ii][0]) + '_Contrast_' + str(A[ii][1]) + '_Deformed'
+        TestName = f'Test_WMnMPRAGE_bias_corr_Sharpness_{str(A[ii][0])}_Contrast_{str(A[ii][1])}_Deformed'
 
-    Directory_Nuclei = Directory_Nuclei_Full + '/' + TestName + '/'
+    Directory_Nuclei = f'{Directory_Nuclei_Full}/{TestName}/'
 
     # with open(Directory_Nuclei_Full + '/OriginalDeformedPriors/subFolderList.txt' ,"rb") as fp:
     #     subFolders = pickle.load(fp)
@@ -80,15 +79,15 @@ for ii in range(len(A)):
 
 
     for sFi in range(len(subFolders)):
-        print('Test: ' + str(A[ii]) + 'Subject: ' + str(subFolders[sFi]))
+        print(f'Test: {str(A[ii])}Subject: {str(subFolders[sFi])}')
     # sFi = 1
 
-        Directory_Nuclei_Label = '/array/hdd/msmajdi/data/priors_forCNN/' +  subFolders[sFi] + '/ManualDelineation/' + NucleusName + '_Deformed.nii.gz'   # ThalamusSegDeformed  ThalamusSegDeformed_Croped    PulNeucleusSegDeformed  PulNeucleusSegDeformed_Croped
+        Directory_Nuclei_Label = f'/array/hdd/msmajdi/data/priors_forCNN/{subFolders[sFi]}/ManualDelineation/{NucleusName}_Deformed.nii.gz'
 
         Directory_Nuclei_Test  = Directory_Nuclei + subFolders[sFi] + '/Test/'
         Directory_Nuclei_Train = Directory_Nuclei + subFolders[sFi] + '/Train/'
-        Directory_Nuclei_Train_Model = Directory_Nuclei_Train + 'model/'
-        TestResults_Path   = Directory_Nuclei_Test  + 'results/'
+        Directory_Nuclei_Train_Model = f'{Directory_Nuclei_Train}model/'
+        TestResults_Path = f'{Directory_Nuclei_Test}results/'
 
         try:
             os.stat(Directory_Nuclei_Train_Model)
@@ -100,11 +99,11 @@ for ii in range(len(A)):
         except:
             os.makedirs(TestResults_Path)
 
-        if os.path.isfile(Directory_Nuclei_Train_Model + 'checkpoint'):
-            print('*---  Already Done:   ' + Directory_Nuclei_Train_Model + '  ---*')
+        if os.path.isfile(f'{Directory_Nuclei_Train_Model}checkpoint'):
+            print(f'*---  Already Done:   {Directory_Nuclei_Train_Model}  ---*')
             continue
         else:
-            print('*---  Not Done:   ' + Directory_Nuclei_Train_Model + '  ---*')
+            print(f'*---  Not Done:   {Directory_Nuclei_Train_Model}' + '  ---*')
 
             TrainData = image_util.ImageDataProvider(Directory_Nuclei_Train + "*.tif")
             # print Directory_Nuclei_Test

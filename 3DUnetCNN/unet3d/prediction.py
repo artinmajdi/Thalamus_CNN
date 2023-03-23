@@ -18,10 +18,10 @@ def patch_wise_prediction(model, data, overlap=0, batch_size=1, permute=False):
     :param overlap:
     :return:
     """
-    patch_shape = tuple([int(dim) for dim in model.input.shape[-3:]])
-    predictions = list()
+    patch_shape = tuple(int(dim) for dim in model.input.shape[-3:])
+    predictions = []
     indices = compute_patch_indices(data.shape[-3:], patch_size=patch_shape, overlap=overlap)
-    batch = list()
+    batch = []
     i = 0
     while i < len(indices):
         while len(batch) < batch_size:
@@ -29,9 +29,8 @@ def patch_wise_prediction(model, data, overlap=0, batch_size=1, permute=False):
             batch.append(patch)
             i += 1
         prediction = predict(model, np.asarray(batch), permute=permute)
-        batch = list()
-        for predicted_patch in prediction:
-            predictions.append(predicted_patch)
+        batch = []
+        predictions.extend(iter(prediction))
     output_shape = [int(model.output.shape[1])] + list(data.shape[-3:])
     return reconstruct_from_patches(predictions, patch_indices=indices, data_shape=output_shape)
 
@@ -75,10 +74,7 @@ def prediction_to_image(prediction, affine, label_map=False, threshold=0.5, labe
         data = prediction[0, 0]
         if label_map:
             label_map_data = np.zeros(prediction[0, 0].shape, np.int8)
-            if labels:
-                label = labels[0]
-            else:
-                label = 1
+            label = labels[0] if labels else 1
             label_map_data[data > threshold] = label
             data = label_map_data
     elif prediction.shape[1] > 1:
@@ -93,10 +89,10 @@ def prediction_to_image(prediction, affine, label_map=False, threshold=0.5, labe
 
 
 def multi_class_prediction(prediction, affine):
-    prediction_images = []
-    for i in range(prediction.shape[1]):
-        prediction_images.append(nib.Nifti1Image(prediction[0, i], affine))
-    return prediction_images
+    return [
+        nib.Nifti1Image(prediction[0, i], affine)
+        for i in range(prediction.shape[1])
+    ]
 
 
 def run_validation_case(data_index, output_dir, model, data_file, training_modalities,
@@ -126,7 +122,7 @@ def run_validation_case(data_index, output_dir, model, data_file, training_modal
     test_truth = nib.Nifti1Image(data_file.root.truth[data_index][0], affine)
     test_truth.to_filename(os.path.join(output_dir, "truth.nii.gz"))
 
-    patch_shape = tuple([int(dim) for dim in model.input.shape[-3:]])
+    patch_shape = tuple(int(dim) for dim in model.input.shape[-3:])
     if patch_shape == test_data.shape[-3:]:
         prediction = predict(model, test_data, permute=permute)
     else:
@@ -149,7 +145,7 @@ def run_validation_cases(validation_keys_file, model_file, training_modalities, 
         if 'subject_ids' in data_file.root:
             case_directory = os.path.join(output_dir, data_file.root.subject_ids[index].decode('utf-8'))
         else:
-            case_directory = os.path.join(output_dir, "validation_case_{}".format(index))
+            case_directory = os.path.join(output_dir, f"validation_case_{index}")
         run_validation_case(data_index=index, output_dir=case_directory, model=model, data_file=data_file,
                             training_modalities=training_modalities, output_label_map=output_label_map, labels=labels,
                             threshold=threshold, overlap=overlap, permute=permute)
@@ -157,17 +153,17 @@ def run_validation_cases(validation_keys_file, model_file, training_modalities, 
 
 
 def predict(model, data, permute=False):
-    if permute:
-        predictions = list()
-        for batch_index in range(data.shape[0]):
-            predictions.append(predict_with_permutations(model, data[batch_index]))
-        return np.asarray(predictions)
-    else:
+    if not permute:
         return model.predict(data)
+    predictions = [
+        predict_with_permutations(model, data[batch_index])
+        for batch_index in range(data.shape[0])
+    ]
+    return np.asarray(predictions)
 
 
 def predict_with_permutations(model, data):
-    predictions = list()
+    predictions = []
     for permutation_key in generate_permutation_keys():
         temp_data = permute_data(data, permutation_key)[np.newaxis]
         predictions.append(reverse_permute_data(model.predict(temp_data)[0], permutation_key))

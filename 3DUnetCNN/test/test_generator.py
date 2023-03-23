@@ -10,7 +10,7 @@ from unet3d.augment import generate_permutation_keys, permute_data, reverse_perm
 
 class TestDataGenerator(TestCase):
     def setUp(self):
-        self.tmp_files = list()
+        self.tmp_files = []
         self.data_file = None
 
     def tearDown(self):
@@ -94,7 +94,7 @@ class TestDataGenerator(TestCase):
     def verify_generator(self, generator, steps, batch_size, expected_samples):
         # check that the generator covers all the samples
         n_validation_samples = 0
-        validation_samples = list()
+        validation_samples = []
         for i in range(steps):
             x, y = next(generator)
             hash_x = hash(str(x))
@@ -167,7 +167,7 @@ class TestDataGenerator(TestCase):
         self.rm_tmp_files()
 
     def test_unique_permutations(self):
-        permutations = list()
+        permutations = []
         shape = (2, 3, 3, 3)
         data = np.arange(54).reshape(shape)
         for key in generate_permutation_keys():
@@ -188,7 +188,7 @@ class TestDataGenerator(TestCase):
                                                             permute=True)
         training_generator, validation_generator, n_training_steps, n_validation_steps = generators
 
-        for x in training_generator:
+        for _ in training_generator:
             break
 
         self.rm_tmp_files()

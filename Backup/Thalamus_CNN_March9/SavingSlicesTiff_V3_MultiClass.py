@@ -23,12 +23,7 @@ def ReadMasks(DirectoryMask,SliceNumbers):
     mask = nib.load(DirectoryMask)
     maskD = mask.get_data()
 
-    msk = maskD[50:198,130:278,SliceNumbers]
-
-    # msk[msk<0.5]  = 0
-    # msk[msk>=0.5] = 1
-
-    return msk
+    return maskD[50:198,130:278,SliceNumbers]
 
 def SumMasks(DirectorySubFolders,SliceNumbers):
 
@@ -38,17 +33,17 @@ def SumMasks(DirectorySubFolders,SliceNumbers):
     maskD = np.zeros((msk.shape[0],msk.shape[1],5,msk.shape[2]))
     maskD[:,:,i,:] = msk
 
-    i = i + 1
+    i += 1
     SegmentName = '/7_VPL_NeucleusSegDeformed.nii.gz'
     msk = ReadMasks(DirectorySubFolders+SegmentName,SliceNumbers)
     maskD[:,:,i,:] = msk
 
-    i = i + 1
+    i += 1
     SegmentName = '/8_Pul_NeucleusSegDeformed.nii.gz'
     msk = ReadMasks(DirectorySubFolders+SegmentName,SliceNumbers)
     maskD[:,:,i,:] = msk
 
-    i = i + 1
+    i += 1
     SegmentName = '/12_MD_Pf_NeucleusSegDeformed.nii.gz'
     msk = ReadMasks(DirectorySubFolders+SegmentName,SliceNumbers)
     maskD[:,:,i,:] = msk
@@ -90,12 +85,13 @@ for o in range(len(subFolders)-1):
         i = i+1;
 
 subFolders = subFolders2
-with open(Directory+"subFolderList.txt" ,"wb") as fp:
+with open(f"{Directory}subFolderList.txt", "wb") as fp:
     pickle.dump(subFolders,fp)
 
 SliceNumbers = range(119,139)
 
 
+padSizeFull = 90
 for sFi in range(len(subFolders)):
 # sFi = 0
 
@@ -114,23 +110,17 @@ for sFi in range(len(subFolders)):
 
     imD = imD[50:198,130:278,SliceNumbers]
 
-    padSizeFull = 90
     padSize = padSizeFull/2
     imD_padded = np.pad(imD,((padSize,padSize),(padSize,padSize),(0,0)),'constant' ) #
     maskD_padded = np.pad(maskD,((padSize,padSize),(padSize,padSize),(0,0),(0,0)),'constant' ) # , constant_values=(5)
-
-    # plt.imshow(maskD_padded[:,:,10],cmap='gray')
-    # plt.show()
-    # print maskD_padded.max()
-        # imD = np.reshape(imD,[572,572,10])
 
     for p in range(len(subFolders)):
 
         #     os.makedirs(SaveDirectorySegment)
         if sFi == p:
-            SaveDirectoryImage = Directory+'../'+TestName+'/TestSubject'+str(p)+'/test/'
+            SaveDirectoryImage = f'{Directory}../{TestName}/TestSubject{str(p)}/test/'
         else:
-            SaveDirectoryImage = Directory+'../'+TestName+'/TestSubject'+str(p)+'/train/'
+            SaveDirectoryImage = f'{Directory}../{TestName}/TestSubject{str(p)}/train/'
         # SaveDirectorySegment = Directory+'ForUnet/Segments/'+subFolders2[sFi]+'/'
 
         try:

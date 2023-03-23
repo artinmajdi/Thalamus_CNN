@@ -32,7 +32,10 @@ def get_random_patch_index(image_shape, patch_shape):
 
 
 def get_random_nd_index(index_max):
-    return tuple([np.random.choice(index_max[index] + 1) for index in range(len(index_max))])
+    return tuple(
+        np.random.choice(index_max[index] + 1)
+        for index in range(len(index_max))
+    )
 
 
 def get_patch_from_3d_data(data, patch_shape, patch_index):

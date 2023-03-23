@@ -37,8 +37,8 @@ def isensee2017_model(input_shape=(4, 128, 128, 128), n_base_filters=16, depth=5
     inputs = Input(input_shape)
 
     current_layer = inputs
-    level_output_layers = list()
-    level_filters = list()
+    level_output_layers = []
+    level_filters = []
     for level_number in range(depth):
         n_level_filters = (2**level_number) * n_base_filters
         level_filters.append(n_level_filters)
@@ -54,7 +54,7 @@ def isensee2017_model(input_shape=(4, 128, 128, 128), n_base_filters=16, depth=5
         level_output_layers.append(summation_layer)
         current_layer = summation_layer
 
-    segmentation_layers = list()
+    segmentation_layers = []
     for level_number in range(depth - 2, -1, -1):
         up_sampling = create_up_sampling_module(current_layer, level_filters[level_number])
         concatenation_layer = concatenate([level_output_layers[level_number], up_sampling], axis=1)
@@ -83,21 +83,18 @@ def isensee2017_model(input_shape=(4, 128, 128, 128), n_base_filters=16, depth=5
 
 def create_localization_module(input_layer, n_filters):
     convolution1 = create_convolution_block(input_layer, n_filters)
-    convolution2 = create_convolution_block(convolution1, n_filters, kernel=(1, 1, 1))
-    return convolution2
+    return create_convolution_block(convolution1, n_filters, kernel=(1, 1, 1))
 
 
 def create_up_sampling_module(input_layer, n_filters, size=(2, 2, 2)):
     up_sample = UpSampling3D(size=size)(input_layer)
-    convolution = create_convolution_block(up_sample, n_filters)
-    return convolution
+    return create_convolution_block(up_sample, n_filters)
 
 
 def create_context_module(input_layer, n_level_filters, dropout_rate=0.3, data_format="channels_first"):
     convolution1 = create_convolution_block(input_layer=input_layer, n_filters=n_level_filters)
     dropout = SpatialDropout3D(rate=dropout_rate, data_format=data_format)(convolution1)
-    convolution2 = create_convolution_block(input_layer=dropout, n_filters=n_level_filters)
-    return convolution2
+    return create_convolution_block(input_layer=dropout, n_filters=n_level_filters)
 
 
 

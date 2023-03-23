@@ -7,11 +7,12 @@ from unet3d.model import unet_model_3d
 from unet3d.training import load_old_model, train_model
 
 
-config = dict()
-config["pool_size"] = (2, 2, 2)  # pool size for the max pooling operations
-config["image_shape"] = (144, 144, 144)  # This determines what shape the images will be cropped/resampled to.
-config["patch_shape"] = (64, 64, 64)  # switch to None to train on the whole image
-config["labels"] = (1, 2, 4)  # the label numbers on the input image
+config = {
+    "pool_size": (2, 2, 2),
+    "image_shape": (144, 144, 144),
+    "patch_shape": (64, 64, 64),
+    "labels": (1, 2, 4),
+}
 config["n_labels"] = len(config["labels"])
 config["all_modalities"] = ["t1", "t1Gd", "flair", "t2"]
 config["training_modalities"] = config["all_modalities"]  # change this if you want to only use some of the modalities
@@ -47,11 +48,12 @@ config["overwrite"] = False  # If True, will previous files. If False, will use 
 
 
 def fetch_training_data_files():
-    training_data_files = list()
+    training_data_files = []
     for subject_dir in glob.glob(os.path.join(os.path.dirname(__file__), "data", "preprocessed", "*", "*")):
-        subject_files = list()
-        for modality in config["training_modalities"] + ["truth"]:
-            subject_files.append(os.path.join(subject_dir, modality + ".nii.gz"))
+        subject_files = [
+            os.path.join(subject_dir, f"{modality}.nii.gz")
+            for modality in config["training_modalities"] + ["truth"]
+        ]
         training_data_files.append(tuple(subject_files))
     return training_data_files
 
